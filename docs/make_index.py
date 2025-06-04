@@ -64,13 +64,12 @@ def main():
                 md_dir = os.path.join(doc_dir_path, ff)
                 if os.path.isfile(md_dir):
                     continue
-                md_name = find_md_name(os.listdir(md_dir))
-                if not md_name:
+                sub2_title = find_md_name(os.listdir(md_dir))
+                if not sub2_title:
                     continue
                 sub2_index = os.path.join(md_dir, index_filename)
-                sub2_title = md_name.replace(' ', '')
                 sub2_symbol = len(sub2_title) * 3 * '='
-                sub2_doc_tree = f'   {md_name}'
+                sub2_doc_tree = f'   {sub2_title}'
                 sub2_index_content = template.format(title=sub2_title, symbol=sub2_symbol, doc_tree=sub2_doc_tree)
                 write_file(sub2_index, sub2_index_content)
 

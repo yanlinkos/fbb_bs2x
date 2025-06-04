@@ -6,9 +6,6 @@ CODEHUB_BRANCH=$3
 if [ -z "${DOCS_DIR}" ]; then
     DOCS_DIR="docs"
 fi
-if [ -n "${OBS_ROOT_KEY}" ]; then
-    OBS_ROOT_KEY="${OBS_ROOT_KEY}/"
-fi
 
 
 function install_py_libs() {
@@ -66,7 +63,7 @@ function docs_build_start() {
     repo_branch=$2
     chip=$3
 
-    key_prefix="${OBS_ROOT_KEY}${repo_path}"
+    key_prefix="${OBS_ROOT_KEY}/${repo_path}"
     if [ -n "${chip}" ]; then
         # 如 bs2x/docs/en
         dir_path_prefix="${chip}/${DOCS_DIR}"
