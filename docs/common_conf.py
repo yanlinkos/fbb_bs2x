@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 # 构建执行时声明的环境变量
 use_doc_reading = os.getenv('USE_DOC_READING', 'yes')  # 文档捉虫
 repo_namespace = os.getenv('REPO_NAMESPACE', 'HiSpark')  # 仓命名空间
-repo_path = os.getenv('REPO_PATH', 'fbb_bs2x')  # 仓路径
+repo_path = os.getenv('REPO_PATH')  # 仓路径
 repo_host = os.getenv('REPO_HOST', 'gitee.com')  # 仓域名
 repo_branch = os.getenv('REPO_BRANCH', 'master')  # 构建分支
 cur_path = os.path.dirname(__file__)
@@ -38,6 +38,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 language = 'zh_CN'
 
+html_favicon = '../_static/img/favicon.ico'
 html_static_path = ['../_static']
 html_theme = "sphinx_rtd_theme"
 html_theme_options = {
@@ -76,7 +77,7 @@ html_context = {
 
 a_tag_re_matcher = re.compile(r'<a name=[\\]?"[^"]+[\\]?"></a>')
 img_tag_re_matcher = re.compile(r'<img\b[^>]{0,200}src="([^"]+)"[^>]{0,200}>')
-md_link_matcher = re.compile(r'\[[^\]]+\]\([^\)]+\.md[^\)]{0,200}\)|<a href="\w+\.md">[^<]+</a>')
+md_link_matcher = re.compile(r'\[[^\]]+\]\([^\)]+\.md[^\)]{0,200}\)|<a href="[^>]+\.md">[^<]+</a>')
 
 
 # 适配处理相关函数----------------------
