@@ -121,6 +121,7 @@ def handle_zh_images(app, page_name, template_name, context, doctree):
 
             if img_src_val.startswith((app.builder.imgpath, 'http')):
                 continue
+            # 解决sphinx无法正确处理存在中文的图片名称
             unquote_path = urllib.parse.unquote(img_src_val)  # 恢复中文
             relative_path, filename = os.path.split(unquote_path)
 
@@ -140,7 +141,9 @@ def handle_zh_images(app, page_name, template_name, context, doctree):
                     img_src_val,
                     posixpath.join(app.builder.imgpath, img_src_val))
             else:
-                temp_line = temp_line.replace(relative_path, app.builder.imgpath)
+                posix_img_path = posixpath.join(app.builder.imgpath,
+                                                urllib.parse.quote(filename))
+                temp_line = temp_line.replace(img_src_val, posix_img_path)
             body_change = True
         if body_change:
             body_lines[index] = temp_line
