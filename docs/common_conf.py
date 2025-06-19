@@ -9,6 +9,10 @@ import urllib.parse
 
 from zipfile import ZipFile
 
+import jieba3
+
+from sphinx.search import SearchLanguage
+
 logging.basicConfig(level=logging.INFO)
 
 # 构建执行时声明的环境变量
@@ -199,11 +203,20 @@ def source_read_handler(app, docname, content):
         content[index] = remove_md_href(text)
 
 
+class ChineseSearch(SearchLanguage):
+    lang = 'zh'
+    jieba = jieba3.jieba3()
+
+    def split(self, input_content):
+        return list(set(self.jieba.cut_text(input_content)))  # 搜索引擎模式分词
+
+
 def setup(app):
     app.connect('builder-inited', builder_inited)
     app.connect('source-read', source_read_handler)
     app.connect('html-page-context', handle_zh_images)
     app.connect('build-finished', after_build)
+    app.add_search_language(ChineseSearch)
 
 
 # latex构建相关
