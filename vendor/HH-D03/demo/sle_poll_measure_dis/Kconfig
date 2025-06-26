@@ -1,8 +1,3 @@
-#===============================================================================
-# @brief    Kconfig file.
-# Copyright (c) @CompanyNameMagicTag 2024-2024. All rights reserved.
-#===============================================================================
-
 choice
     prompt "Select sle uart type"
     default SAMPLE_SUPPORT_SLE_MEASURE_DIS_SERVER

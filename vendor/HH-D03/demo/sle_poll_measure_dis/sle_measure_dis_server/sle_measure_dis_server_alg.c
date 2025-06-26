@@ -1,11 +1,18 @@
-/**
- * Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved. \n
+/*
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Description: sle adv config for sle uart server. \n
- * Author: @CompanyNameTag \n
- * History: \n
- * 2023-07-17, Create file. \n
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 #include "sle_measure_dis_server.h"
 #include "sle_common.h"
 #include "smooth.h"
@@ -58,7 +65,7 @@ static void measure_dis_posalg_set_distance(dis_result *dis, measure_dis_profile
 /*函数接受一个指向alg_para_dis结构体的指针alg_para作为参数，并为其成员变量设置基础或默认的参数值*/
 void measure_dis_posalg_set_base_para(alg_para_dis *alg_para)
 {
-    alg_para->calib_val = 0.8;/*根据5次测量平均值-1来校准*/
+    alg_para->calib_val = 0.8; /* 根据5次测量平均值0.8来校准 */
     alg_para->tof_calib = TOF_DEFAULT;
     alg_para->flag_inter = DIS_ALG_MODE;
 }
