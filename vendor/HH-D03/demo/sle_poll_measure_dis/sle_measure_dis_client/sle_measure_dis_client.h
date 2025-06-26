@@ -53,14 +53,12 @@ typedef struct server_data {
     uint16_t property_handle;
 } measure_dis_server_data_t;
 
-static inline void check_rc_return_rc(uint32_t rc, char *err)
-{
-    do {
-        if ((rc) != ERRCODE_SUCC) {
-            osal_printk("CARKEY ERROR: %s fail!: call %s return 0x%x!\n", err, __FUNCTION__, rc);
-        }
-    } while (0);
-}
+#define check_rc_return_rc(rc, err)                                                             \
+    do {                                                                                         \
+        if ((rc) != ERRCODE_SUCC) {                                                              \
+            osal_printk("CARKEY ERROR: %s fail!: call %s return 0x%x!\n", err, __FUNCTION__, rc);   \
+        }                                                                                        \
+    } while (0)
 
 int measure_dis_client_write_server(uint16_t conn_id, uint32_t type, uint8_t *data, uint32_t data_len);
 int measure_dis_client_init(void);
