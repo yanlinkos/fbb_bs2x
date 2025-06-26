@@ -152,5 +152,11 @@
     "chip": "BS2X",
     "buildDef": "",
     "needSmoke": "false"
+  },{
+    "buildTarget": "standard-bs21e-1100e",
+    "relativePath": "demo/sle_poll_measure_dis",
+    "chip": "BS2X",
+    "buildDef": "",
+    "needSmoke": "false"
   }
 ]
