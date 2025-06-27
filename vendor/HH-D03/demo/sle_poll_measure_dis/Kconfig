@@ -1,0 +1,8 @@
+choice
+    prompt "Select sle uart type"
+    default SAMPLE_SUPPORT_SLE_MEASURE_DIS_SERVER
+    config SAMPLE_SUPPORT_SLE_MEASURE_DIS_SERVER
+        bool "Enable SLE MEASURE_DIS Server sample."
+    config SAMPLE_SUPPORT_SLE_MEASURE_DIS_CLIENT
+        bool "Enable SLE MEASURE_DIS Client sample."
+endchoice

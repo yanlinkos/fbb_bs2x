@@ -12,6 +12,8 @@
 ./vendor/HH-D03/demo/oled/ssd1306_fonts.c
 ./vendor/HH-D03/demo/environment/ssd1306_fonts.h
 ./vendor/HH-D03/demo/oled/ssd1306_fonts.h
+./vendor/HH-D03/demo/sle_measure_dis/ssd1306_fonts.c
+./vendor/HH-D03/demo/sle_measure_dis/ssd1306_fonts.h
 
 (a)
                                  Apache License
