@@ -48,13 +48,13 @@ unsigned long g_sle_uart_server_msgqueue_id;
 static void ssaps_server_read_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_read_cb_t *read_cb_para,
     errcode_t status)
 {
-    osal_printk("%s ssaps read request cbk callback server_id:%x, conn_id:%x, handle:%x, status:%x\r\n",
+    osal_printk("%s ssaps read request cbk callback server_id:0x%x, conn_id:0x%x, handle:0x%x, status:0x%x\r\n",
         SLE_UART_SERVER_LOG, server_id, conn_id, read_cb_para->handle, status);
 }
 static void ssaps_server_write_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_write_cb_t *write_cb_para,
     errcode_t status)
 {
-    osal_printk("%s ssaps write request callback cbk server_id:%x, conn_id:%x, handle:%x, status:%x\r\n",
+    osal_printk("%s ssaps write request callback cbk server_id:0x%x, conn_id:0x%x, handle:0x%x, status:0x%x\r\n",
         SLE_UART_SERVER_LOG, server_id, conn_id, write_cb_para->handle, status);
     if ((write_cb_para->length > 0) && write_cb_para->value) {
         uapi_uart_write(CONFIG_SLE_UART_BUS, (uint8_t *)write_cb_para->value, write_cb_para->length, 0);

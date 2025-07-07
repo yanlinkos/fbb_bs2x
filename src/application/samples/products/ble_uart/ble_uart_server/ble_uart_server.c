@@ -146,7 +146,7 @@ static void ble_uart_server_service_add_cbk(uint8_t server_id, bt_uuid_t *uuid, 
     osal_printk("%s add characters_and_descriptors cbk service:%d, srv_handle:%d, uuid_len:%d, status:%d, uuid:",
                 BLE_UART_SERVER_LOG, server_id, handle, uuid->uuid_len, status);
     for (int8_t i = 0; i < uuid->uuid_len; i++) {
-        osal_printk("%02x ", uuid->uuid[i]);
+        osal_printk("0x%02x ", uuid->uuid[i]);
     }
     osal_printk("\n");
     ble_uart_add_tx_characters_and_descriptors(server_id, handle);
@@ -162,7 +162,7 @@ static void ble_uart_server_characteristic_add_cbk(uint8_t server_id, bt_uuid_t 
                 BLE_UART_SERVER_LOG, server_id, service_handle, result->handle, result->value_handle, uuid->uuid_len);
     osal_printk("uuid:");
     for (int8_t i = 0; i < uuid->uuid_len; i++) {
-        osal_printk("%02x ", uuid->uuid[i]);
+        osal_printk("0x%02x ", uuid->uuid[i]);
     }
     bt_uuid_t characters_cbk_uuid = { 0 };
     bts_data_to_uuid_len2(BLE_UART_CHARACTERISTIC_UUID_TX, &characters_cbk_uuid);
@@ -181,7 +181,7 @@ static void ble_uart_server_descriptor_add_cbk(uint8_t server_id, bt_uuid_t *uui
                 BLE_UART_SERVER_LOG, server_id, service_handle, handle, uuid->uuid_len);
     osal_printk("uuid:");
     for (int8_t i = 0; i < uuid->uuid_len; i++) {
-        osal_printk("%02x ", (uint8_t)uuid->uuid[i]);
+        osal_printk("0x%02x ", (uint8_t)uuid->uuid[i]);
     }
     osal_printk("%s status:%d\n", BLE_UART_SERVER_LOG, status);
 }
@@ -250,7 +250,7 @@ void ble_uart_server_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_b
 {
     g_ble_uart_conn_id = conn_id;
     g_connection_state = (uint8_t)conn_state;
-    osal_printk("%s connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason %x\n",
+    osal_printk("%s connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason 0x%x\n",
                 BLE_UART_SERVER_LOG, conn_id, conn_state, pair_state, disc_reason);
     osal_printk("addr:\n");
     for (uint8_t i = 0; i < BD_ADDR_LEN; i++) {

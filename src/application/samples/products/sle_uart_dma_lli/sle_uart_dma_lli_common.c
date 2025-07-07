@@ -64,10 +64,9 @@ bool uart_dma_lli_buffer_add_data(uint8_t *data, uint16_t length)
 uint8_t *uart_dma_lli_buffer_get_data(uint16_t *length)
 {
     uint32_t lock = osal_irq_lock();
-    uint8_t *temp = g_data_buffer[g_data_buffer_head].data;
-    *length = g_data_buffer[g_data_buffer_head].length;
+    uint8_t *temp = NULL;
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_UART_DMA_MASTER_B) && defined(CONFIG_UART_SUPPORT_FLOW_CTRL)
-    if (uart_dma_lli_buffer_check_full()) {
+    if (uapi_uart_dma_lli_is_stop(CONFIG_SLE_UART_DMA_BUS_ID) == true) {
 #if defined(CONFIG_SAMPLE_SUPPORT_UART_DMA_RAW_DATA_MODE)
         uapi_uart_dma_recv_raw_data(CONFIG_SLE_UART_DMA_BUS_ID, uart_dma_rx_cb);
 #elif defined(CONFIG_SAMPLE_SUPPORT_UART_DMA_LLI_MODE)
@@ -75,8 +74,13 @@ uint8_t *uart_dma_lli_buffer_get_data(uint16_t *length)
 #endif
     }
 #endif
-
-    g_data_buffer_head = (g_data_buffer_head + 1) % SLE_UART_DATA_BUFFER_SIZE;
+    if (uart_dma_lli_buffer_check_empty()) {
+        *length = 0;
+    } else {
+        temp = g_data_buffer[g_data_buffer_head].data;
+        *length = g_data_buffer[g_data_buffer_head].length;
+        g_data_buffer_head = (g_data_buffer_head + 1) % SLE_UART_DATA_BUFFER_SIZE;
+    }
     osal_irq_restore(lock);
     return temp;
 }

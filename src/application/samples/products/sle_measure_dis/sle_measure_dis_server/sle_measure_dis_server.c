@@ -159,7 +159,7 @@ void measure_dis_server_msg_proc(uint8_t *data, uint16_t data_len)
     }
 
     if (unlikely(ret != ERRCODE_SLE_SUCCESS)) {
-        osal_printk("client proc msg failed MSG_TYPE:%x ret:0x%x \r\n", slem_profile_msg->type, ret);
+        osal_printk("client proc msg failed MSG_TYPE:0x%x ret:0x%x \r\n", slem_profile_msg->type, ret);
     }
 }
 
@@ -176,13 +176,13 @@ static void measure_dis_ssaps_write_request_cbk(uint8_t server_id, uint16_t conn
 static void measure_dis_ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id,  ssap_exchange_info_t *mtu_size,
     errcode_t status)
 {
-    osal_printk("[scd server] ssaps myu change cbk server_id:%x, conn_id:%x, mtu_size:%x, status:%x\r\n",
+    osal_printk("[scd server] ssaps myu change cbk server_id:0x%x, conn_id:0x%x, mtu_size:0x%x, status:0x%x\r\n",
                 server_id, conn_id, mtu_size->mtu_size, status);
 }
 
 static void measure_dis_ssaps_start_service_cbk(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    osal_printk("[scd server] start service cbk server_id:%x, handle:%x, status:%x\r\n",
+    osal_printk("[scd server] start service cbk server_id:0x%x, handle:0x%x, status:0x%x\r\n",
                 server_id, handle, status);
 }
 

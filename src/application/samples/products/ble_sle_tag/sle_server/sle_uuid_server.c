@@ -75,27 +75,27 @@ static void sle_uuid_setu2(uint16_t u2, sle_uuid_t *out)
 static void ssaps_read_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_read_cb_t *read_cb_para,
     errcode_t status)
 {
-    sample_at_log_print("[uuid server] ssaps read request cbk server_id:%x, conn_id:%x, handle:%x, status:%x\r\n",
-        server_id, conn_id, read_cb_para->handle, status);
+    sample_at_log_print("[uuid server] ssaps read request cbk server_id:0x%x, conn_id:0x%x, handle:0x%x, status:\
+        0x%x\r\n", server_id, conn_id, read_cb_para->handle, status);
 }
 
 static void ssaps_write_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_write_cb_t *write_cb_para,
     errcode_t status)
 {
-    sample_at_log_print("[uuid server] ssaps write request cbk server_id:%x, conn_id:%x, handle:%x, status:%x\r\n",
-        server_id, conn_id, write_cb_para->handle, status);
+    sample_at_log_print("[uuid server] ssaps write request cbk server_id:0x%x, conn_id:0x%x, handle:0x%x, status:\
+        0x%x\r\n", server_id, conn_id, write_cb_para->handle, status);
 }
 
 static void ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id,  ssap_exchange_info_t *mtu_size,
     errcode_t status)
 {
-    sample_at_log_print("[uuid server] ssaps write request cbk server_id:%x, conn_id:%x, mtu_size:%x, status:%x\r\n",
-        server_id, conn_id, mtu_size->mtu_size, status);
+    sample_at_log_print("[uuid server] ssaps write request cbk server_id:0x%x, conn_id:0x%x, mtu_size:0x%x, status:\
+        0x%x\r\n", server_id, conn_id, mtu_size->mtu_size, status);
 }
 
 static void ssaps_start_service_cbk(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    sample_at_log_print("[uuid server] start service cbk server_id:%x, handle:%x, status:%x\r\n",
+    sample_at_log_print("[uuid server] start service cbk server_id:0x%x, handle:0x%x, status:0x%x\r\n",
         server_id, handle, status);
 }
 
@@ -116,7 +116,7 @@ static errcode_t sle_uuid_server_service_add(void)
     sle_uuid_setu2(SLE_UUID_SERVER_SERVICE, &service_uuid);
     ret = ssaps_add_service_sync(g_server_id, &service_uuid, 1, &g_service_handle);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        sample_at_log_print("[uuid server] sle uuid add service fail, ret:%x\r\n", ret);
+        sample_at_log_print("[uuid server] sle uuid add service fail, ret:0x%x\r\n", ret);
         return ERRCODE_SLE_FAIL;
     }
     return ERRCODE_SLE_SUCCESS;
@@ -163,7 +163,7 @@ static errcode_t sle_uuid_server_property_add(void)
     }
     ret = ssaps_add_descriptor_sync(g_server_id, g_service_handle, g_property_handle, &descriptor);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        sample_at_log_print("[uuid server] sle uuid add descriptor fail, ret:%x\r\n", ret);
+        sample_at_log_print("[uuid server] sle uuid add descriptor fail, ret:0x%x\r\n", ret);
         osal_vfree(property.value);
         osal_vfree(descriptor.value);
         return ERRCODE_SLE_FAIL;
@@ -269,7 +269,7 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
 
 static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status)
 {
-    sample_at_log_print("[uuid server] pair complete conn_id:%02x, status:%x\r\n",
+    sample_at_log_print("[uuid server] pair complete conn_id:0x%02x, status:0x%x\r\n",
         conn_id, status);
     sample_at_log_print("[uuid server] pair complete addr:%02x:**:**:**:%02x:%02x\r\n",
         addr->addr[BT_INDEX_0], addr->addr[BT_INDEX_4], addr->addr[BT_INDEX_5]);

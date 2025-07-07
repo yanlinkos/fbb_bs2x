@@ -68,5 +68,7 @@ errcode_t sle_rcu_server_adv_deinit(void);
 errcode_t sle_rcu_server_directed_adv_init(sle_addr_t *addr);
 errcode_t sle_rcu_announce_register_cbks(void);
 errcode_t sle_rcu_server_wakeup_adv_init(sle_addr_t *addr);
-errcode_t rcu_mp_test_server_adv_init(sle_addr_t *addr);
+#if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
+errcode_t rcu_mp_test_server_adv_init(sle_addr_t *local_addr, sle_addr_t *peer_addr);
+#endif
 #endif

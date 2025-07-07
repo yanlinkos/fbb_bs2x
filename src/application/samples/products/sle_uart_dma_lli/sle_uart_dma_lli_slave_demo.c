@@ -27,7 +27,6 @@ extern uint8_t gle_tx_acb_data_num_get(void);
 #define UART_TASK_STACK_SIZE               0x1000
 
 // uart_dma 回调注册
-
 #if defined(CONFIG_SAMPLE_SUPPORT_UART_DMA_RAW_DATA_MODE)
 bool uart_dma_rx_cb(uint8_t *data, uint32_t length)
 {

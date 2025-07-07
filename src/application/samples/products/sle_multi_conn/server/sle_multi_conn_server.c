@@ -11,12 +11,10 @@
 #include "common_def.h"
 #include "osal_debug.h"
 #include "osal_addr.h"
-#include "osal_task.h"
 #include "sle_errcode.h"
 #include "sle_common.h"
 #include "sle_connection_manager.h"
 #include "sle_device_discovery.h"
-#include "sle_device_manager.h"
 #include "sle_multi_conn_server_adv.h"
 #include "sle_multi_conn_server.h"
 
@@ -96,21 +94,25 @@ static void sle_uuid_setu2(uint16_t u2, sle_uuid_t *out)
 static void ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id, ssap_exchange_info_t *mtu_size,
                                   errcode_t status)
 {
-    osal_printk("%s ssaps ssaps_mtu_changed_cbk callback server_id:%x, conn_id:%x, mtu_size:%x, status:%x\r\n",
+    osal_printk("%s ssaps ssaps_mtu_changed_cbk callback server_id:0x%x, conn_id:0x%x, mtu_size:0x%x, status:0x%x\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, server_id, conn_id, mtu_size->mtu_size, status);
     g_sle_pair_handle = conn_id + 1;
 }
 
 static void ssaps_start_service_cbk(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    osal_printk("%s start service cbk callback server_id:%x, handle:%x, status:%x\r\n",
+    osal_printk("%s start service cbk callback server_id:0x%x, handle:0x%x, status:0x%x\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, server_id, handle, status);
+	// 开始设备公开
+    if (sle_multi_conn_server_adv_init() != ERRCODE_SLE_SUCCESS) {
+        osal_printk("%s server_adv_init fail.\r\n", SLE_MULTI_CONN_SERVER_LOG);
+    }
 }
 
 static void ssaps_add_service_cbk(uint8_t server_id, sle_uuid_t *uuid, uint16_t handle, errcode_t status)
 {
     unused(uuid);
-    osal_printk("%s add service cbk callback server_id:%x, handle:%x, status:%x\r\n",
+    osal_printk("%s add service cbk callback server_id:0x%x, handle:0x%x, status:0x%x\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, server_id, handle, status);
 }
 
@@ -118,7 +120,7 @@ static void ssaps_add_property_cbk(uint8_t server_id, sle_uuid_t *uuid, uint16_t
                                    uint16_t handle, errcode_t status)
 {
     unused(uuid);
-    osal_printk("%s add property cbk callback server_id:%x, service_handle:%x,handle:%x, status:%x\r\n",
+    osal_printk("%s add property cbk callback server_id:0x%x, service_handle:0x%x,handle:0x%x, status:0x%x\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, server_id, service_handle, handle, status);
 }
 
@@ -126,14 +128,14 @@ static void ssaps_add_descriptor_cbk(uint8_t server_id, sle_uuid_t *uuid, uint16
                                      uint16_t property_handle, errcode_t status)
 {
     unused(uuid);
-    osal_printk("%s add descriptor cbk callback server_id:%x, service_handle:%x, property_handle:%x, \
-                 status:%x\r\n",
+    osal_printk("%s add descriptor cbk callback server_id:0x%x, service_handle:0x%x, property_handle:0x%x, \
+                 status:0x%x\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, server_id, service_handle, property_handle, status);
 }
 
 static void ssaps_delete_all_service_cbk(uint8_t server_id, errcode_t status)
 {
-    osal_printk("%s delete all service callback server_id:%x, status:%x\r\n", SLE_MULTI_CONN_SERVER_LOG,
+    osal_printk("%s delete all service callback server_id:0x%x, status:0x%x\r\n", SLE_MULTI_CONN_SERVER_LOG,
                 server_id, status);
 }
 
@@ -170,7 +172,6 @@ static errcode_t sle_uuid_server_service_add(void)
 
 static errcode_t sle_uuid_server_property_add(void)
 {
-    errcode_t ret;
     ssaps_property_info_t property = {0};
     ssaps_desc_info_t descriptor = {0};
     uint8_t ntf_value[] = {0x01, 0x00};
@@ -189,7 +190,7 @@ static errcode_t sle_uuid_server_property_add(void)
         osal_printk("%s osal_vfree(property.value); \r\n", SLE_MULTI_CONN_SERVER_LOG);
         return ERRCODE_SLE_FAIL;
     }
-    ret = ssaps_add_property_sync(g_server_id, g_service_handle, &property, &g_property_handle);
+    errcode_t ret = ssaps_add_property_sync(g_server_id, g_service_handle, &property, &g_property_handle);
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_vfree(property.value);
         return ERRCODE_SLE_FAIL;
@@ -197,7 +198,7 @@ static errcode_t sle_uuid_server_property_add(void)
     descriptor.permissions = SSAP_PERMISSION_READ_WRITE;
     descriptor.type = SSAP_DESCRIPTOR_CLIENT_CONFIGURATION;
     descriptor.operate_indication = SSAP_OPERATE_INDICATION_BIT_READ_WRITE;
-
+    descriptor.value_len = sizeof(ntf_value);
     descriptor.value = (uint8_t *)osal_vmalloc(sizeof(ntf_value));
     if (descriptor.value == NULL) {
         osal_vfree(property.value);
@@ -231,9 +232,10 @@ errcode_t sle_multi_conn_server_add(void)
     if (memcpy_s(app_uuid.uuid, app_uuid.len, g_sle_uuid_app_uuid, sizeof(g_sle_uuid_app_uuid)) != EOK) {
         return ERRCODE_SLE_FAIL;
     }
-    if (ssaps_register_server(&app_uuid, &g_server_id) != ERRCODE_SLE_SUCCESS) {
-        osal_printk("%s ssaps_register_server failed. \r\n", SLE_MULTI_CONN_SERVER_LOG);
-        return ERRCODE_SLE_FAIL;
+    ret = ssaps_register_server(&app_uuid, &g_server_id);
+    if (ret != ERRCODE_SLE_SUCCESS) {
+        osal_printk("%s ssaps_register_server. app_uuid.uuid: %x, g_server_id: %x, err_code: [%x]\r\n",
+                    SLE_MULTI_CONN_SERVER_LOG, app_uuid.uuid, g_server_id, ret);
     }
 
     if (sle_uuid_server_service_add() != ERRCODE_SLE_SUCCESS) {
@@ -268,7 +270,7 @@ errcode_t sle_multi_conn_server_send_notify_indicate(void)
 
     errcode_t ret;
     ret = ssaps_notify_indicate(g_server_id, g_sle_conn_id, &param);
-    osal_printk("%s sle_multi_conn_server_send_notify_indicate return: [%x]\r\n",
+    osal_printk("%s sle_multi_conn_server_send_notify_indicate return: [0x%x]\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, ret);
     return ret;
 }
@@ -277,8 +279,8 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
                                           sle_pair_state_t pair_state, sle_disc_reason_t disc_reason)
 {
     osal_printk("%s connect state changed callback conn_id:0x%02x, conn_state:0x%x, pair_state:0x%x, \
-                disc_reason:0x%x\r\n, client mac addr:[%02x:%02x:%02x:%02x:%02x:%02x]\r\n", SLE_MULTI_CONN_SERVER_LOG,
-                conn_id, conn_state, pair_state, disc_reason,
+                disc_reason:0x%x\r\n, client mac addr:[%02x:%02x:%02x:%02x:%02x:%02x]\r\n",
+                SLE_MULTI_CONN_SERVER_LOG, conn_id, conn_state, pair_state, disc_reason,
                 addr->addr[SLE_ADDR_INDEX0], addr->addr[SLE_ADDR_INDEX1], addr->addr[SLE_ADDR_INDEX2],
                 addr->addr[SLE_ADDR_INDEX3], addr->addr[SLE_ADDR_INDEX4], addr->addr[SLE_ADDR_INDEX5]);
     
@@ -292,7 +294,7 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
         g_conn_update = 0;
         errcode_t ret;
         ret = sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
-        osal_printk("%s sle_connect_state_changed_cbk,sle_start_announce return: [%x]\r\n",
+        osal_printk("%s sle_connect_state_changed_cbk,sle_start_announce return: [0x%x]\r\n",
                     SLE_MULTI_CONN_SERVER_LOG, ret);
     }
 }
@@ -311,7 +313,8 @@ void sle_connect_param_update_cb(uint16_t conn_id, errcode_t status, const sle_c
     unused(conn_id);
     unused(status);
     unused(param);
-    osal_printk("%s sle_connect_param_update_cb interval %x*0.125 ms\r\n", SLE_MULTI_CONN_SERVER_LOG, param->interval);
+    osal_printk("%s sle_connect_param_update_cb interval 0x%x*0.125 ms\r\n", SLE_MULTI_CONN_SERVER_LOG,
+        param->interval);
     g_conn_update = 1;
 }
 
@@ -337,19 +340,25 @@ errcode_t sle_multi_conn_server_init(ssaps_read_request_callback ssaps_read_call
 
     ret = sle_multi_conn_announce_register_cbks();
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("%s sle_multi_conn_server_init,sle_multi_conn_announce_register_cbks fail :%x\r\n",
-                    SLE_MULTI_CONN_SERVER_LOG, ret);
+        osal_printk("%s announce_register fail. err_code: [%x]\r\n", SLE_MULTI_CONN_SERVER_LOG, ret);
         return ret;
     }
     ret = sle_conn_register_cbks();
     if (ret != ERRCODE_SLE_SUCCESS) {
+        osal_printk("%s conn_register fail. err_code: [%x]\r\n", SLE_MULTI_CONN_SERVER_LOG, ret);
         return ret;
     }
     ret = sle_ssaps_register_cbks(ssaps_read_callback, ssaps_write_callback);
     if (ret != ERRCODE_SLE_SUCCESS) {
+        osal_printk("%s SSAP server register fail. err_code: [%x]\r\n", SLE_MULTI_CONN_SERVER_LOG, ret);
         return ret;
     }
 
-    osal_printk("%s init ok\r\n", SLE_MULTI_CONN_SERVER_LOG);
+    ret = sle_multi_conn_server_sample_dev_cbk_register();
+    if (ret != ERRCODE_SUCC) {
+        osal_printk("%s dev_cbk_register fail. err_code: [%x]\r\n", SLE_MULTI_CONN_SERVER_LOG, ret);
+        return ret;
+    }
+    osal_printk("%s server_init ok\r\n", SLE_MULTI_CONN_SERVER_LOG);
     return ERRCODE_SLE_SUCCESS;
 }

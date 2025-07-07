@@ -44,7 +44,7 @@ static void ble_keyboard_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, g
 {
     g_ble_uart_conn_id = conn_id;
     g_connection_state = conn_state;
-    osal_printk("connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason %x\n",
+    osal_printk("connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason 0x%x\n",
                 conn_id, conn_state, pair_state, disc_reason);
     osal_printk("addr:\n");
     for (uint8_t i = 0; i < BD_ADDR_LEN; i++) {
@@ -60,13 +60,13 @@ static void ble_keyboard_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, g
 
 static void ble_power_on_cbk(uint8_t status)
 {
-    osal_printk("power on status:%x\r\n", status);
+    osal_printk("power on status:0x%x\r\n", status);
     enable_ble();
 }
 
 static void ble_enable_cbk(uint8_t status)
 {
-    osal_printk("enable status:%x\r\n", status);
+    osal_printk("enable status:0x%x\r\n", status);
     /* ble enable callback will call twice, second is success */
     ble_hiddev_keyboard_server_init();
     ble_keyboard_set_adv_data();

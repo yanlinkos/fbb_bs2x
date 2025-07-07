@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023. All rights reserved. \n
  * Description: nfc only sample. \n
- * \n
+ * Author:  \n
  * Date: 2023-07-6 \n
  */
 #include "app_init.h"

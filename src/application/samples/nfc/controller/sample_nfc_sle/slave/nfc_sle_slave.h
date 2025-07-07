@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023. All rights reserved. \n
  * Description: The process of nfc sle message in slave. \n
- * \n
+ * Author:  \n
  * Date: 2023-06-28 \n
  */
 #ifndef NFC_SLE_SLAVE_H

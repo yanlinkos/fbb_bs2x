@@ -32,7 +32,7 @@
 
 #define SLE_RCU_DONGLE_TASK_STACK_SIZE      0x1000
 #define SLE_RCU_DONGLE_TASK_PRIO            24
-#define SLE_RCU_MP_TEST_TASK_STACK_SIZE     0x400
+#define SLE_RCU_MP_TEST_TASK_STACK_SIZE     0x800
 #define SLE_RCU_MP_TEST_TASK_PRIO           25
 #define SLE_RCU_DONGLE_TASK_DELAY_MS        2000
 #define USB_HID_RCU_INIT_DELAY_MS           (500UL)
@@ -95,7 +95,7 @@ static void sle_rcu_keyboard_dongle_send_data(usb_hid_rcu_keyboard_report_t *rpt
 #endif  /* CONFIG_RCU_MASS_PRODUCTION_TEST */
     rpt->kind = 0x1;
     int32_t ret = fhid_send_data(g_sle_rcu_dongle_hid_index, (char *)rpt, USB_RCU_KEYBOARD_REPORTER_LEN + 1);
-    if (ret == -1) {
+    if (ret < 0) {
         osal_printk("%s send data falied! ret:%d\n", SLE_RCU_DONGLE_LOG, ret);
         return;
     }
@@ -108,7 +108,7 @@ static void sle_rcu_mouse_dongle_send_data(usb_hid_rcu_mouse_report_t *rpt)
     }
     rpt->kind = 0x4;
     int32_t ret = fhid_send_data(g_sle_rcu_dongle_hid_index, (char *)rpt, USB_RCU_MOUSE_REPORTER_LEN + 1);
-    if (ret == -1) {
+    if (ret < 0) {
         osal_printk("%s send data falied! ret:%d\n", SLE_RCU_DONGLE_LOG, ret);
         return;
     }
@@ -121,7 +121,7 @@ static void sle_rcu_consumer_dongle_send_data(usb_hid_rcu_consumer_report_t *rpt
     }
     rpt->kind = 0x3;
     int32_t ret = fhid_send_data(g_sle_rcu_dongle_hid_index, (char *)rpt, USB_RCU_CONSUMER_REPORTER_LEN + 1);
-    if (ret == -1) {
+    if (ret < 0) {
         osal_printk("%s send data falied! ret:%d\n", SLE_RCU_DONGLE_LOG, ret);
         return;
     }
@@ -212,6 +212,61 @@ static uint8_t sle_rcu_dongle_init(void)
     return SLE_RCU_DONGLE_OK;
 }
 
+static void sle_rcu_reporter_data_distribute(ssapc_handle_value_t *data)
+{
+    if (data->data_len == USB_RCU_KEYBOARD_REPORTER_LEN) {
+        usb_hid_rcu_keyboard_report_t keyboard_report = { 0 };
+        (void)memcpy_s(&(keyboard_report.special_key), USB_RCU_KEYBOARD_REPORTER_LEN, data->data,
+                       USB_RCU_KEYBOARD_REPORTER_LEN);
+        if (keyboard_report.key[0] != 0) {
+            osal_printk("keyboard key_value:%x;\r\n", keyboard_report.key[0]);
+        }
+        sle_rcu_keyboard_dongle_send_data(&keyboard_report);
+    } else if (data->data_len == USB_RCU_MOUSE_REPORTER_LEN) {
+        usb_hid_rcu_mouse_report_t mouse_report = { 0 };
+        (void)memcpy_s(&(mouse_report.key), USB_RCU_MOUSE_REPORTER_LEN, data->data,
+                       USB_RCU_MOUSE_REPORTER_LEN);
+        sle_rcu_mouse_dongle_send_data(&mouse_report);
+    } else if (data->data_len == USB_RCU_CONSUMER_REPORTER_LEN) {
+        usb_hid_rcu_consumer_report_t consumer_report = { 0 };
+        (void)memcpy_s(&(consumer_report.comsumer_key0), USB_RCU_CONSUMER_REPORTER_LEN, data->data,
+                       USB_RCU_CONSUMER_REPORTER_LEN);
+        sle_rcu_consumer_dongle_send_data(&consumer_report);
+    }
+}
+
+static void sle_rcu_amic_data_handle(ssapc_handle_value_t *data)
+{
+    (void)memcpy_s(g_out_decode_data[g_write_index], data->data_len, data->data, data->data_len);
+    g_write_index = (g_write_index + 1) % RECV_BUFFER_LENGTH ;
+    if (g_write_index != g_read_index) {
+        uint32_t ret = osal_event_write(&g_trans_event_id, SLE_RCU_VDT_TRANSFER_EVENT);
+        if (ret != OSAL_SUCCESS) {
+            osal_printk("(%d)osal event write fail, ret = %x\r\n", __LINE__, ret);
+        }
+    }
+}
+
+static void sle_rcu_data_distribute(ssapc_handle_value_t *data)
+{
+    uint8_t type = TYPE_MAX;
+    if (!cmp_property_handle(data->handle, &type)) {
+        osal_printk("handle is wrong value\r\n");
+        return;
+    }
+
+    switch (type) {
+        case TYPE_KEYBOARD:
+            sle_rcu_reporter_data_distribute(data);
+            break;
+        case TYPE_AMIC:
+            sle_rcu_amic_data_handle(data);
+            break;
+        default:
+            break;
+    }
+}
+
 static void sle_rcu_notification_cb(uint8_t client_id, uint16_t conn_id, ssapc_handle_value_t *data, errcode_t status)
 {
     unused(client_id);
@@ -224,36 +279,7 @@ static void sle_rcu_notification_cb(uint8_t client_id, uint16_t conn_id, ssapc_h
     rcu_dongle_mp_test_submit(data);
     return;
 #endif
-    if (data -> handle == SLE_RCU_PROPERTY_HANDLE) {
-        if (data->data_len == USB_RCU_KEYBOARD_REPORTER_LEN) {
-            usb_hid_rcu_keyboard_report_t keyboard_report = { 0 };
-            (void)memcpy_s(&(keyboard_report.special_key), USB_RCU_KEYBOARD_REPORTER_LEN, data->data,
-                           USB_RCU_KEYBOARD_REPORTER_LEN);
-            if (keyboard_report.key[0] != 0) {
-                osal_printk("keyboard key_value:%x;\r\n", keyboard_report.key[0]);
-            }
-            sle_rcu_keyboard_dongle_send_data(&keyboard_report);
-        } else if (data->data_len == USB_RCU_MOUSE_REPORTER_LEN) {
-            usb_hid_rcu_mouse_report_t mouse_report = { 0 };
-            (void)memcpy_s(&(mouse_report.key), USB_RCU_MOUSE_REPORTER_LEN, data->data,
-                           USB_RCU_MOUSE_REPORTER_LEN);
-            sle_rcu_mouse_dongle_send_data(&mouse_report);
-        } else if (data->data_len == USB_RCU_CONSUMER_REPORTER_LEN) {
-            usb_hid_rcu_consumer_report_t consumer_report = { 0 };
-            (void)memcpy_s(&(consumer_report.comsumer_key0), USB_RCU_CONSUMER_REPORTER_LEN, data->data,
-                           USB_RCU_CONSUMER_REPORTER_LEN);
-            sle_rcu_consumer_dongle_send_data(&consumer_report);
-        }
-    } else {
-        (void)memcpy_s(g_out_decode_data[g_write_index], data->data_len, data->data, data->data_len);
-        g_write_index = (g_write_index + 1) % RECV_BUFFER_LENGTH ;
-        if (g_write_index != g_read_index) {
-            uint32_t ret = osal_event_write(&g_trans_event_id, SLE_RCU_VDT_TRANSFER_EVENT);
-            if (ret != OSAL_SUCCESS) {
-                osal_printk("(%d)osal event write fail, ret = %x\r\n", __LINE__, ret);
-            }
-        }
-    }
+    sle_rcu_data_distribute(data);
 }
 
 static void sle_rcu_indication_cb(uint8_t client_id, uint16_t conn_id, ssapc_handle_value_t *data, errcode_t status)
@@ -264,35 +290,7 @@ static void sle_rcu_indication_cb(uint8_t client_id, uint16_t conn_id, ssapc_han
     if (data == NULL || data->data_len == 0 || data->data == NULL) {
         return;
     }
-
-    if (data -> handle == SLE_RCU_PROPERTY_HANDLE) {
-        if (data->data_len == USB_RCU_KEYBOARD_REPORTER_LEN) {
-            usb_hid_rcu_keyboard_report_t keyboard_report = { 0 };
-            (void)memcpy_s(&keyboard_report + sizeof(uint8_t), USB_RCU_KEYBOARD_REPORTER_LEN, data->data,
-                           USB_RCU_KEYBOARD_REPORTER_LEN);
-            osal_printk("keyboard_report->key[0] = %d", keyboard_report.key[0]);
-            sle_rcu_keyboard_dongle_send_data(&keyboard_report);
-        } else if (data->data_len == USB_RCU_MOUSE_REPORTER_LEN) {
-            usb_hid_rcu_mouse_report_t mouse_report = { 0 };
-            (void)memcpy_s(&mouse_report + sizeof(uint8_t), USB_RCU_MOUSE_REPORTER_LEN, data->data,
-                           USB_RCU_MOUSE_REPORTER_LEN);
-            sle_rcu_mouse_dongle_send_data(&mouse_report);
-        } else if (data->data_len == USB_RCU_CONSUMER_REPORTER_LEN) {
-            usb_hid_rcu_consumer_report_t consumer_report = { 0 };
-            (void)memcpy_s(&consumer_report + sizeof(uint8_t), USB_RCU_CONSUMER_REPORTER_LEN, data->data,
-                           USB_RCU_CONSUMER_REPORTER_LEN);
-            sle_rcu_consumer_dongle_send_data(&consumer_report);
-        }
-    } else {
-        (void)memcpy_s(g_out_decode_data[g_write_index], data->data_len, data->data, data->data_len);
-        g_write_index = (g_write_index + 1) % RECV_BUFFER_LENGTH;
-        if (g_write_index != g_read_index) {
-            uint32_t ret = osal_event_write(&g_trans_event_id, SLE_RCU_VDT_TRANSFER_EVENT);
-            if (ret != OSAL_SUCCESS) {
-                osal_printk("(%d)osal event write fail, ret = %x\r\n", __LINE__, ret);
-            }
-        }
-    }
+    sle_rcu_data_distribute(data);
 }
 
 static void sle_rcu_send_uac(void)

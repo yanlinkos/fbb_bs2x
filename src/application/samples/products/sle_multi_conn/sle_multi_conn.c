@@ -72,7 +72,7 @@ static void ssaps_server_write_request_cbk(uint8_t server_id, uint16_t conn_id, 
 
 static void sle_multi_conn_server_send_report(void)
 {
-    while (sle_multi_conn_client_is_connected() == false) {
+    while (get_g_conn_update() == false) {
         osal_msleep(MULTI_CONN_TASK_DURATION_MS);
     }
     sle_multi_conn_server_send_notify_indicate();
@@ -87,7 +87,7 @@ static void *sle_multi_conn_server_task(const char *arg)
     /* sle server init */
     ret = sle_multi_conn_server_init(ssaps_server_read_request_cbk, ssaps_server_write_request_cbk);
     if (ret != ERRCODE_SUCC) {
-        osal_printk("%s sle_multi_conn_server_init fail.[%x]\r\n", SLE_MULTI_CONN_SERVER_LOG, ret);
+        osal_printk("%s sle_multi_conn_server_init fail.err_code: [%x]\r\n", SLE_MULTI_CONN_SERVER_LOG, ret);
         return NULL;
     }
     sle_multi_conn_server_send_report();
@@ -124,7 +124,6 @@ static void sle_multi_conn_entry(void)
     osal_printk("uapi_clock_control: Config return:[%x].\r\n", ret);
     osal_kthread_lock();
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_MULTI_CONN_SERVER)
-    sle_multi_conn_server_sample_dev_cbk_register();
     task_handle = osal_kthread_create((osal_kthread_handler)sle_multi_conn_server_task,
                                       0,
                                       "SleMultiConnServerTask",

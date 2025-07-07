@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022. All rights reserved. \n
  * Description: nfc ce example, ExampleCardEmulation should enable build macro HAVE_NFC_LISTEN \n
- * \n
+ * Author:  \n
  * Date: 2022-08-05 \n
  */
 #include "example_ce.h"

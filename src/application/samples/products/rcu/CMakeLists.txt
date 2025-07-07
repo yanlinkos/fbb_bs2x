@@ -60,11 +60,10 @@ endif()
 
 if(DEFINED CONFIG_SAMPLE_SUPPORT_IR)
 list(APPEND SOURCES_LIST
-    ${CMAKE_CURRENT_SOURCE_DIR}/ir/ir_demo.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/ir/ir_nec.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/rcu/ir/ir_nec.c
 )
 list(APPEND HEADER_LIST
-    ${CMAKE_CURRENT_SOURCE_DIR}/ir
+    ${CMAKE_CURRENT_SOURCE_DIR}/rcu/ir
 )
 endif()
 

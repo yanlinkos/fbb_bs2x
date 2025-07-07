@@ -60,7 +60,7 @@ static void usb_keyscan_send_data(usb_hid_keyboard_report_t *rpt)
     rpt->kind = 0x1;
 
     int32_t ret = fhid_send_data(g_usb_keyscan_hid_index, (char *)rpt, USB_KEYBOARD_REPORTER_LEN);
-    if (ret == -1) {
+    if (ret < 0) {
         osal_printk("send data falied! ret:%d\n", ret);
         return;
     }

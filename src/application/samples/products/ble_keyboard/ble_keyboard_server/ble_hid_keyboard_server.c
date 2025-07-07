@@ -337,7 +337,7 @@ static void  ble_hid_server_characteristic_add_cbk(uint8_t server_id, bt_uuid_t 
         server_id, service_handle, result->handle, result->value_handle, uuid->uuid_len);
     osal_printk("uuid:");
     for (i = 0; i < uuid->uuid_len ; i++) {
-        osal_printk("%02x", uuid->uuid[i]);
+        osal_printk("0x%02x", uuid->uuid[i]);
     }
     if ((g_hid_input_report_att_hdl == INVALID_ATT_HDL) && (bts_compare_uuid(uuid, &report_uuid))) {
         g_hid_input_report_att_hdl = result->value_handle;
@@ -355,7 +355,7 @@ static void  ble_hid_server_descriptor_add_cbk(uint8_t server_id, bt_uuid_t *uui
         "uuid_len:%d\n", server_id, service_handle, handle, uuid->uuid_len);
     osal_printk("uuid:");
     for (i = 0; i < uuid->uuid_len ; i++) {
-        osal_printk("%02x", (uint8_t)uuid->uuid[i]);
+        osal_printk("0x%02x", (uint8_t)uuid->uuid[i]);
     }
     osal_printk("\n");
     osal_printk("status:%d\n", status);
@@ -377,7 +377,7 @@ static void ble_hid_receive_write_req_cbk(uint8_t server_id, uint16_t conn_id, g
         write_cb_para->need_authorize, write_cb_para->is_prep);
     osal_printk("data_len:%d data:\n", write_cb_para->length);
     for (uint8_t i = 0; i < write_cb_para->length; i++) {
-        osal_printk("%02x ", write_cb_para->value[i]);
+        osal_printk("0x%02x ", write_cb_para->value[i]);
     }
     osal_printk("\n");
     osal_printk("status:%d\n", status);

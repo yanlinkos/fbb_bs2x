@@ -55,7 +55,7 @@ static void sle_vdt_adc_init(void)
     return;
 }
 
-static void sle_usb_vdt_dma_transfer_done_callback(uint8_t intr, uint8_t channel, uintptr_t arg)
+static void rcu_vdt_dma_transfer_done_callback(uint8_t intr, uint8_t channel, uintptr_t arg)
 {
     unused(channel);
     unused(arg);
@@ -100,14 +100,12 @@ void rcu_amic_init(uint16_t g_conn_id)
     }
 
     dma_channel_t dma_channel = uapi_dma_get_lli_channel(0, HAL_DMA_HANDSHAKING_MAX_NUM);
-    for (uint8_t i = 0; i < RING_BUFFER_NUMBER; i++) {
-        if (rcu_add_dma_lli_node(i, dma_channel, sle_usb_vdt_dma_transfer_done_callback) != 0) {
-            osal_printk("rcu_add_dma_lli_node fail!\r\n");
-            return;
-        }
+    if (rcu_pdm_start_dma_transfer(g_pdm_dma_data[0], rcu_vdt_dma_transfer_done_callback) != 0) {
+        osal_printk("rcu_pdm_start_dma_transfer fail!\r\n");
+        return;
     }
 
-    if (uapi_dma_enable_lli(dma_channel, sle_usb_vdt_dma_transfer_done_callback, (uintptr_t)NULL) == ERRCODE_SUCC) {
+    if (uapi_dma_enable_lli(dma_channel, rcu_vdt_dma_transfer_done_callback, (uintptr_t)NULL) == ERRCODE_SUCC) {
         osal_printk("dma enable lli memory transfer succ!\r\n");
     }
 }

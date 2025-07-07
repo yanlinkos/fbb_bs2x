@@ -110,38 +110,38 @@ static void sle_uart_uuid_print(sle_uuid_t *uuid)
 static void ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id,  ssap_exchange_info_t *mtu_size,
     errcode_t status)
 {
-    sample_at_log_print("%s ssaps ssaps_mtu_changed_cbk callback server_id:%x, conn_id:%x, mtu_size:%x, status:%x\r\n",
-        SLE_UART_SERVER_LOG, server_id, conn_id, mtu_size->mtu_size, status);
+    sample_at_log_print("%s ssaps ssaps_mtu_changed_cbk callback server_id:0x%x, conn_id:0x%x, mtu_size:0x%x, \
+        status:0x%x\r\n", SLE_UART_SERVER_LOG, server_id, conn_id, mtu_size->mtu_size, status);
 }
 
 static void ssaps_start_service_cbk(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    sample_at_log_print("%s start service cbk callback server_id:%d, handle:%x, status:%x\r\n", SLE_UART_SERVER_LOG,
+    sample_at_log_print("%s start service cbk callback server_id:%d, handle:0x%x, status:0x%x\r\n", SLE_UART_SERVER_LOG,
         server_id, handle, status);
 }
 static void ssaps_add_service_cbk(uint8_t server_id, sle_uuid_t *uuid, uint16_t handle, errcode_t status)
 {
-    sample_at_log_print("%s add service cbk callback server_id:%x, handle:%x, status:%x\r\n", SLE_UART_SERVER_LOG,
+    sample_at_log_print("%s add service cbk callback server_id:0x%x, handle:0x%x, status:0x%x\r\n", SLE_UART_SERVER_LOG,
         server_id, handle, status);
     sle_uart_uuid_print(uuid);
 }
 static void ssaps_add_property_cbk(uint8_t server_id, sle_uuid_t *uuid, uint16_t service_handle,
     uint16_t handle, errcode_t status)
 {
-    sample_at_log_print("%s add property cbk callback server_id:%x, service_handle:%x,handle:%x, status:%x\r\n",
+    sample_at_log_print("%s add property cbk callback server_id:0x%x, service_handle:0x%x,handle:0x%x, status:0x%x\r\n",
         SLE_UART_SERVER_LOG, server_id, service_handle, handle, status);
     sle_uart_uuid_print(uuid);
 }
 static void ssaps_add_descriptor_cbk(uint8_t server_id, sle_uuid_t *uuid, uint16_t service_handle,
     uint16_t property_handle, errcode_t status)
 {
-    sample_at_log_print("%s add descriptor cbk callback server_id:%x, service_handle:%x, property_handle:%x, \
-        status:%x\r\n", SLE_UART_SERVER_LOG, server_id, service_handle, property_handle, status);
+    sample_at_log_print("%s add descriptor cbk callback server_id:0x%x, service_handle:0x%x, property_handle:0x%x, \
+        status:0x%x\r\n", SLE_UART_SERVER_LOG, server_id, service_handle, property_handle, status);
     sle_uart_uuid_print(uuid);
 }
 static void ssaps_delete_all_service_cbk(uint8_t server_id, errcode_t status)
 {
-    sample_at_log_print("%s delete all service callback server_id:%x, status:%x\r\n", SLE_UART_SERVER_LOG,
+    sample_at_log_print("%s delete all service callback server_id:0x%x, status:0x%x\r\n", SLE_UART_SERVER_LOG,
         server_id, status);
 }
 static errcode_t sle_ssaps_register_cbks(ssaps_read_request_callback ssaps_read_callback, ssaps_write_request_callback
@@ -206,7 +206,8 @@ static errcode_t sle_uuid_server_property_add(void)
     }
     descriptor.permissions = SLE_UUID_TEST_DESCRIPTOR;
     descriptor.type = SSAP_DESCRIPTOR_CLIENT_CONFIGURATION;
-    descriptor.operate_indication = SLE_UUID_TEST_OPERATION_INDICATION;
+    descriptor.operate_indication = SSAP_OPERATE_INDICATION_BIT_READ |
+        SSAP_OPERATE_INDICATION_BIT_WRITE | SSAP_OPERATE_INDICATION_BIT_DESCRIPTOR_CLIENT_CONFIGURATION_WRITE;
     descriptor.value = (uint8_t *)osal_vmalloc(sizeof(ntf_value));
     descriptor.value_len = sizeof(ntf_value);
     if (descriptor.value == NULL) {
@@ -283,7 +284,7 @@ errcode_t sle_uart_server_send_report_by_uuid(const uint8_t *data, uint8_t len)
     sle_uuid_setu2(SLE_UUID_SERVER_NTF_REPORT, &param.uuid);
     ret = ssaps_notify_indicate_by_uuid(g_server_id, g_conn_id, &param);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        sample_at_log_print("%s sle_uart_server_send_report_by_uuid,ssaps_notify_indicate_by_uuid fail :%x\r\n",
+        sample_at_log_print("%s sle_uart_server_send_report_by_uuid,ssaps_notify_indicate_by_uuid fail :0x%x\r\n",
             SLE_UART_SERVER_LOG, ret);
         osal_vfree(param.value);
         return ret;
@@ -363,7 +364,7 @@ static void sle_phy_update_complete_cbk(uint16_t conn_id, errcode_t status, cons
 
 static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status)
 {
-    sample_at_log_print("%s pair complete conn_id:%02x, status:%x\r\n", SLE_UART_SERVER_LOG,
+    sample_at_log_print("%s pair complete conn_id:0x%02x, status:0x%x\r\n", SLE_UART_SERVER_LOG,
         conn_id, status);
     sample_at_log_print("%s pair complete addr:%02x:**:**:**:%02x:%02x\r\n", SLE_UART_SERVER_LOG,
         addr->addr[BT_INDEX_0], addr->addr[BT_INDEX_4]);
@@ -400,7 +401,7 @@ static errcode_t sle_tm_register_cbks(void)
     tm_cbks.send_data_cb = sle_tm_send_data_busy_cbk;
     errcode_t ret = sle_transmission_register_callbacks(&tm_cbks);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        sample_at_log_print("%s sle_tm_register_cbks, sle_transmission_register_callbacks fail :%x\r\n",
+        sample_at_log_print("%s sle_tm_register_cbks, sle_transmission_register_callbacks fail :0x%x\r\n",
             SLE_UART_SERVER_LOG, ret);
         return ret;
     }
@@ -454,7 +455,7 @@ errcode_t sle_enable_server_cbk(void)
     errcode_t ret;
     ret = sle_uart_server_add();
     if (ret != ERRCODE_SLE_SUCCESS) {
-        sample_at_log_print("%s sle_uart_server_init,sle_uart_server_add fail :%x\r\n", SLE_UART_SERVER_LOG, ret);
+        sample_at_log_print("%s sle_uart_server_init,sle_uart_server_add fail :0x%x\r\n", SLE_UART_SERVER_LOG, ret);
         return ret;
     }
     return ERRCODE_SLE_SUCCESS;
