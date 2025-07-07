@@ -82,11 +82,11 @@
 </th>
 </tr>
 </thead>
-<tbody><tr id="row138037202114"><td class="cellrowborder" valign="top" width="18.240000000000002%" headers="mcps1.1.4.1.1 "><p id="p6801722120"><a name="p6801722120"></a><a name="p6801722120"></a><span id="ph142401882217"><a name="ph142401882217"></a><a name="ph142401882217"></a>04</span></p>
+<tbody><tr id="row138037202114"><td class="cellrowborder" valign="top" width="18.240000000000002%" headers="mcps1.1.4.1.1 "><p id="p6801722120"><a name="p6801722120"></a><a name="p6801722120"></a>04</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.73%" headers="mcps1.1.4.1.2 "><p id="p8808712117"><a name="p8808712117"></a><a name="p8808712117"></a><span id="ph636691092113"><a name="ph636691092113"></a><a name="ph636691092113"></a>2025-04-02</span></p>
+<td class="cellrowborder" valign="top" width="24.73%" headers="mcps1.1.4.1.2 "><p id="p8808712117"><a name="p8808712117"></a><a name="p8808712117"></a>2025-05-30</p>
 </td>
-<td class="cellrowborder" valign="top" width="57.03%" headers="mcps1.1.4.1.3 "><p id="p119769229"><a name="p119769229"></a><a name="p119769229"></a>新增“<a href="AT+BLESETPHY-设置phy.md">AT+BLESETPHY 设置phy</a>”小节内容。</p>
+<td class="cellrowborder" valign="top" width="57.03%" headers="mcps1.1.4.1.3 "><a name="ul1649714318467"></a><a name="ul1649714318467"></a><ul id="ul1649714318467"><li>更新“<a href="通用AT指令一览表.md">通用AT指令一览表</a>”小节内容。</li><li>更新“<a href="通用AT指令描述.md">通用AT指令描述</a>”小节内容。</li><li>新增“<a href="AT+BLESETPHY-设置phy.md">AT+BLESETPHY 设置phy</a>”小节内容。</li><li>更新“<a href="获取设备配对状态.md">获取设备配对状态</a>”小节内容。</li><li>更新“<a href="服务端向客户端发送通知.md">服务端向客户端发送通知</a>”小节内容。</li><li>新增“<a href="常用AT指令示例.md">常用AT指令示例</a>”小节内容。</li></ul>
 </td>
 </tr>
 <tr id="row197934519345"><td class="cellrowborder" valign="top" width="18.240000000000002%" headers="mcps1.1.4.1.1 "><p id="p1779414513345"><a name="p1779414513345"></a><a name="p1779414513345"></a>03</p>
@@ -114,7 +114,7 @@
 </td>
 <td class="cellrowborder" valign="top" width="24.73%" headers="mcps1.1.4.1.2 "><p id="p192214541338"><a name="p192214541338"></a><a name="p192214541338"></a>2024-03-01</p>
 </td>
-<td class="cellrowborder" valign="top" width="57.03%" headers="mcps1.1.4.1.3 "><a name="ul19744136143413"></a><a name="ul19744136143413"></a><ul id="ul19744136143413"><li>新增“<a href="BLE-0.md">BLE</a>”小节内容。</li><li>新增“<a href="SLE-4.md">SLE</a>”小节内容。</li></ul>
+<td class="cellrowborder" valign="top" width="57.03%" headers="mcps1.1.4.1.3 "><a name="ul19744136143413"></a><a name="ul19744136143413"></a><ul id="ul19744136143413"><li>新增“<a href="BT业务AT指令.md">BT业务AT指令</a>”的“<a href="BLE-0.md">BLE</a>”小节内容。</li><li>新增“<a href="BT业务AT指令.md">BT业务AT指令</a>”的“<a href="SLE-4.md">SLE</a>”小节内容。</li></ul>
 </td>
 </tr>
 <tr id="row5947359616410"><td class="cellrowborder" valign="top" width="18.240000000000002%" headers="mcps1.1.4.1.1 "><p id="p2149706016410"><a name="p2149706016410"></a><a name="p2149706016410"></a>00B01</p>
@@ -148,38 +148,38 @@ AT指令类型如[表1](#table838912210233)所示。
 <a name="table838912210233"></a>
 <table><thead align="left"><tr id="row173891322132320"><th class="cellrowborder" valign="top" width="25.292529252925295%" id="mcps1.2.4.1.1"><p id="p14585143712315"><a name="p14585143712315"></a><a name="p14585143712315"></a>类型</p>
 </th>
-<th class="cellrowborder" valign="top" width="33.97339733973397%" id="mcps1.2.4.1.2"><p id="p4585237122320"><a name="p4585237122320"></a><a name="p4585237122320"></a>格式</p>
+<th class="cellrowborder" valign="top" width="31.883188318831877%" id="mcps1.2.4.1.2"><p id="p4585237122320"><a name="p4585237122320"></a><a name="p4585237122320"></a>格式</p>
 </th>
-<th class="cellrowborder" valign="top" width="40.73407340734073%" id="mcps1.2.4.1.3"><p id="p105852373232"><a name="p105852373232"></a><a name="p105852373232"></a>用途</p>
+<th class="cellrowborder" valign="top" width="42.824282428242824%" id="mcps1.2.4.1.3"><p id="p105852373232"><a name="p105852373232"></a><a name="p105852373232"></a>用途</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row133901022132313"><td class="cellrowborder" valign="top" width="25.292529252925295%" headers="mcps1.2.4.1.1 "><p id="p158673792311"><a name="p158673792311"></a><a name="p158673792311"></a>测试指令</p>
 </td>
-<td class="cellrowborder" valign="top" width="33.97339733973397%" headers="mcps1.2.4.1.2 "><p id="p658683712313"><a name="p658683712313"></a><a name="p658683712313"></a>AT+&lt;cmd&gt;=?</p>
+<td class="cellrowborder" valign="top" width="31.883188318831877%" headers="mcps1.2.4.1.2 "><p id="p658683712313"><a name="p658683712313"></a><a name="p658683712313"></a>AT+&lt;cmd&gt;=?</p>
 </td>
-<td class="cellrowborder" valign="top" width="40.73407340734073%" headers="mcps1.2.4.1.3 "><p id="p1586133792316"><a name="p1586133792316"></a><a name="p1586133792316"></a>该命令用于查询设置指令的参数以及取值范围。</p>
+<td class="cellrowborder" valign="top" width="42.824282428242824%" headers="mcps1.2.4.1.3 "><p id="p1586133792316"><a name="p1586133792316"></a><a name="p1586133792316"></a>该命令用于查询设置指令的参数以及取值范围。</p>
 </td>
 </tr>
 <tr id="row1839062292313"><td class="cellrowborder" valign="top" width="25.292529252925295%" headers="mcps1.2.4.1.1 "><p id="p1758653710235"><a name="p1758653710235"></a><a name="p1758653710235"></a>查询指令</p>
 </td>
-<td class="cellrowborder" valign="top" width="33.97339733973397%" headers="mcps1.2.4.1.2 "><p id="p11586113712315"><a name="p11586113712315"></a><a name="p11586113712315"></a>AT+&lt;cmd&gt;?</p>
+<td class="cellrowborder" valign="top" width="31.883188318831877%" headers="mcps1.2.4.1.2 "><p id="p11586113712315"><a name="p11586113712315"></a><a name="p11586113712315"></a>AT+&lt;cmd&gt;?</p>
 </td>
-<td class="cellrowborder" valign="top" width="40.73407340734073%" headers="mcps1.2.4.1.3 "><p id="p758653719235"><a name="p758653719235"></a><a name="p758653719235"></a>该命令用于返回参数的当前值。</p>
+<td class="cellrowborder" valign="top" width="42.824282428242824%" headers="mcps1.2.4.1.3 "><p id="p758653719235"><a name="p758653719235"></a><a name="p758653719235"></a>该命令用于返回参数的当前值。</p>
 </td>
 </tr>
 <tr id="row1939012220233"><td class="cellrowborder" valign="top" width="25.292529252925295%" headers="mcps1.2.4.1.1 "><p id="p3587183711237"><a name="p3587183711237"></a><a name="p3587183711237"></a>设置指令</p>
 </td>
-<td class="cellrowborder" valign="top" width="33.97339733973397%" headers="mcps1.2.4.1.2 "><p id="p358715379239"><a name="p358715379239"></a><a name="p358715379239"></a>AT+&lt;cmd&gt;=&lt;parameter&gt;,…</p>
+<td class="cellrowborder" valign="top" width="31.883188318831877%" headers="mcps1.2.4.1.2 "><p id="p358715379239"><a name="p358715379239"></a><a name="p358715379239"></a>AT+&lt;cmd&gt;=&lt;parameter&gt;,…</p>
 </td>
-<td class="cellrowborder" valign="top" width="40.73407340734073%" headers="mcps1.2.4.1.3 "><p id="p5587183712234"><a name="p5587183712234"></a><a name="p5587183712234"></a>设置参数值或执行。</p>
+<td class="cellrowborder" valign="top" width="42.824282428242824%" headers="mcps1.2.4.1.3 "><p id="p5587183712234"><a name="p5587183712234"></a><a name="p5587183712234"></a>设置参数值或执行。</p>
 </td>
 </tr>
 <tr id="row7390172217239"><td class="cellrowborder" valign="top" width="25.292529252925295%" headers="mcps1.2.4.1.1 "><p id="p85871377234"><a name="p85871377234"></a><a name="p85871377234"></a>执行指令</p>
 </td>
-<td class="cellrowborder" valign="top" width="33.97339733973397%" headers="mcps1.2.4.1.2 "><p id="p0587737182311"><a name="p0587737182311"></a><a name="p0587737182311"></a>AT+&lt;cmd&gt;</p>
+<td class="cellrowborder" valign="top" width="31.883188318831877%" headers="mcps1.2.4.1.2 "><p id="p0587737182311"><a name="p0587737182311"></a><a name="p0587737182311"></a>AT+&lt;cmd&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="40.73407340734073%" headers="mcps1.2.4.1.3 "><p id="p958723712239"><a name="p958723712239"></a><a name="p958723712239"></a>用于执行本指令的功能。</p>
+<td class="cellrowborder" valign="top" width="42.824282428242824%" headers="mcps1.2.4.1.3 "><p id="p958723712239"><a name="p958723712239"></a><a name="p958723712239"></a>用于执行本指令的功能。</p>
 </td>
 </tr>
 </tbody>
@@ -227,10 +227,85 @@ AT指令类型如[表1](#table838912210233)所示。
 <td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p1442054"><a name="p1442054"></a><a name="p1442054"></a>AT调试切换为TESTSUITE调试。</p>
 </td>
 </tr>
+<tr id="row472714018213"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p17390102315616"><a name="p17390102315616"></a><a name="p17390102315616"></a>AT+REBOOT</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p5727104010219"><a name="p5727104010219"></a><a name="p5727104010219"></a>芯片软复位。</p>
+</td>
+</tr>
+<tr id="row1621312581125"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p14403141465715"><a name="p14403141465715"></a><a name="p14403141465715"></a>AT+WRITEREG</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p721365815212"><a name="p721365815212"></a><a name="p721365815212"></a>通过AT写寄存器，需要打开宏REG_OPERATION。</p>
+</td>
+</tr>
+<tr id="row8420137231"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p12761728155710"><a name="p12761728155710"></a><a name="p12761728155710"></a>AT+READREG</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p9420474320"><a name="p9420474320"></a><a name="p9420474320"></a>通过AT读寄存器，需要打开宏REG_OPERATION。</p>
+</td>
+</tr>
+<tr id="row1068312125315"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p1266620464571"><a name="p1266620464571"></a><a name="p1266620464571"></a>AT+SETSLEEP</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p668320121539"><a name="p668320121539"></a><a name="p668320121539"></a>通过AT投睡眠票，需要打开宏SLP_VETO_AT_SUPPORT。</p>
+</td>
+</tr>
+<tr id="row14390920332"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p191331225819"><a name="p191331225819"></a><a name="p191331225819"></a>AT+HEAPSTAT</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p133901420438"><a name="p133901420438"></a><a name="p133901420438"></a>打印堆使用情况。</p>
+</td>
+</tr>
+<tr id="row1411152316318"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p18931951585"><a name="p18931951585"></a><a name="p18931951585"></a>AT+TASKSTACK</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p1341119231534"><a name="p1341119231534"></a><a name="p1341119231534"></a>打印每个任务栈使用情况。</p>
+</td>
+</tr>
+<tr id="row34183392312"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p78261995817"><a name="p78261995817"></a><a name="p78261995817"></a>AT+TASKMALLOC</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p1841993919315"><a name="p1841993919315"></a><a name="p1841993919315"></a>打印每个任务内存申请情况。</p>
+</td>
+</tr>
+<tr id="row17741203175618"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p19951920175817"><a name="p19951920175817"></a><a name="p19951920175817"></a>AT+INTLOCKDUMP</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p167418316561"><a name="p167418316561"></a><a name="p167418316561"></a>打印锁中断时长排名前10的函数。</p>
+</td>
+</tr>
+<tr id="row154514613563"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p394714242585"><a name="p394714242585"></a><a name="p394714242585"></a>AT+OSTIMERPRINT</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p18455610569"><a name="p18455610569"></a><a name="p18455610569"></a>打印目前创建的Timer情况。</p>
+</td>
+</tr>
+<tr id="row167310845618"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p1955215285581"><a name="p1955215285581"></a><a name="p1955215285581"></a>AT+OSDFXPRINT</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p1967338175613"><a name="p1967338175613"></a><a name="p1967338175613"></a>打印线程切换轨迹和最近的10次中断。</p>
+</td>
+</tr>
+<tr id="row815111155618"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p1556843295818"><a name="p1556843295818"></a><a name="p1556843295818"></a>AT+PMVETOINFO</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p115111135613"><a name="p115111135613"></a><a name="p115111135613"></a>通过AT投低功耗票，需要打开宏SLP_VETO_AT_SUPPORT。</p>
+</td>
+</tr>
+<tr id="row15506842732"><td class="cellrowborder" valign="top" width="32.32%" headers="mcps1.2.3.1.1 "><p id="p421793685816"><a name="p421793685816"></a><a name="p421793685816"></a>AT+CPUP</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.67999999999999%" headers="mcps1.2.3.1.2 "><p id="p8506114215315"><a name="p8506114215315"></a><a name="p8506114215315"></a>通过AT打印CPU占用率情况，需要LiteOS版本内打开宏LOSCFG_KERNEL_CPUP。</p>
+</td>
+</tr>
 </tbody>
 </table>
 
 ## 通用AT指令描述<a name="ZH-CN_TOPIC_0000001767719718"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -302,7 +377,498 @@ AT指令类型如[表1](#table838912210233)所示。
 </tbody>
 </table>
 
+### AT+REBOOT<a name="ZH-CN_TOPIC_0000002276017906"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+REBOOT</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p50460048"><a name="p50460048"></a><a name="p50460048"></a>软复位芯片</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>-</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+REBOOT</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>-</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+SETSLEEP<a name="ZH-CN_TOPIC_0000002310777645"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+SETSLEEP=para</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p442121919215"><a name="p442121919215"></a><a name="p442121919215"></a>disable enter sleep.</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+<p id="p15209033172120"><a name="p15209033172120"></a><a name="p15209033172120"></a>enable enter sleep.</p>
+<p id="p13951143711215"><a name="p13951143711215"></a><a name="p13951143711215"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><a name="ul69373212479"></a><a name="ul69373212479"></a><ul id="ul69373212479"><li>0：禁止进入睡眠</li><li>1：允许进入睡眠</li></ul>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+HELP=0</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要打开ENABLE_LOW_POWER</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+CACHESTATISTIC<a name="ZH-CN_TOPIC_0000002310650673"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+CACHESTATISTIC=para</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p50460048"><a name="p50460048"></a><a name="p50460048"></a>开启或关闭cache的命中率统计</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p178342010478"><a name="p178342010478"></a><a name="p178342010478"></a>para：</p>
+<a name="ul69373212479"></a><a name="ul69373212479"></a><ul id="ul69373212479"><li>0：关闭</li><li>1：开启</li></ul>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+CACHESTATISTIC=1</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要打开CACHE_SUPPORT_DEBUG</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+HEAPSTAT<a name="ZH-CN_TOPIC_0000002276121058"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+HEAPSTAT</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p50460048"><a name="p50460048"></a><a name="p50460048"></a>打印所有线程堆内存申请信息</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>-</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+HEAPSTAT</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>-</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+TASKSTACK<a name="ZH-CN_TOPIC_0000002276017926"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+TASKSTACK</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p50460048"><a name="p50460048"></a><a name="p50460048"></a>打印所有线程栈信息</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>-</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+TASKSTACK</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>-</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+TASKMALLOC<a name="ZH-CN_TOPIC_0000002310777649"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+TASKMALLOC=para</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p50460048"><a name="p50460048"></a><a name="p50460048"></a>打印某个线程堆内存申请信息</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>&lt;task_id&gt;：线程ID</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+TASKMALLOC=2</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>-</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+WRITEREG<a name="ZH-CN_TOPIC_0000002310650681"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+WRITEREG=para0,para1</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p33991077324"><a name="p33991077324"></a><a name="p33991077324"></a>写寄存器</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><a name="ul18353837161913"></a><a name="ul18353837161913"></a><ul id="ul18353837161913"><li>para0：寄存器地址</li><li>para1：写入寄存器的值</li></ul>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+WRITEREG=0x57000014,0x5a5a</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要打开REG_OPERATION</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+READREG<a name="ZH-CN_TOPIC_0000002276121074"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+READREG=para0,para1</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p50460048"><a name="p50460048"></a><a name="p50460048"></a>读寄存器</p>
+<p id="p584351033420"><a name="p584351033420"></a><a name="p584351033420"></a>addr：para0 = value</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><a name="ul10543050191910"></a><a name="ul10543050191910"></a><ul id="ul10543050191910"><li>para0：读寄存器起始地址</li><li>para1：读寄存器的长度</li></ul>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+READREG=0x57000010,4</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要打开REG_OPERATION</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+INTLOCKDUMP<a name="ZH-CN_TOPIC_0000002276017938"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+INTLOCKDUMP</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p50460048"><a name="p50460048"></a><a name="p50460048"></a>打印锁中断时长排名前10的函数</p>
+<p id="p1098194220526"><a name="p1098194220526"></a><a name="p1098194220526"></a>osal_print_irq_record: type[0:lock, 1:unlock, 2:restore 3 enter 4 exit]</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>-</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+INTLOCKDUMP</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要打开OSAL_IRQ_RECORD_DEBUG</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+OSTIMERPRINT<a name="ZH-CN_TOPIC_0000002310777673"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+OSTIMERPRINT</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p50460048"><a name="p50460048"></a><a name="p50460048"></a>打印当前创建了延时的线程和创建的软Timer情况</p>
+<p id="p1627219421142"><a name="p1627219421142"></a><a name="p1627219421142"></a>[task]: taskId = %d, taskName = %s, taskStatus = %d</p>
+<p id="p12741160161519"><a name="p12741160161519"></a><a name="p12741160161519"></a>[swtmr]: timerId = 0x%x, handler = 0x%x, interval = %d, state = %d</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>-</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+OSTIMERPRINT</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要打开OS_TIMER_DEBUG_SUPPORT，status对应的状态在los_task_base.h和los_swtmr_pri.h中查询</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+OSDFXPRINT<a name="ZH-CN_TOPIC_0000002310650705"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+OSDFXPRINT</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p50460048"><a name="p50460048"></a><a name="p50460048"></a>打印线程切换轨迹和最近的10次中断</p>
+<p id="p991611125111"><a name="p991611125111"></a><a name="p991611125111"></a>&lt;Task id&gt;:x x x x x x</p>
+<p id="p828616349511"><a name="p828616349511"></a><a name="p828616349511"></a>&lt;Interrupt num&gt;: x x x</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>-</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+OSDFXPRINT</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要打开OS_DFX_SUPPORT</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+PMVETOINFO<a name="ZH-CN_TOPIC_0000002276121090"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+PMVETOINFO</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p4772148134015"><a name="p4772148134015"></a><a name="p4772148134015"></a>[pm_veto]: total_counts =</p>
+<p id="p652773874014"><a name="p652773874014"></a><a name="p652773874014"></a>通过AT投低功耗票</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>-</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+PMVETOINFO</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要打开SLP_VETO_AT_SUPPORT</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+CPUP<a name="ZH-CN_TOPIC_0000002276017954"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+CPUP</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p50460048"><a name="p50460048"></a><a name="p50460048"></a>统计CPU占用率</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>-</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+CPUP</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要LiteOS版本内打开宏LOSCFG_KERNEL_CPUP、LOSCFG_DEBUG_TASK、LOSCFG_DEBUG_HWI</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+GPIODEBUG<a name="ZH-CN_TOPIC_0000002310777681"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+GPIODEBUG</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p134951538194217"><a name="p134951538194217"></a><a name="p134951538194217"></a>打印各个GPIO方向、输出高低等配置</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>-</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+GPIODEBUG</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要打开GPIO_SUPPORT_DEBUG</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### AT+UARTINONE<a name="ZH-CN_TOPIC_0000002310650713"></a>
+
+<a name="table41995683"></a>
+<table><tbody><tr id="row60142677"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.1.1"><p id="p39718677"><a name="p39718677"></a><a name="p39718677"></a>格式</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.1.1 "><p id="p63096249"><a name="p63096249"></a><a name="p63096249"></a>AT+UARTINONE=para</p>
+</td>
+</tr>
+<tr id="row30995332"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.2.1"><p id="p27593978"><a name="p27593978"></a><a name="p27593978"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.2.1 "><p id="p135051546134310"><a name="p135051546134310"></a><a name="p135051546134310"></a>AT串口输出到HSO</p>
+<p id="p51487255"><a name="p51487255"></a><a name="p51487255"></a>OK</p>
+</td>
+</tr>
+<tr id="row60732119"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.3.1"><p id="p20354569"><a name="p20354569"></a><a name="p20354569"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.3.1 "><p id="p38107408"><a name="p38107408"></a><a name="p38107408"></a>para：1表示将AT串口输出到HSO</p>
+</td>
+</tr>
+<tr id="row7422359"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.4.1"><p id="p64340216"><a name="p64340216"></a><a name="p64340216"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.4.1 "><p id="p44175009"><a name="p44175009"></a><a name="p44175009"></a>AT+UARTINONE=1</p>
+</td>
+</tr>
+<tr id="row62030769"><th class="firstcol" valign="top" width="17.8%" id="mcps1.1.3.5.1"><p id="p58436378"><a name="p58436378"></a><a name="p58436378"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="82.19999999999999%" headers="mcps1.1.3.5.1 "><p id="p35726176"><a name="p35726176"></a><a name="p35726176"></a>需要打开UART_SUPPORT_ALL_IN_ONE</p>
+</td>
+</tr>
+</tbody>
+</table>
+
 # BT业务AT指令<a name="ZH-CN_TOPIC_0000001767879386"></a>
+
 
 
 
@@ -446,7 +1012,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row15891013111"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p2598107119"><a name="p2598107119"></a><a name="p2598107119"></a>AT+BLESETDATALEN=&lt;参数&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p859111017112"><a name="p859111017112"></a><a name="p859111017112"></a>设置链路数据包的数据长度</p>
+<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p859111017112"><a name="p859111017112"></a><a name="p859111017112"></a>设置链路数据包的数据长度。</p>
 </td>
 </tr>
 </tbody>
@@ -560,7 +1126,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row172141557165512"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p1021516570556"><a name="p1021516570556"></a><a name="p1021516570556"></a>AT+GATTCFNDSERV=&lt;参数&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p82157576551"><a name="p82157576551"></a><a name="p82157576551"></a>发现所有服务(可by uuid)。</p>
+<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p82157576551"><a name="p82157576551"></a><a name="p82157576551"></a>发现所有服务（可by uuid）。</p>
 </td>
 </tr>
 <tr id="row20215357145512"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p9215155795515"><a name="p9215155795515"></a><a name="p9215155795515"></a>AT+GATTCFNDCHAR=&lt;参数&gt;</p>
@@ -609,235 +1175,235 @@ AT指令类型如[表1](#table838912210233)所示。
 ### SLE<a name="ZH-CN_TOPIC_0000001856225193"></a>
 
 <a name="table2154132319579"></a>
-<table><thead align="left"><tr id="row0193132317579"><th class="cellrowborder" valign="top" width="32%" id="mcps1.1.3.1.1"><p id="p12193423175714"><a name="p12193423175714"></a><a name="p12193423175714"></a>指令</p>
+<table><thead align="left"><tr id="row0193132317579"><th class="cellrowborder" valign="top" width="50.46000000000001%" id="mcps1.1.3.1.1"><p id="p12193423175714"><a name="p12193423175714"></a><a name="p12193423175714"></a>指令</p>
 </th>
-<th class="cellrowborder" valign="top" width="68%" id="mcps1.1.3.1.2"><p id="p61931723115716"><a name="p61931723115716"></a><a name="p61931723115716"></a>描述</p>
+<th class="cellrowborder" valign="top" width="49.54%" id="mcps1.1.3.1.2"><p id="p61931723115716"><a name="p61931723115716"></a><a name="p61931723115716"></a>描述</p>
 </th>
 </tr>
 </thead>
-<tbody><tr id="row8193202319572"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p31931223155712"><a name="p31931223155712"></a><a name="p31931223155712"></a>AT+SLEENABLE</p>
+<tbody><tr id="row8193202319572"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p31931223155712"><a name="p31931223155712"></a><a name="p31931223155712"></a>AT+SLEENABLE</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p151931238570"><a name="p151931238570"></a><a name="p151931238570"></a>SLE使能。</p>
-</td>
-</tr>
-<tr id="row819314233577"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p20193623135712"><a name="p20193623135712"></a><a name="p20193623135712"></a>AT+SLESETADVPAR</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p1619342313572"><a name="p1619342313572"></a><a name="p1619342313572"></a>设置SLE广播参数。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p151931238570"><a name="p151931238570"></a><a name="p151931238570"></a>SLE使能。</p>
 </td>
 </tr>
-<tr id="row1019342311574"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p18193142314572"><a name="p18193142314572"></a><a name="p18193142314572"></a>AT+SLESETADVDATA</p>
+<tr id="row819314233577"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p20193623135712"><a name="p20193623135712"></a><a name="p20193623135712"></a>AT+SLESETADVPAR</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p819352305717"><a name="p819352305717"></a><a name="p819352305717"></a>设置指令。</p>
-</td>
-</tr>
-<tr id="row319392313574"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p91931723115717"><a name="p91931723115717"></a><a name="p91931723115717"></a>AT+SLESTARTADV</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p2019372395720"><a name="p2019372395720"></a><a name="p2019372395720"></a>起SLE广播。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p1619342313572"><a name="p1619342313572"></a><a name="p1619342313572"></a>设置SLE广播参数。</p>
 </td>
 </tr>
-<tr id="row2193182365711"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p14193192345719"><a name="p14193192345719"></a><a name="p14193192345719"></a>AT+SLESTOPADV</p>
+<tr id="row1019342311574"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p18193142314572"><a name="p18193142314572"></a><a name="p18193142314572"></a>AT+SLESETADVDATA</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p2019342315710"><a name="p2019342315710"></a><a name="p2019342315710"></a>停SLE广播。</p>
-</td>
-</tr>
-<tr id="row31931123205717"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p1619322315719"><a name="p1619322315719"></a><a name="p1619322315719"></a>AT+SLESTARTSCAN</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p519312231573"><a name="p519312231573"></a><a name="p519312231573"></a>启动扫描。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p819352305717"><a name="p819352305717"></a><a name="p819352305717"></a>设置指令。</p>
 </td>
 </tr>
-<tr id="row319342325720"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p201931239574"><a name="p201931239574"></a><a name="p201931239574"></a>AT+SLESTOPSCAN</p>
+<tr id="row319392313574"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p91931723115717"><a name="p91931723115717"></a><a name="p91931723115717"></a>AT+SLESTARTADV</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p181931723135720"><a name="p181931723135720"></a><a name="p181931723135720"></a>关闭扫描。</p>
-</td>
-</tr>
-<tr id="row1919342319576"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p719342375719"><a name="p719342375719"></a><a name="p719342375719"></a>AT+SLESETNAME</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p10193723155710"><a name="p10193723155710"></a><a name="p10193723155710"></a>设置本端名称。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p2019372395720"><a name="p2019372395720"></a><a name="p2019372395720"></a>起SLE广播。</p>
 </td>
 </tr>
-<tr id="row10193182314579"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p919312236573"><a name="p919312236573"></a><a name="p919312236573"></a>AT+SLEGETNAME</p>
+<tr id="row2193182365711"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p14193192345719"><a name="p14193192345719"></a><a name="p14193192345719"></a>AT+SLESTOPADV</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p5193423175718"><a name="p5193423175718"></a><a name="p5193423175718"></a>获取本端名称。</p>
-</td>
-</tr>
-<tr id="row7193112313573"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p11193523195719"><a name="p11193523195719"></a><a name="p11193523195719"></a>AT+SLESETADDR</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p201937236579"><a name="p201937236579"></a><a name="p201937236579"></a>设置本端地址。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p2019342315710"><a name="p2019342315710"></a><a name="p2019342315710"></a>停SLE广播。</p>
 </td>
 </tr>
-<tr id="row1119382310571"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p5193223105716"><a name="p5193223105716"></a><a name="p5193223105716"></a>AT+SLEGETADDR</p>
+<tr id="row31931123205717"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p1619322315719"><a name="p1619322315719"></a><a name="p1619322315719"></a>AT+SLESTARTSCAN</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p15193823145715"><a name="p15193823145715"></a><a name="p15193823145715"></a>获取本端地址。</p>
-</td>
-</tr>
-<tr id="row019312395716"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p1193162315579"><a name="p1193162315579"></a><a name="p1193162315579"></a>AT+SLECONN</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p9193223185720"><a name="p9193223185720"></a><a name="p9193223185720"></a>建立SLE连接。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p519312231573"><a name="p519312231573"></a><a name="p519312231573"></a>启动扫描。</p>
 </td>
 </tr>
-<tr id="row81931423165717"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p1719372325710"><a name="p1719372325710"></a><a name="p1719372325710"></a>AT+SLEDISCONN</p>
+<tr id="row319342325720"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p201931239574"><a name="p201931239574"></a><a name="p201931239574"></a>AT+SLESTOPSCAN</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p1919315236574"><a name="p1919315236574"></a><a name="p1919315236574"></a>断开SLE连接。</p>
-</td>
-</tr>
-<tr id="row4193923135714"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p1319382355715"><a name="p1319382355715"></a><a name="p1319382355715"></a>AT+SLESETPHY</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p71931123185717"><a name="p71931123185717"></a><a name="p71931123185717"></a>设置SLE PHY。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p181931723135720"><a name="p181931723135720"></a><a name="p181931723135720"></a>关闭扫描。</p>
 </td>
 </tr>
-<tr id="row1019312395717"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p161931823195714"><a name="p161931823195714"></a><a name="p161931823195714"></a>AT+SLESETDEFAULTCONNP</p>
+<tr id="row1919342319576"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p719342375719"><a name="p719342375719"></a><a name="p719342375719"></a>AT+SLESETNAME</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p16193123115712"><a name="p16193123115712"></a><a name="p16193123115712"></a>设置SLE 默认连接参数。</p>
-</td>
-</tr>
-<tr id="row819318233571"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p019317235575"><a name="p019317235575"></a><a name="p019317235575"></a>AT+SLEPAIR</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p14193122320571"><a name="p14193122320571"></a><a name="p14193122320571"></a>进行加密配对。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p10193723155710"><a name="p10193723155710"></a><a name="p10193723155710"></a>设置本端名称。</p>
 </td>
 </tr>
-<tr id="row01931223205718"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p121930234576"><a name="p121930234576"></a><a name="p121930234576"></a>AT+SLEUNPAIR</p>
+<tr id="row10193182314579"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p919312236573"><a name="p919312236573"></a><a name="p919312236573"></a>AT+SLEGETNAME</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p1219312234576"><a name="p1219312234576"></a><a name="p1219312234576"></a>移除加密配对。</p>
-</td>
-</tr>
-<tr id="row81934233577"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p11193182315571"><a name="p11193182315571"></a><a name="p11193182315571"></a>AT+SLEGETPAIREDNUM</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p419362355711"><a name="p419362355711"></a><a name="p419362355711"></a>获取配对设备数目。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p5193423175718"><a name="p5193423175718"></a><a name="p5193423175718"></a>获取本端名称。</p>
 </td>
 </tr>
-<tr id="row21931123165710"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p171936236579"><a name="p171936236579"></a><a name="p171936236579"></a>AT+SLEGETPAIRDEV</p>
+<tr id="row7193112313573"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p11193523195719"><a name="p11193523195719"></a><a name="p11193523195719"></a>AT+SLESETADDR</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p16193182325713"><a name="p16193182325713"></a><a name="p16193182325713"></a>获取配对设备。</p>
-</td>
-</tr>
-<tr id="row419313237575"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p5193132375717"><a name="p5193132375717"></a><a name="p5193132375717"></a>AT+SLEGETPAIRSTA</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p121931223185717"><a name="p121931223185717"></a><a name="p121931223185717"></a>获取配对状态。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p201937236579"><a name="p201937236579"></a><a name="p201937236579"></a>设置本端地址。</p>
 </td>
 </tr>
-<tr id="row16193172318578"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p1119372313579"><a name="p1119372313579"></a><a name="p1119372313579"></a>AT+SLEGETBONDDEV</p>
+<tr id="row1119382310571"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p5193223105716"><a name="p5193223105716"></a><a name="p5193223105716"></a>AT+SLEGETADDR</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p6193102385710"><a name="p6193102385710"></a><a name="p6193102385710"></a>获取绑定设备状态。</p>
-</td>
-</tr>
-<tr id="row819310230572"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p19193122355713"><a name="p19193122355713"></a><a name="p19193122355713"></a>AT+SLECONNPARUPD</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p9193172365717"><a name="p9193172365717"></a><a name="p9193172365717"></a>星闪逻辑链路更新参数。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p15193823145715"><a name="p15193823145715"></a><a name="p15193823145715"></a>获取本端地址。</p>
 </td>
 </tr>
-<tr id="row131931235572"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p219302315571"><a name="p219302315571"></a><a name="p219302315571"></a>AT+SLEREADPEERRSSI</p>
+<tr id="row019312395716"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p1193162315579"><a name="p1193162315579"></a><a name="p1193162315579"></a>AT+SLECONN</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p11193323145717"><a name="p11193323145717"></a><a name="p11193323145717"></a>读取对端rssi。</p>
-</td>
-</tr>
-<tr id="row31930233570"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p17193323105717"><a name="p17193323105717"></a><a name="p17193323105717"></a>AT+SSAPSADDSRV</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p619492317579"><a name="p619492317579"></a><a name="p619492317579"></a>注册服务端。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p9193223185720"><a name="p9193223185720"></a><a name="p9193223185720"></a>建立SLE连接。</p>
 </td>
 </tr>
-<tr id="row6194023185716"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p1819416238577"><a name="p1819416238577"></a><a name="p1819416238577"></a>AT+SSAPSDELALLSRV</p>
+<tr id="row81931423165717"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p1719372325710"><a name="p1719372325710"></a><a name="p1719372325710"></a>AT+SLEDISCONN</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p111941023165711"><a name="p111941023165711"></a><a name="p111941023165711"></a>删除服务端。</p>
-</td>
-</tr>
-<tr id="row719402315714"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p17194162335716"><a name="p17194162335716"></a><a name="p17194162335716"></a>AT+SSAPSADDSERV</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p1519462315712"><a name="p1519462315712"></a><a name="p1519462315712"></a>添加服务。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p1919315236574"><a name="p1919315236574"></a><a name="p1919315236574"></a>断开SLE连接。</p>
 </td>
 </tr>
-<tr id="row13194182355716"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p119422315710"><a name="p119422315710"></a><a name="p119422315710"></a>AT+SSAPSSYNCADDSERV</p>
+<tr id="row4193923135714"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p1319382355715"><a name="p1319382355715"></a><a name="p1319382355715"></a>AT+SLESETPHY</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p319402395711"><a name="p319402395711"></a><a name="p319402395711"></a>添加服务同步。</p>
-</td>
-</tr>
-<tr id="row171941623145710"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p91941237574"><a name="p91941237574"></a><a name="p91941237574"></a>AT+SSAPSADDPROPERTY</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p6194142375716"><a name="p6194142375716"></a><a name="p6194142375716"></a>添加属性。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p71931123185717"><a name="p71931123185717"></a><a name="p71931123185717"></a>设置SLE PHY。</p>
 </td>
 </tr>
-<tr id="row1194132314578"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p1519402312576"><a name="p1519402312576"></a><a name="p1519402312576"></a>AT+SSAPSSYNCADDPROPERTY</p>
+<tr id="row1019312395717"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p161931823195714"><a name="p161931823195714"></a><a name="p161931823195714"></a>AT+SLESETDEFAULTCONNP</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p319472385719"><a name="p319472385719"></a><a name="p319472385719"></a>添加属性同步。</p>
-</td>
-</tr>
-<tr id="row1919442319572"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p1194223145714"><a name="p1194223145714"></a><a name="p1194223145714"></a>AT+SSAPSADDDESCR</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p8194122355716"><a name="p8194122355716"></a><a name="p8194122355716"></a>添加属性描述符。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p16193123115712"><a name="p16193123115712"></a><a name="p16193123115712"></a>设置SLE 默认连接参数。</p>
 </td>
 </tr>
-<tr id="row519411232577"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p2194102319571"><a name="p2194102319571"></a><a name="p2194102319571"></a>AT+SSAPSSYNCADDDESCR</p>
+<tr id="row819318233571"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p019317235575"><a name="p019317235575"></a><a name="p019317235575"></a>AT+SLEPAIR</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p19194152315714"><a name="p19194152315714"></a><a name="p19194152315714"></a>添加属性描述符同步。</p>
-</td>
-</tr>
-<tr id="row1119472317572"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p2194112312577"><a name="p2194112312577"></a><a name="p2194112312577"></a>AT+SSAPSSTARTSERV</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p31942239576"><a name="p31942239576"></a><a name="p31942239576"></a>start service。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p14193122320571"><a name="p14193122320571"></a><a name="p14193122320571"></a>进行加密配对。</p>
 </td>
 </tr>
-<tr id="row51945232572"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p19194172315712"><a name="p19194172315712"></a><a name="p19194172315712"></a>AT+SSAPSSNDNTFY</p>
+<tr id="row01931223205718"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p121930234576"><a name="p121930234576"></a><a name="p121930234576"></a>AT+SLEUNPAIR</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p17194142312576"><a name="p17194142312576"></a><a name="p17194142312576"></a>服务端向客户端发送通知。</p>
-</td>
-</tr>
-<tr id="row9194112395716"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p1519402355719"><a name="p1519402355719"></a><a name="p1519402355719"></a>AT+SSAPSNTFYBYUUID</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p1119402310579"><a name="p1119402310579"></a><a name="p1119402310579"></a>服务端向客户端通过uuid发送通知。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p1219312234576"><a name="p1219312234576"></a><a name="p1219312234576"></a>移除加密配对。</p>
 </td>
 </tr>
-<tr id="row519411230572"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p17194202315716"><a name="p17194202315716"></a><a name="p17194202315716"></a>AT+SSAPSSNDRESP</p>
+<tr id="row81934233577"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p11193182315571"><a name="p11193182315571"></a><a name="p11193182315571"></a>AT+SLEGETPAIREDNUM</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p171947238576"><a name="p171947238576"></a><a name="p171947238576"></a>服务端向客户端发送响应。</p>
-</td>
-</tr>
-<tr id="row3194023185716"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p819432313571"><a name="p819432313571"></a><a name="p819432313571"></a>AT+SSAPSREGCBK</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p151940230571"><a name="p151940230571"></a><a name="p151940230571"></a>服务端注册回调函数。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p419362355711"><a name="p419362355711"></a><a name="p419362355711"></a>获取配对设备数目。</p>
 </td>
 </tr>
-<tr id="row1519419237571"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p219415232572"><a name="p219415232572"></a><a name="p219415232572"></a>AT+SSAPCREGCBK</p>
+<tr id="row21931123165710"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p171936236579"><a name="p171936236579"></a><a name="p171936236579"></a>AT+SLEGETPAIRDEV</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p15194123145716"><a name="p15194123145716"></a><a name="p15194123145716"></a>注册SSAPC回调函数。</p>
-</td>
-</tr>
-<tr id="row1519413231576"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p119432319579"><a name="p119432319579"></a><a name="p119432319579"></a>AT+SSAPCFNDSTRU</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p8194112312574"><a name="p8194112312574"></a><a name="p8194112312574"></a>发现service。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p16193182325713"><a name="p16193182325713"></a><a name="p16193182325713"></a>获取配对设备。</p>
 </td>
 </tr>
-<tr id="row12195323185718"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p17195523205715"><a name="p17195523205715"></a><a name="p17195523205715"></a>AT+SSAPCWRITECMD</p>
+<tr id="row419313237575"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p5193132375717"><a name="p5193132375717"></a><a name="p5193132375717"></a>AT+SLEGETPAIRSTA</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p8195142395710"><a name="p8195142395710"></a><a name="p8195142395710"></a>客户端向服务端写入数据。</p>
-</td>
-</tr>
-<tr id="row1819572318572"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p5195112315712"><a name="p5195112315712"></a><a name="p5195112315712"></a>AT+SSAPCWRITEREQ</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p1019562305711"><a name="p1019562305711"></a><a name="p1019562305711"></a>客户端向服务端发送写请求。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p121931223185717"><a name="p121931223185717"></a><a name="p121931223185717"></a>获取配对状态。</p>
 </td>
 </tr>
-<tr id="row151951523145711"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p4195172319573"><a name="p4195172319573"></a><a name="p4195172319573"></a>AT+SSAPCEXCHINFO</p>
+<tr id="row16193172318578"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p1119372313579"><a name="p1119372313579"></a><a name="p1119372313579"></a>AT+SLEGETBONDDEV</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p51951423175712"><a name="p51951423175712"></a><a name="p51951423175712"></a>客户端发起信息交换。</p>
-</td>
-</tr>
-<tr id="row2195112316577"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p19195152365712"><a name="p19195152365712"></a><a name="p19195152365712"></a>AT+SSAPCREADBYUUID</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p1919510235575"><a name="p1919510235575"></a><a name="p1919510235575"></a>客户端通过uuid发送读请求。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p6193102385710"><a name="p6193102385710"></a><a name="p6193102385710"></a>获取绑定设备状态。</p>
 </td>
 </tr>
-<tr id="row319552313578"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p61951023135720"><a name="p61951023135720"></a><a name="p61951023135720"></a>AT+SSAPCREADREQ</p>
+<tr id="row819310230572"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p19193122355713"><a name="p19193122355713"></a><a name="p19193122355713"></a>AT+SLECONNPARUPD</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p17195202318574"><a name="p17195202318574"></a><a name="p17195202318574"></a>客户端读取服务端属性数据。</p>
-</td>
-</tr>
-<tr id="row41951523185719"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p6195142318571"><a name="p6195142318571"></a><a name="p6195142318571"></a>AT+SLESETSCANPAR</p>
-</td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p41951723115715"><a name="p41951723115715"></a><a name="p41951723115715"></a>设置扫描参数。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p9193172365717"><a name="p9193172365717"></a><a name="p9193172365717"></a>星闪逻辑链路更新参数。</p>
 </td>
 </tr>
-<tr id="row85442222295"><td class="cellrowborder" valign="top" width="32%" headers="mcps1.1.3.1.1 "><p id="p1254402214291"><a name="p1254402214291"></a><a name="p1254402214291"></a>AT+SLEDISCONNALL</p>
+<tr id="row131931235572"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p219302315571"><a name="p219302315571"></a><a name="p219302315571"></a>AT+SLEREADPEERRSSI</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.3.1.2 "><p id="p25441222162913"><a name="p25441222162913"></a><a name="p25441222162913"></a>SLE断开所有连接。</p>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p11193323145717"><a name="p11193323145717"></a><a name="p11193323145717"></a>读取对端rssi。</p>
+</td>
+</tr>
+<tr id="row31930233570"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p17193323105717"><a name="p17193323105717"></a><a name="p17193323105717"></a>AT+SSAPSADDSRV</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p619492317579"><a name="p619492317579"></a><a name="p619492317579"></a>注册服务端。</p>
+</td>
+</tr>
+<tr id="row6194023185716"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p1819416238577"><a name="p1819416238577"></a><a name="p1819416238577"></a>AT+SSAPSDELALLSRV</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p111941023165711"><a name="p111941023165711"></a><a name="p111941023165711"></a>删除服务端。</p>
+</td>
+</tr>
+<tr id="row719402315714"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p17194162335716"><a name="p17194162335716"></a><a name="p17194162335716"></a>AT+SSAPSADDSERV</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p1519462315712"><a name="p1519462315712"></a><a name="p1519462315712"></a>添加服务。</p>
+</td>
+</tr>
+<tr id="row13194182355716"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p119422315710"><a name="p119422315710"></a><a name="p119422315710"></a>AT+SSAPSSYNCADDSERV</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p319402395711"><a name="p319402395711"></a><a name="p319402395711"></a>添加服务同步。</p>
+</td>
+</tr>
+<tr id="row171941623145710"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p91941237574"><a name="p91941237574"></a><a name="p91941237574"></a>AT+SSAPSADDPROPERTY</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p6194142375716"><a name="p6194142375716"></a><a name="p6194142375716"></a>添加属性。</p>
+</td>
+</tr>
+<tr id="row1194132314578"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p1519402312576"><a name="p1519402312576"></a><a name="p1519402312576"></a>AT+SSAPSSYNCADDPROPERTY</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p319472385719"><a name="p319472385719"></a><a name="p319472385719"></a>添加属性同步。</p>
+</td>
+</tr>
+<tr id="row1919442319572"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p1194223145714"><a name="p1194223145714"></a><a name="p1194223145714"></a>AT+SSAPSADDDESCR</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p8194122355716"><a name="p8194122355716"></a><a name="p8194122355716"></a>添加属性描述符。</p>
+</td>
+</tr>
+<tr id="row519411232577"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p2194102319571"><a name="p2194102319571"></a><a name="p2194102319571"></a>AT+SSAPSSYNCADDDESCR</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p19194152315714"><a name="p19194152315714"></a><a name="p19194152315714"></a>添加属性描述符同步。</p>
+</td>
+</tr>
+<tr id="row1119472317572"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p2194112312577"><a name="p2194112312577"></a><a name="p2194112312577"></a>AT+SSAPSSTARTSERV</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p31942239576"><a name="p31942239576"></a><a name="p31942239576"></a>start service。</p>
+</td>
+</tr>
+<tr id="row51945232572"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p19194172315712"><a name="p19194172315712"></a><a name="p19194172315712"></a>AT+SSAPSSNDNTFY</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p17194142312576"><a name="p17194142312576"></a><a name="p17194142312576"></a>服务端向客户端发送通知。</p>
+</td>
+</tr>
+<tr id="row9194112395716"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p1519402355719"><a name="p1519402355719"></a><a name="p1519402355719"></a>AT+SSAPSNTFYBYUUID</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p1119402310579"><a name="p1119402310579"></a><a name="p1119402310579"></a>服务端向客户端通过uuid发送通知。</p>
+</td>
+</tr>
+<tr id="row519411230572"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p17194202315716"><a name="p17194202315716"></a><a name="p17194202315716"></a>AT+SSAPSSNDRESP</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p171947238576"><a name="p171947238576"></a><a name="p171947238576"></a>服务端向客户端发送响应。</p>
+</td>
+</tr>
+<tr id="row3194023185716"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p819432313571"><a name="p819432313571"></a><a name="p819432313571"></a>AT+SSAPSREGCBK</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p151940230571"><a name="p151940230571"></a><a name="p151940230571"></a>服务端注册回调函数。</p>
+</td>
+</tr>
+<tr id="row1519419237571"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p219415232572"><a name="p219415232572"></a><a name="p219415232572"></a>AT+SSAPCREGCBK</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p15194123145716"><a name="p15194123145716"></a><a name="p15194123145716"></a>注册SSAPC回调函数。</p>
+</td>
+</tr>
+<tr id="row1519413231576"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p119432319579"><a name="p119432319579"></a><a name="p119432319579"></a>AT+SSAPCFNDSTRU</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p8194112312574"><a name="p8194112312574"></a><a name="p8194112312574"></a>发现service。</p>
+</td>
+</tr>
+<tr id="row12195323185718"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p17195523205715"><a name="p17195523205715"></a><a name="p17195523205715"></a>AT+SSAPCWRITECMD</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p8195142395710"><a name="p8195142395710"></a><a name="p8195142395710"></a>客户端向服务端写入数据。</p>
+</td>
+</tr>
+<tr id="row1819572318572"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p5195112315712"><a name="p5195112315712"></a><a name="p5195112315712"></a>AT+SSAPCWRITEREQ</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p1019562305711"><a name="p1019562305711"></a><a name="p1019562305711"></a>客户端向服务端发送写请求。</p>
+</td>
+</tr>
+<tr id="row151951523145711"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p4195172319573"><a name="p4195172319573"></a><a name="p4195172319573"></a>AT+SSAPCEXCHINFO</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p51951423175712"><a name="p51951423175712"></a><a name="p51951423175712"></a>客户端发起信息交换。</p>
+</td>
+</tr>
+<tr id="row2195112316577"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p19195152365712"><a name="p19195152365712"></a><a name="p19195152365712"></a>AT+SSAPCREADBYUUID</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p1919510235575"><a name="p1919510235575"></a><a name="p1919510235575"></a>客户端通过uuid发送读请求。</p>
+</td>
+</tr>
+<tr id="row319552313578"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p61951023135720"><a name="p61951023135720"></a><a name="p61951023135720"></a>AT+SSAPCREADREQ</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p17195202318574"><a name="p17195202318574"></a><a name="p17195202318574"></a>客户端读取服务端属性数据。</p>
+</td>
+</tr>
+<tr id="row41951523185719"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p6195142318571"><a name="p6195142318571"></a><a name="p6195142318571"></a>AT+SLESETSCANPAR</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p41951723115715"><a name="p41951723115715"></a><a name="p41951723115715"></a>设置扫描参数。</p>
+</td>
+</tr>
+<tr id="row85442222295"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p1254402214291"><a name="p1254402214291"></a><a name="p1254402214291"></a>AT+SLEDISCONNALL</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p25441222162913"><a name="p25441222162913"></a><a name="p25441222162913"></a>SLE断开所有连接。</p>
 </td>
 </tr>
 </tbody>
@@ -915,30 +1481,30 @@ AT指令类型如[表1](#table838912210233)所示。
 ##### AT+BLEDISABLE 关闭ble协议栈<a name="ZH-CN_TOPIC_0000001856334681"></a>
 
 <a name="table1983240851"></a>
-<table><tbody><tr id="row58435019518"><th class="firstcol" valign="top" width="17.93%" id="mcps1.1.3.1.1"><p id="p68431501355"><a name="p68431501355"></a><a name="p68431501355"></a>格式</p>
+<table><tbody><tr id="row58435019518"><th class="firstcol" valign="top" width="18%" id="mcps1.1.3.1.1"><p id="p68431501355"><a name="p68431501355"></a><a name="p68431501355"></a>格式</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.07%" headers="mcps1.1.3.1.1 "><p id="p0843100054"><a name="p0843100054"></a><a name="p0843100054"></a>AT+BLEDISABLE</p>
+<td class="cellrowborder" valign="top" width="82%" headers="mcps1.1.3.1.1 "><p id="p0843100054"><a name="p0843100054"></a><a name="p0843100054"></a>AT+BLEDISABLE</p>
 </td>
 </tr>
-<tr id="row15843207510"><th class="firstcol" valign="top" width="17.93%" id="mcps1.1.3.2.1"><p id="p11843202052"><a name="p11843202052"></a><a name="p11843202052"></a>响应</p>
+<tr id="row15843207510"><th class="firstcol" valign="top" width="18%" id="mcps1.1.3.2.1"><p id="p11843202052"><a name="p11843202052"></a><a name="p11843202052"></a>响应</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.07%" headers="mcps1.1.3.2.1 "><p id="p486414818143"><a name="p486414818143"></a><a name="p486414818143"></a>关闭BLE开关</p>
+<td class="cellrowborder" valign="top" width="82%" headers="mcps1.1.3.2.1 "><p id="p486414818143"><a name="p486414818143"></a><a name="p486414818143"></a>关闭BLE开关</p>
 <p id="p94281448151317"><a name="p94281448151317"></a><a name="p94281448151317"></a>成功：OK</p>
 </td>
 </tr>
-<tr id="row9843901258"><th class="firstcol" valign="top" width="17.93%" id="mcps1.1.3.3.1"><p id="p78431800510"><a name="p78431800510"></a><a name="p78431800510"></a>参数说明</p>
+<tr id="row9843901258"><th class="firstcol" valign="top" width="18%" id="mcps1.1.3.3.1"><p id="p78431800510"><a name="p78431800510"></a><a name="p78431800510"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.07%" headers="mcps1.1.3.3.1 "><p id="p484330155"><a name="p484330155"></a><a name="p484330155"></a>-</p>
+<td class="cellrowborder" valign="top" width="82%" headers="mcps1.1.3.3.1 "><p id="p484330155"><a name="p484330155"></a><a name="p484330155"></a>-</p>
 </td>
 </tr>
-<tr id="row14843601359"><th class="firstcol" valign="top" width="17.93%" id="mcps1.1.3.4.1"><p id="p148431601458"><a name="p148431601458"></a><a name="p148431601458"></a>示例</p>
+<tr id="row14843601359"><th class="firstcol" valign="top" width="18%" id="mcps1.1.3.4.1"><p id="p148431601458"><a name="p148431601458"></a><a name="p148431601458"></a>示例</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.07%" headers="mcps1.1.3.4.1 "><p id="p3843607516"><a name="p3843607516"></a><a name="p3843607516"></a>AT+BLEDISABLE</p>
+<td class="cellrowborder" valign="top" width="82%" headers="mcps1.1.3.4.1 "><p id="p3843607516"><a name="p3843607516"></a><a name="p3843607516"></a>AT+BLEDISABLE</p>
 </td>
 </tr>
-<tr id="row9843507518"><th class="firstcol" valign="top" width="17.93%" id="mcps1.1.3.5.1"><p id="p2843701759"><a name="p2843701759"></a><a name="p2843701759"></a>注意</p>
+<tr id="row9843507518"><th class="firstcol" valign="top" width="18%" id="mcps1.1.3.5.1"><p id="p2843701759"><a name="p2843701759"></a><a name="p2843701759"></a>注意</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.07%" headers="mcps1.1.3.5.1 "><p id="p13843901558"><a name="p13843901558"></a><a name="p13843901558"></a>-</p>
+<td class="cellrowborder" valign="top" width="82%" headers="mcps1.1.3.5.1 "><p id="p13843901558"><a name="p13843901558"></a><a name="p13843901558"></a>-</p>
 </td>
 </tr>
 </tbody>
@@ -1023,8 +1589,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row96644509515"><th class="firstcol" valign="top" width="18.16%" id="mcps1.1.3.3.1"><p id="p156642508517"><a name="p156642508517"></a><a name="p156642508517"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="81.84%" headers="mcps1.1.3.3.1 "><p id="p1766413501458"><a name="p1766413501458"></a><a name="p1766413501458"></a>&lt;len&gt;：本地设备名称长度；</p>
-<p id="p566415501955"><a name="p566415501955"></a><a name="p566415501955"></a>&lt;name&gt;：本地设备名称</p>
+<td class="cellrowborder" valign="top" width="81.84%" headers="mcps1.1.3.3.1 "><a name="ul1034857162316"></a><a name="ul1034857162316"></a><ul id="ul1034857162316"><li>&lt;len&gt;：本地设备名称长度</li><li>&lt;name&gt;：本地设备名称</li></ul>
 </td>
 </tr>
 <tr id="row176641350555"><th class="firstcol" valign="top" width="18.16%" id="mcps1.1.3.4.1"><p id="p3664185011519"><a name="p3664185011519"></a><a name="p3664185011519"></a>示例</p>
@@ -1034,7 +1599,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row16642501853"><th class="firstcol" valign="top" width="18.16%" id="mcps1.1.3.5.1"><p id="p766485018515"><a name="p766485018515"></a><a name="p766485018515"></a>注意</p>
 </th>
-<td class="cellrowborder" valign="top" width="81.84%" headers="mcps1.1.3.5.1 "><p id="p1466415502050"><a name="p1466415502050"></a><a name="p1466415502050"></a>名称长度取值范围为[0,255],设备名称长度为len-1的字符串，名称最后默认存在’/0’</p>
+<td class="cellrowborder" valign="top" width="81.84%" headers="mcps1.1.3.5.1 "><p id="p1466415502050"><a name="p1466415502050"></a><a name="p1466415502050"></a>名称长度取值范围为[0,255]，设备名称长度为len-1的字符串，名称最后默认存在’/0’</p>
 </td>
 </tr>
 </tbody>
@@ -1086,7 +1651,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row18717518463"><th class="firstcol" valign="top" width="17.88%" id="mcps1.1.3.3.1"><p id="p77171118861"><a name="p77171118861"></a><a name="p77171118861"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.12%" headers="mcps1.1.3.3.1 "><p id="p671741820612"><a name="p671741820612"></a><a name="p671741820612"></a>&lt;appearance&gt;：本地设备外观；</p>
+<td class="cellrowborder" valign="top" width="82.12%" headers="mcps1.1.3.3.1 "><p id="p671741820612"><a name="p671741820612"></a><a name="p671741820612"></a>&lt;appearance&gt;：本地设备外观</p>
 </td>
 </tr>
 <tr id="row117178185617"><th class="firstcol" valign="top" width="17.88%" id="mcps1.1.3.4.1"><p id="p1371716187611"><a name="p1371716187611"></a><a name="p1371716187611"></a>示例</p>
@@ -1241,11 +1806,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row121710464814"><th class="firstcol" valign="top" width="18.16%" id="mcps1.1.3.3.1"><p id="p521713469812"><a name="p521713469812"></a><a name="p521713469812"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="81.84%" headers="mcps1.1.3.3.1 "><p id="p182171246682"><a name="p182171246682"></a><a name="p182171246682"></a>&lt;scan_interval&gt;：扫描间隔；取值范围[0x04, 0x4000]，Time=N×0.625ms</p>
-<p id="p1221714465817"><a name="p1221714465817"></a><a name="p1221714465817"></a>&lt;scan_window&gt;：扫描窗口；取值范围[0x04, 0x4000]，Time=N×0.625ms</p>
-<p id="p221734615815"><a name="p221734615815"></a><a name="p221734615815"></a>&lt;scan_type&gt;：扫描类型；{0（被动扫描）,1（主动扫描）}</p>
-<p id="p121720466818"><a name="p121720466818"></a><a name="p121720466818"></a>&lt;scan_phy&gt;：扫描phy</p>
-<p id="p162175461887"><a name="p162175461887"></a><a name="p162175461887"></a>&lt;scan_rsp_policy&gt;：扫描过滤策略</p>
+<td class="cellrowborder" valign="top" width="81.84%" headers="mcps1.1.3.3.1 "><a name="ul22082053102420"></a><a name="ul22082053102420"></a><ul id="ul22082053102420"><li>&lt;scan_interval&gt;：扫描间隔；取值范围[0x04, 0x4000]，Time=N×0.625ms</li><li>&lt;scan_window&gt;：扫描窗口；取值范围[0x04, 0x4000]，Time=N×0.625ms</li><li>&lt;scan_type&gt;：扫描类型；{0（被动扫描）,1（主动扫描）}</li><li>&lt;scan_phy&gt;：扫描phy</li><li>&lt;scan_rsp_policy&gt;：扫描过滤策略</li></ul>
 </td>
 </tr>
 <tr id="row6217246983"><th class="firstcol" valign="top" width="18.16%" id="mcps1.1.3.4.1"><p id="p2021711462815"><a name="p2021711462815"></a><a name="p2021711462815"></a>示例</p>
@@ -1433,8 +1994,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row165081315103"><th class="firstcol" valign="top" width="17.95%" id="mcps1.1.3.3.1"><p id="p19508133181017"><a name="p19508133181017"></a><a name="p19508133181017"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.05%" headers="mcps1.1.3.3.1 "><p id="p050813171020"><a name="p050813171020"></a><a name="p050813171020"></a>&lt;addr_type&gt;：蓝牙设备类型</p>
-<p id="p1508113111013"><a name="p1508113111013"></a><a name="p1508113111013"></a>&lt;addr&gt;：蓝牙设备地址</p>
+<td class="cellrowborder" valign="top" width="82.05%" headers="mcps1.1.3.3.1 "><a name="ul1366615201252"></a><a name="ul1366615201252"></a><ul id="ul1366615201252"><li>&lt;addr_type&gt;：蓝牙设备类型</li><li>&lt;addr&gt;：蓝牙设备地址</li></ul>
 </td>
 </tr>
 <tr id="row11508030105"><th class="firstcol" valign="top" width="17.95%" id="mcps1.1.3.4.1"><p id="p175089361018"><a name="p175089361018"></a><a name="p175089361018"></a>示例</p>
@@ -1467,8 +2027,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row125823196101"><th class="firstcol" valign="top" width="17.94%" id="mcps1.1.3.3.1"><p id="p8582319171018"><a name="p8582319171018"></a><a name="p8582319171018"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.06%" headers="mcps1.1.3.3.1 "><p id="p1058251918102"><a name="p1058251918102"></a><a name="p1058251918102"></a>&lt;addr_type&gt;：蓝牙设备类型</p>
-<p id="p1582519171019"><a name="p1582519171019"></a><a name="p1582519171019"></a>&lt;addr&gt;：蓝牙设备地址</p>
+<td class="cellrowborder" valign="top" width="82.06%" headers="mcps1.1.3.3.1 "><a name="ul17836133152519"></a><a name="ul17836133152519"></a><ul id="ul17836133152519"><li>&lt;addr_type&gt;：蓝牙设备类型</li><li>&lt;addr&gt;：蓝牙设备地址</li></ul>
 </td>
 </tr>
 <tr id="row18582419151018"><th class="firstcol" valign="top" width="17.94%" id="mcps1.1.3.4.1"><p id="p858211198109"><a name="p858211198109"></a><a name="p858211198109"></a>示例</p>
@@ -1692,9 +2251,9 @@ AT指令类型如[表1](#table838912210233)所示。
 <tr id="row24861326111115"><th class="firstcol" valign="top" width="17.93%" id="mcps1.1.3.3.1"><p id="p17649229233"><a name="p17649229233"></a><a name="p17649229233"></a>参数说明</p>
 </th>
 <td class="cellrowborder" valign="top" width="82.07%" headers="mcps1.1.3.3.1 "><a name="ul91942026122212"></a><a name="ul91942026122212"></a><ul id="ul91942026122212"><li>&lt;conn_handle&gt;：连接句柄</li><li>&lt;all_phys&gt;:<p id="p8832143319249"><a name="p8832143319249"></a><a name="p8832143319249"></a>0:  TX/RX PHY生效</p>
-<p id="p571817377242"><a name="p571817377242"></a><a name="p571817377242"></a>1:  TX PHY不生效</p>
-<p id="p12651144032419"><a name="p12651144032419"></a><a name="p12651144032419"></a>2:  RX PHY不生效</p>
-<p id="p149322442417"><a name="p149322442417"></a><a name="p149322442417"></a>3:  TX/RX PHY都不生效</p>
+<p id="p571817377242"><a name="p571817377242"></a><a name="p571817377242"></a>1：TX PHY不生效</p>
+<p id="p12651144032419"><a name="p12651144032419"></a><a name="p12651144032419"></a>2：RX PHY不生效</p>
+<p id="p149322442417"><a name="p149322442417"></a><a name="p149322442417"></a>3：TX/RX PHY都不生效</p>
 </li></ul>
 <a name="ul13929113155219"></a><a name="ul13929113155219"></a><ul id="ul13929113155219"><li>&lt;tx_phy&gt;：tx phy值<p id="p206412212312"><a name="p206412212312"></a><a name="p206412212312"></a>0：1M PHY</p>
 <p id="p146419228239"><a name="p146419228239"></a><a name="p146419228239"></a>1：2M PHY</p>
@@ -1715,7 +2274,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row15486726111113"><th class="firstcol" valign="top" width="17.93%" id="mcps1.1.3.5.1"><p id="p965202262310"><a name="p965202262310"></a><a name="p965202262310"></a>注意</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.07%" headers="mcps1.1.3.5.1 "><p id="p2650227237"><a name="p2650227237"></a><a name="p2650227237"></a>上述各参数中没有列出的示例值为预留字段, AT侧不做拦截, 下发后BTC会回复异常参数, 请关注回调中的异常日志打印。</p>
+<td class="cellrowborder" valign="top" width="82.07%" headers="mcps1.1.3.5.1 "><p id="p2650227237"><a name="p2650227237"></a><a name="p2650227237"></a>上述各参数中没有列出的示例值为预留字段, AT侧不做拦截, 下发后BTC会回复异常参数, 请关注回调中的异常日志打印</p>
 </td>
 </tr>
 </tbody>
@@ -2293,9 +2852,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row152537575166"><th class="firstcol" valign="top" width="17.9%" id="mcps1.1.3.3.1"><p id="p16253125781612"><a name="p16253125781612"></a><a name="p16253125781612"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.1%" headers="mcps1.1.3.3.1 "><p id="p4253657191612"><a name="p4253657191612"></a><a name="p4253657191612"></a>&lt;client_id&gt;：客户端id;</p>
-<p id="p17253135712165"><a name="p17253135712165"></a><a name="p17253135712165"></a>&lt;conn_id&gt;：连接id</p>
-<p id="p15253205731619"><a name="p15253205731619"></a><a name="p15253205731619"></a>&lt;uuid&gt;：应用uuid</p>
+<td class="cellrowborder" valign="top" width="82.1%" headers="mcps1.1.3.3.1 "><a name="ul10653143515279"></a><a name="ul10653143515279"></a><ul id="ul10653143515279"><li>&lt;client_id&gt;：客户端id</li><li>&lt;conn_id&gt;：连接id</li><li>&lt;uuid&gt;：应用uuid</li></ul>
 </td>
 </tr>
 <tr id="row19253125771616"><th class="firstcol" valign="top" width="17.9%" id="mcps1.1.3.4.1"><p id="p225345716163"><a name="p225345716163"></a><a name="p225345716163"></a>示例</p>
@@ -2933,29 +3490,29 @@ AT指令类型如[表1](#table838912210233)所示。
 ##### 设置本端地址<a name="ZH-CN_TOPIC_0000001809862886"></a>
 
 <a name="table179119562215"></a>
-<table><tbody><tr id="row1592116512226"><th class="firstcol" valign="top" width="17.73%" id="mcps1.1.3.1.1"><p id="p1592195182217"><a name="p1592195182217"></a><a name="p1592195182217"></a>设置指令</p>
+<table><tbody><tr id="row1592116512226"><th class="firstcol" valign="top" width="16.56%" id="mcps1.1.3.1.1"><p id="p1592195182217"><a name="p1592195182217"></a><a name="p1592195182217"></a>设置指令</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.27%" headers="mcps1.1.3.1.1 "><p id="p9921856226"><a name="p9921856226"></a><a name="p9921856226"></a>AT+SLESETADDR</p>
+<td class="cellrowborder" valign="top" width="83.44%" headers="mcps1.1.3.1.1 "><p id="p9921856226"><a name="p9921856226"></a><a name="p9921856226"></a>AT+SLESETADDR</p>
 </td>
 </tr>
-<tr id="row14921135152216"><th class="firstcol" valign="top" width="17.73%" id="mcps1.1.3.2.1"><p id="p59211854225"><a name="p59211854225"></a><a name="p59211854225"></a>响应</p>
+<tr id="row14921135152216"><th class="firstcol" valign="top" width="16.56%" id="mcps1.1.3.2.1"><p id="p59211854225"><a name="p59211854225"></a><a name="p59211854225"></a>响应</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.27%" headers="mcps1.1.3.2.1 "><a name="ul1513171018487"></a><a name="ul1513171018487"></a><ul id="ul1513171018487"><li>成功：OK</li><li>失败：ERROR</li></ul>
+<td class="cellrowborder" valign="top" width="83.44%" headers="mcps1.1.3.2.1 "><a name="ul1513171018487"></a><a name="ul1513171018487"></a><ul id="ul1513171018487"><li>成功：OK</li><li>失败：ERROR</li></ul>
 </td>
 </tr>
-<tr id="row119211511222"><th class="firstcol" valign="top" width="17.73%" id="mcps1.1.3.3.1"><p id="p15921165122211"><a name="p15921165122211"></a><a name="p15921165122211"></a>参数说明</p>
+<tr id="row119211511222"><th class="firstcol" valign="top" width="16.56%" id="mcps1.1.3.3.1"><p id="p15921165122211"><a name="p15921165122211"></a><a name="p15921165122211"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.27%" headers="mcps1.1.3.3.1 "><a name="ul8833101072610"></a><a name="ul8833101072610"></a><ul id="ul8833101072610"><li>&lt;addr_type&gt;：地址类型</li><li>&lt;addr&gt;：地址</li></ul>
+<td class="cellrowborder" valign="top" width="83.44%" headers="mcps1.1.3.3.1 "><a name="ul8833101072610"></a><a name="ul8833101072610"></a><ul id="ul8833101072610"><li>&lt;addr_type&gt;：地址类型</li><li>&lt;addr&gt;：地址</li></ul>
 </td>
 </tr>
-<tr id="row59218562216"><th class="firstcol" valign="top" width="17.73%" id="mcps1.1.3.4.1"><p id="p1692118517226"><a name="p1692118517226"></a><a name="p1692118517226"></a>示例</p>
+<tr id="row59218562216"><th class="firstcol" valign="top" width="16.56%" id="mcps1.1.3.4.1"><p id="p1692118517226"><a name="p1692118517226"></a><a name="p1692118517226"></a>示例</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.27%" headers="mcps1.1.3.4.1 "><p id="p2921175142213"><a name="p2921175142213"></a><a name="p2921175142213"></a>AT+SLESETADDR=0,0x000000000001</p>
+<td class="cellrowborder" valign="top" width="83.44%" headers="mcps1.1.3.4.1 "><p id="p2921175142213"><a name="p2921175142213"></a><a name="p2921175142213"></a>AT+SLESETADDR=0,0x000000000001</p>
 </td>
 </tr>
-<tr id="row6921175152212"><th class="firstcol" valign="top" width="17.73%" id="mcps1.1.3.5.1"><p id="p179211758226"><a name="p179211758226"></a><a name="p179211758226"></a>注意</p>
+<tr id="row6921175152212"><th class="firstcol" valign="top" width="16.56%" id="mcps1.1.3.5.1"><p id="p179211758226"><a name="p179211758226"></a><a name="p179211758226"></a>注意</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.27%" headers="mcps1.1.3.5.1 "><p id="p1792116511221"><a name="p1792116511221"></a><a name="p1792116511221"></a>-</p>
+<td class="cellrowborder" valign="top" width="83.44%" headers="mcps1.1.3.5.1 "><p id="p1792116511221"><a name="p1792116511221"></a><a name="p1792116511221"></a>-</p>
 </td>
 </tr>
 </tbody>
@@ -3137,7 +3694,7 @@ AT指令类型如[表1](#table838912210233)所示。
 
 ##### 设置SLE PHY<a name="ZH-CN_TOPIC_0000001856541529"></a>
 
-默认1M 4M暂时不支持
+默认1M 4M暂时不支持。
 
 该命令作用：某些场景下需要高的传输速率，此时就通过设置tx\_phy、rx\_phy参数为2M。如果两端都支持2M,才能设置成功。
 
@@ -3268,7 +3825,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row192410511247"><th class="firstcol" valign="top" width="17.73%" id="mcps1.1.3.3.1"><p id="p1241105112248"><a name="p1241105112248"></a><a name="p1241105112248"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.27%" headers="mcps1.1.3.3.1 "><a name="ul8600115211283"></a><a name="ul8600115211283"></a><ul id="ul8600115211283"><li>&lt; sle_addr_type &gt;：SLE设备地址类型<p id="p18842166182916"><a name="p18842166182916"></a><a name="p18842166182916"></a>0：公有地址,</p>
+<td class="cellrowborder" valign="top" width="82.27%" headers="mcps1.1.3.3.1 "><a name="ul8600115211283"></a><a name="ul8600115211283"></a><ul id="ul8600115211283"><li>&lt; sle_addr_type &gt;：SLE设备地址类型<p id="p18842166182916"><a name="p18842166182916"></a><a name="p18842166182916"></a>0：公有地址</p>
 <p id="p14161135914289"><a name="p14161135914289"></a><a name="p14161135914289"></a>6：随机地址</p>
 </li></ul>
 <a name="ul1037416544282"></a><a name="ul1037416544282"></a><ul id="ul1037416544282"><li>&lt;sle_addr&gt;：SLE设备地址</li></ul>
@@ -3397,14 +3954,14 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row104046337259"><th class="firstcol" valign="top" width="17.23%" id="mcps1.1.3.3.1"><p id="p1040403312259"><a name="p1040403312259"></a><a name="p1040403312259"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.77%" headers="mcps1.1.3.3.1 "><a name="ul1526514474294"></a><a name="ul1526514474294"></a><ul id="ul1526514474294"><li>&lt; sle_addr_type &gt;：SLE设备地址类型<p id="p155815497291"><a name="p155815497291"></a><a name="p155815497291"></a>0：公有地址,</p>
+<td class="cellrowborder" valign="top" width="82.77%" headers="mcps1.1.3.3.1 "><a name="ul1526514474294"></a><a name="ul1526514474294"></a><ul id="ul1526514474294"><li>&lt; sle_addr_type &gt;：SLE设备地址类型<p id="p155815497291"><a name="p155815497291"></a><a name="p155815497291"></a>0：公有地址</p>
 <p id="p658149182916"><a name="p658149182916"></a><a name="p658149182916"></a>6：随机地址</p>
 </li><li>&lt;sle_addr&gt;：SLE设备地址</li></ul>
 </td>
 </tr>
 <tr id="row840413312513"><th class="firstcol" valign="top" width="17.23%" id="mcps1.1.3.4.1"><p id="p1440423312511"><a name="p1440423312511"></a><a name="p1440423312511"></a>示例</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.77%" headers="mcps1.1.3.4.1 "><p id="p440433319256"><a name="p440433319256"></a><a name="p440433319256"></a>AT+SLEUNPAIR=0,000000000000</p>
+<td class="cellrowborder" valign="top" width="82.77%" headers="mcps1.1.3.4.1 "><p id="p440433319256"><a name="p440433319256"></a><a name="p440433319256"></a>AT+SLEGETPAIRSTA=0,000000000000</p>
 </td>
 </tr>
 <tr id="row1404193317255"><th class="firstcol" valign="top" width="17.23%" id="mcps1.1.3.5.1"><p id="p11404113332516"><a name="p11404113332516"></a><a name="p11404113332516"></a>注意</p>
@@ -3720,7 +4277,7 @@ typedef enum {
 </tr>
 <tr id="row9148112562914"><th class="firstcol" valign="top" width="17.349999999999998%" id="mcps1.1.3.3.1"><p id="p8148102519295"><a name="p8148102519295"></a><a name="p8148102519295"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.65%" headers="mcps1.1.3.3.1 "><a name="ul5876338203018"></a><a name="ul5876338203018"></a><ul id="ul5876338203018"><li>&lt;service_handle&gt;：服务handle</li><li>&lt;property_handle&gt;：属性handle</li><li>&lt;uuid&gt;：SSAP 描述符 UUID</li><li>&lt;permissions&gt;：特征权限</li><li>&lt;operate_indication&gt;：操作指示</li><li>&lt;type&gt;：描述符类型</li><li>&lt;value_len&gt;：数据长度</li><li>&lt;value&gt;：数据。</li></ul>
+<td class="cellrowborder" valign="top" width="82.65%" headers="mcps1.1.3.3.1 "><a name="ul5876338203018"></a><a name="ul5876338203018"></a><ul id="ul5876338203018"><li>&lt;service_handle&gt;：服务handle</li><li>&lt;property_handle&gt;：属性handle</li><li>&lt;uuid&gt;：SSAP 描述符 UUID</li><li>&lt;permissions&gt;：特征权限</li><li>&lt;operate_indication&gt;：操作指示</li><li>&lt;type&gt;：描述符类型</li><li>&lt;value_len&gt;：数据长度</li><li>&lt;value&gt;：数据</li></ul>
 </td>
 </tr>
 <tr id="row121481225172912"><th class="firstcol" valign="top" width="17.349999999999998%" id="mcps1.1.3.4.1"><p id="p17148142532918"><a name="p17148142532918"></a><a name="p17148142532918"></a>示例</p>
@@ -3751,7 +4308,7 @@ typedef enum {
 </tr>
 <tr id="row25831548122914"><th class="firstcol" valign="top" width="17.349999999999998%" id="mcps1.1.3.3.1"><p id="p205831148142913"><a name="p205831148142913"></a><a name="p205831148142913"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.65%" headers="mcps1.1.3.3.1 "><a name="ul279995253014"></a><a name="ul279995253014"></a><ul id="ul279995253014"><li>&lt;conn_id&gt;：服务handle</li><li>&lt;handle&gt;：属性handle</li><li>&lt;type&gt;：SSAP 特征类型<p id="p1941195683018"><a name="p1941195683018"></a><a name="p1941195683018"></a>0：特征值</p>
+<td class="cellrowborder" valign="top" width="82.65%" headers="mcps1.1.3.3.1 "><a name="ul279995253014"></a><a name="ul279995253014"></a><ul id="ul279995253014"><li>&lt;conn_id&gt;：连接handle</li><li>&lt;handle&gt;：属性handle</li><li>&lt;type&gt;：SSAP 特征类型<p id="p1941195683018"><a name="p1941195683018"></a><a name="p1941195683018"></a>0：特征值</p>
 <p id="p241155673012"><a name="p241155673012"></a><a name="p241155673012"></a>1：属性说明描述符</p>
 <p id="p18411656193016"><a name="p18411656193016"></a><a name="p18411656193016"></a>2：客户端配置描述符</p>
 <p id="p134165611301"><a name="p134165611301"></a><a name="p134165611301"></a>3：服务端配置描述符</p>
@@ -3789,7 +4346,7 @@ typedef enum {
 </tr>
 <tr id="row7862132833516"><th class="firstcol" valign="top" width="17.599999999999998%" id="mcps1.1.3.3.1"><p id="p1286282819358"><a name="p1286282819358"></a><a name="p1286282819358"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.39999999999999%" headers="mcps1.1.3.3.1 "><a name="ul547316893118"></a><a name="ul547316893118"></a><ul id="ul547316893118"><li>&lt;conn_id&gt;：服务handle</li><li>&lt;uuid&gt;：属性uuid</li><li>&lt;start_hdl&gt;：开始句柄</li><li>&lt;end_hdl&gt;：结束句柄</li><li>&lt;type&gt;：SSAP 特征类型<p id="p1081581803117"><a name="p1081581803117"></a><a name="p1081581803117"></a>0：特征值</p>
+<td class="cellrowborder" valign="top" width="82.39999999999999%" headers="mcps1.1.3.3.1 "><a name="ul547316893118"></a><a name="ul547316893118"></a><ul id="ul547316893118"><li>&lt;conn_id&gt;：连接handle</li><li>&lt;uuid&gt;：属性uuid</li><li>&lt;start_hdl&gt;：开始句柄</li><li>&lt;end_hdl&gt;：结束句柄</li><li>&lt;type&gt;：SSAP 特征类型<p id="p1081581803117"><a name="p1081581803117"></a><a name="p1081581803117"></a>0：特征值</p>
 <p id="p178151318103112"><a name="p178151318103112"></a><a name="p178151318103112"></a>1：属性说明描述符</p>
 <p id="p13815118123117"><a name="p13815118123117"></a><a name="p13815118123117"></a>2：客户端配置描述符</p>
 <p id="p281591893113"><a name="p281591893113"></a><a name="p281591893113"></a>3：服务端配置描述符</p>
@@ -4093,7 +4650,7 @@ typedef enum {
 </tr>
 <tr id="row11665185018376"><th class="firstcol" valign="top" width="17.48%" id="mcps1.1.3.3.1"><p id="p11665165018378"><a name="p11665165018378"></a><a name="p11665165018378"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.52000000000001%" headers="mcps1.1.3.3.1 "><a name="ul13888169145910"></a><a name="ul13888169145910"></a><ul id="ul13888169145910"><li>&lt;client_id&gt;：客户端id</li><li>&lt;conn_id&gt;：连接id</li><li>&lt;mtu_size&gt;：ssap 通道mtu<p id="p349735110598"><a name="p349735110598"></a><a name="p349735110598"></a>最小值：251</p>
+<td class="cellrowborder" valign="top" width="82.52000000000001%" headers="mcps1.1.3.3.1 "><a name="ul13888169145910"></a><a name="ul13888169145910"></a><ul id="ul13888169145910"><li>&lt;client_id&gt;：客户端id</li><li>&lt;conn_id&gt;：连接id</li><li>&lt;mtu_size&gt;：ssap通道mtu<p id="p349735110598"><a name="p349735110598"></a><a name="p349735110598"></a>最小值：251</p>
 <p id="p6739547175913"><a name="p6739547175913"></a><a name="p6739547175913"></a>最大值：520</p>
 </li><li>&lt;version&gt;：版本号<p id="p19313449596"><a name="p19313449596"></a><a name="p19313449596"></a>0：BLE</p>
 <p id="p39315449591"><a name="p39315449591"></a><a name="p39315449591"></a>1：SLE</p>
@@ -4475,6 +5032,1359 @@ typedef enum {
 </tr>
 </tbody>
 </table>
+
+## 常用AT指令示例<a name="ZH-CN_TOPIC_0000002304360933"></a>
+
+
+
+### BLE<a name="ZH-CN_TOPIC_0000002304434037"></a>
+
+
+
+
+#### 配置server<a name="ZH-CN_TOPIC_0000002270767498"></a>
+
+1.  使能BLE。
+
+    ```
+    AT+BLEENABLE
+    [Acore] ble enable cbk in, event:c
+    OK
+    ```
+
+    -   命令说明：使能BLE协议栈。
+    -   打印说明：使能成功。
+
+2.  设置本地地址。
+
+    ```
+    AT+BLESETADDR=0 , 0x111111111112
+    OK
+    ```
+
+    -   命令说明：配置BLE本地地址为0x111111111112，地址类型为公共设备地址。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >设备类型取值：
+        >0：公共设备地址
+        >1：随机设备地址
+        >2：公共本端地址
+        >3：随机静态本端地址
+
+    -   打印说明：本地地址配置成功。设置完成后，可以使用AT+BLEGETADDR命令查看当前本地地址：
+
+        ```
+        AT+BLEGETADDR
+        ble at cmd gap ble get local addr:
+          0x11 0x11 0x11 0x11 0x11 0x12
+        OK
+        ```
+
+3.  设置本地设备名。
+
+    ```
+    AT+BLESETNAME=11,testnamesrv
+    OK
+    ```
+
+    -   命令说明：设置设备名称，名称长度取值范围为\[0,255\]，设备实际名称长度为len+1的字符串，名称最后默认存在’/0’。本例中，设置时名称后没有' '，读取设备名称显示名称后有' '。
+    -   打印说明：设置成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >设置后可以通过命令验证是否设置成功:
+        >```
+        >AT+BLEGETNAME
+        > ble at cmd gap ble get local name:testnamesrv
+        >OK
+        >```
+
+4.  注册GAP回调函数。
+
+    ```
+    AT+BLEGAPREGCBK
+    OK
+    ```
+
+    -   命令说明：注册GAP层回调函数。
+    -   打印说明：注册成功。
+
+5.  注册一个GATT server。
+
+    ```
+    AT+GATTSREGSRV=0x1122
+    [GAP service register][device name] handle: 0x0006, value handle: 0x0007
+    [GAP service register][device appearance] handle: 0x0008, value handle: 0x0009
+    [GAP service register][prefer conn param] handle: 0x000a, value handle: 0x000b
+    [GATTServer]register server: 1
+    OK
+    ```
+
+    -   命令说明：注册一个GATT服务端（sever），配置该服务端的UUID=0x1122。
+    -   打印说明：GAP服务注册器自动注册一个Generic Access服务（包含device name、device appearance、prefer conn param三个chara），handle id从0x6开始，到0xb；然后GATT成功注册了一个server，server ID=1，sercer hdl=5。
+
+6.  <a name="li1423412550612"></a>注册 GATT 服务端回调函数
+
+    ```
+    AT+GATTSREGCBK
+    OK
+    ```
+
+    -   命令说明：注册 GATT 服务端回调函数。
+    -   打印说明：注册成功。
+
+7.  添加一个 GATT 服务（同步）
+
+    ```
+    AT+GATTSSYNCADDSERV=1,0x0012,1
+    ble at gatts add service sync register srv_handle:14
+    OK
+    ```
+
+    -   命令说明：在server id=1的server中注册一个服务，配置服务uuid=0x0012，该服务是首选服务。
+    -   打印说明：成功添加了一个GATT服务（同步），服务句柄=14，服务句柄可用于后续对该服务进行操作。
+
+8.  为 GATT 服务添加一个特征（同步）
+
+    ```
+    AT+GATTSSYNCADDCHAR=1,14,0x122a,0x03,0x12,4,01010003
+    [gatts_add_characteristic_sync] register handle:15, value_handle:16
+    OK
+    ```
+
+    -   命令说明：向指定server\(server ID=1\)中指定的service（service handle=14）添加一个characteristic，这个特征的uuid=0x122a，权限是0x3（可读可写），property（特性）是0x12（通知特征值+读特征值），value的（最大）长度是4字节，value是0x01010003；（service handle来自于步骤5返回的数据）。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >权限参数取值范围：
+        >0x01：可读
+        >0x02：可写
+        >0x04：需要加密
+        >0x08：需要认证
+        >0x10：需要授权
+        >0x20：需要MITM保护
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >property（特性）参数取值范围：
+        >0x01：广播特征值
+        >0x02：读特征值
+        >0x04：写特征值并且不需要响应
+        >0x08：写特征值
+        >0x10：通知特征值
+        >0x20：指示特征值
+        >0x40：签名写特征值
+        >0x80：在特征扩展特性描述符中定义了附加的特征特性
+
+    -   打印说明：：添加characteristic成功，register handle=15，value handle=16
+
+9.  为最新的特征添加一个描述符（同步）。
+
+    ```
+    AT+GATTSSYNCADDDESCR=1,14,0x2902,0x03,2,0100
+    [gatts_add_descriptor_sync] register descriptor handle:17
+    OK
+    ```
+
+    -   命令说明：向指定server（server id=1）的指定service（service handle=14）的最新的characteristic添加一个描述符（descriptor），desc的uuid=0x2902，权限为0x03（可读可写），value长度2字节，value=0x0100；权限的取值与[6](#li1423412550612)中权限取值相同。
+    -   打印说明：添加描述符成功，描述符的handle=17。
+
+10. 注册一个特性为可读可写且需要响应、允许指示且有两个描述符的特征；注册一个特性为可读可写且不需要响应，并允许指示的特征。
+
+    ```
+    AT+GATTSSYNCADDCHAR=1,14,0x122b,0x03,0x2a,4,01010003
+    [gatts_add_characteristic_sync] register handle:18, value_handle:19
+    OK
+    AT+GATTSSYNCADDDESCR=1,14,0x2904,0x03,2,1110
+    [gatts_add_descriptor_sync] register descriptor handle:20
+    OK
+    AT+GATTSSYNCADDDESCR=1,14,0x2905,0x03,2,2220
+    [gatts_add_descriptor_sync] register descriptor handle:21
+    OK
+    AT+GATTSSYNCADDCHAR=1,14,0x122c,0x03,0x26,4,01010003
+    [gatts_add_characteristic_sync] register handle:22, value_handle:23
+    OK
+    ```
+
+11. 启动指定的GATT 服务。
+
+    ```
+    AT+GATTSSTARTSERV=1,14
+    [GATTServer]ServiceStartCallback server: 1 srv_hdl: 14 status: 0
+    OK
+    ```
+
+    -   命令说明：启动指定GATT server（server id=1）中service handle=14的服务。
+    -   打印说明：server 1中handle=14的服务启动成功。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >必须在start一个service后，才能添加新的service。
+
+12. 设置广播参数。
+
+    ```
+    AT+BLESETADVPAR=0x32,0x32,0,0x000000000000,0,0x000000000000,7,0,1,0,0x1
+    [ACore] ble set adv param min_interval:0x32, max interval:0x32, adv_type:0, duration:0
+    [ACore] ble set adv param, own addr:0x00:**:**:**:00:00
+    [ACore] ble set adv param, peer addr:0x00:**:**:**:00:00
+    AdvParamCallback adv_id: 1 status: 0
+    OK
+    ```
+
+    -   命令说明：设置id=1的广播的发送参数。
+    -   打印说明：广播参数设置成功。
+
+1.  设置广播数据。
+
+    ```
+    AT+BLESETADVDATA=0,0,0,0,1
+    AdvDataCallback adv_id: 1 status: 0
+    OK
+    ```
+
+    -   命令说明：设置指定广播（id=1）的发送数据。
+    -   打印说明：广播1的发送数据设置成功。
+
+2.  发送广播。
+
+    ```
+    AT+BLESTARTADV=1
+    [ACore] gap ble start adv in, adv_id:1
+    AdvEnableCallback adv_id: 1, start success
+    OK
+    ```
+
+    -   命令说明：开始发送id=1的BLE广播。
+    -   打印说明：开始发送id=1的BLE广播，回调打印发送成功。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >使用nRF connect工具，与设备连接后，可以看到注册的服务，如[图1](#fig569194295117)所示。
+
+    **图 1**  设备连接页面示意图<a name="fig569194295117"></a>  
+    ![](figures/设备连接页面示意图.png "设备连接页面示意图")
+
+    >![](public_sys-resources/icon-notice.gif) **须知：** 
+    >后续步骤需要在client端发现了相应服务后执行才有效。
+
+3.  <a name="li836512891212"></a>发送通知或指示。
+
+    ```
+    AT+GATTSSNDNTFY=1,0,16,7,0x00000000000014
+    OK
+    ```
+
+    -   命令说明：让指定characteristic（hdl=16）向指定server（id=1）的指定连接（conn id=0）对端发送notify或indicate\(取决与该characteristic的特性\)，内容为7字节的数据，数据内容为0x00000000000014。本例中，将指令的第三个参数设置为15或16均可以。
+    -   打印说明：发送成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >client端成功收到notify/indicate后，触发回调，会打印对应信息。
+        >特征的特性是允许nofity时的打印：
+        >```
+        >[GATTClient]Receive notification----client:1 conn_id:0
+        >handle:16 data_len:7
+        >data:00 00 00 00 00 00 14
+        >status:0
+        >```
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >hdl=2的特征的特性是indicate，使用该命令会indicate。
+        >```
+        >AT+GATTSSNDNTFY=1,0,2,4,0x00000001
+        >OK
+        >```
+        >此时客户端的回调打印为：
+        >```
+        >[GATTClient]Receive indication----client:1 conn_id:0
+        >handle:3 data_len:4
+        >data:00 00 00 00
+        >status:0
+        >```
+
+4.  根据uuid发送通知或指示。
+
+    ```
+    AT+GATTSSNDNTFYBYUUID=1,0,0x122a,14,17,2,0x0101
+    OK
+    ```
+
+    -   命令说明：让指定characteristic（uuid=0x122a，特性起始hdl=14，结束hdl=17）向指定server（id=1）的指定连接（conn id=0）对端发送notify或indicate\(取决与该characteristic的特性\)，内容为7字节的数据，数据内容为0x00000000000014。
+    -   打印说明：发送成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >client端成功收到notify后，触发回调，会打印对应信息：
+        >```
+        >[GATTClient]Receive notification----client:1 conn_id:0
+        >handle:16 data_len:2
+        >data:01 01
+        >status:0
+        >```
+
+        indicate方式与[15](#li836512891212)一致。
+
+#### 配置client<a name="ZH-CN_TOPIC_0000002270824406"></a>
+
+1.  使能BLE。
+
+    ```
+    AT+BLEENABLE
+    [ACore] ble enable cbk in, event:c
+    OK
+    ```
+
+    -   命令说明：使能BLE协议栈。
+    -   打印说明：使能成功。
+
+2.  设置本地地址。
+
+    ```
+    AT+BLESETADDR=0,0x000000000002
+    OK
+    ```
+
+    -   命令说明：与配置server时一样，配置BLE本地地址为0x111111111112，地址类型为公共设备地址。
+    -   打印说明：本地地址配置成功。
+
+3.  注册GAP回调函数。
+
+    ```
+    AT+BLEGAPREGCBK
+    OK
+    ```
+
+    -   命令说明：注册GAP层回调函数。
+    -   打印说明：注册成功。
+
+4.  注册GATT客户端回调函数。
+
+    ```
+    AT+GATTCREGCBK
+    OK
+    ```
+
+    -   命令说明：注册GATT客户端回调函数。
+    -   打印说明：注册成功。
+
+5.  注册一个GATT client。
+
+    ```
+    AT+GATTCREG=0x1234
+    [GATTClient] client: 1
+    OK
+    ```
+
+    -   命令说明：注册一个GATT客户端（client），配置该客户端的UUID=0x1234。
+    -   打印说明：成功添加了一个GATT客户端，它的client id=1（client id可用于后续对该client进行操作）。
+
+6.  与BLE设备连接。
+
+    ```
+    AT+BLECONN=0,0x111111111112
+    [Connected] addr:12:**:**:**:11:11, conn_id:00 addr type 0
+    conn_id: 0 conn_state: 1 pair_status: 1 addrtype 0 disc_reason 0
+    [GATTClient]Mtu changed----client:1 conn_id:0 mtu size:23
+    status:0
+    OK
+    ```
+
+    -   命令说明：与指定地址的设备进行连接，对端地址类型为公共设备地址。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >设备类型参数取值范围：
+        >0：公共设备地址
+        >1：随机设备地址
+        >2：公共本端地址
+        >3：随机静态本端地址
+
+    -   打印说明：与目标设备连接成功，连接id=0，连接状态＝１，配对状态＝１，并且双端交换了MTU信息。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >连接时，对端设备也会打印连接信息，server端还会终止广播，被终止的广播ID此时为１。
+        >```
+        >[Connected] addr:02:**:**:**:00:00, conn_id:00 addr type 0
+        >[ACore] ble gap adv set terminated cbk event:9
+        >conn_id: 0 conn_state: 1 pair_status: 1 addrtype 0 disc_reason 0
+        >[GATTServer]ExchangeMtuReqReceiveCallback--server_id:1 conn_id:0
+        >req_mtu_size:23
+        >status:0
+        >AdvTerminateCallback adv_id: 1 status: 0
+        >```
+
+7.  与对端设备发起配对。
+
+    ```
+    AT+BLEPAIR=0,0x111111111112
+    OK
+    PairCompleteCallback con_id: 0 status: 0
+    PairCompleteCallback addr:12:**:**:**:11:11
+    ```
+
+    -   命令说明：与指定地址的设备进行配对，配对前双端设备必须已连接。
+    -   打印说明：设备配对成功，回调打印配对成功的信息。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >配对成功后，对端设备也会触发回调，打印配对信息：
+        >```
+        >PairCompleteCallback con_id: 0 status: 0
+        >PairCompleteCallback addr:02:**:**:**:00:00
+        >```
+
+8.  发现服务。
+
+    ```
+    AT+GATTCFNDSERV=1,0,0x0012
+    [GATTClient]Discovery service----client:1 conn_id:0
+    start handle:14 end handle:21 uuid_len:2
+    uuid:0012
+    status:0
+    [GATTClient]Discovery service complete----client:1 conn_id:0 uuid len:2
+    uuid:0012status:0
+    OK
+    ```
+
+    -   命令说明：在指定client（id=1）的指定连接（conn id=0）中发现UUID=0x0012的服务。
+    -   打印说明：在指定client（id=1）的指定连接（conn id=0）中发现了UUID=0x0012的服务，服务的起始handle=14，最后handle=21，uuid的长度=2字节。后续的发现chara或者读、写操作需要用到handle信息。
+
+9.  发现特征。
+
+    ```
+    AT+GATTCFNDCHAR=1,0,14,0x122a
+    [GATTClient]Discovery character----client:1 conn_id:0 uuid_len:2
+    uuid:122a
+    declare handle:15 value handle:16 properties:12
+    status:0
+    [GATTClient]Discovery character----client:1 conn_id:0 uuid_len:2
+    uuid:122b
+    declare handle:18 value handle:19 properties:2a
+    status:0
+    [GATTClient]Discovery character----client:1 conn_id:0 uuid_len:2
+    uuid:122c
+    declare handle:22 value handle:23 properties:26
+    status:0
+    [GATTClient]Discovery character complete----client:1 conn_id:0 uuid len:2
+    uuid:0012
+    service handle:29
+    status:0
+    OK
+    ```
+
+    -   命令说明：在指定client（id=1）的指定连接（conn id=0）的指定服务（server hdl=14）发现UUID=0x122a的特性。
+    -   打印说明：在指定client（id=1）的指定连接（conn id=0）的指定服务（server hdl=14）发现了UUID=0x122a的特性，这个特性的declare hdl=15，value hdl=16，property =0x12（通知特征值+读特征值）。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >从回调打印信息中可以发现，该命令实际会发现指定服务的所有特性，本例中发现了server 14中uuid=122a和uuid=122b的特性。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >在该AT指令中，uuid填写service uuid 0x0012或者chara uuid 0x122a，都可以成功发现服务中的该服务（server hdl=14）中的charateristics：
+    >```
+    >AT+GATTCFNDCHAR=1,0,14,0x0012
+    >[GATTClient]Discovery character----client:1 conn_id:0 uuid_len:2
+    >uuid:122a
+    >declare handle:15 value handle:16 properties:12
+    >status:0
+    >[GATTClient]Discovery character----client:1 conn_id:0 uuid_len:2
+    >uuid:122b
+    >declare handle:18 value handle:19 properties:2a
+    >status:0
+    >[GATTClient]Discovery character----client:1 conn_id:0 uuid_len:2
+    >uuid:122c
+    >declare handle:22 value handle:23 properties:26
+    >status:0
+    >[GATTClient]Discovery character complete----client:1 conn_id:0 uuid len:2
+    >uuid:0012
+    >service handle:55
+    >status:0
+    >OK
+    >```
+
+1.  发现描述符。
+
+    ```
+    AT+GATTCFNDDESCR=1,0,15
+    [GATTClient]Discovery descriptor----client:1 conn_id:0 uuid len:2
+    uuid:2902
+    descriptor handle:17
+    status:0
+    [GATTClient]Discovery descriptor complete----client:1 conn_id:0
+    charatcer handle:65535
+    status:0
+    OK
+    ```
+
+    -   命令说明：在指定client（id=1）的指定连接（conn id=0）中发现指定特性（declare hdl=15）的所有描述符（一个特性从它的声明属性开始）。
+    -   打印说明：在指定client（id=1）的指定连接（conn id=0）中发现了指定特性的所有描述符，这个特性包含一个描述符（hdl=17）。
+
+    然后再发现第二个特征的所有描述符：
+
+    ```
+    AT+GATTCFNDDESCR=1,0,18
+    [GATTClient]Discovery descriptor----client:1 conn_id:0 uuid len:2
+    uuid:2904
+    descriptor handle:20
+    status:0
+    [GATTClient]Discovery descriptor----client:1 conn_id:0 uuid len:2
+    uuid:2905
+    descriptor handle:21
+    status:0
+    [GATTClient]Discovery descriptor complete----client:1 conn_id:0
+    charatcer handle:36882
+    status:0
+    OK
+    ```
+
+2.  通过handle读取服务端信息。
+
+    ```
+    AT+GATTCREADBYHDL=1,0,16
+    OK
+    [GATTClient]Read result----client:1 conn_id:0
+    handle:16 data_len:4
+    data:01 01 00 03
+    status:0
+    ```
+
+    -   命令说明：在指定client（id=1）的指定连接（conn id=0）中，请求读取srv端hdl=16的数据。
+    -   打印说明：请求成功，读取到srv端的数据，读取结果返回了4字节长度的数据，数据内容为\(0x\)01 01 00 03。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >在此前的章节中，我们注册server时，系统自动注册了一个服务，其中一个chara是device name，它的值的handle=7，我们可以试着读取它。
+    >读取成功的返回值是\(0x\)74 65 73 74 6e 61 6d 65 73 72 76，转换为ASCII码即**"**testnamesrv  **"**，也就是此前在配置服务端时我们设置的设备名字。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >srv端收到请求时，会有回调打印信息：
+    >```
+    >[GATTServer]ReadReqReceiveCallback--server_id:1 conn_id:0
+    >request_id:7 handle:7 offset:0 need_authorize:0 need_rsp:1 is_long:0
+    >status:0
+    >```
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >使用命令时发现，（如此例）client端不需要先发现服务、特征等，即可进行读取请求并能成功。
+
+3.  通过UUID读取。
+
+    ```
+    AT+GATTCREADBYUUID=1,0,15,16,0x122a
+    OK
+    [GATTClient]Read result----client:1 conn_id:0
+    handle:16 data_len:4
+    data:01 01 00 03 
+    status:0
+    [GATTClient]Read by uuid complete----client:1 conn_id:0
+    start handle:15 end handle:16 uuid len:2
+    uuid:122a
+    status:0
+    ```
+
+    -   命令说明：在指定client（id=1）的指定连接（conn id=0）的指定hdl区间内\(hdl in \[15,16\]\)中，请求读取srv端uuid=0x122a的数据。
+    -   打印说明：请求成功，读取到srv端的数据，读取结果返回了4字节长度的数据，数据内容为\(0x\)01 01 00 03 。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >这种读取方式srv端无回调打印。
+
+4.  写by hdl请求。
+
+    ```
+    AT+GATTCWRITEREQ=1,0,19,4,0xaabbccdd
+    [GATTClient]Write result----client:1 conn_id:0 handle:19
+    status:0
+    OK
+    ```
+
+    -   命令说明：向指定client（id=1）的指定连接（conn id=0）的指定hdl\(=19\)发送写请求，请求写入4个字节的数据，数据值为0xaabbccdd，此时特征的特性必须包含0x8写特征值。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >特征注册时配置数据的长度也是改属性的固定长度，如果写入属性值的长度值小于或等于这个固定长度，则属性值中包括写入属性值长度的部分应被写入新的属性值，而剩下的部分应不被改动（例：如果原属性固定长度为4字节，value=0x01010003，当请求写入3字节的数据0xaabbcc时，写入成功后的值会是0xaabbcc03）；如果写入属性值的长度值大于属性值的固定长度，则服务端会忽略该写入请求；srv端notify或indicate时不受固定长度限制。
+
+    -   打印说明：写请求成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >server端收到写请求，会有回调打印：
+        >```
+        >[GATTServer]WriteReqReceiveCallback--server_id:1 conn_id:0
+        >request_id:22 handle:19 offset:0 need_authorize:0 need_rsp:1 is_prep:0
+        >data_len:4 data:
+        >aa bb cc dd
+        >status:0
+        >```
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >可以通过读取请求，验证写入是否成功：
+        >```
+        >AT+GATTCREADBYHDL=1,0,19
+        >OK
+        >[GATTClient]Read result----client:1 conn_id:0
+        >handle:19 data_len:4
+        >data:aa bb cc dd
+        >status:0
+        >```
+
+5.  写by hdl cmd（需要先注册一个特性包含0x4的特征）。
+
+    ```
+    AT+GATTCWRITECMD=1,0,23,3,0xaabbee
+    [GATTClient]Write result----client:1 conn_id:0 handle:23
+    status:0
+    OK
+    ```
+
+    -   命令说明：向指定client（id=1）的指定连接（conn id=0）的指定hdl\(=19\)发送写请求，请求写入3个字节的数据，数据值为0xaabbee，此时特征的特性必须包含0x4，即写特征值并且不需要响应。
+
+    -   打印说明：写请求成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >server端收到写请求，会有回调打印：
+        >```
+        >[GATTServer]WriteReqReceiveCallback--server_id:1 conn_id:0
+        >request_id:3 handle:23 offset:0 need_authorize:0 need_rsp:0 is_prep:0
+        >data_len:3 data:
+        >aa bb ee
+        >status:0
+        >```
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >通过读取请求，验证写入是否成功：
+    >```
+    >AT+GATTCREADBYHDL=1,0,23
+    >OK
+    >[GATTClient]Read result----client:1 conn_id:0
+    >handle:23 data_len:4
+    >data:aa bb ee 03
+    >status:0
+    >```
+
+#### 其他AT指令示例<a name="ZH-CN_TOPIC_0000002270769238"></a>
+
+
+
+##### 扫描参数设置<a name="ZH-CN_TOPIC_0000002305698501"></a>
+
+-   设置BLE扫描参数。
+
+    ```
+    AT+BLESETSCANPAR=0x48,0x48,0,1,0
+    ScanParameterSetCompletedCallback status: 0
+    OK
+    ```
+
+    命令说明：配置扫描间隔为0x48 \* 0.625ms，扫描窗口为0x48 \* 0.625ms，扫描类型为被动扫描，扫描LE 1M PHY，扫描过滤策略为接收所有广播（定向到其它设备的除外）。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >扫描phy参数取值范围：
+    >0x0：无广播包
+    >0x1：1M PHY
+    >0x2：2M PHY
+    >0x3：Coded PHY
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >扫描过滤策略参数取值范围：
+    >0x0：接收所有广播，不接收目标地址不是本设备地址的定向广播；
+    >0x1：只接收白名单里设备的广播，不接收目标地址不是本设备地址的定向广播；
+    >0x2：接收所有的非定向广播、地址是可解析私有地址的广播方发送的定向广播和发给该设备的定向广播；
+    >0x3：接收白名单中的所有非定向广播、地址是可解析私有地址的广播方发送的定向广播和发给该设备的定向广播。
+
+    打印说明：参数设置成功，回调打印。
+
+##### 开启扫描<a name="ZH-CN_TOPIC_0000002271145582"></a>
+
+-   启动BLE扫描。
+
+    ```
+    AT+BLESTARTSCAN
+    OK
+    ```
+
+    ScanResult primPhy: 1 secPhy: 0 event\_type: 19 data\_status: 0 data\_len: 31,         addr\_type:0x1 addr:0xa6:2e:e5:07:59:58
+
+    ScanResult primPhy: 1 secPhy: 0 event\_type: 19 data\_status: 0 data\_len: 12,         addr\_type:0x1 addr:0x91:28:08:07:b6:d2
+
+    ScanResult primPhy: 1 secPhy: 0 event\_type: 19 data\_status: 0 data\_len: 30,         addr\_type:0x0 addr:0x5f:10:00:10:10:d8
+
+    ScanResult primPhy: 1 secPhy: 0 event\_type: 19 data\_status: 0 data\_len: 0,         addr\_type:0x0 addr:0x12:11:11:11:11:11
+
+    命令说明：启动BLE扫描功能。
+
+    打印说明：扫描启动成功，打印扫描结果到屏幕上。每一条打印数据中分别表示：主广播PHY类型\(primPhy\)，辅广播PHY类型\(secPhy\)，扫描结果广播类型（event\_type），扫描结果数据状态，广播数据长度，广播地址类型，广播地址。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >扫描结果广播类型：
+    >0x00：扩展的不可连接不可扫描非定向；
+    >0x01：扩展的可连接非定向；
+    >0x02：扩展的可扫描非定向；
+    >0x04：扩展的不可连接不可扫描定向；
+    >0x05：扩展的可连接定向；
+    >0x06：扩展的可扫描定向；
+    >0x10：传统的不可连接非定向；
+    >0x12：传统的可扫描非定向；
+    >0x13：传统的可连接可扫描非定向；
+    >0x15：传统的可连接定向；
+    >0x1A：传统的与ADV\_SCAN\_IND对应的扫描响应；
+    >0x1B：传统的与ADV\_IND对应的扫描响应。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >扫描结果广播类型：
+    >0x00：完整数据或最后一个片段
+    >0x01：不完整的数据
+    >0x02：被截断不完整的数据
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >启动BLE扫描后，扫描结果会刷屏。
+
+### SLE<a name="ZH-CN_TOPIC_0000002269784194"></a>
+
+
+
+
+#### 配置server<a name="ZH-CN_TOPIC_0000002305385925"></a>
+
+1.  使能SLE。
+
+    ```
+    AT+SLEENABLE
+    OK
+    ```
+
+    -   命令说明：使能SLE协议栈。
+    -   打印说明：使能成功。
+
+2.  设置SLE本地地址。
+
+    ```
+    AT+SLESETADDR=0,0x000000001111
+    OK
+    ```
+
+    -   命令说明：使能SLE协议栈。
+    -   打印说明：使能成功。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >可以使用AT+SLEGETADDR命令查看当前本地地址：
+    >```
+    >AT+SLEGETADDR
+    >[SLE DD SDK] get addr: 00:00:00:00:11:11
+    >OK
+    >```
+
+3.  设置本地设备名。
+
+    ```
+    AT+SLESETNAME=11,BLETESTNAME
+    OK
+    ```
+
+    -   命令说明：设置设备名称
+    -   打印说明：设置成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >可以使用AT+SLEGETNAME命令查看：
+        >```
+        >AT+SLEGETNAME
+        >[SLE DD SDK] get name: BLETESTNAME
+        >OK
+        >```
+        >与BLE中不同，SLE设置的设备名称后没有被添加' '。
+
+4.  服务端注册回调。
+
+    ```
+    AT+SSAPSREGCBK
+    [AT] ssaps register cbks.
+    OK
+    ```
+
+    -   命令说明：注册SLE服务端回调函数。
+    -   打印说明：回调注册成功。
+
+5.  注册SLE服务端。
+
+    ```
+    AT+SSAPSADDSRV=0x1234
+    ssaps register server handle (1).
+    OK
+    ```
+
+    -   命令说明：注册SLE服务端，服务端uuid设置为0x1234；
+    -   打印说明：服务端注册成功，服务端句柄=1。
+
+6.  添加service（同步）。
+
+    ```
+    AT+SSAPSSYNCADDSERV=0x2222,1
+    ssaps add service sync handle (16), ret:0.
+    OK
+    ```
+
+    -   命令说明：同步的方式添加一个service，service uuid=0x2222，1表示把这个服务注册为首要服务；
+    -   打印说明：服务注册成功，服务句柄hdl=16。
+
+7.  添加属性（同步）。
+
+    ```
+    AT+SSAPSSYNCADDPROPERTY=16,0x2424,0x3,0xb,2,0x0101
+    ssaps add property sync handle (17), ret:0.
+    OK
+    ```
+
+    -   命令说明：同步方式为handle=16的service添加一个属性（property），属性的uuid=0x2424，属性权限为3（可读可写），操作指使=0xb（可读可写，写后无反馈，允许notify），数据长度=2字节，数据值=0x0101。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >property  permission参数取值范围：
+        >0x1：可读
+        >0x2：可写
+        >0x4：需要加密
+        >0x8：需要认证
+        >0x10：需要授权
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >operate indication参数取值范围：
+        >0x01：数据值可被读取；
+        >0x02：数据值可被写入，写入后无反馈；
+        >0x04：数据值可被写入，写入后产生反馈给客户端；
+        >0x08：数据值通过通知方式传递给客户端；
+        >0x10：数据值通过指示方式传递给客户端；
+        >0x20：数据值可携带在广播中；
+        >0x100：数据值说明描述符可被写入；
+        >0x200：客户端描述符可被写入；
+        >0x400：服务端述符可被写入；
+        >0x7FF：操作指示最大值。
+
+    -   打印说明：property添加成功，property handle=17。
+
+8.  <a name="li623465516611"></a>添加属性描述符（同步）
+
+    ```
+    AT+SSAPSSYNCADDDESCR=16,17,0x2425,5,5,3,2,0x0100
+    ssaps add descriptor sync ret (0).
+    OK
+    ```
+
+    -   命令说明：为指定服务（handle=16）的指定属性（property handle=17）添加一个descriptor，descriptor的uuid=0x2425，描述符权限为5，操作指示为5（这两个参数的取值范围与步骤6中的一致）；描述符类型为2，数据长度2字节，数据值=0x0100，表示notify。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >描述符类型参数取值范围：
+        >0x00：特征值；
+        >0x01：属性说明描述符；
+        >0x02：客户端配置描述符；
+        >0x03：服务端配置描述符；
+        >0x04：格式描述符；
+        >0x05\~ 0x1F：服务管理保留描述符；
+        >0xFF：厂商自定义描述符。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >属性描述符的value字段的值的含义：
+        >0100：notify；
+        >0200：indicate；
+        >0 ：不可向对端通知或指示。
+
+    -   打印说明：descriptor添加成功
+
+9.  添加属性（同步）。
+
+    ```
+    AT+SSAPSSYNCADDPROPERTY=16,0x2525,0x3,0x15,2,0x0202
+    ssaps add property sync handle (18), ret:0.
+    OK
+    ```
+
+    命令说明：同步方式为handle=16的service再添加一个属性（property），属性的uuid=0x2525，属性权限为3（可读可写），操作指使=0x15（可读可写，写后有反馈，允许indicate），数据长度=2字节，数据值=0x0202。
+
+10. 添加属性描述符（同步）。
+
+    ```
+    AT+SSAPSSYNCADDDESCR=16,18,0x2526,5,0x15,2,2,0x0200
+    ssaps add descriptor sync ret (0).
+    OK
+    ```
+
+    命令说明：为指定服务（handle=16）的指定属性（property handle=17）添加一个descriptor，descriptor的uuid=0x2526，描述符权限为5，操作指示为5；描述符类型为2，数据长度2字节，数据值=0x020，表示indicate。
+
+11. 启动服务
+
+    ```
+    AT+SSAPSSTARTSERV=16
+    [AT] ssaps start service cb server_id(1) handle(16) status(0).
+    ssaps start_service handle:10, ret:0.
+    OK
+    ```
+
+    -   命令说明：启动handle=16的service；
+    -   打印说明：启动成功，server id=1，service handle=16。
+
+12. 设置SLE广播参数
+
+    ```
+    AT+SLESETADVPAR=1,3,200,200,0,000000001111,0,000000000000
+    [ACore] sle set announce param, handle:1, mode:3, min_interval:c8, max_interval:c8, tx_power: 127
+    [ACore] sle set announce param, own addr:0x00:**:**:**:11:11
+    [ACore] sle set announce param, peer addr:0x00:**:**:**:00:00
+    OK
+    ```
+
+    -   命令说明：设置广播参数，设置广播handle=1，handle的取值范围\[0，0x10\]；设备为0x03 可连接可扫描状态，最小公开周期200 \* 125μs，最大200×125μs，本端地址为公共设备地址，地址为0x000000001111，对端为公共设备地址，地址全0。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >设备公开类型参数取值范围：
+        >0x00：不可连接不可扫描；
+        >0x01：可连接不可扫描；
+        >0x02：不可连接可扫描；
+        >0x03：可连接可扫描；
+        >0x07：可连接可扫描，定向。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >地址类型参数：
+        >0：公有地址；
+        >6：随机地址。
+
+    -   打印说明：广播参数设置成功，打印了hdl=1的广播参数，其中tx\_power: 127表示没有设置特定发射功率。
+
+1.  设置SLE广播数据。
+
+    ```
+    AT+SLESETADVDATA=1,10,4,aabbccddeeff11223344,11224455
+    OK
+    ```
+
+    -   命令说明：设置handle=1的广播的发送数据，广播数据长度为10字节，扫描响应数据长度为4字节，广播数据=aabbccddeeff11223344，响应数据设置为11224455。
+    -   打印说明：广播数据设置成功。
+
+2.  发送SLE广播：AT+SLESTARTADV=1
+
+    ```
+    AT+SLESTARTADV=1
+    [ACore] sle start announce in, adv_id:1
+    [ACore] sle adv cbk in, event:0 status:0
+    [ACore] sle adv cbk in, event:1 status:0
+    [ACore] sle adv cbk in, event:2 status:0
+    [ACore] sle adv cbk in, event:3 status:0
+    OK
+    ```
+
+    -   命令说明：开始发送id=1的SLE广播。
+    -   打印说明：开始发送id=1的SLE广播。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >下方步骤需要在client端发现了相应服务后执行才有效。
+
+3.  服务端向客户端发送通知（NTF或IND）
+
+    ```
+    AT+SSAPSSNDNTFY=0,0x11,0,2,0x1010
+    OK
+    ```
+
+    -   命令说明：指定连接（conn id=0）对端的客户端发送notify或indicate（由该property的特征的值决定），notify特定property（hdl=0x11）的数据，数据类型为0（见[8](#li623465516611)的描述符类型），2字节数据，数据内容为0x0200。
+    -   打印说明：发送成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >client端成功收到notify后，回调触发，打印对应信息：：
+        >```
+        >[ssap client] notification info cbk client 0,handle:0x11, type:0x0, status:0x0
+        >------------data-----------------
+        >10 10
+        >---------------------------------
+        >```
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >handle=0x12的property是允许indicate的，可以使用该命令进行indicate操作：
+        >```
+        >AT+SSAPSSNDNTFY=0,0x12,0,2,0x2020
+        >OK
+        >```
+        >此时对端触发indicate的回调，打印信息如下：
+        >```
+        >[ssap client] indication info cbk conn_id 0,data_len:2, data_type:0x0, status:0x0
+        >```
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >触发哪种回调取决于发送方的property的权限配置（要允许notify或indicate）以及其描述符的值：
+        >-   property允许notify时，该属性的描述符值需设置成0x0100；
+        >-   property允许indicate时，该属性的描述符值需设置成0x0200。
+
+4.  根据uuid发送通知或指示。
+
+    ```
+    AT+SSAPSNTFYBYUUID=0,0x2424,16,17,0,2,0xaabb
+    OK
+    ```
+
+    -   命令说明：指定连接（conn id=0）对端的客户端发送notify或indicate（由该property的特性决定），通知特定property（uuid=0x2424）的数据，数据类型为0（见[8](#li623465516611)中的描述符类型），内容为2字节数据，数据内容为0x0200。本命令与SSAPSSNDNTFY效果相同。
+    -   打印说明：发送成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >client端成功收到notify后，回调触发，打印对应信息：
+        >```
+        >[ssap client] notification info cbk client 0,handle:0x11, type:0x0, status:0x0
+        >------------data-----------------
+        >aa bb
+        >---------------------------------
+        >```
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >property是允许indicate的，可以使用该命令进行indicate操作：
+        >```
+        >AT+SSAPSNTFYBYUUID=0,0x2525,18,19,0,2,0xaabb
+        >OK
+        >```
+        >此时对端触发indicate的回调，打印信息如下：
+        >```
+        >[ssap client] indication info cbk conn_id 0,data_len:2, data_type:0x0, status:0x0
+        >```
+
+#### 配置client<a name="ZH-CN_TOPIC_0000002270826110"></a>
+
+1.  使能SLE。
+
+    ```
+    AT+SLEENABLE
+    OK
+    ```
+
+    -   命令说明：使能SLE协议栈。
+    -   打印说明：使能成功。
+
+2.  设置本地地址。
+
+    ```
+    AT+SLESETADDR=0,0X000000888888
+    OK
+    ```
+
+    -   命令说明：设置本地地址。
+    -   打印说明：设置完成成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >可以使用AT+SLEGETADDR命令查看当前本地地址，检验设置是否成功：
+        >```
+        >AT+SLEGETADDR
+        >[SLE DD SDK] get addr: 00:00:00:88:88:88
+        >OK
+        >```
+
+3.  注册SLE客户端回调。
+
+    ```
+    AT+SSAPCREGCBK
+    [ssap client] client register cbk
+    OK
+    ```
+
+    -   命令说明：注册SLE客户端回调（也注册了客户端）。
+    -   打印说明：注册成功。
+
+4.  设置SLE默认连接参数。
+
+    ```
+    AT+SLESETDEFAULTCONNP=0,1,0x1,0x20,0x20,0x64,0x64,0x1FC
+    OK
+    ```
+
+    -   命令说明：设置默认连接参数，配置为：不使能链路过滤，初始化扫描带宽为1\(1表示1M，2表示2M\)，链路建立时进行G\\T交互，扫描interval=0x20\(最小允许0x14\)，扫描窗口为0x20，最大链路interval=0x64，最小链路interval=0x64，超时时间=0x1FC\(单位：10ms\)。
+    -   打印说明：配置成功。
+
+5.  与 SLE 设备连接
+
+    ```
+    AT+SLECONN=0,0X000000001111
+    OK
+    [Connected]
+    addr:00:**:**:**:11:11, handle:00
+    ```
+
+    -   命令说明：与地址为0X000000001111的设备建立连接；SLE建立连接的AT指令中，对端设备地址值必须是对端设备发送的广播中携带的本端地址值。
+    -   打印说明：连接成功，连接hdl=0。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >连接建立后，server端也会打印了连接信息：
+        >```
+        >[Connected]
+        >addr:00:**:**:**:88:88, handle:00
+        >[ACore] sle adv cbk in, event:7 status:0
+        >```
+        >最后一行说明server端触发了广播事件回调（ID=1的广播停止了）。
+
+6.  进行加密配对。
+
+    ```
+    AT+SLEPAIR=0,0X000000001111
+    OK
+    ```
+
+    -   命令说明：与地址为0X000000001111的设备加密配对，必须在连接建立后才能成功。
+    -   打印说明：配对成功。
+
+7.  获取配对设备
+
+    ```
+    AT+SLEGETPAIRDEV
+    [SLE CM SDK] get paired num: 1
+    [SLE CM SDK] addr: 00:00:**:**:**:11
+    OK
+    ```
+
+    -   命令说明：获取配对设备数目。
+    -   打印说明：已配对设备数为1，并打印对端地址。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >另外，可以使用命令AT+SLEGETPAIREDNUM单独获配对设备数量信息：
+    >```
+    >AT+SLEGETPAIREDNUM
+    >[SLE CM SDK] get paired num: 1
+    >OK
+    >```
+
+8.  <a name="li5246143733911"></a>获取设备配对状态。
+
+    ```
+    AT+SLEGETPAIRSTA=0,0X000000001111
+    [SLE CM SDK] state: 3
+    OK
+    ```
+
+    -   命令说明：获取与地址为0X000000001111的设备的配对状态；
+    -   打印说明：与该设备的已配对。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >配对状态值说明：
+    >0x1：未配对
+    >0x2：正在配对
+    >0x3：已配对
+
+9.  获取绑定设备
+
+    ```
+    AT+SLEGETBONDDEV
+    [SLE CM SDK] get bonded num: 1
+    [SLE CM SDK] addr: 00:00:**:**:**:11
+    OK
+    ```
+
+    -   命令说明：获取已绑定的设备信息。
+    -   打印说明：当前已绑定设备数量为1，已绑定地址为 00:00:\*\*:\*\*:\*\*:11的设备。
+
+1.  发现服务和property
+
+    ```
+    AT+SSAPCFNDSTRU=0,0,1,0x2222,0,0xff
+    sle at cmd discovery structure type = 1, uuid_len = 2, start_hdl: 0x0, end_hdl: 0xff
+    OK
+    [ssap client] find structure cbk client: 0 conn_id:0 status: 0x0
+    [ssap client] find structure structure start_hdl:[0x10], end_hdl:[0x12], uuid len:2
+    [ssap client] structure uuid:[0x22][0x22]
+    [ssap client] find structure complete cbk client: 0 conn_id:0 status:0x0, type:1
+    ```
+
+    -   命令说明：在指定client（id=0，服务端id默认为0，目前没有回调打印它）的指定连接（conn id/conn hdl=0，连接id或handle值是在建立连接时，由回调函数打印的，见步骤5）中发现一个structure uuid=0x2222的首要服务，搜索起始handle=0，搜索结束handle=0xff。本例中，目标服务是3.3.2.1 步骤6中的。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >服务类型参数取值范围：
+        >0x00：SERVICE\_STRUCTURE 服务结构
+        >0x01：PRIMARY\_SERVICE     首要服务
+        >0x02：REFERENCE\_SERVICE  引用服务
+        >0x03：PROPERTY                  属性
+        >0x04：METHOD                    方法
+        >0x05：EVENT                        事件
+
+    -   打印说明：发现了目标structure，它的起始hdl=0x10，结束hdl=0x12，以及其他打印信息。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >通过将第三个参数设置为0x3，可以用这个命令发现属性:
+    >```
+    >AT+SSAPCFNDSTRU=0,0,3,0x2424,0,0xff
+    >sle at cmd discovery structure type = 3, uuid_len = 2, start_hdl: 0x0, end_hdl: 0xff
+    >OK
+    >[ssap client] find property cbk client: 0 conn_id:0 status: 0x0
+    >[ssap client] find property hdl:[0x11]
+    >[ssap client] uuid:[0x24][0x24]
+    >[ssap client] descriptors[0]: type = 0x03
+    >[ssap client] find structure complete cbk client: 0 conn_id:0 status:0x0, type:3
+    >```
+    >```
+    >AT+SSAPCFNDSTRU=0,0,3,0x2525,0,0xff
+    >sle at cmd discovery structure type = 3, uuid_len = 2, start_hdl: 0x0, end_hdl: 0xff
+    >OK
+    >[ssap client] find property cbk client: 0 conn_id:0 status: 0x0
+    >[ssap client] find property hdl:[0x12]
+    >[ssap client] uuid:[0x25][0x25]
+    >[ssap client] descriptors[0]: type = 0x02
+    >[ssap client] find structure complete cbk client: 0 conn_id:0 status:0x0, type:3
+    >```
+
+2.  通过uuid读取服务端信息。
+
+    ```
+    AT+SSAPCREADBYUUID=0,0,0x2424,0,0,0xff
+    OK
+    [ssap client] read cfm cbk client: 0 conn_id:0 status: 0x0. handle:0x11
+    ------------data-----------------
+    01 01
+    ---------------------------------
+    [ssap client] read by uuid complete cbk client: 0 conn_id:0 status: 0x0. type:0x0
+    [ssap client] read by uuid complete cbk start_hdl:[0x00], end_hdl:[0xff], uuid len:2
+    [ssap client] uuid:[0x24][0x24]
+    ```
+
+    -   命令说明：请求读取指定client（id=0）的指定连接（conn hdl=0）中类型为0（见3.3.2.1 步骤8中的描述符类型）、uuid=0x2424的数据，搜索的hdl范围为\[0, 0xff\]。
+    -   打印说明：请求成功，读取到srv端的数据，读取的值为0x0101。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >srv端收到请求时，会有回调打印：
+        >```
+        >[AT] ssaps read by uuid cb server_id(1) conn id(0)         begin handle(0x0000) end handle (0x00ff) status(0).
+        >[AT] ssaps read by uuid cb request_id(0) type(0) need_rsp(0) need_authorize(0).
+        >[AT] ssaps read by uuid cb uuid len(2) 37 be
+        >```
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >第四个参数设置为3，可以读取这个property的描述符的值：
+    >```
+    >AT+SSAPCREADBYUUID=0,0,0x2424,3,0,0xff
+    >OK
+    >[ssap client] read cfm cbk client: 0 conn_id:0 status: 0x0. handle:0x11
+    >------------data-----------------
+    >01 00
+    >---------------------------------
+    >[ssap client] read by uuid complete cbk client: 0 conn_id:0 status: 0x0. type:0x3
+    >[ssap client] read by uuid complete cbk start_hdl:[0x00], end_hdl:[0xff], uuid len:2
+    >[ssap client] uuid:[0x24][0x24]
+    >```
+
+3.  通过hdl读取。
+
+    ```
+    AT+SSAPCREADREQ=0,0,0X12,0
+    OK
+    [ssap client] read cfm cbk client: 0 conn_id:0 status: 0x0. handle:0x0
+    ------------data-----------------
+    02 02
+    ---------------------------------
+    ```
+
+    -   命令说明：请求读取指定client（id=0）的指定连接（conn hdl=0）中hdl=0x12、类型为0（见[8](#li5246143733911)中的描述符类型）的数据。
+    -   打印说明：请求成功，读取到srv端的数据，读取的值为0x0202。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >srv端收到请求时，有回调触发，打印如下：
+        >```
+        >[AT] ssaps read cb server_id(1) conn id(0) handle(18) status(0).
+        >[AT] ssaps read request cb request_id(0) type(0) need_rsp(0) need_authorize(0).
+        >```
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >把第四个参数设置为2，可以读取该property的描述符的值：
+    >```
+    >AT+SSAPCREADREQ=0,0,0x12,2
+    >OK
+    >[ssap client] read cfm cbk client: 0 conn_id:0 status: 0x0. handle:0x0
+    >------------data-----------------
+    >02 00
+    >---------------------------------
+    >```
+
+4.  发送写请求（req方式）。
+
+    ```
+    AT+SSAPCWRITEREQ=0,0,0x12,0,3,0x778899
+    OK
+    [ssap client] write cfm cbk client: 0 conn_id:0 status: 0x0. handle:0x12
+    ------------data-----------------
+    77 88 99
+    
+    ---------------------------------
+    ```
+
+    -   命令说明：向指定client（id=0）的指定连接（conn id=0）的指定hdl\(=0x12\)发送写请求，向类型为0（见3.3.2.1 步骤8中的描述符类型）的条目请求写入3个字节的数据，数据值为0x778899。req方式下，目标property必须是包含0x4特性的（即允许写且写后有反馈）。
+    -   打印说明：写请求成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >server端收到写请求，有回调触发，打印如下：
+        >```
+        >[AT] ssaps write cb server_id(1) conn id(0) handle(18) status(0).
+        >[AT] ssaps write cb request cb request_id(0) type(0) need_rsp(0) need_authorize(0).
+        >[AT] ssaps write cb request cb data len(3).
+        >------------data-----------------
+        >77 88 99
+        >---------------------------------
+        >```
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >可以通过读取请求，验证写入是否成功：
+        >```
+        >AT+SSAPCREADREQ=0,0,0x12,0
+        >OK
+        >[ssap client] read cfm cbk client: 0 conn_id:0 status: 0x0. handle:0x0
+        >------------data-----------------
+        >77 88 99
+        >---------------------------------
+        >```
+
+5.  向服务端写入数据（cmd方式）。
+
+    ```
+    AT+SSAPCWRITECMD=0,0,0x11,0,3,0xaabbcc
+    OK
+    ```
+
+    -   命令说明：命令说明：向指定client（id=0）的指定连接（conn id=0）的指定hdl\(=0x11\)发送写请求，向类型为0（见[8](#li5246143733911)中的描述符类型）的条目，写入3个字节的数据，数据值为0xaabbcc。cmd写方式下，目标property必须是包含0x2特性的（即允许写且写后无反馈）。
+    -   打印说明：命令发送成功。
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >对端有回调触发，打印如下：
+        >```
+        >[AT] ssaps write cb server_id(1) conn id(0) handle(17) status(0).
+        >[AT] ssaps write cb request cb request_id(0) type(0) need_rsp(0) need_authorize(0).
+        >[AT] ssaps write cb request cb data len(3).
+        >------------data-----------------
+        >aa bb cc
+        >---------------------------------
+        >```
+
+        >![](public_sys-resources/icon-note.gif) **说明：** 
+        >可以通过读取请求，验证写入是否成功：
+        >```
+        >AT+SSAPCREADREQ=0,0,0x11,0
+        >OK
+        >[ssap client] read cfm cbk client: 0 conn_id:0 status: 0x0. handle:0x0
+        >------------data-----------------
+        >aa bb cc
+        >---------------------------------
+        >```
+
+#### 其他AT指令示例<a name="ZH-CN_TOPIC_0000002305419029"></a>
+
+
+##### 开启扫描<a name="ZH-CN_TOPIC_0000002306374549"></a>
+
+-   开启扫描
+
+```
+AT+SLESTARTSCAN
+OK
+[adv_report] event_type: 0x03, addr_type: 0x00, addr: 00:3e:37:0f:01:00
+[adv_report] data length: 36
+[adv_report] event_type: 0x03, addr_type: 0x00, addr: 00:3e:37:0f:01:00
+[adv_report] data length: 36
+[adv_report] event_type: 0x03, addr_type: 0x00, addr: 00:01:09:07:b0:55
+```
+
+命令说明：开启SLE广播扫描。
+
+打印说明：开启成功。打印扫描结果到屏幕上。每一条扫描结果占两行，第一行打印数据表示：扫描结果广播类型（event\_type），广播地址类型，广播地址；第二行打印数据表示：广播数据长度。
+
+>![](public_sys-resources/icon-note.gif) **说明：** 
+>需要使用指令：AT+SLEATCOMMONREGCBK注册SLE一般回调（包含广播和扫描回调），才能使扫描结果被打印出来。
+
+>![](public_sys-resources/icon-note.gif) **说明：** 
+>扫描结果广播类型：
+>比特位    |    描述
+>0            |    可连接的GLE广播报文 connectable GLE adv packet
+>1            |    可扫描的GLE广播报文 scanable GLE adv packet
+>2            |    直接GLE报文 direct GLE packet
+>3            |    扫描响应报文 scan response packet
+>4            |    第一信道广播报文 first channel adv packet
+>5-6         |    数据状态 data status
+>|    0b00，完整的广播报告 complete adv report
+>|    0b01，不完整的广播报告，后续还有更多报文数据 incomplete adv report, more data is following
+>|    0b10，不完整的广播报告，数据被截断 incomplete adv report, data is truncated
+>|    0b11，RFU
+
+>![](public_sys-resources/icon-note.gif) **说明：** 
+>启动SLE扫描后，扫描结果会刷屏。
 
 # 新增AT指令方法<a name="ZH-CN_TOPIC_0000001814519541"></a>
 

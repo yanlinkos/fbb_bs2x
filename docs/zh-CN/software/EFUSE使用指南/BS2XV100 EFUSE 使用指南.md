@@ -4,8 +4,6 @@
 
 本文档主要描述了BS2XV100的客户预留EFUSE位域的使用方法。
 
-注：本文档部分内容暂以BS21为例，后续不再单独说明。
-
 **产品版本<a name="section578420251745"></a>**
 
 与本文档对应的产品版本如下。
@@ -84,11 +82,25 @@
 </th>
 </tr>
 </thead>
-<tbody><tr id="row1581395714113"><td class="cellrowborder" valign="top" width="12.280000000000001%" headers="mcps1.1.4.1.1 "><p id="p16814957164118"><a name="p16814957164118"></a><a name="p16814957164118"></a>02</p>
+<tbody><tr id="row8884175643117"><td class="cellrowborder" valign="top" width="12.280000000000001%" headers="mcps1.1.4.1.1 "><p id="p128841756103113"><a name="p128841756103113"></a><a name="p128841756103113"></a><span id="ph7976155763119"><a name="ph7976155763119"></a><a name="ph7976155763119"></a>04</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="19.97%" headers="mcps1.1.4.1.2 "><p id="p988415620312"><a name="p988415620312"></a><a name="p988415620312"></a><span id="ph681605915318"><a name="ph681605915318"></a><a name="ph681605915318"></a>2025-06-20</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="67.75%" headers="mcps1.1.4.1.3 "><p id="p127010603215"><a name="p127010603215"></a><a name="p127010603215"></a>更新“<a href="烧录流程.md">烧录流程</a>”章节内容。</p>
+</td>
+</tr>
+<tr id="row163781126111712"><td class="cellrowborder" valign="top" width="12.280000000000001%" headers="mcps1.1.4.1.1 "><p id="p7378426141712"><a name="p7378426141712"></a><a name="p7378426141712"></a>03</p>
+</td>
+<td class="cellrowborder" valign="top" width="19.97%" headers="mcps1.1.4.1.2 "><p id="p437819269178"><a name="p437819269178"></a><a name="p437819269178"></a>2025-05-30</p>
+</td>
+<td class="cellrowborder" valign="top" width="67.75%" headers="mcps1.1.4.1.3 "><a name="ul09961835095"></a><a name="ul09961835095"></a><ul id="ul09961835095"><li>更新“<a href="概述.md">概述</a>”章节内容。</li><li>更新“<a href="使用软件接口读写EFUSE.md">使用软件接口读写EFUSE</a>”章节内容。</li></ul>
+</td>
+</tr>
+<tr id="row1581395714113"><td class="cellrowborder" valign="top" width="12.280000000000001%" headers="mcps1.1.4.1.1 "><p id="p16814957164118"><a name="p16814957164118"></a><a name="p16814957164118"></a>02</p>
 </td>
 <td class="cellrowborder" valign="top" width="19.97%" headers="mcps1.1.4.1.2 "><p id="p48141057184110"><a name="p48141057184110"></a><a name="p48141057184110"></a>2025-01-24</p>
 </td>
-<td class="cellrowborder" valign="top" width="67.75%" headers="mcps1.1.4.1.3 "><p id="p108141657174118"><a name="p108141657174118"></a><a name="p108141657174118"></a>更新“<a href="软件编程接口使用指导.md">软件编程接口使用指导</a>”章节内容。</p>
+<td class="cellrowborder" valign="top" width="67.75%" headers="mcps1.1.4.1.3 "><p id="p108141657174118"><a name="p108141657174118"></a><a name="p108141657174118"></a>更新“<a href="使用软件接口读写EFUSE.md">使用软件接口读写EFUSE</a>”章节内容。</p>
 </td>
 </tr>
 <tr id="row5947359616410"><td class="cellrowborder" valign="top" width="12.280000000000001%" headers="mcps1.1.4.1.1 "><p id="p2149706016410"><a name="p2149706016410"></a><a name="p2149706016410"></a>01</p>
@@ -103,14 +115,18 @@
 
 # 概述<a name="ZH-CN_TOPIC_0000001838078500"></a>
 
-EFUSE是一种可编程的存储单元，由于其只可编程一次的特征，多用于芯片保存Chip ID、密钥或其他一次性存储数据。
+EFUSE是一种可编程的存储单元，由于其只可编程一次的特征，多用于芯片保存Chip ID、密钥或其他一次性存储数据。当前BS2x芯片上总共128Bytes，用户可使用的EFUSE总共18Byte。如果用户不需要使用安全启动功能，其中Boot Hash Value部分的32字节也可以由用户自定义使用。在地址0x5702\_8894中Bit15\~Bit8可以给客户使用。
+
+>![](public_sys-resources/icon-notice.gif) **须知：** 
+>EFUSE地址遵循32位对齐，每个地址包含16Bit的有效EFUSE位域。
 
 BS2X提供了两种使用方式：
 
--   通过软件驱动接口直接读写用户预留的128bit EFUSE空间。
--   通过烧写工具操作整个2048bit空间。
+-   通过软件驱动接口直接读写为用户预留的EFUSE空间。
+-   通过烧写工具操作为用户预留的EFUSE空间。
+-   通过JLink读写为用户预留的EFUSE空间。
 
-# 软件编程接口使用指导<a name="ZH-CN_TOPIC_0000001838237236"></a>
+# 使用软件接口读写EFUSE<a name="ZH-CN_TOPIC_0000001838237236"></a>
 
 EFUSE模块提供的接口及功能如下：
 
@@ -119,6 +135,10 @@ EFUSE模块提供的接口及功能如下：
 -   uapi\_efuse\_read\_bit：读取EFUSE中的指定Bit位。uapi\_efuse\_read\_buffer：读取EFUSE中多个字节，进入提供的缓冲区。
 -   uapi\_efuse\_write\_bit：写EFUSE中的指定Bit位。
 -   uapi\_efuse\_write\_buffer：从提供的缓冲区向EFUSE写入多个字节。
+
+>![](public_sys-resources/icon-notice.gif) **须知：** 
+>-   调用API写EFUSE之前需要先执行LDO上电，写完成之后关闭即可，具体执行过程则是如下示例调用pm\_efuse\_ldo\_power接口执行上下电。读EFUSE则不需要单独执行上电。
+>-   如果要进行位操作，首先需要打开EFUSE\_BIT\_OPERATION宏，将其添加到config.py中的宏列表即可。
 
 示例：
 
@@ -177,7 +197,7 @@ EFUSE模块提供的接口及功能如下：
     }
     ```
 
-# BurnTool烧写efuse\_cfg.bin说明<a name="ZH-CN_TOPIC_0000001838078508"></a>
+# 使用BurnTool烧写EFUSE<a name="ZH-CN_TOPIC_0000001838078508"></a>
 
 
 

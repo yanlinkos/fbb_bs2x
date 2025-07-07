@@ -82,7 +82,21 @@
 </th>
 </tr>
 </thead>
-<tbody><tr id="row31617137538"><td class="cellrowborder" valign="top" width="19.6%" headers="mcps1.1.4.1.1 "><p id="p8161191335314"><a name="p8161191335314"></a><a name="p8161191335314"></a>02</p>
+<tbody><tr id="row34241947105220"><td class="cellrowborder" valign="top" width="19.6%" headers="mcps1.1.4.1.1 "><p id="p204251847165213"><a name="p204251847165213"></a><a name="p204251847165213"></a><span id="ph26857486520"><a name="ph26857486520"></a><a name="ph26857486520"></a>04</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="19.09%" headers="mcps1.1.4.1.2 "><p id="p44252474520"><a name="p44252474520"></a><a name="p44252474520"></a><span id="ph15833184912520"><a name="ph15833184912520"></a><a name="ph15833184912520"></a>2025-06-20</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="61.309999999999995%" headers="mcps1.1.4.1.3 "><p id="p12529155415211"><a name="p12529155415211"></a><a name="p12529155415211"></a>更新“<a href="打包添加其他bin文件.md">打包添加其他bin文件</a>”小节内容。</p>
+</td>
+</tr>
+<tr id="row372895021211"><td class="cellrowborder" valign="top" width="19.6%" headers="mcps1.1.4.1.1 "><p id="p1872915507128"><a name="p1872915507128"></a><a name="p1872915507128"></a>03</p>
+</td>
+<td class="cellrowborder" valign="top" width="19.09%" headers="mcps1.1.4.1.2 "><p id="p127294502129"><a name="p127294502129"></a><a name="p127294502129"></a>2025-05-30</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.309999999999995%" headers="mcps1.1.4.1.3 "><p id="p4856173615221"><a name="p4856173615221"></a><a name="p4856173615221"></a>更新“<a href="flash分区表配置.md">flash分区表配置</a>”小节内容。</p>
+</td>
+</tr>
+<tr id="row31617137538"><td class="cellrowborder" valign="top" width="19.6%" headers="mcps1.1.4.1.1 "><p id="p8161191335314"><a name="p8161191335314"></a><a name="p8161191335314"></a>02</p>
 </td>
 <td class="cellrowborder" valign="top" width="19.09%" headers="mcps1.1.4.1.2 "><p id="p716114136532"><a name="p716114136532"></a><a name="p716114136532"></a>2025-01-24</p>
 </td>
@@ -883,7 +897,7 @@ bs2x在不同目录下的.py文件下配置编译选项，如[表1](#table203401
 
 分区表配置文件路径“sdk\\build\\config\\target\_config\\bs21\\flash\_sector\_config\\xxx.json”。
 
-![](figures/zh-cn_image_0000002192161253.png)
+![](figures/zh-cn_image_0000002321022121.png)
 
 **表 1**  分区表说明
 

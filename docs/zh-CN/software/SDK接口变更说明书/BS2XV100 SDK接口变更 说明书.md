@@ -82,7 +82,14 @@ BS2X发布版本中蓝牙和星闪SDK接口变化说明。
 </th>
 </tr>
 </thead>
-<tbody><tr id="row5947359616410"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p2149706016410"><a name="p2149706016410"></a><a name="p2149706016410"></a>00B01</p>
+<tbody><tr id="row290388124"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p15901841220"><a name="p15901841220"></a><a name="p15901841220"></a>01</p>
+</td>
+<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p10918819127"><a name="p10918819127"></a><a name="p10918819127"></a>2025-05-30</p>
+</td>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p69138181217"><a name="p69138181217"></a><a name="p69138181217"></a>更新“<a href="BLE-SDK接口变更说明.md">BLE SDK接口变更说明</a>”章节的<a href="BLE-SDK接口变更说明.md#table14411119287">表1</a>。</p>
+</td>
+</tr>
+<tr id="row5947359616410"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p2149706016410"><a name="p2149706016410"></a><a name="p2149706016410"></a>00B01</p>
 </td>
 <td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p648803616410"><a name="p648803616410"></a><a name="p648803616410"></a>2024-06-18</p>
 </td>
@@ -161,6 +168,13 @@ BS2X发布版本中蓝牙和星闪SDK接口变化说明。
 <td class="cellrowborder" valign="top" width="27.750000000000004%" headers="mcps1.2.4.1.2 "><p id="p194531336111412"><a name="p194531336111412"></a><a name="p194531336111412"></a>bts_low_latency.h</p>
 </td>
 <td class="cellrowborder" valign="top" width="56.910000000000004%" headers="mcps1.2.4.1.3 "><p id="p2453536161419"><a name="p2453536161419"></a><a name="p2453536161419"></a>新增set em data方法和回调</p>
+</td>
+</tr>
+<tr id="row6490102663216"><td class="cellrowborder" valign="top" width="15.340000000000002%" headers="mcps1.2.4.1.1 "><p id="p54911526103218"><a name="p54911526103218"></a><a name="p54911526103218"></a>1.0.16</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.750000000000004%" headers="mcps1.2.4.1.2 "><p id="p2364157112516"><a name="p2364157112516"></a><a name="p2364157112516"></a>bts_le_gap.h</p>
+</td>
+<td class="cellrowborder" valign="top" width="56.910000000000004%" headers="mcps1.2.4.1.3 "><p id="p149192619322"><a name="p149192619322"></a><a name="p149192619322"></a>新增gap_ble_set_scan_extern_parameters接口</p>
 </td>
 </tr>
 </tbody>
