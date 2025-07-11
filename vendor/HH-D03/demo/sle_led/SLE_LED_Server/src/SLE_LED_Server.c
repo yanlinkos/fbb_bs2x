@@ -19,6 +19,7 @@
 #include "sle_errcode.h"
 #include "sle_ssap_server.h"
 #include "sle_connection_manager.h"
+#include "sle_device_manager.h"
 #include "sle_device_discovery.h"
 #include "../inc/SLE_LED_Server_adv.h"
 #include "../inc/SLE_LED_Server.h"
@@ -102,6 +103,7 @@ static int example_led_control_task(const char *arg)
         if (last_led_operation == EXAMPLE_CONTORL_LED_LEDBOARD_GLED_OFF) {
             uint8_t write_req_data[] = {'R', 'L', 'E', 'D', '_', 'O', 'N'};
             example_sle_server_send_notify_by_handle(write_req_data, sizeof(write_req_data));
+            PRINT("[SLE Server] 1111111111\r\n");
 
             last_led_operation = EXAMPLE_CONTORL_LED_LEDBOARD_RLED_ON;
         } else if (last_led_operation == EXAMPLE_CONTORL_LED_LEDBOARD_RLED_ON) {
@@ -253,8 +255,10 @@ static errcode_t example_sle_server_property_add(void)
     uint8_t ntf_value[] = {0x01, 0x0};
 
     property.permissions = SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE;
+    property.operate_indication = SLE_UUID_TEST_OPERATION_INDICATION;
     example_sle_uuid_setu2(SLE_UUID_SERVER_PROPERTY, &property.uuid);
     property.value = osal_vmalloc(sizeof(g_sle_property_value));
+      
     if (property.value == NULL) {
         PRINT("[SLE Server] sle property mem fail\r\n");
         return ERRCODE_MALLOC;
@@ -276,7 +280,11 @@ static errcode_t example_sle_server_property_add(void)
     PRINT("[SLE Server] sle uuid add property property_handle: %u\r\n", g_property_handle);
 
     descriptor.permissions = SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE;
-    descriptor.value = osal_vmalloc(sizeof(ntf_value));
+    descriptor.value = osal_vmalloc(sizeof(ntf_value)); 
+      descriptor.operate_indication = SSAP_OPERATE_INDICATION_BIT_READ |
+        SSAP_OPERATE_INDICATION_BIT_WRITE | SSAP_OPERATE_INDICATION_BIT_DESCRIPTOR_CLIENT_CONFIGURATION_WRITE;
+    descriptor.value_len = sizeof(ntf_value);
+
     if (descriptor.value == NULL) {
         PRINT("[SLE Server] sle descriptor mem fail\r\n");
         osal_vfree(property.value);
@@ -380,7 +388,7 @@ static void example_sle_connect_state_changed_cbk(uint16_t conn_id,
 static void example_sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status)
 {
     PRINT("[SLE Server] pair complete conn_id:0x%02x, status:0x%x\r\n", conn_id, status);
-    PRINT("[SLE Server] pair complete addr:%02x:**:**:**:%02x:%02x\r\n", addr->addr[0], addr->addr[DATA_LEN4], addr->addr[DATA_LEN45]);
+    PRINT("[SLE Server] pair complete addr:%02x:**:**:**:%02x:%02x\r\n", addr->addr[0], addr->addr[DATA_LEN4], addr->addr[DATA_LEN5]);
 
     if (status == ERRCODE_SUCC) {
         example_led_control_entry();
@@ -398,7 +406,7 @@ static errcode_t example_sle_conn_register_cbks(void)
 static int example_sle_led_server_task(const char *arg)
 {
     unused(arg);
-
+    
     (void)osal_msleep(5000); /* 延时5000=5s，等待SLE初始化完毕 */
 
     PRINT("[SLE Server] try enable.\r\n");
