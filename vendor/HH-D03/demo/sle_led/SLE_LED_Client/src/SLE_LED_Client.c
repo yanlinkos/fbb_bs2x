@@ -15,6 +15,7 @@
 #include "securec.h"
 #include "sle_device_discovery.h"
 #include "sle_connection_manager.h"
+#include "sle_device_manager.h"
 #include "sle_ssap_client.h"
 #include "../inc/SLE_LED_Client.h"
 #include "soc_osal.h"
@@ -37,7 +38,10 @@
 #define DATA_LEN5 5
 #define DATA_LEN6 6
 #define DATA_LEN7 7
-
+#define GPIO_10 10
+#define GPIO_27 27
+#define GPIO_11 11
+static sle_dev_manager_callbacks_t g_manager_cbk = {0};
 static sle_announce_seek_callbacks_t g_seek_cbk = {0};
 static sle_connection_callbacks_t g_connect_cbk = {0};
 static ssapc_callbacks_t g_ssapc_cbk = {0};
@@ -59,13 +63,13 @@ static void example_led_notification_cbk(uint8_t client_id, uint16_t conn_id, ss
 
     if (data->data_len == strlen("RLED_ON") && data->data[0] == 'R' && data->data[DATA_LEN1] == 'L' && data->data[DATA_LEN2] == 'E' &&
         data->data[DATA_LEN3] == 'D' && data->data[DATA_LEN4] == '_' && data->data[DATA_LEN5] == 'O' && data->data[DATA_LEN6] == 'N') {
-        example_turn_onoff_led(GPIO_07, GPIO_LEVEL_HIGH);
+        example_turn_onoff_led(GPIO_27, GPIO_LEVEL_HIGH);
     }
 
     if (data->data_len == strlen("RLED_OFF") && data->data[0] == 'R' && data->data[DATA_LEN1] == 'L' && data->data[DATA_LEN2] == 'E' &&
         data->data[DATA_LEN3] == 'D' && data->data[DATA_LEN4] == '_' && data->data[DATA_LEN5] == 'O' && data->data[DATA_LEN6] == 'F' &&
         data->data[DATA_LEN7] == 'F') {
-        example_turn_onoff_led(GPIO_07, GPIO_LEVEL_LOW);
+        example_turn_onoff_led(GPIO_27, GPIO_LEVEL_LOW);
     }
 
     if (data->data_len == strlen("YLED_ON") && data->data[0] == 'Y' && data->data[DATA_LEN1] == 'L' && data->data[DATA_LEN2] == 'E' &&
@@ -118,7 +122,7 @@ static void example_led_notification_cbk(uint8_t client_id, uint16_t conn_id, ss
     return;
 }
 
-static void example_sle_enable_cbk(errcode_t status)
+static void example_sle_enable_cbk(uint8_t status)
 {
     if (status == ERRCODE_SUCC) {
         example_sle_start_scan();
@@ -158,7 +162,7 @@ static void example_sle_seek_result_info_cbk(sle_seek_result_info_t *seek_result
 
 static void example_sle_seek_cbk_register(void)
 {
-    g_seek_cbk.sle_enable_cb = example_sle_enable_cbk;
+    g_manager_cbk.sle_enable_cb = example_sle_enable_cbk;
     g_seek_cbk.seek_enable_cb = example_sle_seek_enable_cbk;
     g_seek_cbk.seek_disable_cb = example_sle_seek_disable_cbk;
     g_seek_cbk.seek_result_cb = example_sle_seek_result_info_cbk;
@@ -178,6 +182,9 @@ static void example_sle_connect_state_changed_cbk(uint16_t conn_id,
             sle_pair_remote_device(&g_remote_addr);
         }
         g_conn_id = conn_id;
+    }else if(conn_state ==SLE_ACB_STATE_DISCONNECTED){
+        sle_remove_paired_remote_device(&g_remote_addr);
+        example_sle_start_scan();
     }
 }
 
@@ -381,6 +388,11 @@ static int example_sle_led_client_task(const char *arg)
 
     if (sle_connection_register_callbacks(&g_connect_cbk) != ERRCODE_SUCC) {
         PRINT("[SLE Client] sle connection register callbacks fail !\r\n");
+        return -1;
+    }
+
+    if (sle_dev_manager_register_callbacks(&g_manager_cbk) != ERRCODE_SUCC){
+        PRINT("[SLE Client] sle manager register callbacks fail !\r\n");
         return -1;
     }
 

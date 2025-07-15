@@ -65,7 +65,14 @@ BS2X系列包含BS21/BS22/BS26，本文档以BS21为例。
 </th>
 </tr>
 </thead>
-<tbody><tr id="row5830425563"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p1583020255616"><a name="p1583020255616"></a><a name="p1583020255616"></a>02</p>
+<tbody><tr id="row04501152238"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p1716535616314"><a name="p1716535616314"></a><a name="p1716535616314"></a>03</p>
+</td>
+<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p616585612315"><a name="p616585612315"></a><a name="p616585612315"></a>2025-05-30</p>
+</td>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p161656569316"><a name="p161656569316"></a><a name="p161656569316"></a>更新“<a href="用户指南.md">用户指南</a>”章节内容。</p>
+</td>
+</tr>
+<tr id="row5830425563"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p1583020255616"><a name="p1583020255616"></a><a name="p1583020255616"></a>02</p>
 </td>
 <td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p783002145619"><a name="p783002145619"></a><a name="p783002145619"></a>2025-01-14</p>
 </td>
@@ -189,7 +196,7 @@ pm\_sys\_entry初始化时，创建了一线程，即pm\_sys\_task，该线程�
 
 ![](figures/zh-cn_image_0000001801977060.png)
 
-什么时候来消息呢？
+以下场景会写消息队列：
 
 1.  “工作-\>待机”或者“待机-\>睡眠”定时时间到，如下：
 
@@ -227,7 +234,7 @@ pm\_sys\_entry初始化时，创建了一线程，即pm\_sys\_task，该线程�
 
 1.  低功耗sample提供了一种业务状态机管理的方法，这一层代码属于业务逻辑，本应由用户自行实现。SDK中通过该sample向用户演示了一套状态管理示例方法，旨在方便用户开发。用户在实际开发中可以完全重新写一套状态管理的代码，也可以利用该sample进行拓展开发。
 2.  低功耗sample功能比较简单，用户在实际使用时，如果要基于该sample进行开发，肯定要进行适当拓展的。
-3.  低功耗sample中使用的BT相关的接口也都是从别的sample中抄来的，并不保证完全正确，用户在开发时请斟酌使用。
+3.  低功耗sample中使用的BT相关的接口仅提供参考，后续客户有扩展功能开发，请参考协议说明。
 4.  低功耗sample旨在演示低功耗管理/开发方法，仅借用BLE接口作了个演示，用户实际开发时也会涉及到SLE场景以及BLE和SLE共存场景，在此无法提供这一开发指导。
 5.  用户在开发拓展之前可以先基于此sample简单做个功耗测试，以对功耗情况有个大概了解。
 6.  pm\_sys定时状态机任务优先级被设定为最低的30，如需使用请注意任务优先级关系，不建议将其他任务的优先级设置为30。

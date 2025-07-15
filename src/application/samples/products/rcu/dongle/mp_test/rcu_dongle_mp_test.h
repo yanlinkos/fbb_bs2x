@@ -26,6 +26,7 @@ extern "C" {
 #define TLV_TYPE_TYPE                       1
 #define TLV_TYPE_LEN                        2
 #define BODY_LEN                            2
+#define DATA_INDEX                          2
 #define TLV_TYPE_VALUE                      4
 #define COMMAND_ID_BYTE                     6
 #define MP_TEST_INFO_LEN                    64

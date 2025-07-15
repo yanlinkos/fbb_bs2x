@@ -114,7 +114,7 @@ static void ble_uuid_server_service_add_cbk(uint8_t server_id, bt_uuid_t *uuid, 
     sample_at_log_print("[uuid server] add service cbk: server: %d, status: %d, srv_handle: %d, uuid_len: %d,uuid:",
         server_id, status, handle, uuid->uuid_len);
     for (int8_t i = 0; i < uuid->uuid_len ; i++) {
-        sample_at_log_print("%02x", (uint8_t)uuid->uuid[i]);
+        sample_at_log_print("0x%02x", (uint8_t)uuid->uuid[i]);
     }
     sample_at_log_print("\n");
     stream_data_to_uuid(BLE_UUID_UUID_SERVER_SERVICE, &service_uuid);
@@ -134,10 +134,10 @@ static void  ble_uuid_server_characteristic_add_cbk(uint8_t server_id, bt_uuid_t
 {
     int8_t i = 0;
     sample_at_log_print("[uuid server] add characteristic cbk: server: %d, status: %d, srv_hdl: %d "\
-        "char_hdl: %x, char_val_hdl: %x, uuid_len: %d, uuid: ",
+        "char_hdl: 0x%x, char_val_hdl: 0x%x, uuid_len: %d, uuid: ",
         server_id, status, service_handle, result->handle, result->value_handle, uuid->uuid_len);
     for (i = 0; i < uuid->uuid_len ; i++) {
-        sample_at_log_print("%02x", (uint8_t)uuid->uuid[i]);
+        sample_at_log_print("0x%02x", (uint8_t)uuid->uuid[i]);
     }
     sample_at_log_print("\n");
     g_notification_characteristic_att_hdl = result->value_handle;
@@ -148,10 +148,10 @@ static void  ble_uuid_server_descriptor_add_cbk(uint8_t server_id, bt_uuid_t *uu
     uint16_t handle, errcode_t status)
 {
     int8_t i = 0;
-    sample_at_log_print("[uuid server] add descriptor cbk : server: %d, status: %d, srv_hdl: %d, desc_hdl: %x ,"\
+    sample_at_log_print("[uuid server] add descriptor cbk : server: %d, status: %d, srv_hdl: %d, desc_hdl: 0x%x ,"\
         "uuid_len:%d, uuid: ", server_id, status, service_handle, handle, uuid->uuid_len);
     for (i = 0; i < uuid->uuid_len ; i++) {
-        sample_at_log_print("%02x", (uint8_t)uuid->uuid[i]);
+        sample_at_log_print("0x%02x", (uint8_t)uuid->uuid[i]);
     }
     sample_at_log_print("\n");
 }
@@ -172,7 +172,7 @@ static void ble_uuid_server_receive_write_req_cbk(uint8_t server_id, uint16_t co
         write_cb_para->need_authorize, write_cb_para->is_prep);
     sample_at_log_print("data_len:%d data:\n", write_cb_para->length);
     for (uint8_t i = 0; i < write_cb_para->length; i++) {
-        sample_at_log_print("%02x ", write_cb_para->value[i]);
+        sample_at_log_print("0x%02x ", write_cb_para->value[i]);
     }
     sample_at_log_print("\n");
     sample_at_log_print("status:%d\n", status);
@@ -203,8 +203,8 @@ static void ble_uuid_server_adv_disable_cbk(uint8_t adv_id, adv_status_t status)
 void ble_uuid_server_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_ble_conn_state_t conn_state,
     gap_ble_pair_state_t pair_state, gap_ble_disc_reason_t disc_reason)
 {
-    sample_at_log_print("connect state change conn_id: %d, status: %d, pair_status:%d, addr type %x disc_reason %x\n",
-        conn_id, conn_state, pair_state, addr->type, disc_reason);
+    sample_at_log_print("connect state change conn_id: %d, status: %d, pair_status:%d, addr type 0x%x disc_reason \
+        0x%x\n", conn_id, conn_state, pair_state, addr->type, disc_reason);
     g_conn_hdl = conn_id;
     g_connection_state = conn_state;
     if (conn_state == GAP_BLE_STATE_CONNECTED) {

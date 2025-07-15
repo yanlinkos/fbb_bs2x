@@ -306,7 +306,7 @@ static void ble_hid_server_service_add_cbk(uint8_t server_id, bt_uuid_t *uuid, u
         server_id, handle, uuid->uuid_len);
     osal_printk("uuid:");
     for (i = 0; i < uuid->uuid_len ; i++) {
-        osal_printk("%02x", uuid->uuid[i]);
+        osal_printk("0x%02x", uuid->uuid[i]);
     }
     osal_printk("\n");
     osal_printk("status:%d\n", status);
@@ -328,7 +328,7 @@ static void  ble_hid_server_characteristic_add_cbk(uint8_t server_id, bt_uuid_t 
         server_id, service_handle, result->handle, result->value_handle, uuid->uuid_len);
     osal_printk("uuid:");
     for (i = 0; i < uuid->uuid_len ; i++) {
-        osal_printk("%02x", uuid->uuid[i]);
+        osal_printk("0x%02x", uuid->uuid[i]);
     }
     if ((g_hid_input_report_att_hdl == INVALID_ATT_HDL) && (bts_compare_uuid(uuid, &report_uuid))) {
         g_hid_input_report_att_hdl = result->value_handle;
@@ -346,7 +346,7 @@ static void  ble_hid_server_descriptor_add_cbk(uint8_t server_id, bt_uuid_t *uui
         "uuid_len:%d\n", server_id, service_handle, handle, uuid->uuid_len);
     osal_printk("uuid:");
     for (i = 0; i < uuid->uuid_len ; i++) {
-        osal_printk("%02x", (uint8_t)uuid->uuid[i]);
+        osal_printk("0x%02x", (uint8_t)uuid->uuid[i]);
     }
     osal_printk("\n");
     osal_printk("status:%d\n", status);
@@ -368,7 +368,7 @@ static void ble_hid_receive_write_req_cbk(uint8_t server_id, uint16_t conn_id, g
         write_cb_para->need_authorize, write_cb_para->is_prep);
     osal_printk("data_len:%d data:\n", write_cb_para->length);
     for (uint8_t i = 0; i < write_cb_para->length; i++) {
-        osal_printk("%02x ", write_cb_para->value[i]);
+        osal_printk("0x%02x ", write_cb_para->value[i]);
     }
     osal_printk("\n");
     osal_printk("status:%d\n", status);
@@ -434,7 +434,7 @@ static void ble_uuid_server_adv_disable_cbk(uint8_t adv_id, adv_status_t status)
 static void ble_uuid_server_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_ble_conn_state_t conn_state,
     gap_ble_pair_state_t pair_state, gap_ble_disc_reason_t disc_reason)
 {
-    osal_printk("connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason %x\n",
+    osal_printk("connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason 0x%x\n",
         conn_id, conn_state, pair_state, disc_reason);
     osal_printk("addr:\n");
     for (uint8_t i = 0; i < BD_ADDR_LEN; i++) {

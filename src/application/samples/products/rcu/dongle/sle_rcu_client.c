@@ -16,6 +16,7 @@
 #include "sle_device_discovery.h"
 #include "sle_connection_manager.h"
 #include "sle_ssap_client.h"
+#include "sle_errcode.h"
 #include "sle_rcu_client.h"
 
 #define SLE_MICRO_MULTINUM_ONE                      1
@@ -38,6 +39,7 @@ static uint16_t g_sle_rcu_conn_id = 0;
 static uint8_t g_ssap_find_ready = 0;
 static uint8_t g_ssap_connect_param_update_ready = 0;
 static uint8_t g_ssap_connect_state = 0;
+static property_uuid_handle_t g_property_handle[TYPE_MAX] = {0};
 
 static ssapc_find_service_result_t g_sle_rcu_find_service_result = { 0 };
 static sle_dev_manager_callbacks_t g_sle_dev_mgr_cbk = { 0 };
@@ -55,6 +57,40 @@ typedef struct sle_multicon_stru {
     uint8_t addr[CONFIG_SLE_MULTICON_NUM][SLE_ADDR_LEN];
 } sle_multicon_stru_t;
 static sle_multicon_stru_t g_sle_multicon_param = { 0 };
+
+/* Hid Information characteristic not defined */
+static uint8_t g_sle_hid_group_uuid[TYPE_MAX][SLE_UUID_LEN] = {
+    /* Report characteristic UUID. 输入报告信息 */
+    { 0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0xEA,
+      0xB7, 0x20, 0x00, 0x00, 0x00, 0x00, 0x10, 0x3C },
+    /* amic uuid */
+    { 0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0xEA,
+      0xB7, 0x20, 0x00, 0x00, 0x00, 0x00, 0x23, 0x23 },
+};
+
+bool cmp_property_handle(int handle, uint8_t *type)
+{
+    unused(type);
+    for (int i = 0; i < TYPE_MAX; i++) {
+        if (handle == g_property_handle[i].handle) {
+            *type = g_property_handle[i].type;
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool cmp_property_uuid(uint8_t *uuid, uint8_t *type)
+{
+    unused(type);
+    for (int i = 0; i < TYPE_MAX; i++) {
+        if (0 == memcmp(g_sle_hid_group_uuid[i], uuid, SLE_UUID_LEN)) {
+            *type = i;
+            return true;
+        }
+    }
+    return false;
+}
 
 uint16_t get_sle_rcu_conn_id(void)
 {
@@ -151,9 +187,17 @@ static uint8_t sle_rcu_find_connected_server_by_addr(const uint8_t *server_addr)
         if (g_sle_multicon_param.is_connected[i] == 0) {
             continue;
         }
+
+#if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
+        sle_addr_t peer_addr = {0, {0x10, 0x00, 0x00, 0x00, 0x00, 0x00}};
+        if (memcmp(server_addr, &peer_addr.addr[i], SLE_ADDR_LEN) == 0) {
+            return i;
+        }
+#else
         if (memcmp(server_addr, g_sle_multicon_param.addr[i], SLE_ADDR_LEN) == 0) {
             return i;
         }
+#endif
     }
     return i;
 }
@@ -166,9 +210,9 @@ static void sle_rcu_client_sample_seek_result_info_cbk(sle_seek_result_info_t *s
         osal_printk("seek_result_data error!\r\n");
         return;
     }
-    osal_printk("%s sle rcu scan data :%s\r\n", SLE_RCU_DONGLE_LOG, seek_result_data->data);
-    if (((find_connect_server = sle_rcu_find_unconnect_server_by_addr(seek_result_data->addr.addr))
-        < CONFIG_SLE_MULTICON_NUM) && (memcmp(seek_result_data->data + SLE_DEV_NAME_OFFSET, arr, sizeof(arr)) == 0)) {
+    find_connect_server = sle_rcu_find_unconnect_server_by_addr(seek_result_data->addr.addr);
+    if ((find_connect_server < CONFIG_SLE_MULTICON_NUM) &&
+        (memcmp(seek_result_data->data + SLE_DEV_NAME_OFFSET, arr, sizeof(arr)) == 0)) {
         osal_printk("%s find server addr:[0x%02x:0x%02x:xx:xx:xx:0x%02x], index = %d\r\n", SLE_RCU_DONGLE_LOG,
                     seek_result_data->addr.addr[SLE_ADDR_INDEX0], seek_result_data->addr.addr[SLE_ADDR_INDEX1],
                     seek_result_data->addr.addr[SLE_ADDR_INDEX5], find_connect_server);
@@ -227,14 +271,16 @@ static void sle_rcu_client_sample_connect_state_changed_cbk(uint16_t conn_id, co
     } else if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
         osal_printk("%s SLE_ACB_STATE_DISCONNECTED\r\n", SLE_RCU_DONGLE_LOG);
         g_ssap_connect_state = 0;
-        uint8_t connected_server_id = 0;
-        if ((connected_server_id = sle_rcu_find_connected_server_by_addr(addr->addr)) < CONFIG_SLE_MULTICON_NUM) {
+        uint8_t connected_server_id = sle_rcu_find_connected_server_by_addr(addr->addr);
+        if (connected_server_id < CONFIG_SLE_MULTICON_NUM) {
             g_sle_multicon_param.is_connected[connected_server_id] = 0;
             g_sle_multicon_param.connected_num--;
         }
+#if !defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
         if (g_sle_multicon_param.connected_num < CONFIG_SLE_MULTICON_NUM) {
             sle_rcu_start_scan();
         }
+#endif
     } else {
     }
 }
@@ -260,6 +306,9 @@ void sle_rcu_client_sample_pair_complete_cbk(uint16_t conn_id, const sle_addr_t 
         info.mtu_size = SLE_MTU_SIZE_DEFAULT;
         info.version = 1;
         ssapc_exchange_info_req(1, g_sle_rcu_conn_id, &info);
+    } else if (status == ERRCODE_SLE_AUTH_PKEY_MISS) {
+        uint8_t ret = sle_remove_all_pairs();
+        osal_printk("sle_remove_all_pairs ret: %d\r\n", ret);
     }
 }
 
@@ -304,8 +353,16 @@ static void sle_rcu_client_sample_find_property_cbk(uint8_t client_id, uint16_t 
     unused(client_id);
     unused(property);
     unused(status);
+    uint8_t index_type = TYPE_MAX;
     g_sle_rcu_send_param.handle = property->handle;
     g_sle_rcu_send_param.type = SSAP_PROPERTY_TYPE_VALUE;
+
+    if (cmp_property_uuid(property->uuid.uuid, &index_type)) {
+        g_property_handle[index_type].type = index_type;
+        g_property_handle[index_type].uuid.len = property->uuid.len;
+        memcpy_s(g_property_handle[index_type].uuid.uuid, SLE_UUID_LEN, property->uuid.uuid, SLE_UUID_LEN);
+        g_property_handle[index_type].handle = property->handle;
+    }
 }
 
 static void sle_rcu_client_sample_find_structure_cmp_cbk(uint8_t client_id, uint16_t conn_id,

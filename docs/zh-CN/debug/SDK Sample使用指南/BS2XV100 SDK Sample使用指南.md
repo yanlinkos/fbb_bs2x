@@ -9,15 +9,15 @@ BS2X向用户提供了些示例程序（Sample），用于指导用户快速使�
 与本文档对应的产品版本如下。
 
 <a name="table676mcpsimp"></a>
-<table><thead align="left"><tr id="row681mcpsimp"><th class="cellrowborder" valign="top" width="50%" id="mcps1.1.3.1.1"><p id="p683mcpsimp"><a name="p683mcpsimp"></a><a name="p683mcpsimp"></a><strong id="b684mcpsimp"><a name="b684mcpsimp"></a><a name="b684mcpsimp"></a>产品名称</strong></p>
+<table><thead align="left"><tr id="row681mcpsimp"><th class="cellrowborder" valign="top" width="36.9%" id="mcps1.1.3.1.1"><p id="p683mcpsimp"><a name="p683mcpsimp"></a><a name="p683mcpsimp"></a><strong id="b684mcpsimp"><a name="b684mcpsimp"></a><a name="b684mcpsimp"></a>产品名称</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="50%" id="mcps1.1.3.1.2"><p id="p686mcpsimp"><a name="p686mcpsimp"></a><a name="p686mcpsimp"></a><strong id="b687mcpsimp"><a name="b687mcpsimp"></a><a name="b687mcpsimp"></a>产品版本</strong></p>
+<th class="cellrowborder" valign="top" width="63.1%" id="mcps1.1.3.1.2"><p id="p686mcpsimp"><a name="p686mcpsimp"></a><a name="p686mcpsimp"></a><strong id="b687mcpsimp"><a name="b687mcpsimp"></a><a name="b687mcpsimp"></a>产品版本</strong></p>
 </th>
 </tr>
 </thead>
-<tbody><tr id="row689mcpsimp"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p691mcpsimp"><a name="p691mcpsimp"></a><a name="p691mcpsimp"></a>BS2X</p>
+<tbody><tr id="row689mcpsimp"><td class="cellrowborder" valign="top" width="36.9%" headers="mcps1.1.3.1.1 "><p id="p691mcpsimp"><a name="p691mcpsimp"></a><a name="p691mcpsimp"></a>BS2X</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p693mcpsimp"><a name="p693mcpsimp"></a><a name="p693mcpsimp"></a>V100</p>
+<td class="cellrowborder" valign="top" width="63.1%" headers="mcps1.1.3.1.2 "><p id="p693mcpsimp"><a name="p693mcpsimp"></a><a name="p693mcpsimp"></a>V100</p>
 </td>
 </tr>
 </tbody>
@@ -82,11 +82,18 @@ BS2X向用户提供了些示例程序（Sample），用于指导用户快速使�
 </th>
 </tr>
 </thead>
-<tbody><tr id="row05565141001"><td class="cellrowborder" valign="top" width="18.990000000000002%" headers="mcps1.1.4.1.1 "><p id="p17572111515019"><a name="p17572111515019"></a><a name="p17572111515019"></a>06</p>
+<tbody><tr id="row1621142111115"><td class="cellrowborder" valign="top" width="18.990000000000002%" headers="mcps1.1.4.1.1 "><p id="p17210427110"><a name="p17210427110"></a><a name="p17210427110"></a><span id="ph16332443101114"><a name="ph16332443101114"></a><a name="ph16332443101114"></a>07</span></p>
 </td>
-<td class="cellrowborder" valign="top" width="25.629999999999995%" headers="mcps1.1.4.1.2 "><p id="p3556101415014"><a name="p3556101415014"></a><a name="p3556101415014"></a><span id="ph3913141912011"><a name="ph3913141912011"></a><a name="ph3913141912011"></a>2025-03-26</span></p>
+<td class="cellrowborder" valign="top" width="25.629999999999995%" headers="mcps1.1.4.1.2 "><p id="p62112425111"><a name="p62112425111"></a><a name="p62112425111"></a><span id="ph22931445181112"><a name="ph22931445181112"></a><a name="ph22931445181112"></a>2025-06-20</span></p>
 </td>
-<td class="cellrowborder" valign="top" width="55.379999999999995%" headers="mcps1.1.4.1.3 "><a name="ul7978102710017"></a><a name="ul7978102710017"></a><ul id="ul7978102710017"><li>新增“<a href="SLE-Multi-Conn-Sample.md">SLE Multi Conn Sample</a>”章节内容。</li><li>新增“<a href="BLE-Lowpower-Sample.md">BLE Lowpower Sample</a>”章节内容。</li><li>更新“<a href="USB-AMIC-VDT-Sample.md">USB AMIC VDT Sample</a>”章节内容。</li><li>新增“<a href="air-mouse.md">air mouse</a>”~“<a href="BLE-uuid.md">BLE uuid</a>”章节内容。</li></ul>
+<td class="cellrowborder" valign="top" width="55.379999999999995%" headers="mcps1.1.4.1.3 "><a name="ul87311555191115"></a><a name="ul87311555191115"></a><ul id="ul87311555191115"><li>更新“<a href="BLE-Lowpower-Sample.md">BLE Lowpower Sample</a>”章节内容。</li></ul>
+</td>
+</tr>
+<tr id="row05565141001"><td class="cellrowborder" valign="top" width="18.990000000000002%" headers="mcps1.1.4.1.1 "><p id="p17572111515019"><a name="p17572111515019"></a><a name="p17572111515019"></a>06</p>
+</td>
+<td class="cellrowborder" valign="top" width="25.629999999999995%" headers="mcps1.1.4.1.2 "><p id="p3556101415014"><a name="p3556101415014"></a><a name="p3556101415014"></a>2025-05-30</p>
+</td>
+<td class="cellrowborder" valign="top" width="55.379999999999995%" headers="mcps1.1.4.1.3 "><a name="ul7978102710017"></a><a name="ul7978102710017"></a><ul id="ul7978102710017"><li>更新“<a href="SLE-UART-Sample.md">SLE UART Sample</a>”章节内容。</li><li>更新“<a href="SLE-microphone.md">SLE microphone</a>”章节内容。</li><li>新增“<a href="BLE-Lowpower-Sample.md">BLE Lowpower Sample</a>”章节内容。</li><li>更新“<a href="USB-AMIC-VDT-Sample.md">USB AMIC VDT Sample</a>”章节内容。</li><li>更新“<a href="RCU.md">RCU</a>”章节内容。</li><li>新增“<a href="air-mouse.md">air mouse</a>”~“<a href="BLE-UUID.md">BLE UUID</a>”章节内容。</li></ul>
 </td>
 </tr>
 <tr id="row2081910408147"><td class="cellrowborder" valign="top" width="18.990000000000002%" headers="mcps1.1.4.1.1 "><p id="p1881994017142"><a name="p1881994017142"></a><a name="p1881994017142"></a>05</p>
@@ -122,7 +129,7 @@ BS2X向用户提供了些示例程序（Sample），用于指导用户快速使�
 <td class="cellrowborder" valign="top" width="25.629999999999995%" headers="mcps1.1.4.1.2 "><p id="p1814150161818"><a name="p1814150161818"></a><a name="p1814150161818"></a>2024-05-22</p>
 </td>
 <td class="cellrowborder" valign="top" width="55.379999999999995%" headers="mcps1.1.4.1.3 "><p id="p12991124711568"><a name="p12991124711568"></a><a name="p12991124711568"></a>第一次正式版本发布。</p>
-<a name="ul15576154015617"></a><a name="ul15576154015617"></a><ul id="ul15576154015617"><li>更新“<a href="zh-cn_topic_0000001837645809.md">zh-cn_topic_0000001837645809.md</a>”章节内容。</li><li>更新“<a href="外设-Sample.md">外设 Sample</a>”章节内容。</li><li>更新“<a href="USB-AMIC-VDT-Sample.md">USB AMIC VDT Sample</a>”章节内容。</li></ul>
+<a name="ul15576154015617"></a><a name="ul15576154015617"></a><ul id="ul15576154015617"><li>更新“<a href="外设-Sample.md">外设 Sample</a>”章节内容。</li><li>更新“<a href="USB-AMIC-VDT-Sample.md">USB AMIC VDT Sample</a>”章节内容。</li></ul>
 </td>
 </tr>
 <tr id="row203281634153518"><td class="cellrowborder" valign="top" width="18.990000000000002%" headers="mcps1.1.4.1.1 "><p id="p17328534153515"><a name="p17328534153515"></a><a name="p17328534153515"></a>00B03</p>
@@ -339,8 +346,8 @@ BS2X提供的Sample分为轻量级Sample和重量级Sample。
 
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择ADC Sample，如[图1](#fig10563812175115)所示；如果当前Sample支持Timer操作，则继续按[图2](#fig873353011112)选择，选择完成后按“Q”或者“q”选择“y”保存退出。
-3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图3](#fig1486953181217)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图3](#fig1486953181217)所示。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择ADC Sample<a name="fig10563812175115"></a>  
 ![](figures/选择ADC-Sample.png "选择ADC-Sample")
@@ -376,8 +383,8 @@ BS2X提供的Sample分为轻量级Sample和重量级Sample。
 
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”或者使用IDE工具单击menuconfig按钮，打开menuconfig配置界面。
 2.  在menuconfig界面中选择BLINKY Sample，如[图1](#fig13722850165011)所示；如果选择Sample使用的管脚，则继续按[图2](#fig191542445515)选择，选择完成后按“Q”或者“q”选择“y”保存退出。
-3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图3](#fig13120173845312)所示。
-4.  将编译出的版本按照[烧录及运行](烧录及运行-57.md)烧录到板子。
+3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图3](#fig13120173845312)所示。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  Kconfig sample选择<a name="fig13722850165011"></a>  
 ![](figures/Kconfig-sample选择.png "Kconfig-sample选择")
@@ -391,7 +398,7 @@ BS2X提供的Sample分为轻量级Sample和重量级Sample。
 #### 运行<a name="ZH-CN_TOPIC_0000002031992233"></a>
 
 1.  烧录上电复位后串口每隔500ms打印一次“Blinky working”日志。
-2.  使用工具量取配置管脚电平状态，如下图[图1](#fig17708205416574)所示。
+2.  使用工具量取配置管脚电平状态，如[图1](#fig17708205416574)所示。
 
 **图 1**  量取的电平状态<a name="fig17708205416574"></a>  
 ![](figures/量取的电平状态.png "量取的电平状态")
@@ -408,7 +415,7 @@ BS2X提供的Sample分为轻量级Sample和重量级Sample。
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”或者使用IDE工具单击menuconfig按钮，打开menuconfig配置界面。
 2.  在menuconfig界面中选择BUTTON Sample，如[图1](#fig994215245370)所示；如果选择Sample使用的管脚，则继续按[图2](#fig215510307384)选择，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图3](#fig41393494020)下所示。
-4.  将编译出的版本按照[烧录及运行](烧录及运行-57.md)烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择BUTTON Sample<a name="fig994215245370"></a>  
 ![](figures/选择BUTTON-Sample.png "选择BUTTON-Sample")
@@ -438,8 +445,8 @@ BS2X提供的Sample分为轻量级Sample和重量级Sample。
 
 1.  在命令行下执行命令“python build.py standard-bs21a-1M menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择CAN Sample，如[图1](#fig10563812175115)所示；如果需要修改CAN模式，则继续按[图2](#fig873353011112)选择，选择完成后按“Q”或者“q”选择“y”保存退出。
-3.  使用IDE编译版本，编译出的版本包在“output\\bs21a\\fwpkg\\xxx”路径下，如下[图3](#fig1486953181217)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+3.  使用IDE编译版本，编译出的版本包在“output\\bs21a\\fwpkg\\xxx”路径下，如[图3](#fig1486953181217)所示。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择CAN Sample<a name="fig10563812175115"></a>  
 ![](figures/选择CAN-Sample.png "选择CAN-Sample")
@@ -471,8 +478,8 @@ CAN单板执行结果如[图1](#fig92641450144612)、[图2](#fig10171526114717)�
 
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择CLOCK Sample，如[图1](#fig157571841142713)所示；选择完成后按“Q”或者“q”选择“y”保存退出。
-3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图2](#fig5575113515288)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图2](#fig5575113515288)所示。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择CLOCK Sample<a name="fig157571841142713"></a>  
 ![](figures/选择CLOCK-Sample.png "选择CLOCK-Sample")
@@ -495,8 +502,8 @@ CAN单板执行结果如[图1](#fig92641450144612)、[图2](#fig10171526114717)�
 
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择DMA Sample，如[图1](#fig10563812175115)所示；如果内存到内存支持使用链表模式，则继续按[图2](#fig873353011112)选择，选择完成后按“Q”或者“q”选择“y”保存退出。
-3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图3](#fig1486953181217)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图3](#fig1486953181217)所示。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择DMA Sample<a name="fig10563812175115"></a>  
 ![](figures/选择DMA-Sample.png "选择DMA-Sample")
@@ -535,7 +542,7 @@ DMA单板执行结果如[图1](#fig17590124125414)所示，内存到内存使用
 4.  进入到“drivers/drivers”路径下，打开I2C，如[图4](#fig17384141642219)打开，进入配置中，如[图5](#fig154728249225)所示，完成I2C基础配置，此时I2C为轮询模式；可在此基础上修改，将I2C配置为中断模式（[图6](#fig1693117307224)）、dma模式（[图7](#fig1916793718221)）、poll\_dma切换模式（[图8](#fig21871444162213)）。
 5.  进入到“drivers/chips/Chip Configurations for bs2x"路径下，修改I2C bus口数量。如果使用的bus为1，如[图2](#fig873353011112)所示，bus\_id为1，则需要将I2C bus数量修改为2，如[图9](#fig3541217182311)；如果使用的bus为0，则不需要修改bus数。选择完成后按“Q”或者“q”选择“y”保存退出。
 6.  <a name="li0964101511569"></a>使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图11](#fig1486953181217)所示。
-7.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行[步骤1](#li168261215195810)\~[步骤6](#li0964101511569)，但[步骤3](#li329013398596)按[图10](#fig885542191110)所示选择，并将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
+7.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行[步骤1](#li168261215195810)\~[步骤6](#li0964101511569)，但[步骤3](#li329013398596)按[图10](#fig885542191110)所示选择，并将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
 
 **图 1**  选择I2C Sample<a name="fig10563812175115"></a>  
 ![](figures/选择I2C-Sample.png "选择I2C-Sample")
@@ -605,8 +612,8 @@ I2C双板执行结果如[图1](#fig14932149182315)\~[图5](#fig16331837162315)�
 1.  <a name="li372316212512"></a>在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择I2S Sample，如[图1](#fig207248212254)所示。
 3.  <a name="li17233292516"></a>master侧按[图2](#fig872442152517)所示选择，选择完成后按“Q”或者“q”选择“y”保存退出。
-4.  <a name="li172313217254"></a>使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图4](#fig27241427257)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行步骤[1](#li372316212512)\~。[4](#li172313217254)，但步骤[3](#li17233292516)按[图3](#fig18724122172510)所示选择，并将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
+4.  <a name="li172313217254"></a>使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图4](#fig27241427257)所示。
+5.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行步骤[1](#li372316212512)\~[4](#li172313217254)，但[3](#li17233292516)按[图3](#fig18724122172510)所示选择，并将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
 
 **图 1**  选择I2S Sample<a name="fig207248212254"></a>  
 ![](figures/选择I2S-Sample.png "选择I2S-Sample")
@@ -622,7 +629,7 @@ I2C双板执行结果如[图1](#fig14932149182315)\~[图5](#fig16331837162315)�
 
 #### 运行<a name="ZH-CN_TOPIC_0000001908199377"></a>
 
-I2S双板执行结果如下[图1](#fig17590124125414)所示，I2S运行时添加打印会导致cpu处理不及时，slave接收数据丢失，打印只是去验证master与slave是否正常通信，实际使用过程中不建议添加打印。
+I2S双板执行结果如[图1](#fig17590124125414)所示，I2S运行时添加打印会导致cpu处理不及时，slave接收数据丢失，打印只是去验证master与slave是否正常通信，实际使用过程中不建议添加打印。
 
 **图 1**  I2S 运行结果<a name="fig17590124125414"></a>  
 ![](figures/I2S-运行结果.png "I2S-运行结果")
@@ -636,8 +643,8 @@ I2S双板执行结果如下[图1](#fig17590124125414)所示，I2S运行时添加
 1.  <a name="li168261215195810"></a>在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择I2S DMA Sample，如[图1](#fig10563812175115)所示。
 3.  <a name="li1870123015263"></a>master侧按[图2](#fig873353011112)所示选择，选择完成后按“Q”或者“q”选择“y”保存退出。
-4.  <a name="li46811335327"></a>使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图4](#fig1486953181217)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行步骤[1](#li168261215195810)\~[4](#li46811335327)，但步骤[3](#li1870123015263)按[图3](#fig11952330135615)所示选择，并将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
+4.  <a name="li46811335327"></a>使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图4](#fig1486953181217)所示。
+5.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行步骤[1](#li168261215195810)\~[4](#li46811335327)，但步骤[3](#li1870123015263)按[图3](#fig11952330135615)所示选择，并将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
 
 **图 1**  选择I2S DMA Sample<a name="fig10563812175115"></a>  
 ![](figures/选择I2S-DMA-Sample.png "选择I2S-DMA-Sample")
@@ -670,8 +677,8 @@ I2S DMA双板执行结果如下[图1](#fig17590124125414)所示。
 1.  <a name="li168261215195810"></a>在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择I2S DMA LLI Sample，如[图1](#fig10563812175115)所示。
 3.  <a name="li1870123015263"></a>master侧按[图2](#fig873353011112)所示选择，选择完成后按“Q”或者“q”选择“y”保存退出。
-4.  <a name="li46811335327"></a>使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图4](#fig1486953181217)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行步骤[1](#li168261215195810)\~。[4](#li46811335327)，但步骤[3](#li1870123015263)按[图3](#fig11952330135615)所示选择，并将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
+4.  <a name="li46811335327"></a>使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图4](#fig1486953181217)所示。
+5.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行步骤[1](#li168261215195810)\~[4](#li46811335327)，但[3](#li1870123015263)按[图3](#fig11952330135615)所示选择，并将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
 
 **图 1**  选择I2S DMA LLI Sample<a name="fig10563812175115"></a>  
 ![](figures/选择I2S-DMA-LLI-Sample.png "选择I2S-DMA-LLI-Sample")
@@ -708,8 +715,8 @@ I2S DMA LLI双板执行结果如下[图1](#fig17590124125414)所示。
 
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择KEYSCAN Sample，如[图1](#fig276708102)所示，选择完成后按“Q”或者“q”选择“y”保存退出。
-3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图2](#fig77615081019)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图2](#fig77615081019)所示。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择KEYSCAN Sample<a name="fig276708102"></a>  
 ![](figures/选择KEYSCAN-Sample.png "选择KEYSCAN-Sample")
@@ -736,7 +743,7 @@ I2S DMA LLI双板执行结果如下[图1](#fig17590124125414)所示。
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择PDM  Sample，如[图1](#fig106431326122119)所示；如果需要修改配置选项，则继续按[图2](#fig56435266213)选择，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择PDM Sample<a name="fig106431326122119"></a>  
 ![](figures/选择PDM-Sample.png "选择PDM-Sample")
@@ -781,7 +788,7 @@ I2S DMA LLI双板执行结果如下[图1](#fig17590124125414)所示。
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择PDM AMIC Sample，如[图1](#fig106431326122119)所示；如果需要修改配置选项，则继续按[图2](#fig56435266213)选择，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择PDM AMIC Sample<a name="fig106431326122119"></a>  
 ![](figures/选择PDM-AMIC-Sample.png "选择PDM-AMIC-Sample")
@@ -826,7 +833,7 @@ I2S DMA LLI双板执行结果如下[图1](#fig17590124125414)所示。
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择PINCTRL Sample，如[图1](#fig106431326122119)所示；如果需要修改测试管脚，则继续按[图2](#fig56435266213)选择，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图3](#fig116431126152115)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择PINCTRL Sample<a name="fig106431326122119"></a>  
 ![](figures/选择PINCTRL-Sample.png "选择PINCTRL-Sample")
@@ -839,7 +846,7 @@ I2S DMA LLI双板执行结果如下[图1](#fig17590124125414)所示。
 
 #### 运行<a name="ZH-CN_TOPIC_0000001908200781"></a>
 
-PINCTRL单板执行结果如下[图1](#fig17590124125414)所示。
+PINCTRL单板执行结果如[图1](#fig17590124125414)所示。
 
 **图 1**  PINCTRL运行结果<a name="fig17590124125414"></a>  
 ![](figures/PINCTRL运行结果.png "PINCTRL运行结果")
@@ -857,7 +864,7 @@ PINCTRL单板执行结果如下[图1](#fig17590124125414)所示。
 2.  在menuconfig界面中选择PWM Sample，如[图1](#fig106431326122119)所示；如果需要修改配置选项，则继续按[图2](#fig56435266213)选择，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  channel与pin mode对应关系如下图[图4](#fig9985131131317)所示。
 4.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图3](#fig116431126152115)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+5.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择PWM Sample<a name="fig106431326122119"></a>  
 ![](figures/选择PWM-Sample.png "选择PWM-Sample")
@@ -890,7 +897,7 @@ PWM单板执行结果如[图1](#fig17590124125414)所示，使用逻辑分析仪
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择QDEC Sample，如[图1](#fig5310123193014)所示，如果需要修改QDEC管脚配置选项，则继续按[图2](#fig69077322315)配置选择，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图3](#fig1467312273252)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择QDEC Sample并进行QDEC配置<a name="fig5310123193014"></a>  
 ![](figures/选择QDEC-Sample并进行QDEC配置.png "选择QDEC-Sample并进行QDEC配置")
@@ -917,7 +924,7 @@ PWM单板执行结果如[图1](#fig17590124125414)所示，使用逻辑分析仪
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择RTC Sample，如[图1](#fig106431326122119)所示，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图2](#fig116431126152115)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择RTC Sample<a name="fig106431326122119"></a>  
 ![](figures/选择RTC-Sample.png "选择RTC-Sample")
@@ -941,7 +948,7 @@ RTC单板执行结果如下[图1](#fig993812131095)所示。
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择SFC Sample，如[图1](#fig1370984312265)所示，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图2](#fig14215115217298)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  SFC Sample选择<a name="fig1370984312265"></a>  
 ![](figures/SFC-Sample选择.png "SFC-Sample选择")
@@ -971,8 +978,8 @@ SFC单板执行结果如下[图1](#fig10873195615346)[图2](#fig441010374359)所
 1.  <a name="li168261215195810"></a>在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择SPI Sample，如[图1](#fig10563812175115)所示。
 3.  <a name="li1870123015263"></a>master侧则继续按[图2](#fig873353011112)所示选择（如果当前Sample master侧支持使用writeread接口，则继续按[图3](#fig11952330135615)选择），选择完成后按“Q”或者“q”选择“y”保存退出。
-4.  <a name="li46811335327"></a>使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图5](#fig1486953181217)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行步骤[1](#li168261215195810)\~。[4](#li46811335327)，但步骤[3](#li1870123015263)按[图4](#fig885542191110)所示选择，并将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
+4.  <a name="li46811335327"></a>使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图5](#fig1486953181217)所示。
+5.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行步骤[1](#li168261215195810)\~。[4](#li46811335327)，但步骤[3](#li1870123015263)按[图4](#fig885542191110)所示选择，并将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
 
 **图 1**  选择SPI Sample<a name="fig10563812175115"></a>  
 ![](figures/选择SPI-Sample.png "选择SPI-Sample")
@@ -1048,7 +1055,7 @@ SPI双板执行结果分以下多种情况：
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择SYSTICK Sample，如[图1](#fig106431326122119)所示，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图2](#fig116431126152115)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择SYSTICK Sample<a name="fig106431326122119"></a>  
 ![](figures/选择SYSTICK-Sample.png "选择SYSTICK-Sample")
@@ -1075,7 +1082,7 @@ SYSTICK单板执行结果如下[图1](#fig993812131095)所示。
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择TASK Sample，如[图1](#fig519832653110)所示；选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图2](#fig5575113515288)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择TASK Sample<a name="fig519832653110"></a>  
 ![](figures/选择TASK-Sample.png "选择TASK-Sample")
@@ -1099,7 +1106,7 @@ SYSTICK单板执行结果如下[图1](#fig993812131095)所示。
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择TCXO Sample，如[图1](#fig106431326122119)所示，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图2](#fig116431126152115)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择TCXO Sample<a name="fig106431326122119"></a>  
 ![](figures/选择TCXO-Sample.png "选择TCXO-Sample")
@@ -1126,8 +1133,8 @@ TCXO单板执行结果如下[图1](#fig993812131095)所示。
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择TIMER Sample，如[图1](#fig106431326122119)所示，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  在menuconfig界面中选择TIMER 驱动，如[图2](#fig4761185411100)所示，选择软timer个数.
-4.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图3](#fig116431126152115)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图3](#fig116431126152115)所示。
+5.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择TIMER Sample<a name="fig106431326122119"></a>  
 ![](figures/选择TIMER-Sample.png "选择TIMER-Sample")
@@ -1157,7 +1164,7 @@ TIMER单板执行结果如[图1](#fig993812131095)所示。
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
 2.  在menuconfig界面中选择UART Sample，如[图1](#fig10563812175115)所示；如果修改当前Sample的某些参数配置，则继续按[图2](#fig873353011112)选择，默认为轮询（poll）模式；如果当前UART支持DMA链表传输，则继续按[图3](#fig4301151111715)所示选择，如果当前Uart支持int传输，则继续按照[图4](#fig1111723425614)所示选择，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图5](#fig1486953181217)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择UART Sample<a name="fig10563812175115"></a>  
 ![](figures/选择UART-Sample.png "选择UART-Sample")
@@ -1198,7 +1205,7 @@ TIMER单板执行结果如[图1](#fig993812131095)所示。
 2.  在menuconfig界面中选择UART DMA LLI Sample，如[图1](#fig10563812175115)所示。
 3.  <a name="li5749746152511"></a>master侧按[图2](#fig873353011112)所示选择，选择完成后按“Q”或者“q”选择“y”保存退出。
 4.  <a name="li10749146162515"></a>使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图4](#fig1486953181217)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行步骤[1](#li168261215195810)\~[4](#li10749146162515)，但步骤[3](#li5749746152511)按[图3](#fig4301151111715)所示选择，并将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
+5.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到master侧的板子；同理，slave侧依次执行步骤[1](#li168261215195810)\~[4](#li10749146162515)，但[3](#li5749746152511)按[图3](#fig4301151111715)所示选择，并将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到slave侧的板子。
 
 **图 1**  选择UART DMA LLI Sample<a name="fig10563812175115"></a>  
 ![](figures/选择UART-DMA-LLI-Sample.png "选择UART-DMA-LLI-Sample")
@@ -1229,9 +1236,9 @@ TIMER单板执行结果如[图1](#fig993812131095)所示。
 >运行该用例时，需根据实际需求选择其他目录下的KCONFIG配置，请参考《BS2XV100 设备驱动 开发指南》的“KCONFIG配置”章节。
 
 1.  在命令行下执行命令“python build.py standard-bs21 menuconfig”，打开menuconfig配置界面。
-2.  在menuconfig界面中选择WATCHDOG Sample，如[图1](#fig106431326122119)所示；如果选择超时，则继续按下[图2](#fig116431126152115)所示选择；如果选择喂狗，则继续按下[图3](#fig2787175743)所示选择，选择完成后按“Q”或者“q”选择“y”保存退出。
+2.  在menuconfig界面中选择WATCHDOG Sample，如[图1](#fig106431326122119)所示；如果选择超时，则继续按下[图2](#fig116431126152115)所示选择；如果选择喂狗，则继续按[图3](#fig2787175743)所示选择，选择完成后按“Q”或者“q”选择“y”保存退出。
 3.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图4](#fig1889013402418)所示。
-4.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录到板子。
+4.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录到板子。
 
 **图 1**  选择WATCHDOG Sample<a name="fig106431326122119"></a>  
 ![](figures/选择WATCHDOG-Sample.png "选择WATCHDOG-Sample")
@@ -1264,7 +1271,7 @@ WATCHDOG单板超时执行结果如下[图1](#fig993812131095)所示，喂狗后
 
 ## 概述<a name="ZH-CN_TOPIC_0000001837765685"></a>
 
-B/SLE UART的Sample详细的可分为SLE的UART透传功能和BLE的UART透传功能，其中SLE共支持三种，分别是SLE的UART透传功能，SLE的Low Latency UART透传功能以及SLE的Performance跑流功能，整体的连接关系和数据流图如[图1](#fig1856117391419)所示。其中SLE UART Sample的三种模式编译通过Kconfig选项控制，默认为SLE的UART透传功能，选中Low Latency选项为SLE的Low Latency UART透传功能，在此基础上选中performance选项为SLE的Performance跑流功能。其他选项功能不变，详情参考“[编译](编译-52.md)”。
+B/SLE UART的Sample详细的可分为SLE的UART透传功能和BLE的UART透传功能，其中SLE共支持三种，分别是SLE的UART透传功能，SLE的Low Latency UART透传功能以及SLE的Performance跑流功能，整体的连接关系和数据流图如[图1](#fig1856117391419)所示。其中SLE UART Sample的三种模式编译通过Kconfig选项控制，默认为SLE的UART透传功能，选中Low Latency选项为SLE的Low Latency UART透传功能，在此基础上选中performance选项为SLE的Performance跑流功能。其他选项功能不变，详情参考“[SLE UART Sample](SLE-UART-Sample.md)”的“[编译](编译-52.md)”。
 
 **图 1**  B/SLE功能框图<a name="fig1856117391419"></a>  
 ![](figures/B-SLE功能框图.png "B-SLE功能框图")
@@ -1291,7 +1298,7 @@ B/SLE UART的Sample详细的可分为SLE的UART透传功能和BLE的UART透传�
 5.  在menuconfig界面中选择SLE UART Server，如[图4](#fig12415145983216)所示。
 6.  选择完成后按“Q”保存退出。
 7.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs2x”路径下，如[图5](#fig7726546133717)所示。
-8.  <a name="li8164191173710"></a>将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录。
+8.  <a name="li8164191173710"></a>将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录。
 9.  重启打开menuconfig配置界面，仿照[3](#li1870123015263)～[8](#li8164191173710)选择SLE UART Client，如[图6](#fig827416371394)所示，进行编译，并将版本正常烧录。
 
 **图 1**  选择SLE UART Sample<a name="fig1228918832814"></a>  
@@ -1316,7 +1323,7 @@ B/SLE UART的Sample详细的可分为SLE的UART透传功能和BLE的UART透传�
 
 **烧录<a name="section11501615135313"></a>**
 
-版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section11367201532211"></a>**
 
@@ -1423,14 +1430,14 @@ SLE连接支持正常模式和低时延模式，默认使用连接间隔等于25
 
 **烧录：**
 
-烧录方法请参考《BS2XV100  HiSpark Studio  使用指南》。
+烧录方法请参考《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行：**
 
 1.  准备4块单板，分别作为UART数据发送端；SLE数据发送端；SLE数据接收端；UART数据接收端。将UART数据发送端，SLE数据发送端的串口管脚和流控管脚反接；将SLE数据接收端，UART数据接收端的串口管脚和流控管脚反接。默认使用芯片的H0管脚配置。
 2.  使用版本烧录工具将版本分别烧到四块单板上。
 3.  使用PC串口工具连接到四块单板的L0口上，用于观察数据传输情况。
-4.  **按顺序启动A-\>C-\>D-\>B四块单板**，观察串口日志打印。如果uart数据接收端能按时打印统计数据，则运行正常。
+4.  **按顺序启动A-\>C-\>D-\>B四块单板**，观察串口日志打印。如果UART数据接收端能按时打印统计数据，则运行正常。
 
 ## 可选参数配置<a name="ZH-CN_TOPIC_0000002054918234"></a>
 
@@ -1497,27 +1504,27 @@ SLE连接支持正常模式和低时延模式，默认使用连接间隔等于25
 
 星闪速度=1秒内调度次数×每次发包字节数×8（比特数）/ 1000（单位换算），如配置3中包长250B，连接间隔1k，理论速度为1000×250×8/1000=2000kbps。
 
-uart跑流速度一般为为波特率×0.6左右。当波特率设置为4000000时，UART可以达到2400kbps速度。
+UART跑流速度一般为为波特率×0.6左右。当波特率设置为4000000时，UART可以达到2400kbps速度。
 
 ## 使用说明及限制<a name="ZH-CN_TOPIC_0000002091076965"></a>
 
 1.  使用低时延模式时请注意使用支持低时延功能的芯片如282x系列。
 
 <a name="table2405437122616"></a>
-<table><thead align="left"><tr id="row10415103718260"><th class="cellrowborder" valign="top" width="50%" id="mcps1.1.3.1.1"><p id="p18415143718269"><a name="p18415143718269"></a><a name="p18415143718269"></a><strong id="b141510374263"><a name="b141510374263"></a><a name="b141510374263"></a>芯片</strong></p>
+<table><thead align="left"><tr id="row10415103718260"><th class="cellrowborder" valign="top" width="39.64%" id="mcps1.1.3.1.1"><p id="p18415143718269"><a name="p18415143718269"></a><a name="p18415143718269"></a><strong id="b141510374263"><a name="b141510374263"></a><a name="b141510374263"></a>芯片</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="50%" id="mcps1.1.3.1.2"><p id="p8415183722612"><a name="p8415183722612"></a><a name="p8415183722612"></a><strong id="b9415193782619"><a name="b9415193782619"></a><a name="b9415193782619"></a>支持低时延模式</strong></p>
+<th class="cellrowborder" valign="top" width="60.36%" id="mcps1.1.3.1.2"><p id="p8415183722612"><a name="p8415183722612"></a><a name="p8415183722612"></a><strong id="b9415193782619"><a name="b9415193782619"></a><a name="b9415193782619"></a>支持低时延模式</strong></p>
 </th>
 </tr>
 </thead>
-<tbody><tr id="row74151637182611"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p4415937152615"><a name="p4415937152615"></a><a name="p4415937152615"></a>2821/2821E</p>
+<tbody><tr id="row74151637182611"><td class="cellrowborder" valign="top" width="39.64%" headers="mcps1.1.3.1.1 "><p id="p4415937152615"><a name="p4415937152615"></a><a name="p4415937152615"></a>2821/2821E</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p74151037162611"><a name="p74151037162611"></a><a name="p74151037162611"></a>1k、2k</p>
+<td class="cellrowborder" valign="top" width="60.36%" headers="mcps1.1.3.1.2 "><p id="p74151037162611"><a name="p74151037162611"></a><a name="p74151037162611"></a>1k、2k</p>
 </td>
 </tr>
-<tr id="row12415437142611"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p1141523715269"><a name="p1141523715269"></a><a name="p1141523715269"></a>2820</p>
+<tr id="row12415437142611"><td class="cellrowborder" valign="top" width="39.64%" headers="mcps1.1.3.1.1 "><p id="p1141523715269"><a name="p1141523715269"></a><a name="p1141523715269"></a>2820</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p10415193752613"><a name="p10415193752613"></a><a name="p10415193752613"></a>1k</p>
+<td class="cellrowborder" valign="top" width="60.36%" headers="mcps1.1.3.1.2 "><p id="p10415193752613"><a name="p10415193752613"></a><a name="p10415193752613"></a>1k</p>
 </td>
 </tr>
 </tbody>
@@ -1576,7 +1583,7 @@ uart跑流速度一般为为波特率×0.6左右。当波特率设置为4000000�
 3.  <a name="li147941742506"></a>在menuconfig界面中选择鼠标，如[图3](#fig354495715112)所示，并选择合适的sensor，如[图4](#fig422011815401)所示。
 4.  选择完成后按“Q”保存退出。
 5.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs2x”路径下，如[图5](#fig063518437312)所示。
-6.  <a name="li1443621546"></a>将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录进鼠标板。
+6.  <a name="li1443621546"></a>将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录进鼠标板。
 7.  重启打开menuconfig配置界面，仿照[3](#li147941742506)～[6](#li1443621546)选择Dongle，进行编译，并将版本烧录进Dongle板
 
 **图 1**  选择SLE Mouse服务<a name="fig52068218146"></a>  
@@ -1598,7 +1605,7 @@ uart跑流速度一般为为波特率×0.6左右。当波特率设置为4000000�
 
 **烧录<a name="section948712445453"></a>**
 
-将编译出的鼠标版本和Dongle版本分别烧录到鼠标板和Dongle板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的鼠标版本和Dongle版本分别烧录到鼠标板和Dongle板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section9308175717452"></a>**
 
@@ -1630,7 +1637,7 @@ uart跑流速度一般为为波特率×0.6左右。当波特率设置为4000000�
 2.  在menuconfig界面中选择SLE AMIC Sample，如所[图1](#fig1435112258397)示。
 3.  <a name="li86517304586"></a>在menuconfig界面中选择当前SLE type为Server端，如[图2](#fig1874015168504)所示；如果需要调整adc管脚以及单次uac和dma传输数量，采样率默认是16KHZ，则继续按[图3](#fig128231255526)、[图4](#fig172753104212)所示选择。选择完成后按“Q”或者“q”保存退出。
 4.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs21”路径下，如[图6](#fig116431126152115)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-63.md)”烧录。
+5.  将编译出的版本按照的“[SLE microphone](SLE-microphone.md)”“[烧录及运行](烧录及运行-63.md)”烧录。
 6.  <a name="li1716542814517"></a>重启打开menuconfig配置界面，仿照[3](#li86517304586)～[6](#li1716542814517)选择SLE AMIC Client\(Dongle\)，如[图5](#fig1593135913428)所示，进行编译，并将版本正常烧录。
 
 **图 1**  选择SLE AMIC sample<a name="fig1435112258397"></a>  
@@ -1677,20 +1684,20 @@ uart跑流速度一般为为波特率×0.6左右。当波特率设置为4000000�
 
 ## 概述<a name="ZH-CN_TOPIC_0000001912456317"></a>
 
-此Sample演示一个真实的基于SLE的dongle麦克风方案。整体的连接关系和数据流图如[图1](#fig441524312714)所示。
+此Sample演示一个真实的基于SLE的dongle麦克风方案。整体的连接关系和数据流图如[图1](#fig1324737135918)所示。
 
-**图 1**  SLE microphone功能框图<a name="fig441524312714"></a>  
+**图 1**  SLE microphone功能框图<a name="fig1324737135918"></a>  
 ![](figures/SLE-microphone功能框图.png "SLE-microphone功能框图")
 
 ## 编译<a name="ZH-CN_TOPIC_0000001912535977"></a>
 
 1.  在命令行下打开menuconfig配置界面，执行命令“python build.py standard-bs21-n1100 menuconfig”。
-2.  在menuconfig界面中选择SLE Microphone Sample，如所[图1](#fig1435112258397)示。
+2.  在menuconfig界面中选择SLE Microphone Sample，如[图1](#fig1435112258397)所示。
 3.  <a name="li86517304586"></a>在menuconfig界面中选择当前Microphone type为Server端，如[图2](#fig1874015168504)所示。
 4.  在menuconfig界面中选择单次uac传输数量和SLE作为Server端的地址及名称，如[图3](#fig128231255526)所示。
 5.  选择完成后按“Q”保存退出。
 6.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs21”路径下，如下所示。
-7.  <a name="li8164191173710"></a>将编译出的版本按照“[烧录及运行](烧录及运行-63.md)”烧录。
+7.  <a name="li8164191173710"></a>将编译出的版本按照“[SLE microphone](SLE-microphone.md)”的“[烧录及运行](烧录及运行-63.md)”烧录。
 8.  重启打开menuconfig配置界面，仿照[3](#li86517304586)～[7](#li8164191173710)选择SLE Microphone Client\(Dongle\)，如所示，进行编译，并将版本正常烧录。
 
 **图 1**  选择sample<a name="fig1435112258397"></a>  
@@ -1706,7 +1713,7 @@ uart跑流速度一般为为波特率×0.6左右。当波特率设置为4000000�
 
 **烧录<a name="section948712445453"></a>**
 
-将编译出的麦克风版本烧录到单板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的麦克风版本烧录到单板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section4415921314"></a>**
 
@@ -1734,7 +1741,7 @@ uart跑流速度一般为为波特率×0.6左右。当波特率设置为4000000�
 3.  在menuconfig界面中选择Enable SLE MEASURE DIS Server sample，表明当前选择编译的是Server端，如[图1](#fig361683385814)所示。
 4.  选择完成后按“Q”保存退出。
 5.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs2x”路径下，如[图3](#fig156732614012)所示。
-6.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”章节进行烧录。
+6.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”章节进行烧录。
 7.  重启打开menuconfig配置界面，仿照[图2](#fig128317412598)选择Enable SLE MEASURE DIS Client sample，表明当前选择编译的是Client端，如[图2](#fig128317412598)所示，进行编译，并将版本正常烧录。
 
 **图 1**  选择server sample<a name="fig361683385814"></a>  
@@ -1750,7 +1757,7 @@ uart跑流速度一般为为波特率×0.6左右。当波特率设置为4000000�
 
 **烧录<a name="section948712445453"></a>**
 
-将编译出的server, client 分别烧录到两块单板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的server, client 分别烧录到两块单板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section4415921314"></a>**
 
@@ -1774,48 +1781,6 @@ uart跑流速度一般为为波特率×0.6左右。当波特率设置为4000000�
 1.  按照[图1](#fig051614178524)所示在设备周围5个方向的1m位置，进行5次测距，5次测距值的其平均值减1为锚点A的校准值。、
 2.  在如[图2](#fig14390201615514)代码位置减去校准值。application\\samples\\products\\sle\_measure\_dis\\sle\_measure\_dis\_server\\sle\_measure\_dis\_server\_alg.c
 
-# SLE Multi Conn Sample<a name="ZH-CN_TOPIC_0000002188667006"></a>
-
-
-
-
-## 概述<a name="ZH-CN_TOPIC_0000002224116757"></a>
-
-此sample演示的是client和server数据交互的方案，可编译client或者server身份的镜像，不可同时具备client和server身份。client上电后自动起扫描，扫描到server会主动发起连接，连接后会循环给server发数据。
-
-![](figures/sle_multi_conn_sample.png)
-
-## 编译<a name="ZH-CN_TOPIC_0000002224191205"></a>
-
-1.  在命令行下打开menuconfig配置界面，执行命令“python build.py standard-bs21-n1100 menuconfig”。
-2.  在menuconfig界面中选择 SLE Multi Connections sample，如图[选择SLE Multi Connections Sample](#fig14454135055)所示
-3.  选择完成后按“Q”保存退出。
-4.  使用sdk编译版本，编译出的版本包在“output\\bs21\\fwpkg\\standard-bs21-n1100”路径下，如[编译后生成的镜像](#fig062141177)所示。
-5.  将编译出的版本按照[烧录及运行](烧录及运行-69.md)烧录。
-
-**图 1**  选择SLE Multi Connections Sample<a name="fig14454135055"></a>  
-![](figures/选择SLE-Multi-Connections-Sample.png "选择SLE-Multi-Connections-Sample")
-
-![](figures/zh-cn_image_0000002188948216.png)
-
-![](figures/zh-cn_image_0000002224354573.png)
-
-**图 2**  编译后生成的镜像<a name="fig062141177"></a>  
-![](figures/编译后生成的镜像.png "编译后生成的镜像")
-
-## 烧录及运行<a name="ZH-CN_TOPIC_0000002188671122"></a>
-
-**烧录<a name="section11501615135313"></a>**
-
-版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
-
-**运行<a name="section20261858162412"></a>**
-
-1.  准备两块单板，分别作为Server端和Client端，每块单板上将UART-L0和UART-L2与PC通过串口板连接。
-2.  通过UART-L0分别将编译好的Server版本和Client版本烧录到单板中。
-3.  在PC端分别通过两个串口助手连接两个单板的UART-L2，并且将串口设置到115200波特率，并打开串口。
-4.  两块单板都上电后，client会给server发write请求，server有相应的数据打印，则client与server对通成功
-
 # BLE Lowpower Sample<a name="ZH-CN_TOPIC_0000002223691665"></a>
 
 
@@ -1836,8 +1801,8 @@ BLE Lowpower Sample主要展示了低功耗相关回调的注册（[图1](#fig14
 1.  在命令行下打开menuconfig配置界面，执行命令“python build.py standard-bs21-n1100 menuconfig”。
 2.  在menuconfig界面中选择BLE UART Sample，如[图1](#fig169801446114114)所示。
 3.  选择完成后按“Q”保存退出。
-4.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs2x”路径下，如[\#ZH-CN\_TOPIC\_0000002188451282/fig172231859194418](#fig172231859194418)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录。
+4.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs2x”路径下，如[图2](#fig6475121654313)所示。
+5.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录。
 
 **图 1**  选择BLE Lowepower Sample<a name="fig169801446114114"></a>  
 ![](figures/选择BLE-Lowepower-Sample.png "选择BLE-Lowepower-Sample")
@@ -1850,7 +1815,7 @@ BLE Lowpower Sample主要展示了低功耗相关回调的注册（[图1](#fig14
 
 **烧录<a name="section11501615135313"></a>**
 
-版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section370983782713"></a>**
 
@@ -1875,7 +1840,7 @@ BLE UART与SLE UART的实现原理与方案一致，唯一的不同是空口由�
 4.  在menuconfig界面中选择BLE UART Server，如[图3](#fig17183141313443)所示。
 5.  选择完成后按“Q”保存退出。
 6.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs2x”路径下，如[图4](#fig172231859194418)所示。
-7.  <a name="li8164191173710"></a>将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录。
+7.  <a name="li8164191173710"></a>将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录。
 8.  重启打开menuconfig配置界面，仿照[2](#li1870123015263)～[7](#li8164191173710)选择BLE UART Client，如[图5](#fig10113182954618)所示，进行编译，并将版本正常烧录。
 
 **图 1**  选择BLE UART Sample<a name="fig169801446114114"></a>  
@@ -1895,7 +1860,7 @@ BLE UART与SLE UART的实现原理与方案一致，唯一的不同是空口由�
 
 ## 烧录及运行<a name="ZH-CN_TOPIC_0000001790966344"></a>
 
-BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](烧录及运行.md)”。
+BLE UART的烧录及运行方法与SLE UART一致，参考“[SLE UART Sample](SLE-UART-Sample.md)”的“[烧录及运行](烧录及运行.md)”。
 
 # BLE Keyboard Sample<a name="ZH-CN_TOPIC_0000001837645741"></a>
 
@@ -1912,7 +1877,7 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 2.  在menuconfig界面中选择BLE键盘Sample，如[图1](#fig11819102410515)所示。
 3.  选择完成后按“Q”保存退出。
 4.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs2x”路径下，如[图2](#fig57581930962)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录。
+5.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录。
 
 **图 1**  选择BLE Keyboard Sample<a name="fig11819102410515"></a>  
 ![](figures/选择BLE-Keyboard-Sample.png "选择BLE-Keyboard-Sample")
@@ -1924,7 +1889,7 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 
 **烧录<a name="section948712445453"></a>**
 
-将编译出的键盘版本烧录到键盘板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的键盘版本烧录到键盘板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section520612111327"></a>**
 
@@ -1947,22 +1912,22 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 ## 编译<a name="ZH-CN_TOPIC_0000002224116761"></a>
 
 1.  在命令行下打开menuconfig配置界面，执行命令“python build.py standard-bs21-n1100 menuconfig”。
-2.  在menuconfig界面中选择 Ble Sle tag sample，如图[Ble Sle tag sample](#fig6953174811455)
+2.  在menuconfig界面中选择 Ble Sle tag sample，如图[Ble Sle tag sample](#fig6953174811455)所示。
 3.  选择完成后按“Q”保存退出。
-4.  使用sdk编译版本，编译出的版本包在“output\\bs21\\fwpkg\\standard-bs21-n1100”路径下，如图[编译后生成的镜像](#fig1741282616472)所示。
-5.  将编译出的版本按照[烧录及运行](烧录及运行-81.md)烧录。
+4.  使用sdk编译版本，编译出的版本包在“output\\bs21\\fwpkg\\standard-bs21-n1100”路径下，如[图2](#fig1741282616472)所示。
+5.  将编译出的版本按照“[BLE SLE TAG Sample](BLE-SLE-TAG-Sample.md)”的“[烧录及运行](烧录及运行-78.md)”烧录。
 
 **图 1**  Ble Sle tag sample<a name="fig6953174811455"></a>  
 ![](figures/Ble-Sle-tag-sample.png "Ble-Sle-tag-sample")
 
 **图 2**  编译后生成的镜像<a name="fig1741282616472"></a>  
-![](figures/编译后生成的镜像-34.png "编译后生成的镜像-34")
+![](figures/编译后生成的镜像.png "编译后生成的镜像")
 
 ## 烧录及运行<a name="ZH-CN_TOPIC_0000002224191209"></a>
 
 **烧录<a name="section11501615135313"></a>**
 
-版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section20261858162412"></a>**
 
@@ -1993,7 +1958,7 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 4.  在menuconfig界面中选择BLE鼠标的Sensor，如[图3](#fig19164185324114)所示。
 5.  选择完成后按“Q”、“Y”保存退出。
 6.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs21”路径下，如[图4](#fig1461617221592)所示。
-7.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录进鼠标板。
+7.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录进鼠标板。
 
 **图 1**  Mouse Pin Config<a name="fig8838117174110"></a>  
 ![](figures/Mouse-Pin-Config.png "Mouse-Pin-Config")
@@ -2005,13 +1970,13 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 ![](figures/选择sensor型号.png "选择sensor型号")
 
 **图 4**  编译出的版本<a name="fig1461617221592"></a>  
-![](figures/编译出的版本-35.png "编译出的版本-35")
+![](figures/编译出的版本-34.png "编译出的版本-34")
 
 ## 烧录及运行<a name="ZH-CN_TOPIC_0000001790806572"></a>
 
 **烧录<a name="section948712445453"></a>**
 
-将编译出的鼠标版本烧录到鼠标板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的鼠标版本烧录到鼠标板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section520612111327"></a>**
 
@@ -2035,19 +2000,19 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 2.  在menuconfig界面中选择USB键盘Sample，如[图1](#fig640715522143)所示。
 3.  选择完成后按“Q”保存退出。
 4.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs2x”路径下，如[图2](#fig824144515155)所示。
-5.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录。
+5.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录。
 
 **图 1**  选择USB Keyboard Sample<a name="fig640715522143"></a>  
 ![](figures/选择USB-Keyboard-Sample.png "选择USB-Keyboard-Sample")
 
 **图 2**  编译后的版本<a name="fig824144515155"></a>  
-![](figures/编译后的版本-36.png "编译后的版本-36")
+![](figures/编译后的版本-35.png "编译后的版本-35")
 
 ## 烧录及运行<a name="ZH-CN_TOPIC_0000001837765785"></a>
 
 **烧录<a name="section948712445453"></a>**
 
-将编译出的键盘版本烧录到键盘板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的键盘版本烧录到键盘板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section520612111327"></a>**
 
@@ -2074,25 +2039,25 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 3.  在menuconfig界面中选择USB鼠标Sample，如[图2](#fig1097181594319)所示，并选择合适的sensor，如[图3](#fig1815914230436)所示。
 4.  选择完成后按“Q”、“Y”保存退出。
 5.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs2x”路径下，如[图4](#fig73971256134)所示。
-6.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录进鼠标板。
+6.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录进鼠标板。
 
 **图 1**  Mouse Pin Config<a name="fig196586534423"></a>  
-![](figures/Mouse-Pin-Config-37.png "Mouse-Pin-Config-37")
+![](figures/Mouse-Pin-Config-36.png "Mouse-Pin-Config-36")
 
 **图 2**  选择USB Mouse Sample<a name="fig1097181594319"></a>  
 ![](figures/选择USB-Mouse-Sample.png "选择USB-Mouse-Sample")
 
 **图 3**  选择鼠标的sensor<a name="fig1815914230436"></a>  
-![](figures/选择鼠标的sensor-38.png "选择鼠标的sensor-38")
+![](figures/选择鼠标的sensor-37.png "选择鼠标的sensor-37")
 
 **图 4**  编译出的版本<a name="fig73971256134"></a>  
-![](figures/编译出的版本-39.png "编译出的版本-39")
+![](figures/编译出的版本-38.png "编译出的版本-38")
 
 ## 烧录及运行<a name="ZH-CN_TOPIC_0000001790966340"></a>
 
 **烧录<a name="section948712445453"></a>**
 
-将编译出的鼠标版本烧录到鼠标板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的鼠标版本烧录到鼠标板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section520612111327"></a>**
 
@@ -2126,8 +2091,8 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 2.  在menuconfig界面中选择USB AMIC Sample，如[图1](#fig55441733151812)所示。
 3.  在menuconfig界面中选择USB AMIC 相关配置，如[图2](#fig24175441916)所示。
 4.  选择完成后按“Q”或者 ‘q’保存退出。
-5.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如下[图3](#fig37779292111)所示。
-6.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录。
+5.  使用IDE编译版本，编译出的版本包在“output\\bs21\\fwpkg\\xxx”路径下，如[图3](#fig37779292111)所示。
+6.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录。
 
 **图 1**  USB AMIC Sample<a name="fig55441733151812"></a>  
 ![](figures/USB-AMIC-Sample.png "USB-AMIC-Sample")
@@ -2136,13 +2101,13 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 ![](figures/USB-AMIC-配置项.png "USB-AMIC-配置项")
 
 **图 3**  编译后的版本<a name="fig37779292111"></a>  
-![](figures/编译后的版本-40.png "编译后的版本-40")
+![](figures/编译后的版本-39.png "编译后的版本-39")
 
 ## 烧录及运行<a name="ZH-CN_TOPIC_0000001790806584"></a>
 
 **烧录<a name="section948712445453"></a>**
 
-将编译出的音频数传版本烧录到单板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的音频数传版本烧录到单板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section520612111327"></a>**
 
@@ -2207,14 +2172,14 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 ![](figures/选择RCU-Server低功耗.png "选择RCU-Server低功耗")
 
 **图 5**  编译出的版本<a name="fig18317193617319"></a>  
-![](figures/编译出的版本-41.png "编译出的版本-41")
+![](figures/编译出的版本-40.png "编译出的版本-40")
 
 **图 6**  选择SLE RCU Dongle sample<a name="fig18137152003317"></a>  
 ![](figures/选择SLE-RCU-Dongle-sample.png "选择SLE-RCU-Dongle-sample")
 
 注：在USB初始化后需要在PC中选择麦克风+HID设备，才能完全初始化成功。
 
-![](figures/zh-cn_image_0000002222501102.png)
+![](figures/zh-cn_image_0000002334098165.png)
 
 **BLE RCU SAMPLE<a name="section165583283914"></a>**
 
@@ -2255,7 +2220,7 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 
 ### 烧录<a name="ZH-CN_TOPIC_0000001913715465"></a>
 
-将编译出的RCU Server版本与Dongle版本分别烧录到Server与Dongle板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的RCU Server版本与Dongle版本分别烧录到Server与Dongle板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 ### 运行<a name="ZH-CN_TOPIC_0000001913795781"></a>
 
@@ -2275,7 +2240,9 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 
 ## 概述<a name="ZH-CN_TOPIC_0000002027857158"></a>
 
-此Sample演示一个真实的基于SLE的多连接方案。运行Sample的操作包括：配置编译宏，编译，烧录，上电；Client端与Server端在配置编译宏这个步骤上有不同，其他操作步骤相同。
+此Sample演示一个真实的基于SLE的多连接方案。可编译client或者server身份的镜像，不可同时具备client和server身份。client上电后自动起扫描，扫描到server会主动发起连接，连接后会循环给server发数据。运行Sample的操作包括：配置编译宏，编译，烧录，上电；Client端与Server端在配置编译宏这个步骤上有不同，其他操作步骤相同。
+
+![](figures/sle_multi_conn_sample.png)
 
 ## 编译<a name="ZH-CN_TOPIC_0000002063856925"></a>
 
@@ -2306,7 +2273,7 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 ### 配置Server编译<a name="ZH-CN_TOPIC_0000002027719082"></a>
 
 **图 1**  Kconfig配置项<a name="fig1315912214183"></a>  
-![](figures/Kconfig配置项-42.png "Kconfig配置项-42")
+![](figures/Kconfig配置项-41.png "Kconfig配置项-41")
 
 可以配置的选项包括：当前server端的索引号， mac地址和名称。
 
@@ -2326,7 +2293,7 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 
 ### 烧录<a name="ZH-CN_TOPIC_0000002027698722"></a>
 
-将编译出的Server版本与Client版本分别烧录到Server与Client板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的Server版本与Client版本分别烧录到Server与Client板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 ### 运行<a name="ZH-CN_TOPIC_0000002027857162"></a>
 
@@ -2342,13 +2309,13 @@ BLE UART的烧录及运行方法与SLE UART一致，参考“[烧录及运行](�
 
 
 
-## 26.1 概述<a name="ZH-CN_TOPIC_0000002173849740"></a>
+## 概述<a name="ZH-CN_TOPIC_0000002173849740"></a>
 
 此Sample演示一个真实的基于sle+slp air mouse方案。
 
 ![](figures/zh-cn_image_0000002236273297.png)
 
-## 26.2 编译<a name="ZH-CN_TOPIC_0000002209256101"></a>
+## 编译<a name="ZH-CN_TOPIC_0000002209256101"></a>
 
 1.  在命令行下输入“python ./build.py -c bs21e-1100e-slp menuconfig”。
 2.  选择需要编译server，就按照1.server设置，需要编译dongle就按照2.dongle设置
@@ -2373,11 +2340,11 @@ menuconfig选择
 
 ![](figures/zh-cn_image_0000002212387097.png)
 
-## 26.3 烧录<a name="ZH-CN_TOPIC_0000002209170473"></a>
+## 烧录<a name="ZH-CN_TOPIC_0000002209170473"></a>
 
-版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
-## 26.4 运行<a name="ZH-CN_TOPIC_0000002173690004"></a>
+## 运行<a name="ZH-CN_TOPIC_0000002173690004"></a>
 
 1.  准备两块单板，分别作为Server端和Client端。
 2.  烧录完后，上下电。
@@ -2408,10 +2375,10 @@ dongle端与mouse端在配置编译宏这个步骤上有不同。
 4.  在menuconfig界面中选择SLE鼠标的，如[图3](#fig591412161217)所
 5.  选择完成后按“Q”、“Y”保存退出。
 6.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs21”路径下，如[图4](#fig11751945612)所示。
-7.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录进鼠标板。
+7.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录进鼠标板。
 
 **图 1**  Mouse Pin Config<a name="fig21391015105815"></a>  
-![](figures/Mouse-Pin-Config-43.png "Mouse-Pin-Config-43")
+![](figures/Mouse-Pin-Config-42.png "Mouse-Pin-Config-42")
 
 **图 2**  修改sample配置<a name="fig1295982895918"></a>  
 
@@ -2422,7 +2389,7 @@ dongle端与mouse端在配置编译宏这个步骤上有不同。
 ![](figures/zh-cn_image_0000002223525121.png)
 
 **图 4**  编译出的版本<a name="fig11751945612"></a>  
-![](figures/编译出的版本-44.png "编译出的版本-44")
+![](figures/编译出的版本-43.png "编译出的版本-43")
 
 ### 编译SLEMOUSE with Dongle<a name="ZH-CN_TOPIC_0000002188182526"></a>
 
@@ -2431,7 +2398,7 @@ dongle端与mouse端在配置编译宏这个步骤上有不同。
 3.  在menuconfig界面中选择SLE鼠标的，如[图2](#fig591412161217)所示。
 4.  选择完成后按“Q”、“Y”保存退出。
 5.  使用IDE编译版本，编译出的版本包在“tools\\pkg\\fwpkg\\bs21”路径下，如[图3](#fig11751945612)所示。
-6.  将编译出的版本按照“[烧录及运行](烧录及运行-57.md)”烧录进鼠标板。
+6.  将编译出的版本按照“[SLE Mouse Sample](SLE-Mouse-Sample.md)”的“[烧录及运行](烧录及运行-57.md)”烧录进鼠标板。
 
 **图 1**  修改sample配置<a name="fig1295982895918"></a>  
 ![](figures/修改sample配置.png "修改sample配置")
@@ -2440,13 +2407,13 @@ dongle端与mouse端在配置编译宏这个步骤上有不同。
 ![](figures/修改鼠标回报率.png "修改鼠标回报率")
 
 **图 3**  编译出的版本<a name="fig11751945612"></a>  
-![](figures/编译出的版本-45.png "编译出的版本-45")
+![](figures/编译出的版本-44.png "编译出的版本-44")
 
 ## 烧录及运行<a name="ZH-CN_TOPIC_0000002210187685"></a>
 
 **烧录<a name="section948712445453"></a>**
 
-将编译出的鼠标版本烧录到鼠标板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的鼠标版本烧录到鼠标板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 **运行<a name="section20698141827"></a>**
 
@@ -2478,7 +2445,7 @@ dongle端与mouse端在配置编译宏这个步骤上有不同。
 
 ## 烧录及运行<a name="ZH-CN_TOPIC_0000002184234000"></a>
 
-版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
 # game mouse<a name="ZH-CN_TOPIC_0000002185692000"></a>
 
@@ -2569,30 +2536,50 @@ turnkey代码目录说明：
 
 ## 烧录及运行<a name="ZH-CN_TOPIC_0000002220972485"></a>
 
-将编译出的TurnkeyMouse Server版本与Dongle版本分别烧录到Server与Dongle板中，版本烧录方法请参见《BS2XV100  HiSpark Studio  使用指南》。
+将编译出的TurnkeyMouse Server版本与Dongle版本分别烧录到Server与Dongle板中，版本烧录方法请参见《BS2XV100 HiSpark Studio 使用指南》。
 
-各模块的详细功能可参照文档《BS2XV100 星闪鼠标turnkey方案开发 用户指南》。
+各模块的详细功能可参照文档《BS2XV100 星闪鼠标应用方案开发 用户指南》。
 
-# BLE uuid<a name="ZH-CN_TOPIC_0000002194802088"></a>
+# BLE UUID<a name="ZH-CN_TOPIC_0000002194802088"></a>
 
 
 
 
 ## 概述<a name="ZH-CN_TOPIC_0000002230361941"></a>
 
-本文档主要介绍ble uuid sample所提供的接口以及编译方法。此sample只提供接口，不能直接，需要由使用者调用相关接口使用。
+本文档主要介绍BLE UUID sample所提供的接口以及编译方法。此sample只提供接口，不能直接，需要由使用者调用相关接口使用。
 
 ## 编译<a name="ZH-CN_TOPIC_0000002230363373"></a>
 
-使用此sample相关接口需要配置menuconfig，具体配置方法如下。
+使用此sample相关接口需要配置menuconfig，具体配置步骤如下：
 
-1.  ![](figures/zh-cn_image_0000002230322221.png)
-2.  ![](figures/zh-cn_image_0000002195143466.png)
-3.  ![](figures/zh-cn_image_0000002230384033.png)
-4.  ![](figures/zh-cn_image_0000002195144142.png)
-5.  ![](figures/zh-cn_image_0000002195144550.png)
-6.  ![](figures/zh-cn_image_0000002195145458.png)
-7.  ![](figures/zh-cn_image_0000002195145938.png)
+1.  单击“KConfig”按钮。
+
+    ![](figures/zh-cn_image_0000002330127305.png)
+
+2.  单击“Application”。
+
+    ![](figures/zh-cn_image_0000002296127890.png)
+
+3.  单击“Enable Sample”。
+
+    ![](figures/zh-cn_image_0000002330087217.png)
+
+4.  单击“Enable the Sample BT”。
+
+    ![](figures/zh-cn_image_0000002330127421.png)
+
+5.  单击“Support BLE Sample”。
+
+    ![](figures/zh-cn_image_0000002296128014.png)
+
+6.  单击“Support Ble uuid server sample”。
+
+    ![](figures/zh-cn_image_0000002330087345.png)
+
+7.  回到vsocde中，单击“Build”进行编译。
+
+    ![](figures/zh-cn_image_0000002296287770.png)
 
 ## 接口<a name="ZH-CN_TOPIC_0000002230287425"></a>
 

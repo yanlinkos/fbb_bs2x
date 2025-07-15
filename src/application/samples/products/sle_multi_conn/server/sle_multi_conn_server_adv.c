@@ -9,11 +9,10 @@
 
 #include "securec.h"
 #include "errcode.h"
-#include "osal_addr.h"
-#include "osal_task.h"
 #include "common_def.h"
 #include "sle_common.h"
 #include "sle_device_discovery.h"
+#include "sle_connection_manager.h"
 #include "sle_device_manager.h"
 #include "sle_errcode.h"
 
@@ -48,7 +47,7 @@
 
 static void sle_power_on_cbk(uint8_t status)
 {
-    osal_printk("%s sle power on: %x\r\n", SLE_MULTI_CONN_SERVER_LOG, status);
+    osal_printk("%s sle power on: 0x%x\r\n", SLE_MULTI_CONN_SERVER_LOG, status);
     enable_sle();
 }
 
@@ -56,11 +55,9 @@ static void sle_enable_cbk(uint8_t status)
 {
     unused(status);
     errcode_t ret = 0;
+    sle_remove_all_pairs();
     ret = sle_multi_conn_server_add();
-    osal_printk("%s sle_enable_cbk,sle_multi_conn_server_add return: [%x]\r\n",
-                SLE_MULTI_CONN_SERVER_LOG, ret);
-    ret = sle_multi_conn_server_adv_init();
-    osal_printk("%s sle_enable_cbk,sle_multi_conn_server_adv_init return: [%x]\r\n",
+    osal_printk("%s sle_enable_cbk,sle_multi_conn_server_add,err_code: [0x%x]\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, ret);
 }
 
@@ -72,7 +69,7 @@ errcode_t sle_multi_conn_server_sample_dev_cbk_register(void)
     dev_mgr_cbks.sle_enable_cb = sle_enable_cbk;
     ret = sle_dev_manager_register_callbacks(&dev_mgr_cbks);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("%s sle_dev_register_cbks,register_callbacks fail :%x\r\n",
+        osal_printk("%s sle_dev_register_cbks,register_callbacks fail :0x%x\r\n",
                     SLE_MULTI_CONN_SERVER_LOG, ret);
         return ret;
     }
@@ -219,19 +216,19 @@ static errcode_t sle_set_default_announce_data(void)
 
 static void sle_announce_enable_cbk(uint32_t announce_id, errcode_t status)
 {
-    osal_printk("%s sle announce enable callback id:%02x, state:%x\r\n",
+    osal_printk("%s sle announce enable callback id:0x%02x, state:0x%x\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, announce_id, status);
 }
 
 static void sle_announce_disable_cbk(uint32_t announce_id, errcode_t status)
 {
-    osal_printk("%s sle announce disable callback id:%02x, state:%x\r\n",
+    osal_printk("%s sle announce disable callback id:0x%02x, state:0x%x\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, announce_id, status);
 }
 
 static void sle_announce_terminal_cbk(uint32_t announce_id)
 {
-    osal_printk("%s sle announce terminal callback announce_id:%02x\r\n",
+    osal_printk("%s sle announce terminal callback announce_id:0x%02x\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, announce_id);
 }
 

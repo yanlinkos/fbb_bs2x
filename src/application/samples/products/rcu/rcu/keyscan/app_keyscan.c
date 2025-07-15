@@ -59,6 +59,9 @@
 
 #include "hal_reboot.h"
 #include "app_keyscan.h"
+#if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
+#include "rcu_mp_test.h"
+#endif
 
 combine_key_e g_combine_key_flag = COMBINE_KEY_FLAG_NONE;
 osal_mutex g_key_process;
@@ -74,9 +77,6 @@ static uint32_t g_current_control_obj = NONE_DEVICE;
 static bool g_check_mouse_send = false;
 static uint32_t g_keyboard_send_count = 0;
 static bool g_check_keyboard_send = false;
-static const uint8_t g_consumer_key_index[RCU_CONSUMER_KEY_NUM] = {
-    RCU_KEY_VOLUME_UP, RCU_KEY_VOLUME_DOWN, RCU_KEY_MUTE};
-static const uint16_t g_consumer_key_map[RCU_CONSUMER_KEY_NUM] = {0xE9, 0xEA, 0xE2};
 #endif
 /* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER */
 
@@ -160,8 +160,6 @@ static const key_config_t g_menu_key_map[RCU_KEY_MAX] = {
     {RCU_KEY_EIGHT,          0x25, RCU_KEYBOARD_KEY, 0x8B},
     {RCU_KEY_NINE,           0x26, RCU_KEYBOARD_KEY, 0xC4},
     {RCU_KEY_ZERO,           0x27, RCU_KEYBOARD_KEY, 0x87}};
-#if defined(CONFIG_KEYSCAN_USER_CONFIG_TYPE)
-#endif /* CONFIG_KEYSCAN_USER_CONFIG_TYPE */
 
 #if defined(CONFIG_KEYSCAN_USE_SIX_KEYS_TYPE)
 static const uint8_t g_key_map[CONFIG_KEYSCAN_ENABLE_ROW][CONFIG_KEYSCAN_ENABLE_COL] = {
@@ -192,12 +190,12 @@ static const uint8_t combine_key[COMBINE_KEY_MAX][4] = {
     {RCU_KEY_LEFT, RCU_KEY_RIGHT, 0x0, COMBINE_KEY_FLAG_IR_LEARN},                                   // 红外学习
     {RCU_KEY_LOOK_BACK, RCU_KEY_LIVE_BROADCAST, 0x0, COMBINE_KEY_FLAG_UNPAIR},                       // 取消配对
 #if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
-    {RCU_KEY_APPLIC, RCU_KEY_UP, 0X0, COMBINE_KEY_FLAG_TEST_STATION_01},
-    {RCU_KEY_APPLIC, RCU_KEY_DOWN, 0X0, COMBINE_KEY_FLAG_TEST_STATION_02},
-    {RCU_KEY_APPLIC, RCU_KEY_RIGHT, 0X0, COMBINE_KEY_FLAG_TEST_STATION_03},
-    {RCU_KEY_ENTER, RCU_KEY_UP, 0X0, COMBINE_KEY_FLAG_TEST_STATION_04},
-    {RCU_KEY_ENTER, RCU_KEY_DOWN, 0X0, COMBINE_KEY_FLAG_TEST_STATION_05},
-    {RCU_KEY_ENTER, RCU_KEY_RIGHT, 0X0, COMBINE_KEY_FLAG_TEST_STATION_06},
+    {RCU_KEY_MENU, RCU_KEY_UP,    0X0, COMBINE_KEY_FLAG_TEST_STATION_01},
+    {RCU_KEY_MENU, RCU_KEY_DOWN,  0X0, COMBINE_KEY_FLAG_TEST_STATION_02},
+    {RCU_KEY_MENU, RCU_KEY_RIGHT, 0X0, COMBINE_KEY_FLAG_TEST_STATION_03},
+    {RCU_KEY_OK,   RCU_KEY_UP, 0X0, COMBINE_KEY_FLAG_TEST_STATION_04},
+    {RCU_KEY_OK,   RCU_KEY_DOWN, 0X0, COMBINE_KEY_FLAG_TEST_STATION_05},
+    {RCU_KEY_OK,   RCU_KEY_RIGHT, 0X0, COMBINE_KEY_FLAG_TEST_STATION_06},
 #endif
 };
 
@@ -228,7 +226,7 @@ static bool is_key_match(uint8_t template_key, uint8_t *key_buffer, uint8_t key_
 }
 
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-static void sle_usb_vdt_dma_transfer_done_callback(uint8_t intr, uint8_t channel, uintptr_t arg);
+static void rcu_vdt_dma_transfer_done_callback(uint8_t intr, uint8_t channel, uintptr_t arg);
 static void rcu_amic_init(void);
 static void rcu_amic_deinit(void);
 
@@ -238,12 +236,9 @@ static void sle_rcu_consumer_send_report(uint8_t key_value)
         EOK) {
         return;
     }
-    for (uint8_t i = 0; i < RCU_CONSUMER_KEY_NUM; i++) {
-        if (key_value == g_consumer_key_index[i]) {
-            g_hid_sle_consumer_report.comsumer_key0 = g_consumer_key_map[i] & 0xFF;
-            g_hid_sle_consumer_report.comsumer_key1 = g_consumer_key_map[i] >> RCU_CONSUMER_KEY_OFFSET;
-        }
-    }
+
+    g_hid_sle_consumer_report.comsumer_key0 = g_menu_key_map[key_value].usage_id & 0xFF;
+    g_hid_sle_consumer_report.comsumer_key1 = g_menu_key_map[key_value].usage_id >> RCU_CONSUMER_KEY_OFFSET;
     sle_rcu_server_send_report_by_handle(
         (uint8_t *)(uintptr_t)&g_hid_sle_consumer_report, sizeof(usb_hid_consumer_report_t), get_active_con_id());
 }
@@ -328,7 +323,6 @@ static void rcu_amic_deinit(void)
     uapi_dma_end_transfer(g_rcu_dma_channel);
     uapi_dma_close();
     uapi_dma_deinit();
-    dma_port_release_handshaking_source(g_rcu_dma_channel);
     uapi_adc_power_en(AFE_AMIC_MODE, false);
     uapi_adc_deinit();
     uapi_pdm_stop();
@@ -373,29 +367,29 @@ static void rcu_amic_init(void)
         osal_printk("%s Start the PDM fail.\r\n", SLE_VDT_SERVER_LOG);
     }
 
-    dma_channel_t dma_channel = uapi_dma_get_lli_channel(0, HAL_DMA_HANDSHAKING_MAX_NUM);
-    for (uint8_t i = 0; i < RING_BUFFER_NUMBER; i++) {
-        if (rcu_add_dma_lli_node(i, dma_channel, sle_usb_vdt_dma_transfer_done_callback) != 0) {
-            osal_printk("rcu_add_dma_lli_node fail!\r\n");
-            return;
-        }
-    }
-
-    if (uapi_dma_enable_lli(dma_channel, sle_usb_vdt_dma_transfer_done_callback, (uintptr_t)NULL) == ERRCODE_SUCC) {
-        osal_printk("dma enable lli memory transfer succ!\r\n");
+    if (rcu_pdm_start_dma_transfer(g_pdm_dma_data[0], rcu_vdt_dma_transfer_done_callback) != 0) {
+        osal_printk("rcu_pdm_start_dma_transfer fail!\r\n");
+        return;
     }
 }
 
-static void sle_usb_vdt_dma_transfer_done_callback(uint8_t intr, uint8_t channel, uintptr_t arg)
+static void rcu_vdt_dma_transfer_restart(void)
+{
+    g_write_buffer_node = (g_write_buffer_node + 1) % RING_BUFFER_NUMBER;
+    if (rcu_pdm_start_dma_transfer(g_pdm_dma_data[g_write_buffer_node],
+        rcu_vdt_dma_transfer_done_callback) != 0) {
+        return;
+    }
+}
+
+static void rcu_vdt_dma_transfer_done_callback(uint8_t intr, uint8_t channel, uintptr_t arg)
 {
     unused(channel);
     unused(arg);
-    uint8_t node = 0;
-    g_rcu_dma_channel = channel;
+
     switch (intr) {
         case HAL_DMA_INTERRUPT_TFR:
-            node = (g_write_buffer_node + 1) % RING_BUFFER_NUMBER;
-            g_write_buffer_node = node;
+            rcu_vdt_dma_transfer_restart();
             break;
         case HAL_DMA_INTERRUPT_ERR:
             osal_printk("%s DMA transfer error.\r\n", SLE_VDT_SERVER_LOG);
@@ -414,12 +408,8 @@ static void ble_rcu_consumer_send_report(uint8_t key_value)
         EOK) {
         return;
     }
-    for (uint8_t i = 0; i < RCU_CONSUMER_KEY_NUM; i++) {
-        if (key_value == g_consumer_key_index[i]) {
-            g_hid_ble_consumer_report.comsumer_key0 = g_consumer_key_map[i] & 0xFF;
-            g_hid_ble_consumer_report.comsumer_key1 = g_consumer_key_map[i] >> RCU_CONSUMER_KEY_OFFSET;
-        }
-    }
+    g_hid_ble_consumer_report.comsumer_key0 = g_menu_key_map[key_value].usage_id & 0xFF;
+    g_hid_ble_consumer_report.comsumer_key1 = g_menu_key_map[key_value].usage_id >> RCU_CONSUMER_KEY_OFFSET;
     ble_hid_rcu_server_send_consumer_input_report_by_uuid(
         (uint8_t *)(uintptr_t)&g_hid_ble_consumer_report, sizeof(usb_hid_consumer_report_t), get_active_con_id());
 }
@@ -551,7 +541,13 @@ static void rcu_and_ir_send_report(uint8_t key_value)
 {
     unused(key_value);
 #if defined(CONFIG_SAMPLE_SUPPORT_IR)
-    ir_transmit_nec(IR_NEC_USER_CODE, g_menu_key_map[key_value].ir_value);
+    uapi_pin_set_mode(S_MGPIO4, HAL_PIO_FUNC_GPIO);
+    uapi_gpio_set_dir(S_MGPIO4, GPIO_DIRECTION_INPUT);
+    uapi_pin_set_pull(S_MGPIO4, PIN_PULL_UP);
+    uapi_pin_set_mode(S_MGPIO5, HAL_PIO_FUNC_GPIO);
+    uapi_gpio_set_dir(S_MGPIO5, GPIO_DIRECTION_OUTPUT);
+    uapi_gpio_set_val(S_MGPIO5, GPIO_LEVEL_HIGH);
+    ir_nec_send(IR_NEC_USER_CODE, g_menu_key_map[key_value].ir_value);
 #endif /* CONFIG_SAMPLE_SUPPORT_IR */
 }
 
@@ -607,6 +603,13 @@ static void rcu_send_end(void)
 #if defined(CONFIG_SAMPLE_SUPPORT_IR) && defined(CONFIG_SAMPLE_SUPPORT_IR_STUDY)
 void app_uapi_ir_study_start(uint8_t key_value)
 {
+    uapi_pin_set_mode(S_MGPIO6, HAL_PIO_FUNC_GPIO);
+    uapi_gpio_set_dir(S_MGPIO6, GPIO_DIRECTION_OUTPUT);
+    uapi_gpio_set_val(S_MGPIO6, GPIO_LEVEL_LOW);
+    uapi_pin_set_mode(S_MGPIO5, HAL_PIO_FUNC_GPIO);
+    uapi_gpio_set_dir(S_MGPIO5, GPIO_DIRECTION_OUTPUT);
+    uapi_gpio_set_val(S_MGPIO5, GPIO_LEVEL_LOW);
+
     uapi_ir_study_start(key_value);
 }
 #else
@@ -653,13 +656,16 @@ static void rcu_send_report(uint8_t key_value)
 /* 单键操作 */
 static void one_key_process(uint8_t key_value)
 {
-    osal_printk("-key value %x\r\n", g_menu_key_map[key_value].usage_id);
     if (key_value >= RCU_KEY_MAX) {
         osal_printk("key value %d is out of range\r\n", key_value);
         return;
     }
+
     // 红外学习
-    app_ir_key_process(key_value);
+    if (get_rcu_mode() == RCU_MODE_IR_STUDY) {
+        app_ir_key_process(key_value);
+        return;
+    }
     // 当前选中的设备没有建立连接走红外发送
     if ((g_current_control_obj == NONE_DEVICE) || (!active_device_is_connect())) {
         rcu_and_ir_send_report(key_value);
@@ -719,6 +725,7 @@ void sle_notify_connect(uint16_t conn_id, uint8_t con_state)
     g_con_info[TV].device_type = TV;
     g_con_info[TV].con_id = conn_id;
     g_con_info[TV].state = con_state;
+    g_current_control_obj = TV;
 }
 #endif
 
@@ -728,6 +735,7 @@ void ble_notify_connect(uint16_t conn_id, uint8_t con_state)
     g_con_info[SET_TOP_BOX].device_type = SET_TOP_BOX;
     g_con_info[SET_TOP_BOX].con_id = conn_id;
     g_con_info[SET_TOP_BOX].state = con_state;
+    g_current_control_obj = SET_TOP_BOX;
 }
 #endif
 
@@ -752,6 +760,7 @@ static void key_handle_process_repairing_event(void)
             sle_remove_all_pairs();
         } else {
             sle_remove_all_pairs();
+            sle_rcu_standby_to_work();
             app_timer_process_start(TIME_CMD_PAIR, APP_PAIR_TIME);
         }
     }
@@ -764,6 +773,7 @@ static void key_handle_process_repairing_event(void)
             gap_ble_remove_all_pairs();
         } else {
             gap_ble_remove_all_pairs();
+            ble_rcu_standby_to_work();
             app_timer_process_start(TIME_BLE_CMD_PAIR, APP_BLE_PAIR_TIME);
         }
     }
@@ -775,26 +785,35 @@ static void key_handle_process_unpairing_event(void)
 {
     osal_printk("key_handle_process_unpairing_event start\r\n");
     app_globle_status_t status = get_app_globle_status();
-    errcode_t ret = ERRCODE_SUCC;
     if (status.rcu_mode == RCU_MODE_TEST_NO_SLEPP) {
         app_mode_reset();
     }
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-    uint16_t sle_state = g_con_info[g_current_control_obj].state;
-    if (sle_state == SLE_ACB_STATE_CONNECTED) {
-        ret = sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
-        if (ret != ERRCODE_SUCC) {
-        }
+    /* 断开连接 */
+    if (g_con_info[TV].state == SLE_ACB_STATE_CONNECTED) {
+        sle_rcu_standby_to_sleep();
     }
-    ret = sle_remove_all_pairs();
-    osal_printk("sle_remove_all_pairs ret: %d\r\n", ret);
+
+    /* 关闭广播。 */
+    sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
+    /* 删除所有配对信息。 */
+    sle_remove_all_pairs();
+    g_con_info[TV].state = SLE_ACB_STATE_DISCONNECTED;
 #endif
 
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
-    ret = gap_ble_remove_all_pairs();
-    osal_printk("ble_remove_all_pairs ret: %d\r\n", ret);
+    /* 断开连接 */
+    if (g_con_info[SET_TOP_BOX].state == GAP_BLE_STATE_CONNECTED) {
+        ble_rcu_standby_to_sleep();
+    }
+
+    /* 关闭广播。 */
+    gap_ble_stop_adv(BTH_GAP_BLE_ADV_HANDLE_DEFAULT);
+    /* 删除所有配对信息。 */
+    gap_ble_remove_all_pairs();
+    g_con_info[SET_TOP_BOX].state = GAP_BLE_STATE_DISCONNECTED;
 #endif
-    osal_printk("key_handle_process_unpairing_event ret: %d\r\n", ret);
+    g_current_control_obj = NONE_DEVICE;
     clear_rcu_mode(RCU_MODE_ADV_SEND);
 }
 
@@ -804,13 +823,11 @@ static void key_handle_process_ir_study_event(void)
     if (get_rcu_mode() != RCU_MODE_IR_STUDY) {
         set_rcu_mode(RCU_MODE_IR_STUDY);
         app_timer_process_start(TIME_CMD_IR_STUDY, APP_IR_STUDY_TIME);
-        app_print("entry RCU_MODE_IR_STUDY\r\n");
+        osal_printk("[ir_study] entry RCU_MODE_IR_STUDY\r\n");
     } else {
-        app_print("entry exit\r\n");
         app_timer_process_stop(TIME_CMD_IR_STUDY);
-        app_print("before clean\r\n");
         clear_rcu_mode(RCU_MODE_IR_STUDY);
-        app_print("exit RCU_MODE_IR_STUDY\r\n");
+        osal_printk("[ir_study] exit RCU_MODE_IR_STUDY\r\n");
     }
 }
 
@@ -826,6 +843,10 @@ static void key_hold_process(void)
         case COMBINE_KEY_FLAG_TEST_STATION_04:
         case COMBINE_KEY_FLAG_TEST_STATION_05:
         case COMBINE_KEY_FLAG_TEST_STATION_06:
+            /* 关闭广播。 */
+            sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
+            /* 删除所有配对信息。 */
+            sle_remove_all_pairs();
             rcu_mp_test_set_work_station(combine_key_flag);
             break;
 #endif

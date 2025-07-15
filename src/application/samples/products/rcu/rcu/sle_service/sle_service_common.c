@@ -45,7 +45,7 @@ errcode_t sle_service_add(uint8_t *device_uuid, sle_item_handle_t *service_hdl,
     sle_uuid_t service_uuid = {0};
     ret = sle_set_uuid(device_uuid, &service_uuid);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("[dis service] set uuid fail, ret:%x\r\n", ret);
+        osal_printk("[dis service] set uuid fail, ret:0x%x\r\n", ret);
         return ERRCODE_SLE_FAIL;
     }
 

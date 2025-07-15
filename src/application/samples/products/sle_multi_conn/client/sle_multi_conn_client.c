@@ -124,7 +124,7 @@ void sle_multi_conn_start_scan(void)
 
 static void sle_multi_conn_client_sample_seek_enable_cbk(errcode_t status)
 {
-    osal_printk("%s seek_enable_cbk,status: [%x]\r\n", SLE_MULTI_CONN_CLIENT_LOG, status);
+    osal_printk("%s seek_enable_cbk,status: [0x%x]\r\n", SLE_MULTI_CONN_CLIENT_LOG, status);
 }
 
 static uint8_t sle_multi_conn_find_connected_server_by_addr(const uint8_t *server_addr)
@@ -193,7 +193,7 @@ static void sle_multi_conn_client_sample_connect_state_changed_cbk(uint16_t conn
                                                                    sle_pair_state_t pair_state,
                                                                    sle_disc_reason_t disc_reason)
 {
-    osal_printk("%s conn state changed: conn_id:%x, connect_state:%x, pair_state:%x, disc_reason:%x,\r\n \
+    osal_printk("%s conn state changed: conn_id:0x%x, connect_state:0x%x, pair_state:0x%x, disc_reason:0x%x,\r\n \
                 server addr:[%02x:%02x:%02x:%02x:%02x:%02x]\r\n",
                 SLE_MULTI_CONN_CLIENT_LOG, conn_id, conn_state, pair_state, disc_reason, addr->addr[SLE_ADDR_INDEX0],
                 addr->addr[SLE_ADDR_INDEX1], addr->addr[SLE_ADDR_INDEX2], addr->addr[SLE_ADDR_INDEX3],
@@ -210,9 +210,6 @@ static void sle_multi_conn_client_sample_connect_state_changed_cbk(uint16_t conn
         // 连接后，更新client连接的server数量
         g_connected_num++;
         g_current_conn_index = CONFIG_SLE_MULTI_CONN_NUM;
-        if (g_connected_num < CONFIG_SLE_MULTI_CONN_NUM) {
-            sle_multi_conn_start_scan();
-        }
     } else if (conn_state == SLE_ACB_STATE_NONE) {
         osal_printk("%s SLE_ACB_STATE_NONE\r\n", SLE_MULTI_CONN_CLIENT_LOG);
     } else if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
@@ -277,6 +274,9 @@ static void sle_multi_conn_client_param_update_cbk(uint16_t conn_id, errcode_t s
         return;
     }
     g_sle_multi_conn_param.param_update_ready[server_index] = 1;
+    if (g_connected_num < CONFIG_SLE_MULTI_CONN_NUM) {
+            sle_multi_conn_start_scan();
+    }
 }
 
 static void sle_multi_conn_client_sample_connect_cbk_register(void)
@@ -291,7 +291,7 @@ static void sle_multi_conn_client_sample_connect_cbk_register(void)
 static void sle_multi_conn_client_sample_exchange_info_cbk(uint8_t client_id, uint16_t conn_id,
                                                            ssap_exchange_info_t *param, errcode_t status)
 {
-    osal_printk("%s exchange_info_cbk, client id: %x status: %x mtu size: %x, version: %x.\r\n",
+    osal_printk("%s exchange_info_cbk, client id: 0x%x status: 0x%x mtu size: 0x%x, version: 0x%x.\r\n",
                 SLE_MULTI_CONN_CLIENT_LOG,
                 client_id,
                 status,
@@ -312,7 +312,7 @@ static void sle_multi_conn_client_sample_find_structure_cbk(uint8_t client_id, u
     unused(conn_id);
     unused(service);
     unused(status);
-    osal_printk("%s find_structure_cbk cbk client: %x, conn_id: %x\r\n",
+    osal_printk("%s find_structure_cbk cbk client: 0x%x, conn_id: 0x%x\r\n",
                 SLE_MULTI_CONN_CLIENT_LOG,
                 client_id,
                 conn_id);
@@ -325,7 +325,7 @@ static void sle_multi_conn_client_sample_find_property_cbk(uint8_t client_id, ui
     unused(conn_id);
     unused(property);
     unused(status);
-    osal_printk("%s find_property_cbk client_id: [%x], conn_id: [%x], status: [%x] handle: [%x]\r\n",
+    osal_printk("%s find_property_cbk client_id: [0x%x], conn_id: [0x%x], status: [0x%x] handle: [0x%x]\r\n",
                 SLE_MULTI_CONN_CLIENT_LOG,
                 client_id,
                 conn_id,
@@ -348,13 +348,9 @@ static void sle_multi_conn_client_sample_find_structure_cmp_cbk(uint8_t client_i
     unused(client_id);
     unused(structure_result);
     unused(status);
-    osal_printk("%s find_structure_cmp_cbk client_id: [%x], conn_id: [%x], status: [%x], type: [%x], uuid: [%x]\r\n",
-                SLE_MULTI_CONN_CLIENT_LOG,
-                client_id,
-                conn_id,
-                status,
-                structure_result->type,
-                structure_result->uuid.uuid);
+    osal_printk("%s find_structure_cmp_cbk client_id: [0x%x], conn_id: [0x%x], status: [0x%x], type: [0x%x], uuid: \
+        [0x%x]\r\n", SLE_MULTI_CONN_CLIENT_LOG, client_id, conn_id, status, structure_result->type,
+        structure_result->uuid.uuid);
 
     uint8_t server_index = 0;
     server_index = get_sle_multi_conn_server_index(conn_id);
@@ -387,7 +383,7 @@ static void sle_multi_conn_client_sample_ssapc_write_cfm_cbk(uint8_t client_id,
     if (server_index == CONFIG_SLE_MULTI_CONN_NUM) {
         return;
     }
-    osal_printk("%s write cfm cbk. server_index: %x conn_id: %x\r\n",
+    osal_printk("%s write cfm cbk. server_index: 0x%x conn_id: 0x%x\r\n",
                 SLE_MULTI_CONN_CLIENT_LOG,
                 server_index,
                 conn_id);
@@ -407,7 +403,7 @@ static void sle_multi_conn_client_sample_ssapc_read_cfm_cbk(uint8_t client_id,
     if (server_index == CONFIG_SLE_MULTI_CONN_NUM) {
         return;
     }
-    osal_printk("%s ssapc_read_cfm_cbk. server_index: %x,conn_id: %x\r\n",
+    osal_printk("%s ssapc_read_cfm_cbk. server_index: 0x%x,conn_id: 0x%x\r\n",
                 SLE_MULTI_CONN_CLIENT_LOG,
                 server_index,
                 conn_id);
@@ -494,7 +490,7 @@ static void sle_client_target_server_init(void)
 
 void sle_multi_conn_notification_cb(uint8_t client_id, uint16_t conn_id, ssapc_handle_value_t *data, errcode_t status)
 {
-    osal_printk("%s notification_cb status: [%x] data : %s, handle : %x, client_id : %x, conn_id : %x\r\n",
+    osal_printk("%s notification_cb status: [0x%x] data : %s, handle : 0x%x, client_id : 0x%x, conn_id : 0x%x\r\n",
                 SLE_MULTI_CONN_CLIENT_LOG,
                 status,
                 data->data,
@@ -530,8 +526,8 @@ void sle_multi_conn_read_req(uint8_t server_index)
 
 void sle_multi_conn_indication_cb(uint8_t client_id, uint16_t conn_id, ssapc_handle_value_t *data, errcode_t status)
 {
-    osal_printk("%s sle multi_conn client sle_multi_conn_indication_cb status: [%x]\r\n \
-                recived data : %s, client_id : %x, conn_id : %x\r\n",
+    osal_printk("%s sle multi_conn client sle_multi_conn_indication_cb status: [0x%x]\r\n \
+                recived data : %s, client_id : 0x%x, conn_id : 0x%x\r\n",
                 SLE_MULTI_CONN_CLIENT_LOG,
                 status,
                 data->data,
@@ -589,17 +585,17 @@ static void sle_multi_conn_client_sample_sle_power_on_cbk(uint8_t status)
 
 static void sle_multi_conn_client_sample_sle_enable_cbk(uint8_t status)
 {
-    if (status == 0) {
-        // client 初始化,设置地址和回调
-        sle_multi_conn_client_init(sle_multi_conn_notification_cb, sle_multi_conn_indication_cb);
-        // 开始扫描任务
-        sle_multi_conn_start_scan();
-    }
+    unused(status);
+    // 清除G端配对信息
+    sle_remove_all_pairs();
+    // 开始扫描任务
+    sle_multi_conn_start_scan();
 }
 
 errcode_t sle_multi_conn_client_sample_dev_cbk_register(void)
 {
     errcode_t ret = 0;
+    sle_multi_conn_client_init(sle_multi_conn_notification_cb, sle_multi_conn_indication_cb);
     sle_dev_manager_callbacks_t client_dev_mgr_cbk = {0};
     // 设备管理，上电回调
     client_dev_mgr_cbk.sle_power_on_cb = sle_multi_conn_client_sample_sle_power_on_cbk;

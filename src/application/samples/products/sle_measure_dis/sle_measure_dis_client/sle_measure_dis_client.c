@@ -125,7 +125,7 @@ static void measure_dis_cm_conn_state_cbk(uint16_t conn_id, const sle_addr_t *ad
 
 errcode_t measure_dis_cm_register_cbks(void)
 {
-    sle_connection_callbacks_t cm_cbks;
+    sle_connection_callbacks_t cm_cbks = { 0 };
     cm_cbks.connect_state_changed_cb = measure_dis_cm_conn_state_cbk;
     cm_cbks.connect_param_update_req_cb = NULL;
     cm_cbks.connect_param_update_cb = NULL;
@@ -234,7 +234,7 @@ void measure_dis_client_msg_proc(uint8_t *data, uint16_t data_len)
     }
 
     if (unlikely(ret != ERRCODE_SLE_SUCCESS)) {
-        osal_printk("client proc msg failed MSG_TYPE:%x ret:0x%x \r\n", slem_profile_msg->type, ret);
+        osal_printk("client proc msg failed MSG_TYPE:0x%x ret:0x%x \r\n", slem_profile_msg->type, ret);
     }
 }
 
@@ -246,7 +246,7 @@ STATIC void measure_dis_ssapc_notification_cbk(uint8_t client_id, uint16_t conn_
 {
     unused(client_id);
     unused(status);
-    osal_printk("[ssap client] notification info cbk client handle:%d, conn_id:%x, data_len:%x\n",
+    osal_printk("[ssap client] notification info cbk client handle:%d, conn_id:0x%x, data_len:0x%x\n",
         data->handle, conn_id, data->data_len);
 
     measure_dis_client_msg_proc(data->data, data->data_len);
@@ -259,7 +259,7 @@ STATIC void measure_dis_ssapc_indication_cb(uint8_t client_id, uint16_t conn_id,
     errcode_t status)
 {
     unused(client_id);
-    osal_printk("[ssap client] indication info cbk client %d,mtu_size:%d, version:%x, status:%x\n",
+    osal_printk("[ssap client] indication info cbk client %d,mtu_size:%d, version:0x%x, status:0x%x\n",
         conn_id, data->handle, data->type, status);
 }
 
@@ -270,7 +270,7 @@ STATIC void measure_dis_ssapc_exchange_info_cbk(uint8_t client_id, uint16_t conn
     errcode_t status)
 {
     unused(client_id);
-    osal_printk("[ssap client] exchange info cbk client %d,mtu_size:%d, version:%x, status:%x\n",
+    osal_printk("[ssap client] exchange info cbk client %d,mtu_size:%d, version:0x%x, status:0x%x\n",
         conn_id, param->mtu_size, param->version, status);
 }
 

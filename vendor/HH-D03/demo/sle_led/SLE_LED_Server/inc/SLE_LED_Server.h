@@ -32,4 +32,9 @@
 /* Property UUID */
 #define SLE_UUID_SERVER_PROPERTY 0x3344
 
+/* Operation indication */
+#define SLE_UUID_TEST_OPERATION_INDICATION  (SSAP_OPERATE_INDICATION_BIT_READ | \
+                                             SSAP_OPERATE_INDICATION_BIT_WRITE | \
+                                             SSAP_OPERATE_INDICATION_BIT_NOTIFY)
+
 #endif

@@ -93,7 +93,7 @@
 </td>
 <td class="cellrowborder" valign="top" width="24.38%" headers="mcps1.1.4.1.2 "><p id="p1869161762"><a name="p1869161762"></a><a name="p1869161762"></a>2024-07-04</p>
 </td>
-<td class="cellrowborder" valign="top" width="56.410000000000004%" headers="mcps1.1.4.1.3 "><a name="ul639617131167"></a><a name="ul639617131167"></a><ul id="ul639617131167"><li>更新“<a href="工作流程.md">工作流程</a>”小节内容。</li><li>更新“<a href="DebugKits工具获取信息.md">DebugKits工具获取信息</a>”小节内容。</li></ul>
+<td class="cellrowborder" valign="top" width="56.410000000000004%" headers="mcps1.1.4.1.3 "><a name="ul639617131167"></a><a name="ul639617131167"></a><ul id="ul639617131167"><li>更新“<a href="日志打印功能.md">日志打印功能</a>”的“<a href="工作流程.md">工作流程</a>”小节内容。</li><li>更新“<a href="DebugKits工具获取信息.md">DebugKits工具获取信息</a>”小节内容。</li></ul>
 </td>
 </tr>
 <tr id="row1534851124217"><td class="cellrowborder" valign="top" width="19.21%" headers="mcps1.1.4.1.1 "><p id="p934881112421"><a name="p934881112421"></a><a name="p934881112421"></a>01</p>
@@ -139,7 +139,7 @@ DIAG维测功能模块提供以下功能：
 
 ### 场景说明<a name="ZH-CN_TOPIC_0000001837766181"></a>
 
-用户需要增加一些调试日志来定位问题时，可以通过DIAG提供的日志打印接口，将调试信息打印到DebugKits的Message界面上。
+用户需要增加一些调试日志来定位问题时，可以通过DIAG提供的日志打印接口，将调试信息打印到DebugKits的Message界面。
 
 ### 工作流程<a name="ZH-CN_TOPIC_0000001837646229"></a>
 
@@ -217,7 +217,7 @@ int main()
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
->请注意，DIAG日志只能支持长度32位及以下的参数，如："%d"、"%u"、"%x"、"%p"，无法支持长度大于32位的参数，如"%ld"、"%s"，无法支持浮点参数，如"%f"。
+>请注意，DIAG日志只能支持长度32位及以下的参数，如：“%d”、“%u”、“%x”、“%p”，无法支持长度大于32位的参数，如“%ld”、“%s”，无法支持浮点参数，如“%f”。
 
 ## 命令注册功能<a name="ZH-CN_TOPIC_0000001837646225"></a>
 

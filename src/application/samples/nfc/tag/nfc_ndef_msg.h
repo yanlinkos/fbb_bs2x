@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023. All rights reserved.
  * Description: nfc_ndef_msg.h
- *
+ * Author: 
  * Create: 2023-05-06
  */
 #ifndef NFC_NDEF_MSG_H

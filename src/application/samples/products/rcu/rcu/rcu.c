@@ -58,6 +58,8 @@
 #if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
 #include "rcu_mp_test.h"
 #endif  /* CONFIG_RCU_MASS_PRODUCTION_TEST */
+#include "preserve.h"
+#include "log_reg_dump.h"
 #include "hal_reboot.h"
 #include "rcu.h"
 
@@ -130,7 +132,6 @@
 #define RCU_TARGET_ADDR_NUM                2
 #define RCU_CONSUMER_KEY_NUM               6
 #define RCU_CONSUMER_KEY_OFFSET            8
-#define RCU_LOW_POWER                      0  // 0：关闭低功耗; 1:打开低功耗
 
 osal_task *g_rcu_task_handle = NULL;
 
@@ -302,6 +303,9 @@ static void rcu_entry(void)
 {
     app_timer_init();
     uapi_timer_init();
+    if (uapi_clock_control(CLOCK_CLKEN_ID_MCU_CORE, CLOCK_FREQ_LEVEL_HIGH) == ERRCODE_SUCC) {
+        osal_printk("Config succ.\r\n");
+    }
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
     ble_rcu_server_init();
 #endif /* CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER */
@@ -311,10 +315,12 @@ static void rcu_entry(void)
     sle_rcu_server_init(ssaps_server_read_request_cbk, ssaps_server_write_request_cbk);
     sle_vdt_codec_init();
     sle_vdt_set_phy_param();
+    uapi_adc_power_en(AFE_AMIC_MODE, false);
+    uapi_adc_deinit();
 #endif
 
 /* open low power */
-#if (RCU_LOW_POWER == 1) && defined(CONFIG_PM_SYS_SUPPORT)
+#if defined(CONFIG_PM_SYS_SUPPORT)
     rcu_low_power_init();
 #endif
     app_create_msgqueue();
@@ -329,6 +335,23 @@ static void rcu_entry(void)
         osal_kthread_set_priority(g_rcu_task_handle, SLE_RCU_SERVER_TASK_PRIO);
     }
     osal_kthread_unlock();
+}
+
+void app_main(void *unused)
+{
+    UNUSED(unused);
+    hal_reboot_clear_history();
+    system_boot_reason_print();
+    system_boot_reason_process();
+#if (USE_COMPRESS_LOG_INSTEAD_OF_SDT_LOG == NO)
+    log_exception_dump_reg_check();
+#endif
+#if defined(CONFIG_SAMPLE_ENABLE)
+    app_tasks_init();
+#endif
+#ifdef OS_DFX_SUPPORT
+    print_os_task_id_and_name();
+#endif
 }
 
 /* Run the rcu_entry. */

@@ -111,7 +111,7 @@ void ble_uart_client_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_b
         osal_printk("%s add server app addr memcpy failed\r\n", BLE_UART_CLIENT_ERROR);
         return;
     }
-    osal_printk("%s connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason %x\n",
+    osal_printk("%s connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason 0x%x\n",
                 BLE_UART_CLIENT_LOG, conn_id, conn_state, pair_state, disc_reason);
 
     if (conn_state == GAP_BLE_STATE_CONNECTED  &&  pair_state == GAP_BLE_PAIR_NONE) {
@@ -159,7 +159,7 @@ static void ble_uart_client_discover_service_cbk(uint8_t client_id, uint16_t con
     osal_printk("%s start handle:%d end handle:%d uuid_len:%d uuid:\n",
                 BLE_UART_CLIENT_LOG, service->start_hdl, service->end_hdl, service->uuid.uuid_len);
     for (uint8_t i = 0; i < service->uuid.uuid_len; i++) {
-        osal_printk("%02x", service->uuid.uuid[i]);
+        osal_printk("0x%02x", service->uuid.uuid[i]);
     }
     osal_printk("\n %s status:%d\n", BLE_UART_CLIENT_LOG, status);
     param.service_handle = service->start_hdl;
@@ -175,9 +175,9 @@ static void ble_uart_client_discover_character_cbk(uint8_t client_id, uint16_t c
                                                    gattc_discovery_character_result_t *character, errcode_t status)
 {
     for (uint8_t i = 0; i < character->uuid.uuid_len; i++) {
-        osal_printk("%02x", character->uuid.uuid[i]);
+        osal_printk("0x%02x", character->uuid.uuid[i]);
     }
-    osal_printk("\n%s discover character declare_handle:%d, value_handle:%d, properties:%2x\n",
+    osal_printk("\n%s discover character declare_handle:%d, value_handle:%d, properties:0x%2x\n",
                 BLE_UART_CLIENT_LOG, character->declare_handle, character->value_handle, character->properties);
     osal_printk("%s client_id:%d, conn_id = %d, status:%d\n", BLE_UART_CLIENT_LOG, client_id, conn_id, status);
     bt_uuid_t write_uuid = { 0 };
@@ -185,7 +185,7 @@ static void ble_uart_client_discover_character_cbk(uint8_t client_id, uint16_t c
     write_uuid.uuid_len = BT_UUID_MAX_LEN;
     if (memcmp(character->uuid.uuid, write_uuid.uuid, character->uuid.uuid_len) == 0) {
         g_ble_uart_chara_hanle_write_value = character->value_handle;
-        osal_printk("%s write declare_handle:%d, value_handle:%d, properties:%2x\n",
+        osal_printk("%s write declare_handle:%d, value_handle:%d, properties:0x%2x\n",
                     BLE_UART_CLIENT_LOG, character->declare_handle, character->value_handle, character->properties);
     }
     gattc_discovery_descriptor(g_uart_client_id, conn_id, character->declare_handle);
@@ -198,7 +198,7 @@ static void ble_uart_client_discover_descriptor_cbk(uint8_t client_id, uint16_t 
     osal_printk("%s Discovery descriptor----client:%d conn_id:%d uuid len:%d, uuid:\n",
                 BLE_UART_CLIENT_LOG, client_id, conn_id, descriptor->uuid.uuid_len);
     for (uint8_t i = 0; i < descriptor->uuid.uuid_len; i++) {
-        osal_printk("%02x", descriptor->uuid.uuid[i]);
+        osal_printk("0x%02x", descriptor->uuid.uuid[i]);
     }
     osal_printk("\n%s descriptor handle:%d, status:%d\n", BLE_UART_CLIENT_LOG, descriptor->descriptor_hdl, status);
 
@@ -216,7 +216,7 @@ static void ble_uart_client_discover_service_compl_cbk(uint8_t client_id, uint16
     osal_printk("%s Discovery service complete----client:%d conn_id:%d uuid len:%d uuid:\n",
                 BLE_UART_CLIENT_LOG, client_id, conn_id, uuid->uuid_len);
     for (uint8_t i = 0; i < uuid->uuid_len; i++) {
-        osal_printk("%02x", uuid->uuid[i]);
+        osal_printk("0x%02x", uuid->uuid[i]);
     }
     osal_printk("\n%s status:%d\n", BLE_UART_CLIENT_LOG, status);
 }
@@ -228,7 +228,7 @@ static void ble_uart_client_discover_character_compl_cbk(uint8_t client_id, uint
     osal_printk("%s Discovery character complete----client:%d conn_id:%d uuid len:%d uuid: \n",
                 BLE_UART_CLIENT_LOG, client_id, conn_id, param->uuid.uuid_len);
     for (uint8_t i = 0; i < param->uuid.uuid_len; i++) {
-        osal_printk("%02x", param->uuid.uuid[i]);
+        osal_printk("0x%02x", param->uuid.uuid[i]);
     }
     osal_printk("\n%s service handle:%d status:%d\n", BLE_UART_CLIENT_LOG, param->service_handle, status);
 }
@@ -248,7 +248,7 @@ static void ble_uart_client_read_cfm_cbk(uint8_t client_id, uint16_t conn_id, ga
     osal_printk("%s Read result client:%d conn_id:%d\n", BLE_UART_CLIENT_LOG, client_id, conn_id);
     osal_printk("%s handle:%d data_len:%d\ndata:", BLE_UART_CLIENT_LOG, read_result->handle, read_result->data_len);
     for (uint8_t i = 0; i < read_result->data_len; i++) {
-        osal_printk("%02x", read_result->data[i]);
+        osal_printk("0x%02x", read_result->data[i]);
     }
     osal_printk("\n%s status:%d\n", BLE_UART_CLIENT_LOG, status);
 }
@@ -261,7 +261,7 @@ static void ble_uart_client_read_compl_cbk(uint8_t client_id, uint16_t conn_id, 
     osal_printk("%s start handle:%d end handle:%d uuid len:%d uuid:\n",
                 BLE_UART_CLIENT_LOG, param->start_hdl, param->end_hdl, param->uuid.uuid_len);
     for (uint8_t i = 0; i < param->uuid.uuid_len; i++) {
-        osal_printk("%02x", param->uuid.uuid[i]);
+        osal_printk("0x%02x", param->uuid.uuid[i]);
     }
     osal_printk("\n%s status:%d\n", BLE_UART_CLIENT_LOG, status);
 }
@@ -299,7 +299,7 @@ static void ble_uart_client_indication_cbk(uint8_t client_id, uint16_t conn_id, 
     osal_printk("%s Receive indication----client:%d conn_id:%d\n", BLE_UART_CLIENT_LOG, client_id, conn_id);
     osal_printk("%s handle:%d data_len:%d\ndata:", BLE_UART_CLIENT_LOG, data->handle, data->data_len);
     for (uint8_t i = 0; i < data->data_len; i++) {
-        osal_printk("%02x", data->data[i]);
+        osal_printk("0x%02x", data->data[i]);
     }
     osal_printk("\n%s status:%d\n", BLE_UART_CLIENT_LOG, status);
 }

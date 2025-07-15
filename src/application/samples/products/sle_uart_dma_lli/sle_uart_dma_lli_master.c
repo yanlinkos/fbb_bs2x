@@ -102,7 +102,7 @@ static void sle_uart_client_sample_seek_enable_cbk(errcode_t status)
 
 static void sle_uart_client_sample_seek_result_info_cbk(sle_seek_result_info_t *seek_result_data)
 {
-    if (seek_result_data == NULL) {
+    if (seek_result_data == NULL || seek_result_data->data == NULL) {
         osal_printk("status error\r\n");
     } else if (strstr((const char *)seek_result_data->data, SLE_UART_SERVER_NAME) != NULL) {
         memcpy_s(&g_sle_uart_remote_addr, sizeof(sle_addr_t), &seek_result_data->addr, sizeof(sle_addr_t));
@@ -113,7 +113,7 @@ static void sle_uart_client_sample_seek_result_info_cbk(sle_seek_result_info_t *
 static void sle_uart_client_sample_seek_disable_cbk(errcode_t status)
 {
     if (status != 0) {
-        osal_printk("%s sle_uart_client_sample_seek_disable_cbk,status error = %x\r\n", SLE_UART_CLIENT_LOG, status);
+        osal_printk("%s sle_uart_client_sample_seek_disable_cbk,status error = 0x%x\r\n", SLE_UART_CLIENT_LOG, status);
     } else {
         sle_connect_remote_device(&g_sle_uart_remote_addr);
     }
@@ -245,8 +245,8 @@ static void sle_uart_client_sample_find_structure_cmp_cbk(uint8_t client_id, uin
 static void sle_uart_client_sample_write_cfm_cb(uint8_t client_id, uint16_t conn_id,
                                                 ssapc_write_result_t *write_result, errcode_t status)
 {
-    osal_printk("%s sle_uart_client_sample_write_cfm_cb, conn_id:%d client id:%d status:%d handle:%02x type:%02x\r\n",
-                SLE_UART_CLIENT_LOG, conn_id, client_id, status, write_result->handle, write_result->type);
+    osal_printk("%s sle_uart_client_sample_write_cfm_cb, conn_id:%d client id:%d status:%d handle:0x%02x \
+        type:0x%02x\r\n", SLE_UART_CLIENT_LOG, conn_id, client_id, status, write_result->handle, write_result->type);
 }
 
 static void sle_uart_client_sample_ssapc_cbk_register(ssapc_notification_callback notification_cb,

@@ -120,23 +120,23 @@ static int sle_set_default_announce_data(void)
 
 void sle_announce_enable_cbk(uint32_t announce_id, errcode_t status)
 {
-    sample_at_log_print("sle announce enable id:%02x, state:%02x\r\n", announce_id, status);
+    sample_at_log_print("sle announce enable id:0x%02x, state:0x%02x\r\n", announce_id, status);
 }
 
 void sle_announce_disable_cbk(uint32_t announce_id, errcode_t status)
 {
-    sample_at_log_print("sle announce disable id:%02x, state:%02x\r\n", announce_id, status);
+    sample_at_log_print("sle announce disable id:0x%02x, state:0x%02x\r\n", announce_id, status);
 }
 
 void sle_announce_terminal_cbk(uint32_t announce_id)
 {
-    sample_at_log_print("sle announce terminal id:%02x\r\n", announce_id);
+    sample_at_log_print("sle announce terminal id:0x%02x\r\n", announce_id);
 }
 
 void sle_enable_cbk(uint8_t status)
 {
     g_sle_enable_status = SLE_ENABLE_STATUS_OK;
-    sample_at_log_print("sle enable status:%02x\r\n", status);
+    sample_at_log_print("sle enable status:0x%02x\r\n", status);
 }
 
 uint8_t get_g_sle_enable_status(void)

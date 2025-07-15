@@ -62,7 +62,7 @@ static void sle_ota_keyboard_dongle_send_data(usb_hid_keyboard_report_t *rpt)
     }
     rpt->kind = 0x1;
     int32_t ret = fhid_send_data(g_sle_ota_dongle_hid_keyboard_index, (char *)rpt, USB_KEYBOARD_REPORTER_LEN);
-    if (ret == -1) {
+    if (ret < 0) {
         osal_printk("%s send data falied! ret:%d\n", SLE_OTA_DONGLE_LOG, ret);
         return;
     }
@@ -75,7 +75,7 @@ static void sle_ota_mouse_dongle_send_data(usb_hid_mouse_report_t *rpt)
     }
     rpt->kind = 0x4;
     int32_t ret = fhid_send_data(g_sle_ota_dongle_hid_mouse_index, (char *)rpt, USB_MOUSE_REPORTER_LEN);
-    if (ret == -1) {
+    if (ret < 0) {
         osal_printk("%s send data falied! ret:%d\n", SLE_OTA_DONGLE_LOG, ret);
         return;
     }
@@ -87,7 +87,7 @@ static void sle_ota_consumer_dongle_send_data(usb_hid_consumer_report_t *rpt)
         return;
     }
     int32_t ret = fhid_send_data(g_sle_ota_dongle_hid_keyboard_index, (char *)rpt, USB_CONSUMER_REPORTER_LEN);
-    if (ret == -1) {
+    if (ret < 0) {
         osal_printk("%s send data falied! ret:%d\n", SLE_OTA_DONGLE_LOG, ret);
         return;
     }
@@ -173,7 +173,7 @@ static void sle_ota_fhid_send_data_one(uint8_t service_id, uint8_t command_id, u
     }
     uint16_t send_len = body_len + SLE_LINK_FRAME_HEAD_LEN + SLE_LINK_FRAME_PAYLOAD_HEAD_LEN + SLE_LINK_FRAME_MIC_LEN;
     int32_t ret = fhid_send_data(sle_ota_get_hid_index(), (char *)send_buff, send_len);
-    if (ret == -1) {
+    if (ret < 0) {
         osal_printk("%s hid send data falied! ret:%d\n", SLE_OTA_DONGLE_LOG, ret);
         return;
     }
@@ -201,7 +201,7 @@ static void sle_ota_fhid_send_data_more(uint8_t service_id, uint8_t command_id, 
         return;
     }
     int32_t ret = fhid_send_data(sle_ota_get_hid_index(), (char *)send_buff, SLE_LINK_MAX_FRAME_LEN);
-    if (ret == -1) {
+    if (ret < 0) {
         osal_printk("%s hid send data(seq %d) falied! ret:%d\n", SLE_OTA_DONGLE_LOG, head->frame_seq, ret);
         return;
     }
@@ -221,7 +221,7 @@ static void sle_ota_fhid_send_data_more(uint8_t service_id, uint8_t command_id, 
         }
         uint16_t frame_send_len = body_send_len + SLE_LINK_FRAME_MIC_LEN + SLE_LINK_FRAME_HEAD_LEN;
         ret = fhid_send_data(sle_ota_get_hid_index(), (char *)send_buff, frame_send_len);
-        if (ret == -1) {
+        if (ret < 0) {
             osal_printk("%s hid send data(seq %d) falied! ret:%d\n", SLE_OTA_DONGLE_LOG, head->frame_seq, ret);
             return;
         }

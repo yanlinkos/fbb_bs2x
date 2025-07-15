@@ -88,7 +88,7 @@
 </td>
 <td class="cellrowborder" valign="top" width="21.29%" headers="mcps1.1.4.1.2 "><p id="p5986118204118"><a name="p5986118204118"></a><a name="p5986118204118"></a>2025-01-24</p>
 </td>
-<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p06691169419"><a name="p06691169419"></a><a name="p06691169419"></a>更新“<a href="注意事项-8.md">注意事项</a>”小节内容。</p>
+<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p06691169419"><a name="p06691169419"></a><a name="p06691169419"></a>更新<span id="ph12218150245"><a name="ph12218150245"></a><a name="ph12218150245"></a>“<a href="中断机制.md">中断机制</a>”的</span>“<a href="注意事项-8.md">注意事项</a>”小节内容。</p>
 </td>
 </tr>
 <tr id="row133411721194217"><td class="cellrowborder" valign="top" width="16.1%" headers="mcps1.1.4.1.1 "><p id="p13341172174219"><a name="p13341172174219"></a><a name="p13341172174219"></a>02</p>

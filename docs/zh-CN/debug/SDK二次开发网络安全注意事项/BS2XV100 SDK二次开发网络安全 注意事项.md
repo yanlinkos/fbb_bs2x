@@ -6,8 +6,6 @@ BS2XV100交付包为芯片解决方案交付包，主要包括芯片资料、硬
 
 本文档从网络安全的角度，重点分析基于本交付包开发的产品在使用过程中，可能面临的与本交付包中SDK软件包相关的网络安全的威胁，同时，针对性地给出相应的解决方案。
 
-本文档以BS21A为例进行说明示例，后续不再单独说明，请用户知悉。
-
 **产品版本<a name="section27775771"></a>**
 
 与本文档相对应的产品版本如下。
@@ -86,7 +84,14 @@ BS2XV100交付包为芯片解决方案交付包，主要包括芯片资料、硬
 </th>
 </tr>
 </thead>
-<tbody><tr id="row161011912164316"><td class="cellrowborder" valign="top" width="18.39%" headers="mcps1.1.4.1.1 "><p id="p710161214312"><a name="p710161214312"></a><a name="p710161214312"></a>02</p>
+<tbody><tr id="row6317125412115"><td class="cellrowborder" valign="top" width="18.39%" headers="mcps1.1.4.1.1 "><p id="p14318954131115"><a name="p14318954131115"></a><a name="p14318954131115"></a>03</p>
+</td>
+<td class="cellrowborder" valign="top" width="20.849999999999998%" headers="mcps1.1.4.1.2 "><p id="p103181354121110"><a name="p103181354121110"></a><a name="p103181354121110"></a>2025-05-30</p>
+</td>
+<td class="cellrowborder" valign="top" width="60.760000000000005%" headers="mcps1.1.4.1.3 "><p id="p20463118181211"><a name="p20463118181211"></a><a name="p20463118181211"></a>更新“<a href="安全启动.md">安全启动</a>”小节内容。</p>
+</td>
+</tr>
+<tr id="row161011912164316"><td class="cellrowborder" valign="top" width="18.39%" headers="mcps1.1.4.1.1 "><p id="p710161214312"><a name="p710161214312"></a><a name="p710161214312"></a>02</p>
 </td>
 <td class="cellrowborder" valign="top" width="20.849999999999998%" headers="mcps1.1.4.1.2 "><p id="p15101912134315"><a name="p15101912134315"></a><a name="p15101912134315"></a>2025-01-14</p>
 </td>
@@ -145,7 +150,7 @@ BS2X版本可能涉及的威胁如下：
 
 -   系统升级安全
 
-    SDK提供镜像升级功能，包括升级flashboot和APP，其中flashboot采用了双备份机制，该机制可以防止系统在升级写flashboot中掉电，flashboot被破坏带来的风险问题；系统提供对升级镜像校验功能，在写入flash前，对系统image进行校验，确保写入的镜像的安全。。
+    SDK提供镜像升级功能，包括升级flashboot和APP，其中flashboot采用了双备份机制，该机制可以防止系统在升级写flashboot中掉电，flashboot被破坏带来的风险问题；系统提供对升级镜像校验功能，在写入flash前，对系统image进行校验，确保写入的镜像的安全。
 
 -   JTAG安全调试
 
@@ -218,7 +223,7 @@ BS2X的安全启动校验的执行过程，如[图1](#fig856593710917)所示。
 
     flashboot启动成功后，开始对APP image进行签名校验；用户可以使用的单独为APP单独生成public key，也可以和flashboot使用相同的public key；
 
-    如果APP校验失败，则终止启动；
+    如果APP校验失败，则终止启动。
 
 ### 密钥的配置和替换<a name="ZH-CN_TOPIC_0000002002786580"></a>
 
@@ -227,7 +232,7 @@ SDK提供了各个系统的签名配置文件，分别用来对secboot、flashbo
 >![](public_sys-resources/icon-notice.gif) **须知：** 
 >SDK给出的key文件只作为开发参考使用，客户必须要替换成自己的key文件。
 
-以BS21A为例，如下所示
+以BS21A为例，如下所示：
 
 build\\config\\target\_config\\bs21a\\sign\_config\\flashboot\_bs21a\_n1200\_sec.cfg
 
@@ -239,7 +244,7 @@ build\\config\\target\_config\\bs21a\\standard\_bs21a\_slekey\_can\_n1200.cfg
 
 ![](figures/zh-cn_image_0000002002945268.png)
 
-签名所用的秘钥文件，存在放在以下目录
+签名所用的秘钥文件，存在放在以下目录：
 
 build\\config\\target\_config\\bs21a\\sign\_config\\rsa\_3072\_oem\_root\_private\_key.pem
 

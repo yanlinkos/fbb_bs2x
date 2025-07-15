@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024. All rights reserved.
  * Description: Provide the entry for nfc sample
- *
+ * Author: 
  * Date: 2024-01-03
  */
 

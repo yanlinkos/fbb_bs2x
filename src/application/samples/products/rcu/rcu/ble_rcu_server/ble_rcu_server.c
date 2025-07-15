@@ -21,7 +21,7 @@
 static uint16_t g_ble_rcu_conn_id;
 static ble_rcu_notify_connect ble_notify_connect_cb = NULL;
 uint16_t g_connection_state = GAP_BLE_STATE_DISCONNECTED;
-static uint16_t g_sle_enable = false;
+static uint16_t g_ble_enable = false;
 static bd_addr_t g_ble_addr = { 0 };
 /* 低功耗连接参数信息 */
 static gap_conn_param_update_t g_worktostandby = { 0, 6, 9, 30, 3000 };
@@ -49,7 +49,7 @@ static void ble_rcu_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_bl
 {
     g_ble_rcu_conn_id = conn_id;
     g_connection_state = conn_state;
-    osal_printk("connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason %x\n",
+    osal_printk("connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason 0x%x\n",
                 conn_id, conn_state, pair_state, disc_reason);
     osal_printk("addr:\n");
     for (uint8_t i = 0; i < BD_ADDR_LEN; i++) {
@@ -73,7 +73,7 @@ static void ble_rcu_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_bl
 static void ble_enable_cbk(uint8_t status)
 {
     osal_printk("enable status:%d\r\n", status);
-    g_sle_enable = true;
+    g_ble_enable = true;
 }
 
 static void bt_core_enable_cb_register(void)
@@ -127,7 +127,7 @@ void ble_rcu_server_init(void)
 {
     bt_core_enable_cb_register();
     enable_ble();
-    while (g_sle_enable == false) {
+    while (g_ble_enable == false) {
         osal_msleep(BLE_RCU_TASK_DELAY_MS);
     }
     ble_hid_rcu_server_init();

@@ -7,6 +7,7 @@
  * 2024-5-25, Create file. \n
  */
 #include "securec.h"
+#include "osal_task.h"
 #include "common_def.h"
 #include "sle_errcode.h"
 #include "sle_device_manager.h"
@@ -29,6 +30,7 @@
 #define HID_ELEMENT_NUM                 6
 #define SLE_RCU_SSAP_MTU_MAX            520
 #define RCU_TARGET_ADDR_NUM             2
+#define SLE_RCU_TASK_DELAY_MS 		200
 
 /* sle pair acb handle */
 static uint16_t g_sle_pair_handle;
@@ -42,12 +44,13 @@ static uint16_t g_sle_conn_handle[CONFIG_SLE_MULTICON_NUM] = { 0 };
 static uint16_t g_sle_conn_num = 0;
 /* sle server handle */
 uint8_t g_server_id = 0;
+static uint16_t g_sle_enable = false;
 
 static uint16_t g_sle_conn_id;
 static sle_addr_t g_sle_addr = { 0 };
 /* 低功耗连接参数信息 */
-static sle_connection_param_update_t g_work_to_standby = { 0, 100, 100, 48, 3000 };
-static sle_connection_param_update_t g_standby_to_work = { 0, 100, 100, 3, 3000 };
+static sle_connection_param_update_t g_work_to_standby = { 0, 100, 100, 80, 3000 };
+static sle_connection_param_update_t g_standby_to_work = { 0, 100, 100, 3, 1000 };
 static bool g_low_power_state = false; /* false:关闭, true:打开 */
 static sle_rcu_notify_connect sle_notify_connect_cb;
 
@@ -87,7 +90,7 @@ uint16_t get_g_sle_conn_num(void)
 static void ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id,  ssap_exchange_info_t *mtu_size,
                                   errcode_t status)
 {
-    osal_printk("%s ssaps ssaps_mtu_changed_cbk callback server_id:%x, conn_id:%x, mtu_size:%x, status:%x\r\n",
+    osal_printk("%s ssaps ssaps_mtu_changed_cbk callback server_id:0x%x, conn_id:0x%x, mtu_size:0x%x, status:0x%x\r\n",
                 SLE_RCU_SERVER_LOG, server_id, conn_id, mtu_size->mtu_size, status);
     g_ssaps_ready = true;
     if (g_sle_pair_handle == 0) {
@@ -97,14 +100,14 @@ static void ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id,  ssap_exc
 
 static void ssaps_start_service_cbk(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    osal_printk("%s start service cbk callback server_id:%d, handle:%x, status:%x\r\n", SLE_RCU_SERVER_LOG,
+    osal_printk("%s start service cbk callback server_id:%d, handle:0x%x, status:0x%x\r\n", SLE_RCU_SERVER_LOG,
                 server_id, handle, status);
 }
 
 static void ssaps_add_service_cbk(uint8_t server_id, sle_uuid_t *uuid, uint16_t handle, errcode_t status)
 {
     unused(uuid);
-    osal_printk("%s add service cbk callback server_id:%x, handle:%x, status:%x\r\n", SLE_RCU_SERVER_LOG,
+    osal_printk("%s add service cbk callback server_id:0x%x, handle:0x%x, status:0x%x\r\n", SLE_RCU_SERVER_LOG,
                 server_id, handle, status);
 }
 
@@ -112,7 +115,7 @@ static void ssaps_add_property_cbk(uint8_t server_id, sle_uuid_t *uuid, uint16_t
     uint16_t handle, errcode_t status)
 {
     unused(uuid);
-    osal_printk("%s add property cbk callback server_id:%x, service_handle:%x,handle:%x, status:%x\r\n",
+    osal_printk("%s add property cbk callback server_id:0x%x, service_handle:0x%x,handle:0x%x, status:0x%x\r\n",
                 SLE_RCU_SERVER_LOG, server_id, service_handle, handle, status);
 }
 
@@ -120,13 +123,13 @@ static void ssaps_add_descriptor_cbk(uint8_t server_id, sle_uuid_t *uuid, uint16
                                      uint16_t property_handle, errcode_t status)
 {
     unused(uuid);
-    osal_printk("%s add descriptor cbk callback server_id:%x, service_handle:%x, property_handle:%x, \
-                status:%x\r\n", SLE_RCU_SERVER_LOG, server_id, service_handle, property_handle, status);
+    osal_printk("%s add descriptor cbk callback server_id:0x%x, service_handle:0x%x, property_handle:0x%x, \
+                status:0x%x\r\n", SLE_RCU_SERVER_LOG, server_id, service_handle, property_handle, status);
 }
 
 static void ssaps_delete_all_service_cbk(uint8_t server_id, errcode_t status)
 {
-    osal_printk("%s delete all service callback server_id:%x, status:%x\r\n", SLE_RCU_SERVER_LOG,
+    osal_printk("%s delete all service callback server_id:0x%x, status:0x%x\r\n", SLE_RCU_SERVER_LOG,
                 server_id, status);
 }
 
@@ -232,7 +235,8 @@ static void sle_enable_cbk(uint8_t status)
         return;
     }
     sle_is_need_to_reconnect();
-    app_print("%s sle enable callback status:%x\r\n", SLE_RCU_SERVER_LOG, status);
+    app_print("%s sle enable callback status:0x%x\r\n", SLE_RCU_SERVER_LOG, status);
+    g_sle_enable = true;
 }
 
 static errcode_t sle_dev_manager_register_cbks(void)
@@ -241,7 +245,7 @@ static errcode_t sle_dev_manager_register_cbks(void)
     dev_cbks.sle_enable_cb = sle_enable_cbk;
     errcode_t ret = sle_dev_manager_register_callbacks(&dev_cbks);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("%s sle_dev_manager_register_cbks fail :%x\r\n", SLE_RCU_SERVER_LOG, ret);
+        osal_printk("%s sle_dev_manager_register_cbks fail :0x%x\r\n", SLE_RCU_SERVER_LOG, ret);
         return ret;
     }
     return ERRCODE_SLE_SUCCESS;
@@ -250,12 +254,8 @@ static errcode_t sle_dev_manager_register_cbks(void)
 static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *addr, sle_acb_state_t conn_state,
                                           sle_pair_state_t pair_state, sle_disc_reason_t disc_reason)
 {
-    osal_printk("%s connect state changed callback conn_id:0x%02x, conn_state:0x%x, pair_state:0x%x, \
-                disc_reason:0x%x\r\n", SLE_RCU_SERVER_LOG, conn_id, conn_state, pair_state, disc_reason);
-    osal_printk("%s connect state changed callback addr:%02x:**:**:**:%02x:%02x\r\n", SLE_RCU_SERVER_LOG,
-                addr->addr[BT_INDEX_0], addr->addr[BT_INDEX_4]);
-    uint8_t mode;
-    mode = get_rcu_mode();
+    unused(pair_state);
+    unused(disc_reason);
     if (conn_state == SLE_ACB_STATE_CONNECTED) {
         g_sle_conn_id = conn_id;
         set_sle_work_conn_id(conn_id);
@@ -266,25 +266,30 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
             sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
         }
         memcpy_s(&g_sle_addr, sizeof(sle_addr_t), addr, sizeof(sle_addr_t));
+#if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
+        sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
+#endif
     } else if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
-        sle_addr_t direct_adv_addr[RCU_TARGET_ADDR_NUM];
-        uint16_t number = 1;
         g_sle_conn_handle[conn_id] = 0;
         g_sle_pair_handle = 0;
         g_sle_conn_num--;
         g_ssaps_ready = false;
         set_app_sle_conn_status(conn_id, APP_CONNECT_STATUS_DISCONNECT);
         memset_s(&g_sle_addr, sizeof(sle_addr_t), 0, sizeof(sle_addr_t));
+#if !defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
+        uint16_t number = 1;
+        sle_addr_t direct_adv_addr[RCU_TARGET_ADDR_NUM];
         sle_get_bonded_devices(direct_adv_addr, &number);
         if (!g_low_power_state) {
-            if (mode == RCU_MODE_ADV_SEND && number > 0) {
+            if (number > 0) {
                 sle_rcu_server_directed_adv_init(direct_adv_addr);
                 return;
-            } else if (mode == RCU_MODE_IDLE) {
-                set_rcu_mode(RCU_MODE_ADV_SEND);
+            } else {
+                sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
             }
-            sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
+            set_rcu_mode(RCU_MODE_ADV_SEND);
         }
+#endif
     }
     sle_notify_connect_cb(conn_id, conn_state);
 }
@@ -443,6 +448,9 @@ errcode_t sle_rcu_server_init(ssaps_read_request_callback ssaps_read_callback,
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_printk("%s sle_rcu_server_init,enable_sle fail :%x\r\n", SLE_RCU_SERVER_LOG, ret);
         return ret;
+    }
+    while (g_sle_enable == false) {
+        osal_msleep(SLE_RCU_TASK_DELAY_MS);
     }
     osal_printk("%s init ok\r\n", SLE_RCU_SERVER_LOG);
     return ERRCODE_SLE_SUCCESS;

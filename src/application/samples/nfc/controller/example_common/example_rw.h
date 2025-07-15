@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023. All rights reserved. \n
  * Description: nfc rw example, ExampleReaderWriter should enable build macro HAVE_NFC_POLL \n
- * \n
+ * Author:  \n
  * Date: 2023-07-19 \n
  */
 #ifndef EXAMPLE_RW_H

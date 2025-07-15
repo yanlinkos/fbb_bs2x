@@ -80,9 +80,9 @@
 </th>
 </tr>
 </thead>
-<tbody><tr id="row1078055125815"><td class="cellrowborder" valign="top" width="20.05%" headers="mcps1.1.4.1.1 "><p id="p1378185125816"><a name="p1378185125816"></a><a name="p1378185125816"></a><span id="ph1452091915581"><a name="ph1452091915581"></a><a name="ph1452091915581"></a>02</span></p>
+<tbody><tr id="row1078055125815"><td class="cellrowborder" valign="top" width="20.05%" headers="mcps1.1.4.1.1 "><p id="p1378185125816"><a name="p1378185125816"></a><a name="p1378185125816"></a>02</p>
 </td>
-<td class="cellrowborder" valign="top" width="22.91%" headers="mcps1.1.4.1.2 "><p id="p1589341615811"><a name="p1589341615811"></a><a name="p1589341615811"></a><span id="ph31301821135811"><a name="ph31301821135811"></a><a name="ph31301821135811"></a>2025-03-26</span></p>
+<td class="cellrowborder" valign="top" width="22.91%" headers="mcps1.1.4.1.2 "><p id="p1589341615811"><a name="p1589341615811"></a><a name="p1589341615811"></a>2025-03-26</p>
 </td>
 <td class="cellrowborder" valign="top" width="57.04%" headers="mcps1.1.4.1.3 "><p id="p578135145818"><a name="p578135145818"></a><a name="p578135145818"></a>更新“<a href="新增NV项.md">新增NV项</a>”小节内容。</p>
 </td>
@@ -194,8 +194,8 @@ NV项可通过两种方式进行存储：编译预置和API写入。
     </tbody>
     </table>
 
-    **图 1**  NV配置文件示例<a name="fig1347521414456"></a>  
-    
+    NV配置文件示例：
+
     ```
     {
         "common":{

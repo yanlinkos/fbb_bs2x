@@ -336,7 +336,7 @@ static void sle_ota_client_sample_find_property_cbk(uint8_t client_id, uint16_t 
         g_sle_ota_send_param.handle = property->handle;
         g_sle_ota_send_param.type = SSAP_PROPERTY_TYPE_VALUE;
         g_ssap_find_ready = 1;
-        osal_printk("ota prop handle %02x\r\n", g_sle_ota_send_param.handle);
+        osal_printk("ota prop handle 0x%02x\r\n", g_sle_ota_send_param.handle);
     }
 }
 

@@ -203,19 +203,19 @@ static int sle_set_default_announce_data(void)
 
 static void sle_announce_enable_cbk(uint32_t announce_id, errcode_t status)
 {
-    sample_at_log_print("%s sle announce enable callback id:%02x, state:%x\r\n", SLE_UART_SERVER_LOG, announce_id,
+    sample_at_log_print("%s sle announce enable callback id:0x%02x, state:0x%x\r\n", SLE_UART_SERVER_LOG, announce_id,
         status);
 }
 
 static void sle_announce_disable_cbk(uint32_t announce_id, errcode_t status)
 {
-    sample_at_log_print("%s sle announce disable callback id:%02x, state:%x\r\n", SLE_UART_SERVER_LOG, announce_id,
+    sample_at_log_print("%s sle announce disable callback id:0x%02x, state:0x%x\r\n", SLE_UART_SERVER_LOG, announce_id,
         status);
 }
 
 static void sle_announce_terminal_cbk(uint32_t announce_id)
 {
-    sample_at_log_print("%s sle announce terminal callback id:%02x\r\n", SLE_UART_SERVER_LOG, announce_id);
+    sample_at_log_print("%s sle announce terminal callback id:0x%02x\r\n", SLE_UART_SERVER_LOG, announce_id);
 }
 
 errcode_t sle_uart_announce_register_cbks(void)

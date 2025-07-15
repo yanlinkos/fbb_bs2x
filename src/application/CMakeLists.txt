@@ -9,7 +9,6 @@ add_subdirectory_if_exist(dut)
 add_subdirectory_if_exist(monitor)
 add_subdirectory_if_exist(ota)
 add_subdirectory_if_exist(samples)
-add_subdirectory_if_exist(ux)
 add_subdirectory_if_exist(wstp)
 add_subdirectory_if_exist(cfbb)
 
