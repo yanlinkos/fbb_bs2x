@@ -232,7 +232,6 @@ void example_sle_announce_register_cbks(void)
     seek_cbks.announce_enable_cb = example_sle_announce_enable_cbk;
     seek_cbks.announce_disable_cb = example_sle_announce_disable_cbk;
     seek_cbks.announce_terminal_cb = example_sle_announce_terminal_cbk;
-    // seek_cbks.sle_enable_cb = example_sle_enable_cbk;
     sle_announce_seek_register_callbacks(&seek_cbks);
 }
 

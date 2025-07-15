@@ -38,11 +38,10 @@
 #define DATA_LEN5 5
 #define DATA_LEN6 6
 #define DATA_LEN7 7
-
 #define GPIO_10 10
-#define GPIO_27 27 // RED
+#define GPIO_27 27
 #define GPIO_11 11
-static sle_dev_manager_callbacks_t g_manager_cbk ={0};
+static sle_dev_manager_callbacks_t g_manager_cbk = {0};
 static sle_announce_seek_callbacks_t g_seek_cbk = {0};
 static sle_connection_callbacks_t g_connect_cbk = {0};
 static ssapc_callbacks_t g_ssapc_cbk = {0};
