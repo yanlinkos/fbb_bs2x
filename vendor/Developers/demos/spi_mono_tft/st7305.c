@@ -203,13 +203,13 @@ void drawPoint(uint16_t x, uint16_t y)
     }
     uint16_t x1, y1, n, y2;
 
-    x1 = x / 2; // monotft 是2*4作为一个byte传输
-    y1 = y / 4; // monotft 是2*4作为一个byte传输
+    x1 = x / TFT_CELL_ROW;
+    y1 = y / TFT_CELL_COLUMN;
 
-    y2 = y - y1 * 4;         // 计算偏移
-    n = intPow(4, (3 - y2)); // 计算高低位
-    if (x - x1 * 2 == 0)
-        n *= 2; // 计算左右格子
+    y2 = y - y1 * TFT_CELL_COLUMN;
+    n = intPow(TFT_CELL_COLUMN, (TFT_MAX_OFFSET_BIT - y2));
+    if (x - x1 * TFT_CELL_ROW == 0)
+        n *= TFT_CELL_ROW;
 
     image[x1 * COLUMN_COUNT + y1] |= n;
 }

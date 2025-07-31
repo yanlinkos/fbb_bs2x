@@ -16,6 +16,9 @@
 #include "ulp_gpio.h"
 #include "cmsis_os2.h"
 
+#define TFT_CELL_ROW 2       // TFT每个byte2行
+#define TFT_CELL_COLUMN 4    // TFT每个byte4列
+#define TFT_MAX_OFFSET_BIT 3 // 最高3次方
 // 初始化
 void st7305_init(void);
 // 刷新函数
