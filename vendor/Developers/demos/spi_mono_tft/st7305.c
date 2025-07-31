@@ -50,7 +50,7 @@ void st7305_init(void)
 {
     // 复位
     uapi_gpio_set_val(CONFIG_SPI_MASTER_RST_PIN, GPIO_LEVEL_LOW);
-    osal_msleep(50); // 50:延时50ms
+    osal_msleep(50); // 延时50ms
     uapi_gpio_set_val(CONFIG_SPI_MASTER_RST_PIN, GPIO_LEVEL_HIGH);
 
     /////////////HSD 4.2” 300x400 Mono High Scan Rate Initial Code (8Hz)/////////////////
@@ -94,7 +94,6 @@ void st7305_init(void)
     send_data(0XA6); //~51Hz
     send_data(0XE9); //~1Hz
 
-    /*-- HPM=32hz ; LPM=> 0x15=8Hz 0x14=4Hz 0x13=2Hz 0x12=1Hz 0x11=0.5Hz 0x10=0.25Hz---*/
     send_cmd(0xB2);  // Frame Rate Control
     send_data(0X05); // 12--HPM=32hz ; LPM=1hz   05--HPM=16hz ; LPM=8hz
 
@@ -131,8 +130,8 @@ void st7305_init(void)
     send_cmd(0xB0);  // Gate Line Setting
     send_data(0X64); // 60---384 line    64---400 line
 
-    send_cmd(0x11); // Sleep out
-    osal_msleep(120);
+    send_cmd(0x11);   // Sleep out
+    osal_msleep(120); // 延时120ms
 
     send_cmd(0xC9);  // Source Voltage Select
     send_data(0X00); // VSHP1; VSLP1 ; VSHN1 ; VSLN1
@@ -149,8 +148,6 @@ void st7305_init(void)
     send_cmd(0xB8);  // Panel Setting
     send_data(0X29); // Panel Setting Frame inversion  09:column 29:dot_1-Frame 25:dot_1-Line
 
-    // send_cmd(0x21); // Inverse
-
     // WRITE RAM 300*400
     send_cmd(0x2A); // Column Address Setting
     send_data(COLUMN_START);
@@ -160,10 +157,6 @@ void st7305_init(void)
     send_data(ROW_START);
     send_data(ROW_END);
 
-    /*
-      send_cmd(0x72); //de-stress off
-      send_data(0X13);
-    */
     send_cmd(0x35);  // TE
     send_data(0X00); //
 
@@ -209,13 +202,14 @@ void drawPoint(uint16_t x, uint16_t y)
         return;
     }
     uint16_t x1, y1, n, y2;
-    x1 = x / 2;
-    y1 = y / 4;
 
-    y2 = y - y1 * 4;
-    n = intPow(4, (3 - y2));
+    x1 = x / 2; // monotft 是2*4作为一个byte传输
+    y1 = y / 4; // monotft 是2*4作为一个byte传输
+
+    y2 = y - y1 * 4;         // 计算偏移
+    n = intPow(4, (3 - y2)); // 计算高低位
     if (x - x1 * 2 == 0)
-        n *= 2;
+        n *= 2; // 计算左右格子
 
     image[x1 * COLUMN_COUNT + y1] |= n;
 }
@@ -271,11 +265,14 @@ void drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 #define FONT_X_OFFSET 7
 void st7305_drawFrame(void)
 {
+    // 绘制10条线段
     for (uint8_t i = 0; i < 10; i++) {
+        // 偏移9个padding
         drawLine(PADDING, PADDING + i * CELL_LEN, PADDING + CELL_LEN * 9 + 1, PADDING + i * CELL_LEN);
     }
-
+    // 绘制10条线段
     for (uint8_t i = 0; i < 10; i++) {
+        // 偏移9个padding
         drawLine(PADDING + i * CELL_LEN, PADDING, PADDING + i * CELL_LEN, PADDING + CELL_LEN * 9 + 1);
     }
 }

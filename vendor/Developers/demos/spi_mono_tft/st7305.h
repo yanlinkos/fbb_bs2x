@@ -1,10 +1,6 @@
 #ifndef _ST7305_H
 #define _ST7305_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
@@ -30,9 +26,5 @@ void st7305_clean(void);
 void st7305_drawFrame(void);
 // 格子里画数字
 void st7305_drawNumberInCell(uint16_t cell, uint8_t num);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

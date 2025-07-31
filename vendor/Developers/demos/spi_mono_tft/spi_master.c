@@ -45,12 +45,13 @@ static void *spi_master_task(const char *arg)
     st7305_init();
 
     st7305_drawFrame();
-    st7305_drawNumberInCell(0, 1);
-    st7305_drawNumberInCell(1, 2);
-    st7305_drawNumberInCell(2, 3);
+    st7305_drawNumberInCell(0, 1);//绘制数字1
+    st7305_drawNumberInCell(1, 2);//绘制数字2
+    st7305_drawNumberInCell(2, 3);//绘制数字3
     st7305_refresh();
 
     while (1) {
+        // 睡眠500毫秒
         osal_msleep(500);
     }
 

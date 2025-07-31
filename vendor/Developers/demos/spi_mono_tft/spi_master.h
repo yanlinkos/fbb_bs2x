@@ -1,10 +1,6 @@
 #ifndef _SPI_MASTER_H
 #define _SPI_MASTER_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "pinctrl.h"
 #include "spi.h"
 #include "dma.h"
@@ -15,7 +11,6 @@ extern "C" {
 #include "ulp_gpio.h"
 
 #include "st7305.h"
-// #include "mconfig.h"
 
 #define SPI_SLAVE_NUM 1
 #define SPI_FREQUENCY 4
@@ -35,9 +30,5 @@ extern "C" {
 
 extern uint8_t sudokuNumberList[SUDOKU_LEN];
 extern bool sudokuReady;
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
