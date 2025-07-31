@@ -1,4 +1,11 @@
-#ifndef _SPI_MASTER_H
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: SPI MONO TFT Task. \n
+ * 
+ */
+
+ #ifndef _SPI_MASTER_H
 #define _SPI_MASTER_H
 
 #include "pinctrl.h"

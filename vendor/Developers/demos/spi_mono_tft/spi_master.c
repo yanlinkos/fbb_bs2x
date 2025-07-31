@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: SPI MONO TFT Task. \n
+ * 
+ */
+
 #include "spi_master.h"
 
 uint8_t sudokuNumberList[SUDOKU_LEN] = {0};

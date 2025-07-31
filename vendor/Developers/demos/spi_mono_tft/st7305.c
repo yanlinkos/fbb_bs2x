@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: ST7305 Driver. \n
+ * 
+ */
+
 #include "st7305.h"
 
 // 经过实际测试，得出这个数值

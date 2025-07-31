@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: ST7305 Driver. \n
+ * 
+ */
 #ifndef _ST7305_H
 #define _ST7305_H
 
