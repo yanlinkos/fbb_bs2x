@@ -12,11 +12,11 @@
   #define TASK_COMMON_APP_DELAY_MS       7000
   ```
 
-- 步骤二：根据需要连接的锚点数量，在sle_measure_dis_client.h中，修改MAX_SERVERS的值，如下图所示（最大为5）
+- 步骤二：根据需要连接的锚点数量，在sle_measure_dis_client.h中，修改MAX_SERVERS的值，如下图所示（最大为3）
 
 ![image-20250625165545347](../../doc/media/sle_poll_measure_dis/image-20250625165545347.png)
 
-- 步骤三：根据需要连接的锚点数量，在sle_measure_dis_client.c中的measure_dis_slem_set_param函数中，修改变量con_anchor_num的值，如下图，如下图所示（最大为5)
+- 步骤三：根据需要连接的锚点数量，在sle_measure_dis_client.c中的measure_dis_slem_set_param函数中，修改变量con_anchor_num的值，如下图，如下图所示（最大为3)
 
    ![image-20250625165556018](../../doc/media/sle_poll_measure_dis/image-20250625165556018.png)
 
@@ -74,9 +74,9 @@
 
   5、校准
 
-  在锚点周围 3m 范围内空旷无遮挡、无墙体、柱体、金属等遮挡物的环境下测试。按照下图所示在设备周围5个方向的1m位置，进行5次测距，5次测距值的其平均值减1为锚点 A 的校准值。
+  在锚点周围 3m 范围内空旷无遮挡、无墙体、柱体、金属等遮挡物的环境下测试。按照下图所示在设备周围3个方向的1m位置，进行3次测距，3次测距值的其平均值减1为锚点 A 的校准值。
 
-   ![image-20250625170053685](../../doc/media/sle_poll_measure_dis/image-20250625170053685.png)
+   ![image-20250625170053685](../../doc/media/sle_poll_measure_dis/1754016721595.jpg)
 
   每个锚点都要进行校准，得到校准值后，在sle_measure_dis_server_alg.c中如图所示的位置输入校准值
 

@@ -1,17 +1,10 @@
 /**
-/*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Description: SLE ADV Config. \n
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * History: \n
+ * 2023-07-17, Create file. \n
  */
 
 #ifndef SLE_MEASURE_DIS_SERVER_ADV_H
@@ -19,7 +12,7 @@
 
 /* 广播发送功率 */
 #define SLE_ADV_TX_POWER                            6
-#define SLE_ADV_RSSI_MIN                            (-127)
+#define SLE_ADV_RSSI_MIN  (-127)
 /* 最大广播数据长度 */
 #define SLE_ADV_DATA_LEN_MAX                        251
 /* 连接调度间隔300ms，单位125us */
@@ -33,7 +26,7 @@
 // HCI_LE_ADV_FILTER BLE_META_PF_MANU_DATA max len of data
 #define NAME_AND_MANU_MAX_LEN                       29/*定义了BLE广告中制造商数据（Manufacturer Data）的最大长度。*/
 // HCI_LE_ADV_FILTER UUID 一个UUID最大字节数16
-#define GLE_UUID_MAX_LEN                            16
+#define GLE_UUID_MAX_LEN 16
 
 /**
  * @if Eng

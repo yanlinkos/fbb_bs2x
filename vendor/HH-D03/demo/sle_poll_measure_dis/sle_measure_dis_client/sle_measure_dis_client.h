@@ -1,18 +1,11 @@
-/*
+/**
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Description: SLE MEASURE_DIS sample of client. \n
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * History: \n
+ * 2023-04-03, Create file. \n
  */
-
 #ifndef SLE_MEASURE_DIS_CLIENT_H
 #define SLE_MEASURE_DIS_CLIENT_H
 
@@ -32,15 +25,15 @@
 
 #define SLEM_CONNET_INVAILD 0xFF
 
-#define MAX_SERVERS 3                                               
+#define MAX_SERVERS 5                                           
 
 typedef enum {
     SLEM_PROFILE_MSG_IQ = 0xFFFFFFEA,
 } slem_profile_msg_type_t;
 
 typedef struct {
-    uint32_t        type;                             
-    uint32_t        len;                             
+    uint32_t        type;                             /*!< 消息类型 */
+    uint32_t        len;                              /*!< 消息类型 */
     uint8_t         data[0];
 } measure_ids_msg_t;
 
@@ -63,6 +56,5 @@ typedef struct server_data {
 int measure_dis_client_write_server(uint16_t conn_id, uint32_t type, uint8_t *data, uint32_t data_len);
 int measure_dis_client_init(void);
 int measure_dis_start_scan(void);
-void switch_to_next_server(void);
 
 #endif
