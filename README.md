@@ -34,7 +34,7 @@
 | BearPi-Pico_H2821E开发板（小熊派）      | [小熊派BearPi-Pico_H2821E开发板购买链接（淘宝）](https://item.taobao.com/item.htm?id=803331789469) | <img src="vendor/BearPi-Pico_H2821E/doc/media/BearPi-Pico_H2821E/pico-1.png" alt="image-20240809164437807" style="zoom: 25%;" /> |
 | DK221星闪2K鼠标完整解决方案（方格电子） | [方格电子DK221星闪2K鼠标解决方案购买链接（淘宝）](https://e.tb.cn/h.69IMdsPhGFQWDgS?tk=b25cVdob237) | 后续提供                                                     |
 | EB21开发板(利尔达)                      | [利尔达EB21开发板购买链接  (淘宝)](https://e.tb.cn/h.hkUHZCgkSmrD7U3?tk=GjbE4WfqivCMF287) | ![image-20250801143652676](./vendor/Lierda-EB21/image-20250801143652676.png) |
-| 2825星闪外设板（利尔达）                | [利尔达2825星闪外设板（淘宝）](https://e.tb.cn/h.h9s5pP5eEBYr5M5?tk=gimv4WfzzIG CZ005) | ![image-20250801144216037](./vendor/Lierda-EB21/image-20250801144216037.png) |
+| 2825星闪外设板（利尔达）                | [利尔达2825星闪外设板（淘宝）](https://e.tb.cn/h.h9s5pP5eEBYr5M5?tk=gimv4WfzzIG) | ![image-20250801144216037](./vendor/Lierda-EB21/image-20250801144216037.png) |
 
 ## 开发板资料
 
