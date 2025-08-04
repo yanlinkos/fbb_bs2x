@@ -1,32 +1,25 @@
-/*
+/**
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Description: SLE MEASURE_DIS sample of client. \n
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * History: \n
+ * 2023-04-03, Create file. \n
  */
-
 #ifndef SLE_MEASURE_DIS_CLIENT_SLEM_H
 #define SLE_MEASURE_DIS_CLIENT_SLEM_H
 
 #include "sle_measure_dis_client_slem.h"
 #include "sle_hadm_manager.h"
 
-#define MEASURE_DIS_IQ_REPORT_CNT_MAX 4
+#define MEASURE_DIS_IQ_REPORT_CNT_MAX 1
 #define POSALG_DATA_NUM 79
 #define IQ_DATA_MAX (MEASURE_DIS_IQ_REPORT_CNT_MAX * SLE_CS_IQ_REPORT_COUNT)
 
 typedef struct {
     uint16_t i_data;
     uint16_t q_data;
-} measure_dis_stored_qte_trans_t;/*å®šä¹‰ä¸¤ä¸ªuint16_tç±»å‹çš„æˆå‘˜ï¼ši_dataå’Œq_data,ç”¨äºå­˜å‚¨IQæ•°æ®*/
+} measure_dis_stored_qte_trans_t;
 
 typedef struct {
     uint8_t samp_cnt;
@@ -35,14 +28,14 @@ typedef struct {
     uint32_t timestamp_sn;
     measure_dis_stored_qte_trans_t data[IQ_DATA_MAX];
 #if (defined(GLE_CS_MODE3_SUPPORT))
-    uint32_t tof_result;/*å¦‚æœå®šä¹‰äº†GLE_CS_MODE3_SUPPORTå®ï¼Œåˆ™è¿˜ä¼šåŒ…å«ä¸€ä¸ªtof_resultå­—æ®µï¼Œå¯èƒ½ç”¨äºå­˜å‚¨æ—¶é—´é£è¡Œï¼ˆTime of Flightï¼‰çš„æµ‹é‡ç»“æœã€‚*/
+    uint32_t tof_result;/*Èç¹û¶¨ÒåÁËGLE_CS_MODE3_SUPPORTºê£¬Ôò»¹»á°üº¬Ò»¸ötof_result×Ö¶Î£¬¿ÉÄÜÓÃÓÚ´æ´¢Ê±¼ä·ÉĞĞ£¨Time of Flight£©µÄ²âÁ¿½á¹û¡£*/
 #endif
-} measure_dis_stored_iq_data_t;/*ç”¨äºå­˜å‚¨ä¸IQæ•°æ®ç›¸å…³çš„å¤šä¸ªå­—æ®µï¼ŒåŒ…æ‹¬æ ·æœ¬è®¡æ•°ã€RSSIï¼ˆæ¥æ”¶ä¿¡å·å¼ºåº¦æŒ‡ç¤ºï¼‰ã€åºåˆ—å·ã€æ—¶é—´æˆ³ï¼Œä»¥åŠä¸€ä¸ªmeasure_dis_stored_qte_trans_tç±»å‹çš„æ•°ç»„ï¼Œç”¨äºå­˜å‚¨å®é™…çš„IQæ•°æ®ã€‚*/
+} measure_dis_stored_iq_data_t;/*ÓÃÓÚ´æ´¢ÓëIQÊı¾İÏà¹ØµÄ¶à¸ö×Ö¶Î£¬°üÀ¨Ñù±¾¼ÆÊı¡¢RSSI£¨½ÓÊÕĞÅºÅÇ¿¶ÈÖ¸Ê¾£©¡¢ĞòÁĞºÅ¡¢Ê±¼ä´Á£¬ÒÔ¼°Ò»¸ömeasure_dis_stored_qte_trans_tÀàĞÍµÄÊı×é£¬ÓÃÓÚ´æ´¢Êµ¼ÊµÄIQÊı¾İ¡£*/
 
 typedef struct {
     uint16_t i_data;
     uint16_t q_data;
-} sle_channel_sounding_qte_trans_t;/*ç”¨äºå­˜å‚¨CS IQæ•°æ®*/
+} sle_channel_sounding_qte_trans_t;/*ÓÃÓÚ´æ´¢CS IQÊı¾İ*/
 
 typedef struct {
     uint8_t samp_cnt;
@@ -51,8 +44,8 @@ typedef struct {
     uint32_t timestamp_sn;
     sle_channel_sounding_qte_trans_t data[IQ_DATA_MAX];
     uint32_t tof_result;
-} sle_channel_sounding_iq_trans_t;/*ç”¨äºå­˜å‚¨ä¸CS IQæ•°æ®æ ·æœ¬ã€æ ·æœ¬æ•°é‡ã€RSSIå€¼ã€åºåˆ—å·ã€æ—¶é—´æˆ³ã€TOF;*/
+} sle_channel_sounding_iq_trans_t;/*ÓÃÓÚ´æ´¢ÓëCS IQÊı¾İÑù±¾¡¢Ñù±¾ÊıÁ¿¡¢RSSIÖµ¡¢ĞòÁĞºÅ¡¢Ê±¼ä´Á¡¢TOF;*/
 
-errcode_t measure_dis_reg_callbacks(void);/*å›è°ƒå‡½æ•°æ³¨å†Œ*/
+errcode_t measure_dis_reg_callbacks(void);/*»Øµ÷º¯Êı×¢²á*/
 
 #endif

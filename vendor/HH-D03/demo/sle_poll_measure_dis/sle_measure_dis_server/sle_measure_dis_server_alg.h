@@ -1,16 +1,10 @@
-/*
+/**
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Description: SLE ADV Config. \n
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * History: \n
+ * 2023-07-17, Create file. \n
  */
 
 #ifndef SLE_MEASURE_DIS_SERVER_ALG_H
@@ -21,14 +15,14 @@
 #define MEASURE_DIS_INVALID (-1)/*表示无效测量距离的整数值*/
 #define MEASURE_DIS_RSSI_INVALID (-128)/*表示无效RSSI（Received Signal Strength Indication，接收信号强度指示）值的整数值*/
 #define MEASURE_DIS_HIGH_INVALID (-10)/*表示某种“高”值无效的整数值*/
-#define MEASURE_DIS_IQ_REPORT_CNT_MAX 4
+#define MEASURE_DIS_IQ_REPORT_CNT_MAX 1
 #define POSALG_DATA_NUM 79/*位置算法相关的参数,可能用于位置估计算法中的信号强度校正、IQ数据翻转检测等。*/
 #define IQ_DATA_MAX (MEASURE_DIS_IQ_REPORT_CNT_MAX * SLE_CS_IQ_REPORT_COUNT)
 #define POSALG_RSSI_OFFSET 256
 #define POSALG_CALIB_VAL 0.8
 #define POSALG_IQ_FLIP_BARRIER 1023
 #define POSALG_IQ_FLIP_OFFSET 2048
-#define MEASURE_DIS_TIMESTAMP_DIFF_MAX 10
+#define MEASURE_DIS_TIMESTAMP_DIFF_MAX 20
 
 typedef struct {
     int key_num;

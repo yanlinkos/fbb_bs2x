@@ -1,16 +1,10 @@
-/*
+/**
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Description: SLE measure_dis server Config. \n
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * History: \n
+ * 2023-07-17, Create file. \n
  */
 
 #ifndef SLE_MEASURE_DIS_SERVER_H
@@ -73,14 +67,12 @@ typedef struct {
     void                *data;
 } measure_dis_msg_node_t;
 
-static inline void check_rc_return_rc(uint32_t rc, char *err)
-{
-    do {
-        if ((rc) != ERRCODE_SUCC) {
-            osal_printk("CARKEY ERROR: %s fail!: call %s return 0x%x!\n", err, __FUNCTION__, rc);
-        }
-    } while (0);
-}
+#define check_rc_return_rc(rc, err)                                                             \
+    do {                                                                                         \
+        if ((rc) != ERRCODE_SUCC) {                                                              \
+            osal_printk("CARKEY ERROR: %s fail!: call %s return 0x%x!\n", err, __FUNCTION__, rc);   \
+        }                                                                                        \
+    } while (0)
 
 int measure_dis_server_write_client(uint32_t type, uint8_t *data, uint32_t data_len);
 int measure_dis_server_init(void);

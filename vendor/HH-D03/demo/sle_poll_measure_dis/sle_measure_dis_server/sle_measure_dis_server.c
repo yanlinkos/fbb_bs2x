@@ -1,18 +1,11 @@
-/*
+/**
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Description: SLE UART Server Source. \n
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * History: \n
+ * 2023-07-17, Create file. \n
  */
-
 #include "sle_measure_dis_server.h"
 #include "sle_errcode.h"
 #include "sle_common.h"
@@ -39,9 +32,10 @@ static uint16_t g_service_handle = 0;
 /* sle ntf property handle */
 static uint16_t g_property_handle = 0;
 
-#define SLEM_UUID_LEN 12
-#define SLEM_CONNET_INVAILD 0xFF/*连接状态*/
-uint8_t g_measure_dis_server_addr[SLE_ADDR_LEN] = { 4, 4, 4, 4, 4, 4 };
+/* UUID只支持2字节和16字节 */
+#define SLEM_UUID_LEN SLE_UUID_LEN
+#define SLEM_CONNET_INVAILD 0xFF
+uint8_t g_measure_dis_server_addr[SLE_ADDR_LEN] = { 1, 1, 1, 1, 1, 5 };
 uint8_t g_measure_dis_client_addr[SLE_ADDR_LEN] = { 2, 2, 2, 2, 2, 2 };
 uint8_t g_measure_dis_conn_id = SLEM_CONNET_INVAILD;
 
@@ -50,9 +44,9 @@ unsigned long g_measure_dis_queue;/*用于表示一个队列的标识符或状�
 measure_dis_msg_node_t g_msg_data;/*用于存储与“measure_dis”服务相关的消息或数据*/
 
 measure_dis_server_data_t g_measure_dis_server_data = {
-    .server_uuid = {0x11, 0x22, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-    .service_uuid = {0x11, 0x33, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
-    .property_uuid = {0x11, 0x44, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1},
+    .server_uuid = {0x11, 0x22, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    .service_uuid = {0x11, 0x33, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+    .property_uuid = {0x11, 0x44, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
 };
 
 static void measure_dis_cm_conn_state_cbk(uint16_t conn_id, const sle_addr_t *addr,
@@ -140,8 +134,10 @@ errcode_t measure_dis_dd_register_cbks(void)
 static void measure_dis_ssaps_read_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_read_cb_t *read_cb_para,
     errcode_t status)
 {
-    osal_printk("[scd server] ssaps read request cbk server_id:%x, conn_id:%x, handle:%x, status:%x\r\n",
-        server_id, conn_id, read_cb_para->handle, status);
+    unused(server_id);
+    unused(conn_id);
+    unused(read_cb_para);
+    unused(status);
 }
 
 void measure_dis_server_msg_proc(uint8_t *data, uint16_t data_len)
@@ -163,7 +159,7 @@ void measure_dis_server_msg_proc(uint8_t *data, uint16_t data_len)
     }
 
     if (unlikely(ret != ERRCODE_SLE_SUCCESS)) {
-        osal_printk("client proc msg failed MSG_TYPE:%x ret:0x%x \r\n", slem_profile_msg->type, ret);
+        osal_printk("client proc msg failed MSG_TYPE:0x%x ret:0x%x \r\n", slem_profile_msg->type, ret);
     }
 }
 
@@ -180,13 +176,13 @@ static void measure_dis_ssaps_write_request_cbk(uint8_t server_id, uint16_t conn
 static void measure_dis_ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id,  ssap_exchange_info_t *mtu_size,
     errcode_t status)
 {
-    osal_printk("[scd server] ssaps myu change cbk server_id:%x, conn_id:%x, mtu_size:%x, status:%x\r\n",
+    osal_printk("[scd server] ssaps myu change cbk server_id:0x%x, conn_id:0x%x, mtu_size:0x%x, status:0x%x\r\n",
                 server_id, conn_id, mtu_size->mtu_size, status);
 }
 
 static void measure_dis_ssaps_start_service_cbk(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    osal_printk("[scd server] start service cbk server_id:%x, handle:%x, status:%x\r\n",
+    osal_printk("[scd server] start service cbk server_id:0x%x, handle:0x%x, status:0x%x\r\n",
                 server_id, handle, status);
 }
 
@@ -210,7 +206,6 @@ static errcode_t measure_dis_server_service_add(void)
     }
     ret = ssaps_add_service_sync(g_server_id, &service_uuid, 1, &g_service_handle);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("[server] sle uuid add service fail, ret:%x\r\n", ret);
         return ERRCODE_SLE_FAIL;
     }
     return ERRCODE_SLE_SUCCESS;
@@ -234,7 +229,6 @@ static errcode_t measure_dis_server_property_add(void)
 
     ret = ssaps_add_property_sync(g_server_id, g_service_handle, &property,  &g_property_handle);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("[server] sle uuid add property fail, ret:%x\r\n", ret);
         return ERRCODE_SLE_FAIL;
     }
     descriptor.permissions = SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE;
@@ -244,7 +238,6 @@ static errcode_t measure_dis_server_property_add(void)
 
     ret = ssaps_add_descriptor_sync(g_server_id, g_service_handle, g_property_handle, &descriptor);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("[server] sle uuid add descriptor fail, ret:%x\r\n", ret);
         return ERRCODE_SLE_FAIL;
     }
 
@@ -288,7 +281,6 @@ int measure_dis_server_add(void)
         g_server_id, g_service_handle, g_property_handle);
     ret = ssaps_start_service(g_server_id, g_service_handle);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("[server] sle uuid add service fail, ret:%x\r\n", ret);
         return ERRCODE_SLE_FAIL;
     }
     osal_printk("[server] sle uuid add service out\r\n");
@@ -347,7 +339,6 @@ int measure_dis_sle_server_ntf_by_addr(uint16_t len, uint8_t *data)
 
 int measure_dis_server_write_client(uint32_t type, uint8_t *data, uint32_t data_len)
 {
-    osal_printk("server send to client.\r\n");
     uint16_t len = sizeof(measure_ids_msg_t) + data_len;
     measure_ids_msg_t *slem_msg = (measure_ids_msg_t *)osal_kmalloc(len, 0);
     if (slem_msg == NULL) {
@@ -443,3 +434,10 @@ int measure_dis_server_init(void)
     return ret;
 }
 /* 锚点 */
+
+// btc回调函数
+// lm_gle_rssi_info_cb(uint16_t conn_id, int8_t rssi)
+void carkey_sle_rssi_report_cbk(uint16_t conn_id, int8_t rssi)
+{
+    osal_printk("SLE RSSI REPORT conn_id:%d, rssi:%d .\r\n", conn_id, rssi);
+}
