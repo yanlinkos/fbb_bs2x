@@ -17,6 +17,7 @@
 | software | <a href="zh-CN/software/功率配置说明书/BS2XV100 功率配置 说明书.md">BS2XV100 功率配置 说明书 </a> |
 | software | <a href="zh-CN/software/快速入门指南/BS2XV100 快速入门指南.md">BS2XV100 快速入门指南</a> |
 | software | <a href="zh-CN/software/SDK开发指南/BS2XV100 SDK 开发指南.md">BS2XV100 SDK 开发指南</a> |
+| software | <a href="zh-CN/software/release-notes/BS2X-1.0.16.md">release-notes</a> |
 | software | <a href="zh-CN/software/SDK接口变更说明书/BS2XV100 SDK接口变更 说明书.md">BS2XV100 SDK接口变更 说明书</a> |
 | software | <a href="zh-CN/software/星闪应用层SLE-Link协议/BS2XV100 星闪应用层SLE-Link协议.md">BS2XV100 星闪应用层SLE-Link协议</a> |
 | software | <a href="zh-CN/software/星闪软件开发指导书/BS2XV100 星闪软件开发 指导书.md">BS2XV100 星闪软件开发 指导书</a> |
