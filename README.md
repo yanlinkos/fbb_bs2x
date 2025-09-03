@@ -34,6 +34,8 @@
 | BearPi-Pico_H2821E开发板（小熊派）      | [小熊派BearPi-Pico_H2821E开发板购买链接（淘宝）](https://item.taobao.com/item.htm?id=803331789469) | <img src="vendor/BearPi-Pico_H2821E/doc/media/BearPi-Pico_H2821E/pico-1.png" alt="image-20240809164437807" style="zoom: 25%;" /> |
 | DK221星闪2K鼠标完整解决方案（方格电子） | [方格电子DK221星闪2K鼠标解决方案购买链接（淘宝）](https://e.tb.cn/h.69IMdsPhGFQWDgS?tk=b25cVdob237) | 后续提供                                                     |
 
+模组及开发板等产品均由相应产家自行销售，由其对产品质量负责，如侵犯他人知识产权的由其自行承担全部责任及赔偿。海思不提供任何保证及担保，亦不承担任何责任及赔偿。
+
 ## 开发板资料
 
 | 开发板型号                              | 案例开发指南                                                 | 硬件资料                                                     |
@@ -41,10 +43,6 @@
 | HH-D03开发板（润和软件）                | [润和开发板星闪案例开发指南](vendor/HH-D03/demo)             | [HH-D03开发板硬件原理图及HH-D03 星闪开发板规格说明书](vendor/HH-D03/doc/hardware) |
 | BearPi-Pico_H2821E开发板（小熊派）      | [小熊派开发板星闪案例开发指南](vendor/BearPi-Pico_H2821E/doc/README.md) | [BearPi-Pico_H2821E开发板硬件原理图](vendor/BearPi-Pico_H2821E/doc/hardware/) |
 | DK221星闪2K鼠标完整解决方案（方格电子） | 暂不提供                                                     | 暂不提供                                                     |
-
-## 免责声明
-
-模组及开发板等产品均由相应产家自行销售，由其对产品质量负责，如侵犯他人知识产权的由其自行承担全部责任及赔偿。海思不提供任何保证及担保，亦不承担任何责任及赔偿。
 
 ## 示例教程
 
