@@ -21,7 +21,7 @@ target = {
             'cal_dis',
 
             # Middleware Region
-            'dfx_porting', 'algorithm', 'app_init', 'lzma_22.00',
+            'dfx_porting', 'algorithm', 'app_init', 'lzma_23.01',
             'dfx_file_operation', 'pm_sys', 'codec',
             'update_common', 'update_local', 'update_storage', 'update_common_porting', 'update_storage_porting',
             'ota_upgrade',

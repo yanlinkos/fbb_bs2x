@@ -41,11 +41,9 @@ void sle_rcu_standby_to_work(void);
 void sle_rcu_standby_to_sleep(void);
 void sle_rcu_sleep_to_work(void);
 
+void sle_low_latency_cbk_reg(void);
 uint8_t rcu_get_server_id(void);
 uint16_t get_g_connid(void);
-
-typedef void (*sle_rcu_notify_connect)(uint16_t conn_id, uint8_t conn_state);
-void sle_rcu_server_register_cb(sle_rcu_notify_connect sle_cb);
 
 #ifdef __cplusplus
 #if __cplusplus

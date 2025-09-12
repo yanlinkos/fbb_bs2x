@@ -142,6 +142,21 @@ typedef enum {
     BLE_RANDOM_STATIC_IDENTITY_ADDRESS =                    0x03
 } ble_address_type;
 
+/**
+ * @if Eng
+ * @brief Definitaion value range for adv addr type.
+ * @else
+ * @brief Ble 广播地址位。
+ * @endif
+ */
+typedef enum {
+    BLE_ADDRESS_ZERO =                            0x00,
+    BLE_ADDRESS_ONE =                             0x01,
+    BLE_ADDRESS_TWO =                             0x02,
+    BLE_ADDRESS_THREE =                           0x03,
+    BLE_ADDRESS_FOUR =                            0x04,
+    BLE_ADDRESS_FIVE =                            0x05
+} ble_address_bit_e;
 /* Ble adv min interval */
 #define BLE_ADV_MIN_INTERVAL 0x20
 /* Ble adv max interval */
@@ -150,6 +165,9 @@ typedef enum {
 #define BTH_GAP_BLE_ADV_HANDLE_DEFAULT 0x01
 /* Ble adv duration */
 #define BTH_GAP_BLE_ADV_FOREVER_DURATION 0
+
+uint8_t ble_rcu_directed_start_adv(bd_addr_t *addr);
+void ble_set_current_control_obj(uint8_t control_obj);
 
 /**
  * @if Eng

@@ -18,7 +18,8 @@ extern "C" {
 
 #define APP_HOLD_LONG_TIME                  3000
 #define APP_PAIR_TIME                       3000
-#define APP_BLE_PAIR_TIME                   3000
+#define APP_BLE_CALL_TIME                   1000
+#define APP_SLE_CALL_TIME                   1000
 #define APP_UNPAIR_TIME                     3000
 #define APP_IR_STUDY_TIME                   (2 * 60 * 1000)
 #define APP_SLEEP_CHECK_TIME                3000
@@ -27,10 +28,13 @@ extern "C" {
 typedef enum {
     TIME_CMD_KEY_HOLD_LONG,
     TIME_CMD_PAIR,
-    TIME_BLE_CMD_PAIR,
     TIME_CMD_SLEEP_CHECK,
     TIME_CMD_UNPAIR,
     TIME_CMD_IR_STUDY,
+    TIME_CMD_SLE_TV_CALL,
+    TIME_CMD_SLE_OTT_CALL,
+    TIME_CMD_BLE_TV_CALL,
+    TIME_CMD_BLE_OTT_CALL,
     TIME_CMD_MAX
 }APP_TIMER_CMD;
 

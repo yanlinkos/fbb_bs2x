@@ -7,51 +7,34 @@
  * 2023-09-21, Create file. \n
  */
 #include "securec.h"
-#include "errcode.h"
 #include "osal_addr.h"
 #include "osal_task.h"
 #include "common_def.h"
-#include "sle_common.h"
 #include "sle_device_manager.h"
 #include "sle_device_discovery.h"
 #include "sle_errcode.h"
 #include "sle_rcu_server.h"
 #include "timer.h"
+#include "rcu.h"
 #include "chip_core_irq.h"
 #include "app_common.h"
 #include "app_status.h"
+#include "app_keyscan.h"
+#include "sle_rcu_server_control.h"
 #include "sle_rcu_server_adv.h"
 
-/* 连接调度间隔12.5ms，单位125us */
-#define SLE_CONN_INTV_MIN_DEFAULT                 0x64
-/* 连接调度间隔12.5ms，单位125us */
-#define SLE_CONN_INTV_MAX_DEFAULT                 0x64
-/* 连接调度间隔20ms，单位125us */
-#define SLE_CONN_WAKEUP_INTV_MIN_DEFAULT          0xA0
-/* 连接调度间隔20ms，单位125us */
-#define SLE_CONN_WAKEUP_INTV_MAX_DEFAULT          0xA0
-/* 连接调度间隔25ms，单位125us */
-#define SLE_ADV_INTERVAL_MIN_DEFAULT              (0xC8 * 2)
-/* 连接调度间隔25ms，单位125us */
-#define SLE_ADV_INTERVAL_MAX_DEFAULT              (0xC8 * 2)
-/* 超时时间5000ms，单位10ms */
-#define SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT      0x1F4
-/* 超时时间4990ms，单位10ms */
-#define SLE_CONN_MAX_LATENCY                      0x1F3
-/* 广播发送功率 */
-#define SLE_ADV_TX_POWER                          6
-/* 广播ID */
-#define SLE_ADV_HANDLE_DEFAULT                    1
-/* 定向广播ID */
-#define SLE_ADV_HANDLE_DIRECTED                   1
-/* 唤醒广播ID */
-#define SLE_ADV_HANDLE_WAKEUP                     1
-/* 最大广播数据长度 */
-#define SLE_ADV_DATA_LEN_MAX                      31
-#define SLE_UART_TASK_DELAY_MS                    1000
 /* 初始按键序号 */
 static uint8_t keynumber = 0x01;
-static uint8_t g_sle_adv_dev_name[] = {'s', 'l', 'e', '_', 'r', 'c', 'u'};
+
+uint8_t g_sle_current_control_obj = NONE_DEVICE;
+uint8_t g_sle_local_name1[] = {'s', 'l', 'e', '_', 'r', 'c', 'u', '1'};
+uint8_t g_sle_local_name2[] = {'s', 'l', 'e', '_', 'r', 'c', 'u', '2'};
+
+void sle_set_current_control_obj(uint8_t control_obj)
+{
+    g_sle_current_control_obj = control_obj;
+}
+
 static uint16_t sle_set_adv_local_name(uint8_t *adv_data, uint16_t max_len)
 {
     uint8_t index = 0;
@@ -92,8 +75,15 @@ static uint16_t sle_set_adv_data(uint8_t *adv_data, uint16_t length)
     }
     idx += len;
 
-    len = sizeof(g_sle_adv_dev_name);
-    if (memcpy_s(&adv_data[idx], length - idx, g_sle_adv_dev_name, len) != EOK) {
+    uint8_t *sle_adv_dev_name = NULL;
+    if (g_sle_current_control_obj == TV) {
+        sle_adv_dev_name = g_sle_local_name1;
+    } else if (g_sle_current_control_obj == OTT) {
+        sle_adv_dev_name = g_sle_local_name2;
+    }
+
+    len = sizeof(g_sle_local_name1);
+    if (memcpy_s(&adv_data[idx], length - idx, sle_adv_dev_name, len) != EOK) {
         return 0;
     }
     idx += len;
@@ -175,7 +165,7 @@ static int sle_set_default_announce_data(void)
     return ERRCODE_SLE_SUCCESS;
 }
 
-static int sle_set_directed_announce_param(sle_addr_t *addr)
+static int sle_set_directed_announce_param(const sle_addr_t *addr)
 {
     sle_announce_param_t param = { 0 };
     uint8_t local_addr[SLE_ADDR_LEN] = { CONFIG_SLE_MULTICON_SERVER_ADDR0, CONFIG_SLE_MULTICON_SERVER_ADDR1,
@@ -207,7 +197,7 @@ static int sle_set_directed_announce_param(sle_addr_t *addr)
     return sle_set_announce_param(param.announce_handle, &param);
 }
 
-static int sle_set_wakeup_announce_param(sle_addr_t *addr)
+static int sle_set_wakeup_announce_param(const sle_addr_t *addr)
 {
     sle_announce_param_t param = { 0 };
     uint8_t local_addr[SLE_ADDR_LEN] = { CONFIG_SLE_MULTICON_SERVER_ADDR0, CONFIG_SLE_MULTICON_SERVER_ADDR1,
@@ -315,11 +305,12 @@ errcode_t sle_rcu_server_adv_init(void)
     uint8_t conn_id;
     sle_set_default_announce_param();
     sle_set_default_announce_data();
-    conn_id = get_g_connid();
+    conn_id = sle_control_get_specific_con_id(g_sle_current_control_obj);
     set_app_sle_conn_status(conn_id, APP_CONNECT_STATUS_ADVING);
     set_app_sle_adv_status(conn_id, SLE_ADV_TYPE_DEFAULT);
     ret = sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
     if (ret != ERRCODE_SLE_SUCCESS) {
+        sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
         osal_printk("%s sle_rcu_server_adv_init,sle_start_announce fail :%x\r\n", SLE_RCU_SERVER_LOG, ret);
         return ret;
     }
@@ -358,7 +349,7 @@ static int rcu_mp_test_set_test_announce_param(sle_addr_t *local_addr, sle_addr_
 {
     sle_announce_param_t param = { 0 };
     param.announce_mode = SLE_ANNOUNCE_MODE_CONNECTABLE_DIRECTED;
-    param.announce_handle = SLE_ADV_HANDLE_DIRECTED;
+    param.announce_handle = SLE_ADV_HANDLE_DEFAULT;
     param.announce_gt_role = SLE_ANNOUNCE_ROLE_T_CAN_NEGO;
     param.announce_level = SLE_ANNOUNCE_LEVEL_NORMAL;
     param.announce_channel_map = SLE_ADV_CHANNEL_MAP_DEFAULT;
@@ -383,7 +374,7 @@ static int rcu_mp_test_set_test_announce_param(sle_addr_t *local_addr, sle_addr_
     return sle_set_announce_param(param.announce_handle, &param);
 }
  
-errcode_t rcu_mp_test_server_adv_init(sle_addr_t *local_addr, sle_addr_t *peer_addr)
+errcode_t rcu_mp_test_server_adv_init(const sle_addr_t *local_addr, const sle_addr_t *peer_addr)
 {
     errcode_t ret;
     rcu_mp_test_set_test_announce_param(local_addr, peer_addr);
@@ -397,13 +388,12 @@ errcode_t rcu_mp_test_server_adv_init(sle_addr_t *local_addr, sle_addr_t *peer_a
 }
 #endif
 
-errcode_t sle_rcu_server_directed_adv_init(sle_addr_t *addr)
+errcode_t sle_rcu_server_directed_adv_init(const sle_addr_t *addr)
 {
     errcode_t ret;
     sle_set_directed_announce_param(addr);
     sle_set_default_announce_data();
-    app_globle_status_t status = get_app_globle_status();
-    uint16_t conn_id = status.sle_work_conn_id;
+    uint16_t conn_id = sle_control_get_specific_con_id(g_sle_current_control_obj);
     set_app_sle_conn_status(conn_id, APP_CONNECT_STATUS_ADVING);
     set_app_sle_adv_status(conn_id, SLE_ADV_TYPE_DIRECTED);
     ret = sle_start_announce(SLE_ADV_HANDLE_DIRECTED);
@@ -417,9 +407,8 @@ errcode_t sle_rcu_server_directed_adv_init(sle_addr_t *addr)
 errcode_t sle_rcu_server_adv_deinit(void)
 {
     osal_printk("stop pair adv\r\n");
-    errcode_t ret;
     app_globle_status_t status = get_app_globle_status();
-    uint16_t conn_id = status.sle_work_conn_id;
+    uint16_t conn_id = sle_control_get_con_id();
     if (status.app_sle_conn_status[conn_id] == APP_CONNECT_STATUS_ADVING) {
         set_app_sle_conn_status(conn_id, APP_CONNECT_STATUS_IDLE);
     }
@@ -428,9 +417,8 @@ errcode_t sle_rcu_server_adv_deinit(void)
         osal_printk("connect and pair completed not should stop adv\r\n");
         return ERRCODE_SLE_SUCCESS;
     } else {
-        ret = sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
+        int ret = sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
         if (ret != ERRCODE_SLE_SUCCESS) {
-            osal_printk("stop pair adv fail: %x\r\n", ret);
             return ret;
         }
     }
@@ -443,7 +431,7 @@ void sle_rcu_timer_callback(timer_index_t index)
     sle_stop_announce(SLE_ADV_HANDLE_WAKEUP);
 }
 
-errcode_t sle_rcu_server_wakeup_adv_init(sle_addr_t *addr)
+errcode_t sle_rcu_server_wakeup_adv_init(const sle_addr_t *addr)
 {
     if (keynumber != 1) {
         sle_stop_announce(SLE_ADV_HANDLE_WAKEUP);               /* 关闭广播 */
@@ -452,8 +440,7 @@ errcode_t sle_rcu_server_wakeup_adv_init(sle_addr_t *addr)
     errcode_t ret;
     sle_set_wakeup_announce_param(addr);
     sle_set_wakeup_announce_data();
-    app_globle_status_t status = get_app_globle_status();
-    uint16_t conn_id = status.sle_work_conn_id;
+    uint16_t conn_id = sle_control_get_con_id();
     set_app_sle_conn_status(conn_id, APP_CONNECT_STATUS_ADVING);
     set_app_sle_adv_status(conn_id, SLE_ADV_TYPE_WAKEUP);
     ret = sle_start_announce(SLE_ADV_HANDLE_WAKEUP);

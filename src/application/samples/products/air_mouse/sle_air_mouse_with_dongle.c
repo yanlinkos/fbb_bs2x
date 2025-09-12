@@ -11,11 +11,13 @@
 #include "soc_osal.h"
 #include "securec.h"
 #include "uart.h"
+#include "watchdog.h"
 #include "sle_errcode.h"
 #include "slp_errcode.h"
 #include "sle_connection_manager.h"
 #include "sle_device_discovery.h"
 #include "dongle/air_mouse_usb/usb_init_app.h"
+#include "vdt_codec.h"
 #if defined(CONFIG_SAMPLE_SUPPORT_AIR_MOUSE)
 #include "mouse/rcu_main.h"
 #include "mouse/sle_air_mouse_server/sle_air_mouse_server_adv.h"
@@ -58,6 +60,22 @@ static void *slp_task(const char *arg)
     return NULL;
 }
 
+static void set_slp_local_attr(const SlpDeviceAddr *mac)
+{
+    // 设置Slp本机属性
+    set_screen_size(1887, 1092); // 85寸屏宽1887，屏高1092
+    set_slp_cursor_speed(SLP_CURSOR_SPEED_MEDIUM);
+    SlpLocalAtt att = {0};
+    att.screenParam.cursorSpeed = get_slp_cursor_speed();
+    att.screenParam.width = get_screen_width();
+    att.screenParam.height = get_screen_height();
+    (void)memcpy_s(&att.localAddr, sizeof(SlpDeviceAddr), mac, sizeof(SlpDeviceAddr));
+    ErrcodeSlpClient ret = SlpSetLocalAttCommand(&att);
+    if (ret != ERRCODE_SLPC_SUCCESS) {
+        osal_printk("SlpSetLocalAttCommand Error 0x%x\r\n", ret);
+    }
+}
+
 #if defined(CONFIG_SAMPLE_SUPPORT_AIR_MOUSE)
 static void *sle_air_mouse_task(const char *arg)
 {
@@ -76,20 +94,9 @@ static void *sle_air_mouse_task(const char *arg)
 
     sle_server_slp_command_register_cbks(); // 注册server端 SLP command回调
 
-    // 设置Slp本机属性
-    set_screen_size(1887, 1092); // 85寸屏宽1887，屏高1092
-    set_slp_cursor_speed(SLP_CURSOR_SPEED_MEDIUM);
-    SlpLocalAtt att = {0};
-    att.screenParam.cursorSpeed = get_slp_cursor_speed();
-    att.screenParam.width = get_screen_width();
-    att.screenParam.height = get_screen_height();
-    (void)memcpy_s(&att.localAddr, sizeof(SlpDeviceAddr), get_slp_air_mouse_addr(), sizeof(SlpDeviceAddr));
-    ErrcodeSlpClient ret = SlpSetLocalAttCommand(&att);
-    if (ret != ERRCODE_SLPC_SUCCESS) {
-        osal_printk("SlpSetLocalAttCommand Error 0x%x\r\n", ret);
-        return NULL;
-    }
+    set_slp_local_attr(get_slp_air_mouse_addr()); // 设置Slp本机属性
 
+    vdt_codec_init(); // 初始化音频编解码
     // SLE广播
     sle_air_mouse_server_init();
 
@@ -129,25 +136,29 @@ static void *sle_air_mouse_dongle_task(const char *arg)
 #else
 #endif
 
-    // 设置Slp本机属性
-    set_slp_cursor_speed(SLP_CURSOR_SPEED_MEDIUM);
-    set_screen_size(1887, 1092); // 85寸屏宽1887，屏高1092
-    SlpLocalAtt att = {0};
-    att.screenParam.cursorSpeed = get_slp_cursor_speed();
-    att.screenParam.width = get_screen_width();
-    att.screenParam.height = get_screen_height();
-    (void)memcpy_s(&att.localAddr, sizeof(SlpDeviceAddr), get_slp_air_mouse_dongl_addr(), sizeof(SlpDeviceAddr));
-    ErrcodeSlpClient ret = SlpSetLocalAttCommand(&att);
-    if (ret != ERRCODE_SLPC_SUCCESS) {
-        osal_printk("SlpSetLocalAttCommand Error 0x%x\r\n", ret);
-        return NULL;
+    set_slp_local_attr(get_slp_air_mouse_dongl_addr()); // 设置Slp本机属性
+
+    // 初始化事件队列，用于处理amic语音数据
+    if (osal_event_init(&g_trans_event_id) != OSAL_SUCCESS) {
+        osal_printk("dongle osal_event_init fail! \r\n");
     }
+    vdt_codec_init(); // 初始化音频编解码
+
 #ifdef CONFIG_AIR_MOUSE_DONGLE_FACTORY_PHASE_CALI
     SlpSetFactoryTestMode(SLP_FACTORY_TEST_AOX_CALI); // 相位校准模式
 #endif
 
     // GLE 扫描连接
     sle_air_mouse_client_init();
+
+    while (1) {
+        uapi_watchdog_kick();
+        uint8_t ret = osal_event_read(&g_trans_event_id, VDT_TRANSFER_EVENT, OSAL_WAIT_FOREVER,
+                                      OSAL_WAITMODE_AND | OSAL_WAITMODE_CLR);
+        if (ret & VDT_TRANSFER_EVENT) {
+            send_amic_data_uac();
+        }
+    }
 
     return NULL;
 }

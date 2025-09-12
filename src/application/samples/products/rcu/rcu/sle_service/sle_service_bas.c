@@ -13,6 +13,8 @@
 
 #define BAT_ELEMENT_NUM 3
 
+static uint8_t g_server_id;
+
 static uint8_t g_sle_bat_uuid[BAT_ELEMENT_NUM][SLE_UUID_LEN] = {
     /* BAT service UUID. 设备信息管理 */
     { 0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0xEA, 0xB7, 0x20, 0x00, 0x00, 0x00, 0x00, 0x06, 0x0A },
@@ -42,7 +44,7 @@ static errcode_t sle_bas_property_and_descriptor_add(void)
 {
     uint32_t properties = SSAP_OPERATE_INDICATION_BIT_READ;
 
-    return sle_add_property(properties, g_sle_bat_uuid[SLE_BAT_INDEX1], sizeof(g_battert_value),
+    return sle_add_property(g_server_id, properties, g_sle_bat_uuid[SLE_BAT_INDEX1], sizeof(g_battert_value),
                             (uint8_t *)&g_battert_value, &g_bas_service_hdl[SLE_BAT_INDEX1]);
 }
 
@@ -50,7 +52,7 @@ errcode_t sle_rcu_bas_service_add(void)
 {
     errcode_t ret = ERRCODE_SLE_SUCCESS;
 
-    ret = sle_service_add(g_sle_bat_uuid[SLE_BAT_INDEX0], g_bas_service_hdl,
+    ret = sle_service_add(g_server_id, g_sle_bat_uuid[SLE_BAT_INDEX0], g_bas_service_hdl,
     SLE_BAT_INDEX0, SLE_BAT_INDEX_MAX);
     if (ret != ERRCODE_SLE_SUCCESS) {
         return ret;
@@ -69,10 +71,11 @@ errcode_t sle_rcu_bas_service_add(void)
     return ERRCODE_SLE_SUCCESS;
 }
 
-errcode_t sle_add_bas_service(void)
+errcode_t sle_add_bas_service(uint8_t server_id)
 {
     uint8_t channel = 1;
     bool self_cali = true;
+    g_server_id = server_id;
     adc_port_gadc_entirely_open(channel, self_cali);
     sle_set_battert(adc_port_gadc_entirely_sample(channel));
     errcode_t ret = sle_rcu_bas_service_add();

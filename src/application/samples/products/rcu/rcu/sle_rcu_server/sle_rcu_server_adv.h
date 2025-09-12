@@ -10,6 +10,37 @@
 #ifndef SLE_SERVER_ADV_H
 #define SLE_SERVER_ADV_H
 
+#include "errcode.h"
+#include "sle_common.h"
+
+/* 连接调度间隔12.5ms，单位125us */
+#define SLE_CONN_INTV_MIN_DEFAULT                 0x64
+/* 连接调度间隔12.5ms，单位125us */
+#define SLE_CONN_INTV_MAX_DEFAULT                 0x64
+/* 连接调度间隔20ms，单位125us */
+#define SLE_CONN_WAKEUP_INTV_MIN_DEFAULT          0xA0
+/* 连接调度间隔20ms，单位125us */
+#define SLE_CONN_WAKEUP_INTV_MAX_DEFAULT          0xA0
+/* 连接调度间隔25ms，单位125us */
+#define SLE_ADV_INTERVAL_MIN_DEFAULT              (0xC8 * 2)
+/* 连接调度间隔25ms，单位125us */
+#define SLE_ADV_INTERVAL_MAX_DEFAULT              (0xC8 * 2)
+/* 超时时间5000ms，单位10ms */
+#define SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT      0x1F4
+/* 超时时间4990ms，单位10ms */
+#define SLE_CONN_MAX_LATENCY                      0x1F3
+/* 广播发送功率 */
+#define SLE_ADV_TX_POWER                          6
+/* 广播ID */
+#define SLE_ADV_HANDLE_DEFAULT                    1
+/* 定向广播ID */
+#define SLE_ADV_HANDLE_DIRECTED                   1
+/* 唤醒广播ID */
+#define SLE_ADV_HANDLE_WAKEUP                     1
+/* 最大广播数据长度 */
+#define SLE_ADV_DATA_LEN_MAX                      31
+#define SLE_UART_TASK_DELAY_MS                    1000
+
 /**
  * @if Eng
  * @brief Definitaion of BLE ADV common broadcast struct.
@@ -63,12 +94,13 @@ typedef enum sle_adv_data {
     SLE_ADV_DATA_TYPE_MANUFACTURER_SPECIFIC_DATA                   = 0xFF    /*!< 厂商自定义信息 */
 } sle_adv_data_t;
 
+void sle_set_current_control_obj(uint8_t control_obj);
 errcode_t sle_rcu_server_adv_init(void);
 errcode_t sle_rcu_server_adv_deinit(void);
-errcode_t sle_rcu_server_directed_adv_init(sle_addr_t *addr);
+errcode_t sle_rcu_server_directed_adv_init(const sle_addr_t *addr);
 errcode_t sle_rcu_announce_register_cbks(void);
-errcode_t sle_rcu_server_wakeup_adv_init(sle_addr_t *addr);
+errcode_t sle_rcu_server_wakeup_adv_init(const sle_addr_t *addr);
 #if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
-errcode_t rcu_mp_test_server_adv_init(sle_addr_t *local_addr, sle_addr_t *peer_addr);
+errcode_t rcu_mp_test_server_adv_init(const sle_addr_t *local_addr, const sle_addr_t *peer_addr);
 #endif
 #endif

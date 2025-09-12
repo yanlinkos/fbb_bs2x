@@ -82,7 +82,14 @@
 </th>
 </tr>
 </thead>
-<tbody><tr id="row1356491214816"><td class="cellrowborder" valign="top" width="19.21%" headers="mcps1.1.4.1.1 "><p id="p556411126483"><a name="p556411126483"></a><a name="p556411126483"></a>03</p>
+<tbody><tr id="row0499640161910"><td class="cellrowborder" valign="top" width="19.21%" headers="mcps1.1.4.1.1 "><p id="p10390144316197"><a name="p10390144316197"></a><a name="p10390144316197"></a>04</p>
+</td>
+<td class="cellrowborder" valign="top" width="24.38%" headers="mcps1.1.4.1.2 "><p id="p104991340141913"><a name="p104991340141913"></a><a name="p104991340141913"></a>2025-08-07</p>
+</td>
+<td class="cellrowborder" valign="top" width="56.410000000000004%" headers="mcps1.1.4.1.3 "><p id="p840121419208"><a name="p840121419208"></a><a name="p840121419208"></a>更新“<a href="代码示例.md">代码示例</a>”小节内容。</p>
+</td>
+</tr>
+<tr id="row1356491214816"><td class="cellrowborder" valign="top" width="19.21%" headers="mcps1.1.4.1.1 "><p id="p556411126483"><a name="p556411126483"></a><a name="p556411126483"></a>03</p>
 </td>
 <td class="cellrowborder" valign="top" width="24.38%" headers="mcps1.1.4.1.2 "><p id="p17565131244816"><a name="p17565131244816"></a><a name="p17565131244816"></a>2025-03-26</p>
 </td>

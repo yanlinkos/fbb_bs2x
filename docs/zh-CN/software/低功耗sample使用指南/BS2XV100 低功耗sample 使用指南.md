@@ -57,38 +57,45 @@ BS2X系列包含BS21/BS22/BS26，本文档以BS21为例。
 **修改记录<a name="section12787162012256"></a>**
 
 <a name="table1557726816410"></a>
-<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="20.72%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>文档版本</strong></p>
+<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="20.7%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>文档版本</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="26.119999999999997%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>发布日期</strong></p>
+<th class="cellrowborder" valign="top" width="26.14%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>发布日期</strong></p>
 </th>
 <th class="cellrowborder" valign="top" width="53.16%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>修改说明</strong></p>
 </th>
 </tr>
 </thead>
-<tbody><tr id="row04501152238"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p1716535616314"><a name="p1716535616314"></a><a name="p1716535616314"></a>03</p>
+<tbody><tr id="row1366485094810"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p13664135054819"><a name="p13664135054819"></a><a name="p13664135054819"></a>04</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p616585612315"><a name="p616585612315"></a><a name="p616585612315"></a>2025-05-30</p>
+<td class="cellrowborder" valign="top" width="26.14%" headers="mcps1.1.4.1.2 "><p id="p196640500486"><a name="p196640500486"></a><a name="p196640500486"></a>2025-08-07</p>
+</td>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p96642507484"><a name="p96642507484"></a><a name="p96642507484"></a>更新“<a href="详细介绍.md">详细介绍</a>”章节内容。</p>
+</td>
+</tr>
+<tr id="row04501152238"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p1716535616314"><a name="p1716535616314"></a><a name="p1716535616314"></a>03</p>
+</td>
+<td class="cellrowborder" valign="top" width="26.14%" headers="mcps1.1.4.1.2 "><p id="p616585612315"><a name="p616585612315"></a><a name="p616585612315"></a>2025-05-30</p>
 </td>
 <td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p161656569316"><a name="p161656569316"></a><a name="p161656569316"></a>更新“<a href="用户指南.md">用户指南</a>”章节内容。</p>
 </td>
 </tr>
-<tr id="row5830425563"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p1583020255616"><a name="p1583020255616"></a><a name="p1583020255616"></a>02</p>
+<tr id="row5830425563"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p1583020255616"><a name="p1583020255616"></a><a name="p1583020255616"></a>02</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p783002145619"><a name="p783002145619"></a><a name="p783002145619"></a>2025-01-14</p>
+<td class="cellrowborder" valign="top" width="26.14%" headers="mcps1.1.4.1.2 "><p id="p783002145619"><a name="p783002145619"></a><a name="p783002145619"></a>2025-01-14</p>
 </td>
 <td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p883017211563"><a name="p883017211563"></a><a name="p883017211563"></a>更新“<a href="用户指南.md">用户指南</a>”章节内容。</p>
 </td>
 </tr>
-<tr id="row104141231143713"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p0413131712"><a name="p0413131712"></a><a name="p0413131712"></a>01</p>
+<tr id="row104141231143713"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p0413131712"><a name="p0413131712"></a><a name="p0413131712"></a>01</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p184131311111"><a name="p184131311111"></a><a name="p184131311111"></a>2024-05-15</p>
+<td class="cellrowborder" valign="top" width="26.14%" headers="mcps1.1.4.1.2 "><p id="p184131311111"><a name="p184131311111"></a><a name="p184131311111"></a>2024-05-15</p>
 </td>
 <td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p169114261115"><a name="p169114261115"></a><a name="p169114261115"></a>第一次正式版本发布。</p>
 </td>
 </tr>
-<tr id="row5615142573419"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p7616122512348"><a name="p7616122512348"></a><a name="p7616122512348"></a>00B01</p>
+<tr id="row5615142573419"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p7616122512348"><a name="p7616122512348"></a><a name="p7616122512348"></a>00B01</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p1661610257342"><a name="p1661610257342"></a><a name="p1661610257342"></a>2024-03-01</p>
+<td class="cellrowborder" valign="top" width="26.14%" headers="mcps1.1.4.1.2 "><p id="p1661610257342"><a name="p1661610257342"></a><a name="p1661610257342"></a>2024-03-01</p>
 </td>
 <td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p161672515341"><a name="p161672515341"></a><a name="p161672515341"></a>第一次临时版本发布。</p>
 </td>

@@ -19,6 +19,8 @@
 #define FIRM_WARE_VERSION         "SLE AOS-IOT-V1.0\0"
 #define SOFT_WARE_VERSION         "$(SOFT_VERSION)\0"
 
+static uint8_t g_server_id;
+
 static uint8_t g_sle_dis_uuid[DIS_ELEMENT_NUM][SLE_UUID_LEN] = {
     /* DIS service UUID. 设备信息管理 */
     { 0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0xEA, 0xB7, 0x20, 0x00, 0x00, 0x00, 0x00, 0x06, 0x09 },
@@ -74,7 +76,7 @@ static errcode_t sle_dis_property_and_descriptor_add(void)
     errcode_t ret = ERRCODE_SLE_SUCCESS;
     uint32_t properties = SSAP_OPERATE_INDICATION_BIT_READ;
     for (int i = SLE_DIS_INDEX1; i < SLE_DIS_INDEX_MAX; i++) {
-        ret = sle_add_property(properties, g_sle_dis_uuid[i], sizeof(dis_description[i - 1]),
+        ret = sle_add_property(g_server_id, properties, g_sle_dis_uuid[i], sizeof(dis_description[i - 1]),
             dis_description[i - 1], &g_dis_service_hdl[i]);
         if (ret != ERRCODE_SLE_SUCCESS) {
             return ret;
@@ -92,7 +94,7 @@ static errcode_t sle_rcu_dis_service_add(void)
     if (ret != ERRCODE_SLE_SUCCESS) {
         return ret;
     }
-    ret = sle_service_add(g_sle_dis_uuid[SLE_DIS_INDEX0], g_dis_service_hdl,
+    ret = sle_service_add(g_server_id, g_sle_dis_uuid[SLE_DIS_INDEX0], g_dis_service_hdl,
         SLE_DIS_INDEX0, SLE_DIS_INDEX_MAX);
     if (ret != ERRCODE_SLE_SUCCESS) {
         return ret;
@@ -111,8 +113,9 @@ static errcode_t sle_rcu_dis_service_add(void)
     return ERRCODE_SLE_SUCCESS;
 }
 
-errcode_t sle_add_dis_service(void)
+errcode_t sle_add_dis_service(uint8_t server_id)
 {
+    g_server_id = server_id;
     errcode_t ret = sle_rcu_dis_service_add();
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_printk("%s sle_rcu_server_init,sle_rcu_dis_service_add fail\r\n", SLE_RCU_SERVER_LOG);

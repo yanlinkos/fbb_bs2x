@@ -12,16 +12,13 @@
 #include "app_init.h"
 #include "watchdog.h"
 #include "keyscan.h"
-#include "adc.h"
-#include "pdm.h"
 #include "gpio.h"
 #include "pinctrl.h"
 #include "pm_clock.h"
-#include "hal_adc.h"
-#include "hal_dma.h"
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
+#include "vdt_codec.h"
+#endif
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-#include "sle_vdt_codec.h"
-#include "sle_vdt_pdm.h"
 #include "sle_errcode.h"
 #include "sle_device_discovery.h"
 #include "sle_connection_manager.h"
@@ -50,6 +47,7 @@
 #if defined(CONFIG_BT_UPG_ENABLE) || defined(CONFIG_SLE_UPG_ENABLE)
 #include "ota_upgrade.h"
 #endif
+#include "app_status.h"
 #include "app_timer.h"
 #include "app_common.h"
 #include "app_msg_queue.h"
@@ -80,7 +78,6 @@
 #define RCU_TASK_DURATION_MS               200
 #define SLE_RCU_WAIT_SSAPS_READY           500
 #define SLE_RCU_SERVER_DELAY_COUNT         3
-#define SLE_ADV_HANDLE_DEFAULT             1
 #define SLE_RCU_SERVER_MSG_QUEUE_MAX_SIZE  32
 #define SLE_RCU_SERVER_LOG                 "[sle rcu server]"
 #define USB_RCU_TASK_DELAY_MS              10
@@ -126,10 +123,7 @@
 #define IR_NEC_KEY_MUTE                    0xDD
 
 #define SLE_VDT_SERVER_LOG                 "[sle vdt server]"
-#define ADC_POSTIVE_CHANNEL                7
-#define ADC_NEGATIVE_CHANNEL               6
-#define PDM_DMA_TRANSFER_EVENT             1
-#define RCU_TARGET_ADDR_NUM                2
+
 #define RCU_CONSUMER_KEY_NUM               6
 #define RCU_CONSUMER_KEY_OFFSET            8
 
@@ -186,7 +180,7 @@ static void ssaps_server_write_request_cbk(uint8_t server_id, uint16_t conn_id, 
 
 
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-static void sle_vdt_set_phy_param(void)
+static void vdt_set_phy_param(void)
 {
     sle_set_phy_t param = { 0 };
     param.tx_format = 1;         /* 无线帧类型2 */
@@ -200,7 +194,7 @@ static void sle_vdt_set_phy_param(void)
     if (sle_set_phy_param(0, &param) != 0) {
         return;
     }
-    app_print("sle_vdt_set_phy_param ok!\r\n");
+    app_print("vdt_set_phy_param ok!\r\n");
 }
 #endif
 void rcu_msg_sle_adv_enable(void)
@@ -313,16 +307,18 @@ static void rcu_entry(void)
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
     /* sle server init */
     sle_rcu_server_init(ssaps_server_read_request_cbk, ssaps_server_write_request_cbk);
-    sle_vdt_codec_init();
-    sle_vdt_set_phy_param();
-    uapi_adc_power_en(AFE_AMIC_MODE, false);
-    uapi_adc_deinit();
+    vdt_set_phy_param();
+#endif
+
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
+    vdt_codec_init();
 #endif
 
 /* open low power */
 #if defined(CONFIG_PM_SYS_SUPPORT)
     rcu_low_power_init();
 #endif
+    app_conn_info_init();
     app_create_msgqueue();
     app_keyscan_init();
 #if defined(CONFIG_BT_UPG_ENABLE) || defined(CONFIG_SLE_UPG_ENABLE)

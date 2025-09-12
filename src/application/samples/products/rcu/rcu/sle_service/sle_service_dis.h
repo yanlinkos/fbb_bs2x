@@ -19,7 +19,7 @@ extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
-errcode_t sle_add_dis_service(void);
+errcode_t sle_add_dis_service(uint8_t server_id);
 
 #ifdef __cplusplus
 #if __cplusplus

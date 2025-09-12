@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include "securec.h"
 #include "gadget/f_hid.h"
+#include "gadget/f_uac.h"
 #include "osal_debug.h"
 #include "soc_osal.h"
 #include "slp.h"
@@ -58,6 +59,9 @@
 #define MP_TEST_INFO_ID 0x1f
 #define MP_TEST_SEND_AIR_MOUSE_SERVICE 0x01
 #define MP_TEST_SEND_AIR_MOUSE_CMD 0x0c
+
+#define UAC_BUFFER_COUNT                4
+#define UAC_BUFFER_LEN                  512
 
 static bool g_hid_send_flag = false;  // 是否发送坐标标志位，产测指向功能验证需求：上位机发送一个命令后开始测试
 static bool g_usb_inited = false;
@@ -511,7 +515,7 @@ int usb_init_app(device_type dtype)
     };
 
     // 设置描述符
-    if (dtype == DEV_HID) {
+    if (dtype == DEV_UAC_HID) {
         usb_hid_index = hid_add_report_descriptor(g_report_desc_hid, sizeof(g_report_desc_hid), 0);
         g_usb_mouse_hid_custom_index = hid_add_report_descriptor(g_custom_report_desc, sizeof(g_custom_report_desc), 0);
     }
@@ -527,6 +531,11 @@ int usb_init_app(device_type dtype)
     }
 
     if (usb_init(DEVICE, dtype) != 0) {
+        return -1;
+    }
+
+    if (uac_wait_host(UAC_WAIT_HOST_FOREVER) != 0) {
+        osal_printk("uac host can`t connect\r\n");
         return -1;
     }
 
@@ -584,16 +593,42 @@ static void *sle_dongle_hid_recv_task(const char *arg)
 }
 #endif
 
+static void uac_buf_init(void)
+{
+    int32_t ret = fuac_reqbuf_init(UAC_BUFFER_COUNT, UAC_BUFFER_LEN);
+    if (ret != UAC_OK) {
+        osal_printk("fuac eqbuf init fail! ret = %d\r\n", ret);
+    }
+}
+
+int32_t vdt_usb_uac_send_data(const uint8_t *data1, int len1, const uint8_t *data2, int len2)
+{
+    uint32_t uac_buf_index;
+    uint8_t *uac_buf = fuac_reqbuf_get(&uac_buf_index);
+    if (uac_buf == NULL) {
+        osal_printk("fuac reqbuf get failed.\r\n");
+        return -1;
+    }
+    if (memcpy_s(uac_buf, UAC_BUFFER_LEN, data1, len1) != EOK) {
+        osal_printk("uac memcpy first part data fail.\r\n");
+    }
+    if (memcpy_s(uac_buf + len1, UAC_BUFFER_LEN - len1, data2, len2) != EOK) {
+        osal_printk("uac memcpy second part data fail.\r\n");
+    }
+
+    return fuac_send_message((void *)(uintptr_t)uac_buf, len1 + len2, uac_buf_index);
+}
+
 /* HID设备初始化 */
 void dongle_hid_usb_init(void)
 {
-    g_usb_mouse_hid_index = usb_init_app(DEV_HID); // 设置描述符、设备ID、版本号等，返回usb设备HID
+    g_usb_mouse_hid_index = usb_init_app(DEV_UAC_HID); // 设置描述符、设备ID、版本号等，返回usb设备HID
     osal_printk("air mouse usb hid init, %d\n", g_usb_mouse_hid_index);
     if (g_usb_mouse_hid_index < 0) {
         osal_printk("usb_hid_init_fail\n");
     }
     osal_printk("air mouse usb custom idx, %d\n", g_usb_mouse_hid_custom_index);
-
+    uac_buf_init(); // 申请uac buf
     init_hid_variable();
 
 #ifdef CONFIG_AIR_MOUSE_DONGLE_FACTORY_SCREEN_TEST

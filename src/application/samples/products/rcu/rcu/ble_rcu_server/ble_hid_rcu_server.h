@@ -52,6 +52,27 @@ extern "C" {
  * @par Dependency:
  * @li ble_hid_server.h
  * @else
+ * @brief  提供语音特征句柄
+ * @par NULL
+ * @attention  NULL
+ * @param  NULL
+ * @retval NULL
+ * @par 依赖:
+ * @li ble_hid_server.h
+ * @endif
+ */
+uint16_t ble_rcu_get_amic_handle(void);
+
+/**
+ * @if Eng
+ * @brief  Use this funtion to change name value.
+ * @par name, len.
+ * @attention  NULL
+ * @param  NULL
+ * @retval NULL
+ * @par Dependency:
+ * @li ble_hid_server.h
+ * @else
  * @brief  设置注册服务时的name
  * @par NULL
  * @attention  NULL

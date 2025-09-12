@@ -26,6 +26,8 @@
 #include "pm_veto.h"
 #include "pm_clock.h"
 #include "keyscan.h"
+#include "amic_voice.h"
+#include "sle_service_ntf.h"
 #ifdef CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_OTA
 #include "sle_ota.h"
 #endif
@@ -205,6 +207,8 @@ SlpCursorSpeed g_slp_cursor_speed = SLP_CURSOR_SPEED_MEDIUM;  // slp光标速度
 
 uint16_t g_screen_width;   // 屏幕宽度, 单位: mm
 uint16_t g_screen_height;  // 屏幕高度, 单位: mm
+
+uint8_t g_out_low_latency_data[LOW_LATENCY_DATA_MAX] = { 0 };
 
 SlpCursorSpeed get_slp_cursor_speed(void)
 {
@@ -1235,6 +1239,34 @@ void register_slp_factory_test_rpt_callback(void)
     }
 }
 
+void sle_set_em_data(uint8_t enable)
+{
+    sle_low_latency_set_em_data(g_mouse_sle_conn_hdl, enable);
+}
+
+uint8_t *sle_low_latency_get_data_cbk(uint8_t *length, uint16_t *ssap_handle, uint8_t *data_type, uint16_t co_handle)
+{
+    unused(data_type);
+    unused(co_handle);
+    get_amic_encode_data(length, g_out_low_latency_data);
+    *ssap_handle = rcu_get_handle();
+    return g_out_low_latency_data;
+}
+
+void sle_set_em_data_cbk(uint16_t co_handle, uint8_t status)
+{
+    unused(status);
+    unused(co_handle);
+}
+
+void sle_low_latency_cbk_reg(void)
+{
+    sle_low_latency_callbacks_t cbks = {0};
+    cbks.hid_data_cb = sle_low_latency_get_data_cbk;
+    cbks.sle_set_em_data_cb = sle_set_em_data_cbk;
+    sle_low_latency_register_callbacks(&cbks);
+}
+
 errcode_t sle_air_mouse_server_init(void)
 {
     g_announce_keyscan_flag = false;
@@ -1262,6 +1294,8 @@ errcode_t sle_air_mouse_server_init(void)
 
     sle_sample_dis_server_add();
     sle_air_mouse_server_adv_init();
+    sle_add_ntf_service(g_server_id);
+    sle_low_latency_cbk_reg();
     osal_printk("%s init ok\r\n", SLE_AIR_MOUSE_DONGLE_SERVER_LOG);
     return ERRCODE_SLE_SUCCESS;
 }

@@ -70,7 +70,7 @@ typedef enum {
     HID_ELEMENT_NUM,
 } sle_hid_array_index_t;
 
-errcode_t sle_add_hid_service(void);
+errcode_t sle_add_hid_service(uint8_t server_id);
 errcode_t sle_rcu_server_send_report_by_handle(const uint8_t *data, uint8_t len, uint16_t conn_id);
 
 #ifdef __cplusplus

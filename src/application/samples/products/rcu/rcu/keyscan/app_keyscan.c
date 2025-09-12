@@ -11,53 +11,55 @@
 #include "soc_osal.h"
 #include "app_msg_queue.h"
 #include "app_timer.h"
-#include "pdm.h"
-#include "hal_dma.h"
 #include "keyscan.h"
 #include "keyscan_porting.h"
 #include "osal_mutex.h"
-#include "adc.h"
-#include "adc_porting.h"
 #include "pinctrl.h"
 #include "common_def.h"
 #include "app_init.h"
 #include "watchdog.h"
 #include "gpio.h"
 #include "pm_clock.h"
-#include "hal_adc.h"
 #include "ir_study.h"
+#include "hal_reboot.h"
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
+#include "amic_voice.h"
+#endif
+#include "app_status.h"
+#include "app_common.h"
+
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
 #include "sle_rcu_server.h"
 #include "sle_rcu_server_adv.h"
 #include "sle_common.h"
 #include "sle_connection_manager.h"
-#include "sle_vdt_pdm.h"
 #include "sle_device_discovery.h"
+#include "sle_rcu_server_control.h"
 #include "sle_service_hids.h"
 #endif
-/* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER */
+
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
+#include "bts_le_gap.h"
 #include "ble_rcu_server.h"
+#include "bts_low_latency.h"
 #include "ble_rcu_server_adv.h"
 #include "ble_hid_rcu_server.h"
+#include "ble_rcu_server_control.h"
 #endif
 /* CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER */
-#include "bts_le_gap.h"
 #if defined(CONFIG_PM_SYS_SUPPORT)
 #include "ulp_gpio.h"
 #include "gpio.h"
 #include "pm_sys.h"
 #include "app_ulp.h"
 #endif
-#include "app_status.h"
-#include "app_common.h"
+
 #if defined(CONFIG_SAMPLE_SUPPORT_IR)
 #include "ir_nec.h"
 #include "ir_porting.h"
 #include "chip_core_irq.h"
 #endif
 
-#include "hal_reboot.h"
 #include "app_keyscan.h"
 #if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
 #include "rcu_mp_test.h"
@@ -66,34 +68,18 @@
 combine_key_e g_combine_key_flag = COMBINE_KEY_FLAG_NONE;
 osal_mutex g_key_process;
 
-#define SLE_ADV_HANDLE_DEFAULT             1
-
 static bool g_keystate_down = 0;
-static bool g_check_consumer_send = false;
-static connect_device_info_t g_con_info[NONE_DEVICE] = {0};
-static uint32_t g_current_control_obj = NONE_DEVICE;
 
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
+static bool g_check_consumer_send = false;
 static bool g_check_mouse_send = false;
 static uint32_t g_keyboard_send_count = 0;
 static bool g_check_keyboard_send = false;
 #endif
 /* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER */
 
-#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-#define RING_BUFFER_NUMBER 4
-uint8_t g_sle_pdm_buffer[CONFIG_USB_UAC_MAX_RECORD_SIZE] = {0};
-uint8_t g_write_buffer_node = 0;
-uint8_t g_read_buffer_node = 0;
-static uint32_t g_rcu_dma_channel = 0;
-static uint32_t g_pdm_dma_data0[CONFIG_USB_PDM_TRANSFER_LEN_BY_DMA] = {0};
-static uint32_t g_pdm_dma_data1[CONFIG_USB_PDM_TRANSFER_LEN_BY_DMA] = {0};
-static uint32_t g_pdm_dma_data2[CONFIG_USB_PDM_TRANSFER_LEN_BY_DMA] = {0};
-static uint32_t g_pdm_dma_data3[CONFIG_USB_PDM_TRANSFER_LEN_BY_DMA] = {0};
-uint32_t *g_pdm_dma_data[RING_BUFFER_NUMBER] = {g_pdm_dma_data0, g_pdm_dma_data1, g_pdm_dma_data2, g_pdm_dma_data3};
-#endif
-
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
+
 typedef struct usb_hid_mouse_report {
     mouse_key_t key;
     int8_t x;     /* A negative value indicates that the mouse moves left. */
@@ -111,22 +97,19 @@ typedef struct usb_hid_consumer_report {
     uint8_t comsumer_key0;
     uint8_t comsumer_key1;
 } usb_hid_consumer_report_t;
-#endif
-/* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER */
+#endif /* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER || CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER */
 
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
 static usb_hid_mouse_report_t g_hid_sle_mouse_report;
 static usb_hid_keyboard_report_t g_hid_sle_keyboard_report;
 static usb_hid_consumer_report_t g_hid_sle_consumer_report;
-#endif
-/* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER */
+#endif /* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER */
 
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
 static usb_hid_mouse_report_t g_hid_ble_mouse_report;
 static usb_hid_keyboard_report_t g_hid_ble_keyboard_report;
 static usb_hid_consumer_report_t g_hid_ble_consumer_report;
-#endif
-/* CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER */
+#endif /* CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER */
 
 static const key_config_t g_menu_key_map[RCU_KEY_MAX] = {
     {RCU_KEY_NON,            0x00, RCU_KEYBOARD_KEY, 0x00},
@@ -187,7 +170,7 @@ static const uint8_t combine_key[COMBINE_KEY_MAX][4] = {
     // 组合键值
     {RCU_KEY_LIVE_BROADCAST, RCU_KEY_VOLUME_DOWN, 0x0, COMBINE_KEY_FLAG_IR_TV_CONNECT},              // 连电视
     {RCU_KEY_OTT, RCU_KEY_CHANNEL_DOWN, 0x0, COMBINE_KEY_FLAG_IR_LIVE_BROADCAST_CONNECT},            // 连机顶盒
-    {RCU_KEY_LEFT, RCU_KEY_RIGHT, 0x0, COMBINE_KEY_FLAG_IR_LEARN},                                   // 红外学习
+    {RCU_KEY_LIVE_BROADCAST, RCU_KEY_OTT, 0x0, COMBINE_KEY_FLAG_IR_LEARN},                           // 红外学习
     {RCU_KEY_LOOK_BACK, RCU_KEY_LIVE_BROADCAST, 0x0, COMBINE_KEY_FLAG_UNPAIR},                       // 取消配对
 #if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
     {RCU_KEY_MENU, RCU_KEY_UP,    0X0, COMBINE_KEY_FLAG_TEST_STATION_01},
@@ -198,11 +181,6 @@ static const uint8_t combine_key[COMBINE_KEY_MAX][4] = {
     {RCU_KEY_OK,   RCU_KEY_RIGHT, 0X0, COMBINE_KEY_FLAG_TEST_STATION_06},
 #endif
 };
-
-static uint8_t get_active_con_id(void)
-{
-    return g_con_info[g_current_control_obj].con_id;
-}
 
 static void set_combine_key_flag(combine_key_e flag)
 {
@@ -226,10 +204,6 @@ static bool is_key_match(uint8_t template_key, uint8_t *key_buffer, uint8_t key_
 }
 
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-static void rcu_vdt_dma_transfer_done_callback(uint8_t intr, uint8_t channel, uintptr_t arg);
-static void rcu_amic_init(void);
-static void rcu_amic_deinit(void);
-
 static void sle_rcu_consumer_send_report(uint8_t key_value)
 {
     if (memset_s(&g_hid_sle_consumer_report, sizeof(g_hid_sle_consumer_report), 0, sizeof(g_hid_sle_consumer_report)) !=
@@ -239,7 +213,7 @@ static void sle_rcu_consumer_send_report(uint8_t key_value)
 
     g_hid_sle_consumer_report.comsumer_key0 = g_menu_key_map[key_value].usage_id & 0xFF;
     g_hid_sle_consumer_report.comsumer_key1 = g_menu_key_map[key_value].usage_id >> RCU_CONSUMER_KEY_OFFSET;
-    sle_rcu_server_send_report_by_handle(
+    sle_control_send_report_by_handle(
         (uint8_t *)(uintptr_t)&g_hid_sle_consumer_report, sizeof(usb_hid_consumer_report_t), get_active_con_id());
 }
 
@@ -249,7 +223,7 @@ static void sle_rcu_keyboard_send_report(uint8_t key_value, bool send_flag)
         g_hid_sle_keyboard_report.key[g_keyboard_send_count++] = g_menu_key_map[key_value].usage_id;
     }
     if (send_flag) {
-        sle_rcu_server_send_report_by_handle(
+        sle_control_send_report_by_handle(
             (uint8_t *)(uintptr_t)&g_hid_sle_keyboard_report, sizeof(usb_hid_keyboard_report_t), get_active_con_id());
 
         (void)memset_s(
@@ -277,7 +251,7 @@ static void sle_rcu_mouse_send_report(uint8_t key_value, bool send_flag)
             break;
     }
     if (send_flag) {
-        sle_rcu_server_send_report_by_handle(
+        sle_control_send_report_by_handle(
             (uint8_t *)(uintptr_t)&g_hid_sle_mouse_report, sizeof(usb_hid_mouse_report_t), get_active_con_id());
         if (memset_s(&g_hid_sle_mouse_report, sizeof(g_hid_sle_mouse_report), 0, sizeof(g_hid_sle_mouse_report)) !=
             EOK) {
@@ -293,7 +267,7 @@ static void sle_rcu_send_end(void)
             sizeof(g_hid_sle_consumer_report)) != EOK) {
             return;
         }
-        sle_rcu_server_send_report_by_handle(
+        sle_control_send_report_by_handle(
             (uint8_t *)(uintptr_t)&g_hid_sle_consumer_report, sizeof(usb_hid_consumer_report_t), get_active_con_id());
         g_check_consumer_send = false;
     }
@@ -302,7 +276,7 @@ static void sle_rcu_send_end(void)
             EOK) {
             return;
         }
-        sle_rcu_server_send_report_by_handle(
+        sle_control_send_report_by_handle(
             (uint8_t *)(uintptr_t)&g_hid_sle_mouse_report, sizeof(usb_hid_mouse_report_t), get_active_con_id());
         g_check_mouse_send = false;
     }
@@ -311,91 +285,9 @@ static void sle_rcu_send_end(void)
             sizeof(g_hid_sle_keyboard_report)) != EOK) {
             return;
         }
-        sle_rcu_server_send_report_by_handle(
+        sle_control_send_report_by_handle(
             (uint8_t *)(uintptr_t)&g_hid_sle_keyboard_report, sizeof(usb_hid_keyboard_report_t), get_active_con_id());
         g_check_keyboard_send = false;
-    }
-}
-
-static void rcu_amic_deinit(void)
-{
-    sle_low_latency_set_em_data(get_active_con_id(), 0);
-    uapi_dma_end_transfer(g_rcu_dma_channel);
-    uapi_dma_close();
-    uapi_dma_deinit();
-    uapi_adc_power_en(AFE_AMIC_MODE, false);
-    uapi_adc_deinit();
-    uapi_pdm_stop();
-    uapi_pdm_deinit();
-}
-
-static void sle_vdt_adc_set_io(pin_t pin)
-{
-#if defined(CONFIG_PINCTRL_SUPPORT_IE)
-    /* ADC管脚无需配置IE使能且管脚默认IE为0，为防止用户修改IE，特在此将IE配置为0 */
-    uapi_pin_set_ie(pin, PIN_IE_0);
-#endif
-    uapi_pin_set_mode(pin, 0);
-    uapi_gpio_set_dir(pin, GPIO_DIRECTION_INPUT);
-    uapi_pin_set_pull(pin, PIN_PULL_NONE);
-}
-
-static void sle_vdt_adc_init(void)
-{
-    uapi_pin_init();
-    uapi_gpio_init();
-
-    sle_vdt_adc_set_io(CONFIG_ADC_USE_PIN1);
-    sle_vdt_adc_set_io(CONFIG_ADC_USE_PIN2);
-    uapi_adc_init(ADC_CLOCK_NONE);
-    uapi_adc_power_en(AFE_AMIC_MODE, true);
-    uapi_adc_open_differential_channel(ADC_GADC_CHANNEL7, ADC_GADC_CHANNEL6);
-    adc_calibration(AFE_AMIC_MODE, true, true, true);
-
-    return;
-}
-
-static void rcu_amic_init(void)
-{
-    sle_low_latency_set_em_data(get_active_con_id(), 1);
-
-    sle_vdt_adc_init();
-    if (sle_vdt_pdm_init() != 0) {
-        osal_printk("%s Init the PDM fail.\r\n", SLE_VDT_SERVER_LOG);
-    }
-    if (uapi_pdm_start() != ERRCODE_SUCC) {
-        osal_printk("%s Start the PDM fail.\r\n", SLE_VDT_SERVER_LOG);
-    }
-
-    if (rcu_pdm_start_dma_transfer(g_pdm_dma_data[0], rcu_vdt_dma_transfer_done_callback) != 0) {
-        osal_printk("rcu_pdm_start_dma_transfer fail!\r\n");
-        return;
-    }
-}
-
-static void rcu_vdt_dma_transfer_restart(void)
-{
-    g_write_buffer_node = (g_write_buffer_node + 1) % RING_BUFFER_NUMBER;
-    if (rcu_pdm_start_dma_transfer(g_pdm_dma_data[g_write_buffer_node],
-        rcu_vdt_dma_transfer_done_callback) != 0) {
-        return;
-    }
-}
-
-static void rcu_vdt_dma_transfer_done_callback(uint8_t intr, uint8_t channel, uintptr_t arg)
-{
-    unused(channel);
-    unused(arg);
-
-    switch (intr) {
-        case HAL_DMA_INTERRUPT_TFR:
-            rcu_vdt_dma_transfer_restart();
-            break;
-        case HAL_DMA_INTERRUPT_ERR:
-            osal_printk("%s DMA transfer error.\r\n", SLE_VDT_SERVER_LOG);
-            break;
-        default:
-            break;
     }
 }
 #endif
@@ -410,8 +302,8 @@ static void ble_rcu_consumer_send_report(uint8_t key_value)
     }
     g_hid_ble_consumer_report.comsumer_key0 = g_menu_key_map[key_value].usage_id & 0xFF;
     g_hid_ble_consumer_report.comsumer_key1 = g_menu_key_map[key_value].usage_id >> RCU_CONSUMER_KEY_OFFSET;
-    ble_hid_rcu_server_send_consumer_input_report_by_uuid(
-        (uint8_t *)(uintptr_t)&g_hid_ble_consumer_report, sizeof(usb_hid_consumer_report_t), get_active_con_id());
+    ble_control_send_report_by_handle((uint8_t *)(uintptr_t)&g_hid_ble_consumer_report,
+        sizeof(usb_hid_consumer_report_t), get_active_con_id(), RCU_CONSUMER_KEY);
 }
 
 static void ble_rcu_keyboard_send_report(uint8_t key_value, bool send_flag)
@@ -420,8 +312,8 @@ static void ble_rcu_keyboard_send_report(uint8_t key_value, bool send_flag)
         g_hid_ble_keyboard_report.key[g_keyboard_send_count++] = g_menu_key_map[key_value].usage_id;
     }
     if (send_flag) {
-        ble_hid_rcu_server_send_keyboard_input_report_by_uuid(
-            (uint8_t *)(uintptr_t)&g_hid_ble_keyboard_report, sizeof(usb_hid_keyboard_report_t), get_active_con_id());
+        ble_control_send_report_by_handle((uint8_t *)(uintptr_t)&g_hid_ble_keyboard_report,
+            sizeof(usb_hid_keyboard_report_t), get_active_con_id(), RCU_KEYBOARD_KEY);
         if (memset_s(&g_hid_ble_keyboard_report, sizeof(g_hid_ble_keyboard_report), 0,
             sizeof(g_hid_ble_keyboard_report)) != EOK) {
             g_keyboard_send_count = 0;
@@ -450,8 +342,8 @@ static void ble_rcu_mouse_send_report(uint8_t key_value, bool send_flag)
             break;
     }
     if (send_flag) {
-        ble_hid_rcu_server_send_mouse_input_report_by_uuid(
-            (uint8_t *)(uintptr_t)&g_hid_ble_mouse_report, sizeof(usb_hid_mouse_report_t), get_active_con_id());
+        ble_control_send_report_by_handle((uint8_t *)(uintptr_t)&g_hid_ble_mouse_report,
+            sizeof(usb_hid_mouse_report_t), get_active_con_id(), RCU_MOUSE_KEY);
         if (memset_s(&g_hid_ble_mouse_report, sizeof(g_hid_ble_mouse_report), 0, sizeof(g_hid_ble_mouse_report)) !=
             EOK) {
             return;
@@ -466,8 +358,8 @@ static void ble_rcu_send_end(void)
             sizeof(g_hid_ble_consumer_report)) != EOK) {
             return;
         }
-        ble_hid_rcu_server_send_consumer_input_report_by_uuid(
-            (uint8_t *)(uintptr_t)&g_hid_ble_consumer_report, sizeof(usb_hid_consumer_report_t), get_active_con_id());
+        ble_control_send_report_by_handle((uint8_t *)(uintptr_t)&g_hid_ble_consumer_report,
+            sizeof(usb_hid_consumer_report_t), get_active_con_id(), RCU_CONSUMER_KEY);
         g_check_consumer_send = false;
     }
     if (g_check_mouse_send) {
@@ -475,8 +367,8 @@ static void ble_rcu_send_end(void)
             EOK) {
             return;
         }
-        ble_hid_rcu_server_send_mouse_input_report_by_uuid(
-            (uint8_t *)(uintptr_t)&g_hid_ble_mouse_report, sizeof(usb_hid_mouse_report_t), get_active_con_id());
+        ble_control_send_report_by_handle((uint8_t *)(uintptr_t)&g_hid_ble_mouse_report,
+            sizeof(usb_hid_mouse_report_t), get_active_con_id(), RCU_MOUSE_KEY);
         g_check_mouse_send = false;
     }
     if (g_check_keyboard_send) {
@@ -484,8 +376,8 @@ static void ble_rcu_send_end(void)
             sizeof(g_hid_ble_keyboard_report)) != EOK) {
             return;
         }
-        ble_hid_rcu_server_send_keyboard_input_report_by_uuid(
-            (uint8_t *)(uintptr_t)&g_hid_ble_keyboard_report, sizeof(usb_hid_keyboard_report_t), get_active_con_id());
+        ble_control_send_report_by_handle((uint8_t *)(uintptr_t)&g_hid_ble_keyboard_report,
+            sizeof(usb_hid_keyboard_report_t), get_active_con_id(), RCU_KEYBOARD_KEY);
         g_check_keyboard_send = false;
     }
 }
@@ -495,12 +387,15 @@ static void ble_rcu_send_end(void)
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
 static void rcu_consumer_send_report(uint8_t key_value)
 {
-    if (g_current_control_obj == TV) {
+    int con_type = app_control_get_con_type();
+    if (con_type == CONNECT_SLE) {
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
         sle_rcu_consumer_send_report(key_value);
 #endif
         /* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER */
-    } else {
+    }
+
+    if (con_type == CONNECT_BLE) {
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
         ble_rcu_consumer_send_report(key_value);
 #endif
@@ -511,7 +406,8 @@ static void rcu_consumer_send_report(uint8_t key_value)
 
 static void rcu_mouse_and_keyboard_send_report(uint8_t key_value, bool is_mouse)
 {
-    if (g_current_control_obj == TV) {
+    int con_type = app_control_get_con_type();
+    if (con_type == CONNECT_SLE) {
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
         if (is_mouse) {
             sle_rcu_mouse_send_report(key_value, false);
@@ -522,7 +418,9 @@ static void rcu_mouse_and_keyboard_send_report(uint8_t key_value, bool is_mouse)
         }
 #endif
         /* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER */
-    } else {
+    }
+
+    if (con_type == CONNECT_BLE) {
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
         if (is_mouse) {
             ble_rcu_mouse_send_report(key_value, false);
@@ -535,6 +433,39 @@ static void rcu_mouse_and_keyboard_send_report(uint8_t key_value, bool is_mouse)
         /* CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER */
     }
 }
+
+void enable_em_data(uint16_t co_handle)
+{
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
+    sle_low_latency_set_em_data(co_handle, 1);
+#endif
+#if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
+    ble_low_latency_set_em_data(co_handle, 1);
+#endif
+}
+
+void disable_em_data(uint16_t co_handle)
+{
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
+    sle_low_latency_set_em_data(co_handle, 0);
+#endif
+#if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
+    ble_low_latency_set_em_data(co_handle, 0);
+#endif
+}
+
+void rcu_amic_init(void)
+{
+    enable_em_data(get_active_con_id());
+    amic_init();
+}
+
+void rcu_amic_deinit(void)
+{
+    disable_em_data(get_active_con_id());
+    amic_deinit();
+}
+
 #endif
 
 static void rcu_and_ir_send_report(uint8_t key_value)
@@ -553,7 +484,8 @@ static void rcu_and_ir_send_report(uint8_t key_value)
 
 static void rcu_mouse_and_keyboard_send_start(void)
 {
-    if (g_current_control_obj == TV) {
+    int con_type = app_control_get_con_type();
+    if (con_type == CONNECT_SLE) {
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
         if (g_check_mouse_send) {
             sle_rcu_mouse_send_report(0, true);
@@ -563,7 +495,9 @@ static void rcu_mouse_and_keyboard_send_start(void)
         }
 #endif
         /* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER */
-    } else {
+    }
+
+    if (con_type == CONNECT_BLE) {
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
         if (g_check_mouse_send) {
             ble_rcu_mouse_send_report(0, true);
@@ -581,19 +515,22 @@ static void rcu_send_end(void)
 #if defined(CONFIG_PM_SYS_SUPPORT)
     uapi_pm_work_state_reset();
 #endif
-    if (g_current_control_obj == TV) {
+    int con_type = app_control_get_con_type();
+    if (con_type == CONNECT_SLE) {
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
         sle_rcu_send_end();
 #endif
         /* CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER */
-    } else {
+    }
+
+    if (con_type == CONNECT_BLE) {
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
         ble_rcu_send_end();
 #endif
         /* CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER */
     }
     if (g_keystate_down) {
-#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
         rcu_amic_deinit();
 #endif
         g_keystate_down = false;
@@ -626,31 +563,34 @@ void app_ir_key_process(uint8_t key_value)
     }
 }
 
-static bool active_device_is_connect(void)
-{
-#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-    if ((g_current_control_obj == TV) && (g_con_info[TV].state != SLE_ACB_STATE_CONNECTED)) {
-        return false;
-    }
-#endif
-
-#if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
-    if ((g_current_control_obj == SET_TOP_BOX) && (g_con_info[SET_TOP_BOX].state != GAP_BLE_STATE_CONNECTED)) {
-        return false;
-    }
-#endif
-    return true;
-}
-
 static void rcu_send_report(uint8_t key_value)
 {
     // SLE/BLE发送
+    unused(key_value);
+#if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
     uint8_t usage_page = g_menu_key_map[key_value].usage_page;
     if (usage_page == RCU_KEYBOARD_KEY) {
         rcu_mouse_and_keyboard_send_report(key_value, false);
     } else if (usage_page == RCU_CONSUMER_KEY) {
         rcu_consumer_send_report(key_value);
     }
+#endif
+}
+
+static void key_switch_device(uint8_t device_target)
+{
+    set_current_control_obj(device_target);
+#if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
+    rcu_amic_deinit();
+#endif
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
+    sle_control_connect_remote_device(device_target);
+    sle_low_latency_cbk_reg();
+#endif
+#if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
+    ble_control_connect_remote_device(device_target);
+    ble_low_latency_cbk_reg();
+#endif
 }
 
 /* 单键操作 */
@@ -662,25 +602,27 @@ static void one_key_process(uint8_t key_value)
     }
 
     // 红外学习
-    if (get_rcu_mode() == RCU_MODE_IR_STUDY) {
+    uint8_t rcu_mode = get_rcu_mode();
+    if (rcu_mode == RCU_MODE_IR_STUDY) {
         app_ir_key_process(key_value);
         return;
     }
     // 当前选中的设备没有建立连接走红外发送
-    if ((g_current_control_obj == NONE_DEVICE) || (!active_device_is_connect())) {
+    if (rcu_mode == RCU_MODE_IR_SEND) {
         rcu_and_ir_send_report(key_value);
         return;
     }
 
+    /* 在ble和sle切换时清除前面的语音配置，同时也能解决第一次语音录入失败问题。 */
     switch (key_value) {
         case RCU_KEY_LIVE_BROADCAST:
-            g_current_control_obj = TV;
+            key_switch_device(TV);
             break;
         case RCU_KEY_OTT:
-            g_current_control_obj = SET_TOP_BOX;
+            key_switch_device(OTT);
             break;
         case RCU_KEY_VOICE:
-#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
             rcu_amic_init();
 #endif
             g_keystate_down = true;
@@ -719,25 +661,18 @@ static void key_down_process(key_t key)
     }
 }
 
+void stop_all_adv(void)
+{
+    osal_printk("stop_all_adv!\r\n");
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-void sle_notify_connect(uint16_t conn_id, uint8_t con_state)
-{
-    g_con_info[TV].device_type = TV;
-    g_con_info[TV].con_id = conn_id;
-    g_con_info[TV].state = con_state;
-    g_current_control_obj = TV;
-}
+    /* 关闭sle广播。 */
+    sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
 #endif
-
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
-void ble_notify_connect(uint16_t conn_id, uint8_t con_state)
-{
-    g_con_info[SET_TOP_BOX].device_type = SET_TOP_BOX;
-    g_con_info[SET_TOP_BOX].con_id = conn_id;
-    g_con_info[SET_TOP_BOX].state = con_state;
-    g_current_control_obj = SET_TOP_BOX;
-}
+    /* 关闭ble广播。 */
+    gap_ble_stop_adv(BTH_GAP_BLE_ADV_HANDLE_DEFAULT);
 #endif
+}
 
 /**************************************************
  * 按键长按处理
@@ -747,74 +682,62 @@ void ble_notify_connect(uint16_t conn_id, uint8_t con_state)
 // 配对
 static void key_handle_process_repairing_event(void)
 {
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
     osal_printk("key_handle_process_repairing_event start!\r\n");
-    app_globle_status_t status = get_app_globle_status();
     set_rcu_mode(RCU_MODE_ADV_SEND);
-    if (status.rcu_mode == RCU_MODE_TEST_NO_SLEPP) {
+    if (get_rcu_mode() == RCU_MODE_TEST_NO_SLEPP) {
         app_mode_reset();
     }
+    rcu_amic_deinit();
+#endif
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-    if (g_current_control_obj == TV) {
-        uint16_t sle_state = g_con_info[g_current_control_obj].state;
-        if (sle_state == SLE_ACB_STATE_CONNECTED) {
-            sle_remove_all_pairs();
-        } else {
-            sle_remove_all_pairs();
-            sle_rcu_standby_to_work();
-            app_timer_process_start(TIME_CMD_PAIR, APP_PAIR_TIME);
-        }
-    }
+    sle_control_disconnect_remote_device(get_current_control_obj());
+    sle_control_remote_device();
+    sle_control_set_power_state(false);
+    sle_low_latency_cbk_reg();
 #endif
 
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
-    if (g_current_control_obj == SET_TOP_BOX) {
-        uint16_t ble_state = g_con_info[g_current_control_obj].state;
-        if (ble_state == GAP_BLE_STATE_CONNECTED) {
-            gap_ble_remove_all_pairs();
-        } else {
-            gap_ble_remove_all_pairs();
-            ble_rcu_standby_to_work();
-            app_timer_process_start(TIME_BLE_CMD_PAIR, APP_BLE_PAIR_TIME);
-        }
-    }
+    ble_control_disconnect_remote_device(get_current_control_obj());
+    ble_control_remote_device();
+    ble_control_set_power_state(false);
+    ble_low_latency_cbk_reg();
 #endif
+    app_timer_process_start(TIME_CMD_PAIR, APP_PAIR_TIME);
 }
 
 // 解配
 static void key_handle_process_unpairing_event(void)
 {
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER) || defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
     osal_printk("key_handle_process_unpairing_event start\r\n");
-    app_globle_status_t status = get_app_globle_status();
-    if (status.rcu_mode == RCU_MODE_TEST_NO_SLEPP) {
+    if (get_rcu_mode() == RCU_MODE_TEST_NO_SLEPP) {
         app_mode_reset();
     }
+#endif
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-    /* 断开连接 */
-    if (g_con_info[TV].state == SLE_ACB_STATE_CONNECTED) {
-        sle_rcu_standby_to_sleep();
-    }
-
+    sle_control_set_power_state(true);
     /* 关闭广播。 */
     sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
+    /* 断开连接 */
+    sle_control_disconnect_all_remote_device();
     /* 删除所有配对信息。 */
     sle_remove_all_pairs();
-    g_con_info[TV].state = SLE_ACB_STATE_DISCONNECTED;
 #endif
 
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
-    /* 断开连接 */
-    if (g_con_info[SET_TOP_BOX].state == GAP_BLE_STATE_CONNECTED) {
-        ble_rcu_standby_to_sleep();
-    }
-
+    ble_control_set_power_state(true);
     /* 关闭广播。 */
     gap_ble_stop_adv(BTH_GAP_BLE_ADV_HANDLE_DEFAULT);
+    /* 断开连接 */
+    ble_control_disconnect_all_remote_device();
     /* 删除所有配对信息。 */
+    osal_printk("gap_ble_remove_all_pairs\r\n");
     gap_ble_remove_all_pairs();
-    g_con_info[SET_TOP_BOX].state = GAP_BLE_STATE_DISCONNECTED;
 #endif
-    g_current_control_obj = NONE_DEVICE;
-    clear_rcu_mode(RCU_MODE_ADV_SEND);
+    app_conn_info_init();
+    set_current_control_obj(NONE_DEVICE);
+    set_rcu_mode(RCU_MODE_IR_SEND);
 }
 
 // IR study
@@ -826,9 +749,22 @@ static void key_handle_process_ir_study_event(void)
         osal_printk("[ir_study] entry RCU_MODE_IR_STUDY\r\n");
     } else {
         app_timer_process_stop(TIME_CMD_IR_STUDY);
-        clear_rcu_mode(RCU_MODE_IR_STUDY);
+        set_rcu_mode(RCU_MODE_IR_SEND);
         osal_printk("[ir_study] exit RCU_MODE_IR_STUDY\r\n");
     }
+}
+
+static void key_hold_switch_device(uint8_t device_target)
+{
+    set_current_control_obj(device_target);
+    set_rcu_mode(RCU_MODE_ADV_SEND);
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
+    sle_set_current_control_obj(device_target);
+#endif
+#if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
+    ble_set_current_control_obj(device_target);
+#endif
+    key_handle_process_repairing_event();
 }
 
 static void key_hold_process(void)
@@ -844,7 +780,7 @@ static void key_hold_process(void)
         case COMBINE_KEY_FLAG_TEST_STATION_05:
         case COMBINE_KEY_FLAG_TEST_STATION_06:
             /* 关闭广播。 */
-            sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
+            stop_all_adv();
             /* 删除所有配对信息。 */
             sle_remove_all_pairs();
             rcu_mp_test_set_work_station(combine_key_flag);
@@ -852,16 +788,12 @@ static void key_hold_process(void)
 #endif
         // 连电视
         case COMBINE_KEY_FLAG_IR_TV_CONNECT:
-            g_current_control_obj = TV;
-            g_con_info[TV].device_type = TV;
-            key_handle_process_repairing_event();
+            key_hold_switch_device(TV);
             break;
 
         // 连机顶盒
         case COMBINE_KEY_FLAG_IR_LIVE_BROADCAST_CONNECT:
-            g_current_control_obj = SET_TOP_BOX;
-            g_con_info[SET_TOP_BOX].device_type = SET_TOP_BOX;
-            key_handle_process_repairing_event();
+            key_hold_switch_device(OTT);
             break;
 
         // 解配组合键
@@ -928,6 +860,7 @@ void app_keyscan_init(void)
 {
     /* keyscan init */
     osal_mutex_init(&g_key_process);
+    set_rcu_mode(RCU_MODE_IR_SEND);
 #if defined(CONFIG_KEYSCAN_USER_CONFIG_TYPE)
     uint8_t user_gpio_map[CONFIG_KEYSCAN_ENABLE_ROW + CONFIG_KEYSCAN_ENABLE_COL] = {
         10, 11, 12, 13, 14, 21, 22, 23, 24, 25, 26, 16};
@@ -939,12 +872,5 @@ void app_keyscan_init(void)
     uapi_keyscan_init(EVERY_ROW_PULSE_40_US, HAL_KEYSCAN_MODE_1, KEYSCAN_INT_VALUE_RDY);
     uapi_keyscan_register_callback(app_keyscan_callback);
 
-#if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
-    ble_rcu_server_register_cb(ble_notify_connect);
-#endif
-
-#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
-    sle_rcu_server_register_cb(sle_notify_connect);
-#endif
     uapi_keyscan_enable();
 }

@@ -21,7 +21,7 @@ extern "C" {
 
 #define UUID_LEN_2                      2
 
-errcode_t sle_add_ntf_service(void);
+errcode_t sle_add_ntf_service(uint8_t server_id);
 uint16_t rcu_get_handle(void);
 errcode_t sle_rcu_server_send_report_by_uuid(const uint8_t *data, uint8_t len, uint16_t conn_id);
 
