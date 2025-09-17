@@ -82,9 +82,9 @@
 </th>
 </tr>
 </thead>
-<tbody><tr id="row8884175643117"><td class="cellrowborder" valign="top" width="12.280000000000001%" headers="mcps1.1.4.1.1 "><p id="p128841756103113"><a name="p128841756103113"></a><a name="p128841756103113"></a><span id="ph7976155763119"><a name="ph7976155763119"></a><a name="ph7976155763119"></a>04</span></p>
+<tbody><tr id="row8884175643117"><td class="cellrowborder" valign="top" width="12.280000000000001%" headers="mcps1.1.4.1.1 "><p id="p128841756103113"><a name="p128841756103113"></a><a name="p128841756103113"></a>04</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.97%" headers="mcps1.1.4.1.2 "><p id="p988415620312"><a name="p988415620312"></a><a name="p988415620312"></a><span id="ph681605915318"><a name="ph681605915318"></a><a name="ph681605915318"></a>2025-06-20</span></p>
+<td class="cellrowborder" valign="top" width="19.97%" headers="mcps1.1.4.1.2 "><p id="p988415620312"><a name="p988415620312"></a><a name="p988415620312"></a>2025-08-07</p>
 </td>
 <td class="cellrowborder" valign="top" width="67.75%" headers="mcps1.1.4.1.3 "><p id="p127010603215"><a name="p127010603215"></a><a name="p127010603215"></a>更新“<a href="烧录流程.md">烧录流程</a>”章节内容。</p>
 </td>

@@ -35,7 +35,7 @@ static uint8_t g_sle_rcu_base[] = { 0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0x
 /* server notify property uuid */
 static uint8_t g_sle_property_value[OCTET_BIT_LEN] = { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
 
-
+static uint8_t g_server_id;
 static uint16_t g_service_handle = 0;
 static uint16_t g_property_handle = 0;
 
@@ -117,9 +117,10 @@ static errcode_t sle_uuid_server_property_add(void)
     return ERRCODE_SLE_SUCCESS;
 }
 
-errcode_t sle_add_ntf_service(void)
+errcode_t sle_add_ntf_service(uint8_t server_id)
 {
     errcode_t ret;
+    g_server_id = server_id;
     ret = sle_uuid_server_service_add();
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_printk("%s sle_add_ntf_service add service fail, ret:%x\r\n", SLE_RCU_SERVER_LOG, ret);

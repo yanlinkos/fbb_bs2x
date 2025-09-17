@@ -18,6 +18,8 @@
 #include "slp.h"
 #include "../air_mouse_usb/usb_init_app.h"
 #include "../../air_mouse_common.h"
+#include "vdt_codec.h"
+#include "amic_voice.h"
 #ifdef CONFIG_AIR_MOUSE_DONGLE_FACTORY_PHASE_CALI
 #include <string.h>
 #include "gadget/usbd_acm.h"
@@ -38,6 +40,7 @@
 #define SLE_AIR_MOUSE_CURSOR_RPT_HANDLE     0x16 // 鼠标坐标上报HANDLE
 #define SLE_AIR_MOUSE_CMD_RPT_HANDLE        0x1B // 鼠标按键上报HANDLE
 #define SLE_AIR_MOUSE_KEYBOARD_RPT_HANDLE   0x20 // 键盘按键上报HANDLE
+#define SLE_AIR_MOUSE_AMIC_VOICE            0x29 // 语音数据
 
 #define SLE_AIR_MOUSE_DEFAULT_CLIENT_ID     1
 #define SLE_AIR_MOUSE_DEFAULT_CONNECT_ID    0
@@ -59,6 +62,8 @@ static bool g_move_cursor_to_center_flag = false;  // 坐标点是否初始化�
 SlpCursorSpeed g_slp_cursor_speed = SLP_CURSOR_SPEED_MEDIUM;  // slp光标速度
 
 cursor_report_t g_curr_cursor_report = {0};
+
+osal_event g_trans_event_id;
 
 SlpCursorSpeed get_slp_cursor_speed(void)
 {
@@ -405,6 +410,26 @@ static void proc_cmd_rpt_data(uint8_t *data, uint16_t data_len)
     }
 }
 
+static void proc_amic_data(uint8_t *data, uint16_t data_len)
+{
+    if (recive_amic_encode_data(data, data_len)) {
+        uint32_t ret = osal_event_write(&g_trans_event_id, VDT_TRANSFER_EVENT);
+        if (ret != OSAL_SUCCESS) {
+            osal_printk("(%d)osal event write fail, ret = %x\r\n", __LINE__, ret);
+        }
+    }
+}
+
+void send_amic_data_uac(void)
+{
+    uint8_t *out_data1 = 0, *out_data2 = 0;
+    uint32_t decode_data_len = 0, decode_data_len2 = 0;
+    get_amic_decode_data(&out_data1, &decode_data_len, &out_data2, &decode_data_len2);
+    if (vdt_usb_uac_send_data(out_data1, decode_data_len, out_data2, decode_data_len2) != 0) {
+        osal_printk("Send UAV to USB fail.\r\n");
+    }
+}
+
 static void ssapc_notification_cbk(uint8_t client_id, uint16_t conn_id, ssapc_handle_value_t *data, errcode_t status)
 {
     unused(client_id);
@@ -428,6 +453,9 @@ static void ssapc_notification_cbk(uint8_t client_id, uint16_t conn_id, ssapc_ha
             break;
         case SLE_AIR_MOUSE_KEYBOARD_RPT_HANDLE:
             proc_keyboard_rpt_data(data->data, data->data_len);
+            break;
+        case SLE_AIR_MOUSE_AMIC_VOICE:
+            proc_amic_data(data->data, data->data_len);
             break;
         default:
             osal_printk("ssapc_notification_cbk undefined handle, %u\r\n", data->handle);

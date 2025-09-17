@@ -74,53 +74,53 @@
 **修改记录<a name="section2467512116410"></a>**
 
 <a name="table1557726816410"></a>
-<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="19.6%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>文档版本</strong></p>
+<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="19.580000000000002%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>文档版本</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="19.09%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>发布日期</strong></p>
+<th class="cellrowborder" valign="top" width="19.11%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>发布日期</strong></p>
 </th>
 <th class="cellrowborder" valign="top" width="61.309999999999995%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>修改说明</strong></p>
 </th>
 </tr>
 </thead>
-<tbody><tr id="row34241947105220"><td class="cellrowborder" valign="top" width="19.6%" headers="mcps1.1.4.1.1 "><p id="p204251847165213"><a name="p204251847165213"></a><a name="p204251847165213"></a><span id="ph26857486520"><a name="ph26857486520"></a><a name="ph26857486520"></a>04</span></p>
+<tbody><tr id="row34241947105220"><td class="cellrowborder" valign="top" width="19.580000000000002%" headers="mcps1.1.4.1.1 "><p id="p204251847165213"><a name="p204251847165213"></a><a name="p204251847165213"></a>04</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.09%" headers="mcps1.1.4.1.2 "><p id="p44252474520"><a name="p44252474520"></a><a name="p44252474520"></a><span id="ph15833184912520"><a name="ph15833184912520"></a><a name="ph15833184912520"></a>2025-06-20</span></p>
+<td class="cellrowborder" valign="top" width="19.11%" headers="mcps1.1.4.1.2 "><p id="p44252474520"><a name="p44252474520"></a><a name="p44252474520"></a>2025-08-07</p>
 </td>
 <td class="cellrowborder" valign="top" width="61.309999999999995%" headers="mcps1.1.4.1.3 "><p id="p12529155415211"><a name="p12529155415211"></a><a name="p12529155415211"></a>更新“<a href="打包添加其他bin文件.md">打包添加其他bin文件</a>”小节内容。</p>
 </td>
 </tr>
-<tr id="row372895021211"><td class="cellrowborder" valign="top" width="19.6%" headers="mcps1.1.4.1.1 "><p id="p1872915507128"><a name="p1872915507128"></a><a name="p1872915507128"></a>03</p>
+<tr id="row372895021211"><td class="cellrowborder" valign="top" width="19.580000000000002%" headers="mcps1.1.4.1.1 "><p id="p1872915507128"><a name="p1872915507128"></a><a name="p1872915507128"></a>03</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.09%" headers="mcps1.1.4.1.2 "><p id="p127294502129"><a name="p127294502129"></a><a name="p127294502129"></a>2025-05-30</p>
+<td class="cellrowborder" valign="top" width="19.11%" headers="mcps1.1.4.1.2 "><p id="p127294502129"><a name="p127294502129"></a><a name="p127294502129"></a>2025-05-30</p>
 </td>
 <td class="cellrowborder" valign="top" width="61.309999999999995%" headers="mcps1.1.4.1.3 "><p id="p4856173615221"><a name="p4856173615221"></a><a name="p4856173615221"></a>更新“<a href="flash分区表配置.md">flash分区表配置</a>”小节内容。</p>
 </td>
 </tr>
-<tr id="row31617137538"><td class="cellrowborder" valign="top" width="19.6%" headers="mcps1.1.4.1.1 "><p id="p8161191335314"><a name="p8161191335314"></a><a name="p8161191335314"></a>02</p>
+<tr id="row31617137538"><td class="cellrowborder" valign="top" width="19.580000000000002%" headers="mcps1.1.4.1.1 "><p id="p8161191335314"><a name="p8161191335314"></a><a name="p8161191335314"></a>02</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.09%" headers="mcps1.1.4.1.2 "><p id="p716114136532"><a name="p716114136532"></a><a name="p716114136532"></a>2025-01-24</p>
+<td class="cellrowborder" valign="top" width="19.11%" headers="mcps1.1.4.1.2 "><p id="p716114136532"><a name="p716114136532"></a><a name="p716114136532"></a>2025-01-24</p>
 </td>
 <td class="cellrowborder" valign="top" width="61.309999999999995%" headers="mcps1.1.4.1.3 "><a name="ul1051218445539"></a><a name="ul1051218445539"></a><ul id="ul1051218445539"><li>调整文档内容结构。</li><li>新增“<a href="搭建Windows开发环境.md">搭建Windows开发环境</a>”小节内容。</li><li>新增“<a href="编译SDK（Cmake）.md">编译SDK（Cmake）</a>”小节内容。</li></ul>
 </td>
 </tr>
-<tr id="row58810414523"><td class="cellrowborder" valign="top" width="19.6%" headers="mcps1.1.4.1.1 "><p id="p0413131712"><a name="p0413131712"></a><a name="p0413131712"></a>01</p>
+<tr id="row58810414523"><td class="cellrowborder" valign="top" width="19.580000000000002%" headers="mcps1.1.4.1.1 "><p id="p0413131712"><a name="p0413131712"></a><a name="p0413131712"></a>01</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.09%" headers="mcps1.1.4.1.2 "><p id="p184131311111"><a name="p184131311111"></a><a name="p184131311111"></a>2024-05-15</p>
+<td class="cellrowborder" valign="top" width="19.11%" headers="mcps1.1.4.1.2 "><p id="p184131311111"><a name="p184131311111"></a><a name="p184131311111"></a>2024-05-15</p>
 </td>
 <td class="cellrowborder" valign="top" width="61.309999999999995%" headers="mcps1.1.4.1.3 "><p id="p169114261115"><a name="p169114261115"></a><a name="p169114261115"></a>第一次正式版本发布。</p>
 </td>
 </tr>
-<tr id="row6236545165217"><td class="cellrowborder" valign="top" width="19.6%" headers="mcps1.1.4.1.1 "><p id="p795653135515"><a name="p795653135515"></a><a name="p795653135515"></a>00B03</p>
+<tr id="row6236545165217"><td class="cellrowborder" valign="top" width="19.580000000000002%" headers="mcps1.1.4.1.1 "><p id="p795653135515"><a name="p795653135515"></a><a name="p795653135515"></a>00B03</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.09%" headers="mcps1.1.4.1.2 "><p id="p395613165520"><a name="p395613165520"></a><a name="p395613165520"></a>2024-02-29</p>
+<td class="cellrowborder" valign="top" width="19.11%" headers="mcps1.1.4.1.2 "><p id="p395613165520"><a name="p395613165520"></a><a name="p395613165520"></a>2024-02-29</p>
 </td>
 <td class="cellrowborder" valign="top" width="61.309999999999995%" headers="mcps1.1.4.1.3 "><p id="p1295714315557"><a name="p1295714315557"></a><a name="p1295714315557"></a>更新“版本编译”小节内容。</p>
 </td>
 </tr>
-<tr id="row12832184925218"><td class="cellrowborder" valign="top" width="19.6%" headers="mcps1.1.4.1.1 "><p id="p1169313194333"><a name="p1169313194333"></a><a name="p1169313194333"></a>00B02</p>
+<tr id="row12832184925218"><td class="cellrowborder" valign="top" width="19.580000000000002%" headers="mcps1.1.4.1.1 "><p id="p1169313194333"><a name="p1169313194333"></a><a name="p1169313194333"></a>00B02</p>
 <p id="p2149706016410"><a name="p2149706016410"></a><a name="p2149706016410"></a>00B01</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.09%" headers="mcps1.1.4.1.2 "><p id="p6693181912338"><a name="p6693181912338"></a><a name="p6693181912338"></a>2023-12-04</p>
+<td class="cellrowborder" valign="top" width="19.11%" headers="mcps1.1.4.1.2 "><p id="p6693181912338"><a name="p6693181912338"></a><a name="p6693181912338"></a>2023-12-04</p>
 <p id="p648803616410"><a name="p648803616410"></a><a name="p648803616410"></a>2023-10-27</p>
 </td>
 <td class="cellrowborder" valign="top" width="61.309999999999995%" headers="mcps1.1.4.1.3 "><p id="p195751335183313"><a name="p195751335183313"></a><a name="p195751335183313"></a>更新“启动编译”小节内容。</p>
@@ -592,7 +592,7 @@ bs2x在不同目录下的.py文件下配置编译选项，如[表1](#table203401
 </tr>
 <tr id="row358111191722"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p1658117191624"><a name="p1658117191624"></a><a name="p1658117191624"></a>-fno-strict-aliasing</p>
 </td>
-<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p35814192026"><a name="p35814192026"></a><a name="p35814192026"></a>禁用 strict-aliasing优化规则：不同类型的指针绝对不会指向同一块内存区域。</p>
+<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p35814192026"><a name="p35814192026"></a><a name="p35814192026"></a>禁用strict-aliasing优化规则：不同类型的指针绝对不会指向同一块内存区域。</p>
 </td>
 </tr>
 <tr id="row8581919926"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p205811519027"><a name="p205811519027"></a><a name="p205811519027"></a>-Os</p>
@@ -632,7 +632,7 @@ bs2x在不同目录下的.py文件下配置编译选项，如[表1](#table203401
 </tr>
 <tr id="row82231359192613"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p480114577263"><a name="p480114577263"></a><a name="p480114577263"></a>-pipe</p>
 </td>
-<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p08011257132610"><a name="p08011257132610"></a><a name="p08011257132610"></a>编译过程中使用管道，借助 GCC 的管道功能来提高编译速度。</p>
+<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p08011257132610"><a name="p08011257132610"></a><a name="p08011257132610"></a>编译过程中使用管道，借助GCC的管道功能来提高编译速度。</p>
 </td>
 </tr>
 <tr id="row4223185992617"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p780155782616"><a name="p780155782616"></a><a name="p780155782616"></a>-fno-tree-scev-cprop</p>
@@ -647,12 +647,12 @@ bs2x在不同目录下的.py文件下配置编译选项，如[表1](#table203401
 </tr>
 <tr id="row222315919261"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p1280155716262"><a name="p1280155716262"></a><a name="p1280155716262"></a>-mpush-pop</p>
 </td>
-<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p10801457172618"><a name="p10801457172618"></a><a name="p10801457172618"></a>CodeSize 优化，改编译选项需要CPU版本支持push/pop/popret/lwm/swm等指令。</p>
+<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p10801457172618"><a name="p10801457172618"></a><a name="p10801457172618"></a>CodeSize优化，改编译选项需要CPU版本支持push/pop/popret/lwm/swm等指令。</p>
 </td>
 </tr>
 <tr id="row52231259132616"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p38011357172611"><a name="p38011357172611"></a><a name="p38011357172611"></a>-msmall-data-limit=0</p>
 </td>
-<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p13801105716267"><a name="p13801105716267"></a><a name="p13801105716267"></a>CodeSize 优化，改编译选项需要CPU版本支持push/pop/popret/lwm/swm等指令。</p>
+<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p13801105716267"><a name="p13801105716267"></a><a name="p13801105716267"></a>CodeSize优化，改编译选项需要CPU版本支持push/pop/popret/lwm/swm等指令。</p>
 </td>
 </tr>
 <tr id="row1422318591268"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p7801115712618"><a name="p7801115712618"></a><a name="p7801115712618"></a>-fno-ipa-ra</p>
@@ -737,7 +737,7 @@ bs2x在不同目录下的.py文件下配置编译选项，如[表1](#table203401
 </tr>
 <tr id="row022216592268"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p11802115732615"><a name="p11802115732615"></a><a name="p11802115732615"></a>--short-enums</p>
 </td>
-<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p1280214577264"><a name="p1280214577264"></a><a name="p1280214577264"></a>CodeSize 优化，enum类型等于大小足够的最小整数类型。</p>
+<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p1280214577264"><a name="p1280214577264"></a><a name="p1280214577264"></a>CodeSize优化，enum类型等于大小足够的最小整数类型。</p>
 </td>
 </tr>
 <tr id="row17222125972619"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p880285772615"><a name="p880285772615"></a><a name="p880285772615"></a>-madjust-regorder</p>
@@ -772,7 +772,7 @@ bs2x在不同目录下的.py文件下配置编译选项，如[表1](#table203401
 </tr>
 <tr id="row322255912263"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p680220574266"><a name="p680220574266"></a><a name="p680220574266"></a>-mswitch-jump-table</p>
 </td>
-<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p1080265714268"><a name="p1080265714268"></a><a name="p1080265714268"></a>switch   case跳转表优化。</p>
+<td class="cellrowborder" valign="top" width="76.73%" headers="mcps1.2.3.1.2 "><p id="p1080265714268"><a name="p1080265714268"></a><a name="p1080265714268"></a>switch  case跳转表优化。</p>
 </td>
 </tr>
 <tr id="row1422275916266"><td class="cellrowborder" valign="top" width="23.27%" headers="mcps1.2.3.1.1 "><p id="p15802165792620"><a name="p15802165792620"></a><a name="p15802165792620"></a>-frtl-sequence-abstract</p>

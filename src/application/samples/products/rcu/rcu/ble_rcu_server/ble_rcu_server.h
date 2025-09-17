@@ -30,6 +30,7 @@ extern "C" {
 #define app_print(fmt, args...)
 #endif
 
+#define LOW_LATENCY_DATA_MAX 136
 /* Service UUID */
 #define BLE_UUID_UUID_SERVER_SERVICE                 0xABCD
 /* Characteristic UUID */
@@ -62,14 +63,11 @@ extern "C" {
 void ble_rcu_server_init(void);
 uint16_t get_g_connection_state(void);
 
-typedef void (*ble_rcu_notify_connect)(uint16_t conn_id, uint8_t conn_state);
-
 void ble_rcu_work_to_standby(void);
 void ble_rcu_standby_to_work(void);
 void ble_rcu_standby_to_sleep(void);
 void ble_rcu_sleep_to_work(void);
-void ble_rcu_server_register_cb(ble_rcu_notify_connect ble_cb);
-
+void ble_low_latency_cbk_reg(void);
 #ifdef __cplusplus
 #if __cplusplus
 }

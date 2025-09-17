@@ -82,7 +82,14 @@
 </th>
 </tr>
 </thead>
-<tbody><tr id="row138037202114"><td class="cellrowborder" valign="top" width="18.240000000000002%" headers="mcps1.1.4.1.1 "><p id="p6801722120"><a name="p6801722120"></a><a name="p6801722120"></a>04</p>
+<tbody><tr id="row125941950111315"><td class="cellrowborder" valign="top" width="18.240000000000002%" headers="mcps1.1.4.1.1 "><p id="p10596650151316"><a name="p10596650151316"></a><a name="p10596650151316"></a>05</p>
+</td>
+<td class="cellrowborder" valign="top" width="24.73%" headers="mcps1.1.4.1.2 "><p id="p115961150181320"><a name="p115961150181320"></a><a name="p115961150181320"></a>2025-08-29</p>
+</td>
+<td class="cellrowborder" valign="top" width="57.03%" headers="mcps1.1.4.1.3 "><a name="ul47423051611"></a><a name="ul47423051611"></a><ul id="ul47423051611"><li>更新“<a href="BT业务AT指令一览表.md">BT业务AT指令一览表</a>”的“<a href="gatts模块AT命令.md">gatts模块AT命令</a>”小节内容。</li><li>更新“<a href="BT业务AT指令描述.md">BT业务AT指令描述</a>”的“<a href="AT+GATTSUNREG-删除GATT-server-释放资源.md">AT+GATTSUNREG 删除GATT server，释放资源</a>”小节内容。</li><li>新增“<a href="注册SLE连接模块和安全模块AT指令的串口打印回调函数.md">注册SLE连接模块和安全模块AT指令的串口打印回调函数</a>”小节内容。</li></ul>
+</td>
+</tr>
+<tr id="row138037202114"><td class="cellrowborder" valign="top" width="18.240000000000002%" headers="mcps1.1.4.1.1 "><p id="p6801722120"><a name="p6801722120"></a><a name="p6801722120"></a>04</p>
 </td>
 <td class="cellrowborder" valign="top" width="24.73%" headers="mcps1.1.4.1.2 "><p id="p8808712117"><a name="p8808712117"></a><a name="p8808712117"></a>2025-05-30</p>
 </td>
@@ -201,6 +208,12 @@ AT指令类型如[表1](#table838912210233)所示。
 
     **图 2**  SecureCRT8.1 CR+LF设置示例<a name="fig931533818276"></a>  
     ![](figures/SecureCRT8-1-CR+LF设置示例.png "SecureCRT8-1-CR+LF设置示例")
+
+-   AT命令默认最大长度为128个字符，参数可配置。通过Kconfig（menuconfig），（Top）-\>Middleware-\>Utils-\>AT-\>Config AT，修改The max length of AT comand参数
+
+    ![](figures/zh-cn_image_0000002424801832.png)
+
+-   AT命令默认单个参数最大长度为128字节，参数可配置。修改middleware/chips/bs2x/at/at\_cmd\_porting/at\_porting.c中，修改AT\_RX\_BUFF\_SIZE大小
 
 # 通用AT指令<a name="ZH-CN_TOPIC_0000001814599437"></a>
 
@@ -1021,85 +1034,85 @@ AT指令类型如[表1](#table838912210233)所示。
 #### gatts模块AT命令<a name="ZH-CN_TOPIC_0000001809506380"></a>
 
 <a name="table63229348554"></a>
-<table><thead align="left"><tr id="row335443435510"><th class="cellrowborder" valign="top" width="50%" id="mcps1.1.3.1.1"><p id="p935453495513"><a name="p935453495513"></a><a name="p935453495513"></a>指令</p>
+<table><thead align="left"><tr id="row335443435510"><th class="cellrowborder" valign="top" width="49.94%" id="mcps1.1.3.1.1"><p id="p935453495513"><a name="p935453495513"></a><a name="p935453495513"></a>指令</p>
 </th>
-<th class="cellrowborder" valign="top" width="50%" id="mcps1.1.3.1.2"><p id="p113541534125518"><a name="p113541534125518"></a><a name="p113541534125518"></a>描述</p>
+<th class="cellrowborder" valign="top" width="50.06%" id="mcps1.1.3.1.2"><p id="p113541534125518"><a name="p113541534125518"></a><a name="p113541534125518"></a>描述</p>
 </th>
 </tr>
 </thead>
-<tbody><tr id="row18354134175517"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p7260639103917"><a name="p7260639103917"></a><a name="p7260639103917"></a>AT+GAGATTSSNDNTFYTTSREGSRV=&lt;参数&gt;</p>
+<tbody><tr id="row18354134175517"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p7260639103917"><a name="p7260639103917"></a><a name="p7260639103917"></a>AT+GATTSREGSRV=&lt;参数&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p2354734195518"><a name="p2354734195518"></a><a name="p2354734195518"></a>创建一个GATT server。</p>
-</td>
-</tr>
-<tr id="row14354163455514"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p133605153390"><a name="p133605153390"></a><a name="p133605153390"></a>AT+GAGATTSSNDNTFYTTSUNREG=&lt;参数&gt;</p>
-</td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p14354193410552"><a name="p14354193410552"></a><a name="p14354193410552"></a>删除GATT server，释放资源。</p>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p2354734195518"><a name="p2354734195518"></a><a name="p2354734195518"></a>创建一个GATT server。</p>
 </td>
 </tr>
-<tr id="row11354534195510"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p3354153412557"><a name="p3354153412557"></a><a name="p3354153412557"></a>AT+GATTSADDSERV=&lt;参数&gt;</p>
+<tr id="row14354163455514"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p133605153390"><a name="p133605153390"></a><a name="p133605153390"></a>AT+GATTSUNREG=&lt;参数&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p15354153415551"><a name="p15354153415551"></a><a name="p15354153415551"></a>添加一个GATT服务。</p>
-</td>
-</tr>
-<tr id="row4354193415554"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p1435419343552"><a name="p1435419343552"></a><a name="p1435419343552"></a>AT+GATTSSYNCADDSERV=&lt;参数&gt;</p>
-</td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p1435419345558"><a name="p1435419345558"></a><a name="p1435419345558"></a>添加一个GATT服务（同步）。</p>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p14354193410552"><a name="p14354193410552"></a><a name="p14354193410552"></a>删除GATT server，释放资源。</p>
 </td>
 </tr>
-<tr id="row73541234155513"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p15354133416552"><a name="p15354133416552"></a><a name="p15354133416552"></a>AT+GATTSADDCHAR=&lt;参数&gt;</p>
+<tr id="row11354534195510"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p3354153412557"><a name="p3354153412557"></a><a name="p3354153412557"></a>AT+GATTSADDSERV=&lt;参数&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p1935473417557"><a name="p1935473417557"></a><a name="p1935473417557"></a>为GATT服务添加一个特征。</p>
-</td>
-</tr>
-<tr id="row1935483410557"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p535417347558"><a name="p535417347558"></a><a name="p535417347558"></a>AT+GATTSSYNCADDCHAR=&lt;参数&gt;</p>
-</td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p19354934165519"><a name="p19354934165519"></a><a name="p19354934165519"></a>为GATT服务添加一个特征（同步）。</p>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p15354153415551"><a name="p15354153415551"></a><a name="p15354153415551"></a>添加一个GATT服务。</p>
 </td>
 </tr>
-<tr id="row63541734155517"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p3354173475515"><a name="p3354173475515"></a><a name="p3354173475515"></a>AT+GATTSADDDESCR=&lt;参数&gt;</p>
+<tr id="row4354193415554"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p1435419343552"><a name="p1435419343552"></a><a name="p1435419343552"></a>AT+GATTSSYNCADDSERV=&lt;参数&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p635473411556"><a name="p635473411556"></a><a name="p635473411556"></a>为最新的特征添加一个描述符。</p>
-</td>
-</tr>
-<tr id="row2035443455511"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p435416344556"><a name="p435416344556"></a><a name="p435416344556"></a>AT+GATTSSYNCADDDESCR=&lt;参数&gt;</p>
-</td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p53547343551"><a name="p53547343551"></a><a name="p53547343551"></a>为最新的特征添加一个描述符（同步）。</p>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p1435419345558"><a name="p1435419345558"></a><a name="p1435419345558"></a>添加一个GATT服务（同步）。</p>
 </td>
 </tr>
-<tr id="row435493485515"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p133541934135515"><a name="p133541934135515"></a><a name="p133541934135515"></a>AT+GATTSSTARTSERV=&lt;参数&gt;</p>
+<tr id="row73541234155513"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p15354133416552"><a name="p15354133416552"></a><a name="p15354133416552"></a>AT+GATTSADDCHAR=&lt;参数&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p5354103425520"><a name="p5354103425520"></a><a name="p5354103425520"></a>启动指定的GATT服务。</p>
-</td>
-</tr>
-<tr id="row5354103413552"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p8354153417554"><a name="p8354153417554"></a><a name="p8354153417554"></a>AT+GATTSDELALLSERV=&lt;参数&gt;</p>
-</td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p11354153415518"><a name="p11354153415518"></a><a name="p11354153415518"></a>删除指定server上的所有服务。</p>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p1935473417557"><a name="p1935473417557"></a><a name="p1935473417557"></a>为GATT服务添加一个特征。</p>
 </td>
 </tr>
-<tr id="row13354163419551"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p14354934125516"><a name="p14354934125516"></a><a name="p14354934125516"></a>AT+GATTSSENDRSP=&lt;参数&gt;</p>
+<tr id="row1935483410557"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p535417347558"><a name="p535417347558"></a><a name="p535417347558"></a>AT+GATTSSYNCADDCHAR=&lt;参数&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p33541334145519"><a name="p33541334145519"></a><a name="p33541334145519"></a>发送响应。</p>
-</td>
-</tr>
-<tr id="row10354143420557"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p83549349558"><a name="p83549349558"></a><a name="p83549349558"></a>AT+GATTSSNDNTFY=&lt;参数&gt;</p>
-</td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p163544345557"><a name="p163544345557"></a><a name="p163544345557"></a>发送通知或指示。</p>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p19354934165519"><a name="p19354934165519"></a><a name="p19354934165519"></a>为GATT服务添加一个特征（同步）。</p>
 </td>
 </tr>
-<tr id="row7354133485511"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p12354123435510"><a name="p12354123435510"></a><a name="p12354123435510"></a>AT+GATTSSNDNTFYBYUUID=&lt;参数&gt;</p>
+<tr id="row63541734155517"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p3354173475515"><a name="p3354173475515"></a><a name="p3354173475515"></a>AT+GATTSADDDESCR=&lt;参数&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p11355113405511"><a name="p11355113405511"></a><a name="p11355113405511"></a>根据uuid发送通知或指示。</p>
-</td>
-</tr>
-<tr id="row235593465511"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p435520345552"><a name="p435520345552"></a><a name="p435520345552"></a>AT+GATTSREGCBK</p>
-</td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p123551034135515"><a name="p123551034135515"></a><a name="p123551034135515"></a>注册GATT服务端回调函数。</p>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p635473411556"><a name="p635473411556"></a><a name="p635473411556"></a>为最新的特征添加一个描述符。</p>
 </td>
 </tr>
-<tr id="row12355534115514"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p13551634105517"><a name="p13551634105517"></a><a name="p13551634105517"></a>AT+GATTSSETMTU=&lt;参数&gt;</p>
+<tr id="row2035443455511"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p435416344556"><a name="p435416344556"></a><a name="p435416344556"></a>AT+GATTSSYNCADDDESCR=&lt;参数&gt;</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p18355143412552"><a name="p18355143412552"></a><a name="p18355143412552"></a>在连接之前设置server rx mtu。</p>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p53547343551"><a name="p53547343551"></a><a name="p53547343551"></a>为最新的特征添加一个描述符（同步）。</p>
+</td>
+</tr>
+<tr id="row435493485515"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p133541934135515"><a name="p133541934135515"></a><a name="p133541934135515"></a>AT+GATTSSTARTSERV=&lt;参数&gt;</p>
+</td>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p5354103425520"><a name="p5354103425520"></a><a name="p5354103425520"></a>启动指定的GATT服务。</p>
+</td>
+</tr>
+<tr id="row5354103413552"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p8354153417554"><a name="p8354153417554"></a><a name="p8354153417554"></a>AT+GATTSDELALLSERV=&lt;参数&gt;</p>
+</td>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p11354153415518"><a name="p11354153415518"></a><a name="p11354153415518"></a>删除指定server上的所有服务。</p>
+</td>
+</tr>
+<tr id="row13354163419551"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p14354934125516"><a name="p14354934125516"></a><a name="p14354934125516"></a>AT+GATTSSENDRSP=&lt;参数&gt;</p>
+</td>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p33541334145519"><a name="p33541334145519"></a><a name="p33541334145519"></a>发送响应。</p>
+</td>
+</tr>
+<tr id="row10354143420557"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p83549349558"><a name="p83549349558"></a><a name="p83549349558"></a>AT+GATTSSNDNTFY=&lt;参数&gt;</p>
+</td>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p163544345557"><a name="p163544345557"></a><a name="p163544345557"></a>发送通知或指示。</p>
+</td>
+</tr>
+<tr id="row7354133485511"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p12354123435510"><a name="p12354123435510"></a><a name="p12354123435510"></a>AT+GATTSSNDNTFYBYUUID=&lt;参数&gt;</p>
+</td>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p11355113405511"><a name="p11355113405511"></a><a name="p11355113405511"></a>根据uuid发送通知或指示。</p>
+</td>
+</tr>
+<tr id="row235593465511"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p435520345552"><a name="p435520345552"></a><a name="p435520345552"></a>AT+GATTSREGCBK</p>
+</td>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p123551034135515"><a name="p123551034135515"></a><a name="p123551034135515"></a>注册GATT服务端回调函数。</p>
+</td>
+</tr>
+<tr id="row12355534115514"><td class="cellrowborder" valign="top" width="49.94%" headers="mcps1.1.3.1.1 "><p id="p13551634105517"><a name="p13551634105517"></a><a name="p13551634105517"></a>AT+GATTSSETMTU=&lt;参数&gt;</p>
+</td>
+<td class="cellrowborder" valign="top" width="50.06%" headers="mcps1.1.3.1.2 "><p id="p18355143412552"><a name="p18355143412552"></a><a name="p18355143412552"></a>在连接之前设置server rx mtu。</p>
 </td>
 </tr>
 </tbody>
@@ -1294,6 +1307,11 @@ AT指令类型如[表1](#table838912210233)所示。
 <tr id="row131931235572"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p219302315571"><a name="p219302315571"></a><a name="p219302315571"></a>AT+SLEREADPEERRSSI</p>
 </td>
 <td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p11193323145717"><a name="p11193323145717"></a><a name="p11193323145717"></a>读取对端rssi。</p>
+</td>
+</tr>
+<tr id="row17130320134110"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p12130192034110"><a name="p12130192034110"></a><a name="p12130192034110"></a>AT+SLEREGCONNCBK</p>
+</td>
+<td class="cellrowborder" valign="top" width="49.54%" headers="mcps1.1.3.1.2 "><p id="p9130142064116"><a name="p9130142064116"></a><a name="p9130142064116"></a>注册SLE连接模块和安全模块AT指令的串口打印回调函数</p>
 </td>
 </tr>
 <tr id="row31930233570"><td class="cellrowborder" valign="top" width="50.46000000000001%" headers="mcps1.1.3.1.1 "><p id="p17193323105717"><a name="p17193323105717"></a><a name="p17193323105717"></a>AT+SSAPSADDSRV</p>
@@ -2343,12 +2361,12 @@ AT指令类型如[表1](#table838912210233)所示。
 </tr>
 <tr id="row1260341241215"><th class="firstcol" valign="top" width="17.299999999999997%" id="mcps1.1.3.3.1"><p id="p156031512131211"><a name="p156031512131211"></a><a name="p156031512131211"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.69999999999999%" headers="mcps1.1.3.3.1 "><p id="p15603912171217"><a name="p15603912171217"></a><a name="p15603912171217"></a>&lt;uuid&gt;：应用uuid</p>
+<td class="cellrowborder" valign="top" width="82.69999999999999%" headers="mcps1.1.3.3.1 "><p id="p15603912171217"><a name="p15603912171217"></a><a name="p15603912171217"></a>&lt;server_id&gt;：服务端id</p>
 </td>
 </tr>
 <tr id="row860351219125"><th class="firstcol" valign="top" width="17.299999999999997%" id="mcps1.1.3.4.1"><p id="p660391212129"><a name="p660391212129"></a><a name="p660391212129"></a>示例</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.69999999999999%" headers="mcps1.1.3.4.1 "><p id="p1603181251220"><a name="p1603181251220"></a><a name="p1603181251220"></a>AT+GATTSUNREG=0x1122</p>
+<td class="cellrowborder" valign="top" width="82.69999999999999%" headers="mcps1.1.3.4.1 "><p id="p1603181251220"><a name="p1603181251220"></a><a name="p1603181251220"></a>AT+GATTSUNREG=1</p>
 </td>
 </tr>
 <tr id="row2060341218129"><th class="firstcol" valign="top" width="17.299999999999997%" id="mcps1.1.3.5.1"><p id="p9603141215129"><a name="p9603141215129"></a><a name="p9603141215129"></a>注意</p>
@@ -2964,29 +2982,29 @@ AT指令类型如[表1](#table838912210233)所示。
 ##### AT+GATTCREADBYUUID 读取by\_uuid<a name="ZH-CN_TOPIC_0000001809862866"></a>
 
 <a name="table1467924917179"></a>
-<table><tbody><tr id="row1969084916179"><th class="firstcol" valign="top" width="17.53%" id="mcps1.1.3.1.1"><p id="p1569044991719"><a name="p1569044991719"></a><a name="p1569044991719"></a>格式</p>
+<table><tbody><tr id="row1969084916179"><th class="firstcol" valign="top" width="17.5%" id="mcps1.1.3.1.1"><p id="p1569044991719"><a name="p1569044991719"></a><a name="p1569044991719"></a>格式</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.47%" headers="mcps1.1.3.1.1 "><p id="p1169004911715"><a name="p1169004911715"></a><a name="p1169004911715"></a>AT+GATTCREADBYUUID=&lt;client_id,conn_id,start_hdl,end_hdl,uuid&gt;</p>
+<td class="cellrowborder" valign="top" width="82.5%" headers="mcps1.1.3.1.1 "><p id="p1169004911715"><a name="p1169004911715"></a><a name="p1169004911715"></a>AT+GATTCREADBYUUID=&lt;client_id,conn_id,start_hdl,end_hdl,uuid&gt;</p>
 </td>
 </tr>
-<tr id="row1669013495170"><th class="firstcol" valign="top" width="17.53%" id="mcps1.1.3.2.1"><p id="p2069024951710"><a name="p2069024951710"></a><a name="p2069024951710"></a>响应</p>
+<tr id="row1669013495170"><th class="firstcol" valign="top" width="17.5%" id="mcps1.1.3.2.1"><p id="p2069024951710"><a name="p2069024951710"></a><a name="p2069024951710"></a>响应</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.47%" headers="mcps1.1.3.2.1 "><a name="ul1513171018487"></a><a name="ul1513171018487"></a><ul id="ul1513171018487"><li>成功：OK</li><li>失败：ERROR</li></ul>
+<td class="cellrowborder" valign="top" width="82.5%" headers="mcps1.1.3.2.1 "><a name="ul1513171018487"></a><a name="ul1513171018487"></a><ul id="ul1513171018487"><li>成功：OK</li><li>失败：ERROR</li></ul>
 </td>
 </tr>
-<tr id="row9690184912178"><th class="firstcol" valign="top" width="17.53%" id="mcps1.1.3.3.1"><p id="p569074951715"><a name="p569074951715"></a><a name="p569074951715"></a>参数说明</p>
+<tr id="row9690184912178"><th class="firstcol" valign="top" width="17.5%" id="mcps1.1.3.3.1"><p id="p569074951715"><a name="p569074951715"></a><a name="p569074951715"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.47%" headers="mcps1.1.3.3.1 "><a name="ul47502913237"></a><a name="ul47502913237"></a><ul id="ul47502913237"><li>&lt;client_id&gt;：客户端id</li><li>&lt;conn_id&gt;：连接id</li><li>&lt;start_hdl&gt;：起始句柄</li><li>&lt;end_hdl&gt;：结束句柄</li><li>&lt;uuid&gt;：想要读的uuid</li></ul>
+<td class="cellrowborder" valign="top" width="82.5%" headers="mcps1.1.3.3.1 "><a name="ul47502913237"></a><a name="ul47502913237"></a><ul id="ul47502913237"><li>&lt;client_id&gt;：客户端id</li><li>&lt;conn_id&gt;：连接id</li><li>&lt;start_hdl&gt;：起始句柄</li><li>&lt;end_hdl&gt;：结束句柄</li><li>&lt;uuid&gt;：想要读的uuid</li></ul>
 </td>
 </tr>
-<tr id="row3690194916174"><th class="firstcol" valign="top" width="17.53%" id="mcps1.1.3.4.1"><p id="p1269013492179"><a name="p1269013492179"></a><a name="p1269013492179"></a>示例</p>
+<tr id="row3690194916174"><th class="firstcol" valign="top" width="17.5%" id="mcps1.1.3.4.1"><p id="p1269013492179"><a name="p1269013492179"></a><a name="p1269013492179"></a>示例</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.47%" headers="mcps1.1.3.4.1 "><p id="p18690154916177"><a name="p18690154916177"></a><a name="p18690154916177"></a>AT+GATTCREADBYUUID=1,0,13,13,2a4d</p>
+<td class="cellrowborder" valign="top" width="82.5%" headers="mcps1.1.3.4.1 "><p id="p18690154916177"><a name="p18690154916177"></a><a name="p18690154916177"></a>AT+GATTCREADBYUUID=1,0,13,13,2a4d</p>
 </td>
 </tr>
-<tr id="row146901949201716"><th class="firstcol" valign="top" width="17.53%" id="mcps1.1.3.5.1"><p id="p6690154912176"><a name="p6690154912176"></a><a name="p6690154912176"></a>注意</p>
+<tr id="row146901949201716"><th class="firstcol" valign="top" width="17.5%" id="mcps1.1.3.5.1"><p id="p6690154912176"><a name="p6690154912176"></a><a name="p6690154912176"></a>注意</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.47%" headers="mcps1.1.3.5.1 "><p id="p269018493179"><a name="p269018493179"></a><a name="p269018493179"></a>-</p>
+<td class="cellrowborder" valign="top" width="82.5%" headers="mcps1.1.3.5.1 "><p id="p269018493179"><a name="p269018493179"></a><a name="p269018493179"></a>-</p>
 </td>
 </tr>
 </tbody>
@@ -3558,6 +3576,7 @@ AT指令类型如[表1](#table838912210233)所示。
 
 
 
+
 ##### 建立SLE连接<a name="ZH-CN_TOPIC_0000001856541525"></a>
 
 当前只支持0、6两种，通常常用的类型是0。地址类型会校验，如果不匹配会返回错误。
@@ -3630,29 +3649,60 @@ AT指令类型如[表1](#table838912210233)所示。
 该命令的作用：读取当前SLE ACB 链路的RSSI信号强度，RSSI（Received Signal Strength Indicator）是接收信号的强度指示。
 
 <a name="table5420838142314"></a>
-<table><tbody><tr id="row543363813239"><th class="firstcol" valign="top" width="17.599999999999998%" id="mcps1.1.3.1.1"><p id="p04331638122319"><a name="p04331638122319"></a><a name="p04331638122319"></a>设置指令</p>
+<table><tbody><tr id="row543363813239"><th class="firstcol" valign="top" width="17.419999999999998%" id="mcps1.1.3.1.1"><p id="p04331638122319"><a name="p04331638122319"></a><a name="p04331638122319"></a>设置指令</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.39999999999999%" headers="mcps1.1.3.1.1 "><p id="p12433638152312"><a name="p12433638152312"></a><a name="p12433638152312"></a>AT+SLEREADPEERRSSI=&lt;conn_id&gt;</p>
+<td class="cellrowborder" valign="top" width="82.58%" headers="mcps1.1.3.1.1 "><p id="p12433638152312"><a name="p12433638152312"></a><a name="p12433638152312"></a>AT+SLEREADPEERRSSI=&lt;conn_id&gt;</p>
 </td>
 </tr>
-<tr id="row54337380235"><th class="firstcol" valign="top" width="17.599999999999998%" id="mcps1.1.3.2.1"><p id="p54331738172318"><a name="p54331738172318"></a><a name="p54331738172318"></a>响应</p>
+<tr id="row54337380235"><th class="firstcol" valign="top" width="17.419999999999998%" id="mcps1.1.3.2.1"><p id="p54331738172318"><a name="p54331738172318"></a><a name="p54331738172318"></a>响应</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.39999999999999%" headers="mcps1.1.3.2.1 "><a name="ul1513171018487"></a><a name="ul1513171018487"></a><ul id="ul1513171018487"><li>成功：OK</li><li>失败：ERROR</li></ul>
+<td class="cellrowborder" valign="top" width="82.58%" headers="mcps1.1.3.2.1 "><a name="ul1513171018487"></a><a name="ul1513171018487"></a><ul id="ul1513171018487"><li>成功：OK</li><li>失败：ERROR</li></ul>
 </td>
 </tr>
-<tr id="row10433838132319"><th class="firstcol" valign="top" width="17.599999999999998%" id="mcps1.1.3.3.1"><p id="p134331838132317"><a name="p134331838132317"></a><a name="p134331838132317"></a>参数说明</p>
+<tr id="row10433838132319"><th class="firstcol" valign="top" width="17.419999999999998%" id="mcps1.1.3.3.1"><p id="p134331838132317"><a name="p134331838132317"></a><a name="p134331838132317"></a>参数说明</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.39999999999999%" headers="mcps1.1.3.3.1 "><p id="p143310385230"><a name="p143310385230"></a><a name="p143310385230"></a>&lt;conn_id&gt;：连接ID</p>
+<td class="cellrowborder" valign="top" width="82.58%" headers="mcps1.1.3.3.1 "><p id="p143310385230"><a name="p143310385230"></a><a name="p143310385230"></a>&lt;conn_id&gt;：连接ID</p>
 </td>
 </tr>
-<tr id="row74333381234"><th class="firstcol" valign="top" width="17.599999999999998%" id="mcps1.1.3.4.1"><p id="p1343383822315"><a name="p1343383822315"></a><a name="p1343383822315"></a>示例</p>
+<tr id="row74333381234"><th class="firstcol" valign="top" width="17.419999999999998%" id="mcps1.1.3.4.1"><p id="p1343383822315"><a name="p1343383822315"></a><a name="p1343383822315"></a>示例</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.39999999999999%" headers="mcps1.1.3.4.1 "><p id="p043383817239"><a name="p043383817239"></a><a name="p043383817239"></a>AT+SLEREADPEERRSSI=0</p>
+<td class="cellrowborder" valign="top" width="82.58%" headers="mcps1.1.3.4.1 "><p id="p043383817239"><a name="p043383817239"></a><a name="p043383817239"></a>AT+SLEREADPEERRSSI=0</p>
 </td>
 </tr>
-<tr id="row4433173812312"><th class="firstcol" valign="top" width="17.599999999999998%" id="mcps1.1.3.5.1"><p id="p134346389231"><a name="p134346389231"></a><a name="p134346389231"></a>注意</p>
+<tr id="row4433173812312"><th class="firstcol" valign="top" width="17.419999999999998%" id="mcps1.1.3.5.1"><p id="p134346389231"><a name="p134346389231"></a><a name="p134346389231"></a>注意</p>
 </th>
-<td class="cellrowborder" valign="top" width="82.39999999999999%" headers="mcps1.1.3.5.1 "><p id="p144347389235"><a name="p144347389235"></a><a name="p144347389235"></a>需建立连接后发送此命令</p>
+<td class="cellrowborder" valign="top" width="82.58%" headers="mcps1.1.3.5.1 "><p id="p144347389235"><a name="p144347389235"></a><a name="p144347389235"></a>需建立连接后发送此命令</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+##### 注册SLE连接模块和安全模块AT指令的串口打印回调函数<a name="ZH-CN_TOPIC_0000002380559480"></a>
+
+<a name="table192821844145016"></a>
+<table><tbody><tr id="row19282104495014"><th class="firstcol" valign="top" width="16.72%" id="mcps1.1.3.1.1"><p id="p1828212447504"><a name="p1828212447504"></a><a name="p1828212447504"></a>设置指令</p>
+</th>
+<td class="cellrowborder" valign="top" width="83.28%" headers="mcps1.1.3.1.1 "><p id="p228224435017"><a name="p228224435017"></a><a name="p228224435017"></a>AT+SLEREGCONNCBK</p>
+</td>
+</tr>
+<tr id="row132825444505"><th class="firstcol" valign="top" width="16.72%" id="mcps1.1.3.2.1"><p id="p9282144415020"><a name="p9282144415020"></a><a name="p9282144415020"></a>响应</p>
+</th>
+<td class="cellrowborder" valign="top" width="83.28%" headers="mcps1.1.3.2.1 "><a name="ul20282154417503"></a><a name="ul20282154417503"></a><ul id="ul20282154417503"><li>成功：OK</li><li>失败：ERROR</li></ul>
+</td>
+</tr>
+<tr id="row3282144412507"><th class="firstcol" valign="top" width="16.72%" id="mcps1.1.3.3.1"><p id="p1928213443504"><a name="p1928213443504"></a><a name="p1928213443504"></a>参数说明</p>
+</th>
+<td class="cellrowborder" valign="top" width="83.28%" headers="mcps1.1.3.3.1 "><p id="p528214441502"><a name="p528214441502"></a><a name="p528214441502"></a>-</p>
+</td>
+</tr>
+<tr id="row7282144414509"><th class="firstcol" valign="top" width="16.72%" id="mcps1.1.3.4.1"><p id="p172826446506"><a name="p172826446506"></a><a name="p172826446506"></a>示例</p>
+</th>
+<td class="cellrowborder" valign="top" width="83.28%" headers="mcps1.1.3.4.1 "><p id="p4282144417501"><a name="p4282144417501"></a><a name="p4282144417501"></a>AT+SLEREGCONNCBK</p>
+</td>
+</tr>
+<tr id="row1128218442501"><th class="firstcol" valign="top" width="16.72%" id="mcps1.1.3.5.1"><p id="p14282844115017"><a name="p14282844115017"></a><a name="p14282844115017"></a>注意</p>
+</th>
+<td class="cellrowborder" valign="top" width="83.28%" headers="mcps1.1.3.5.1 "><p id="p22821944205010"><a name="p22821944205010"></a><a name="p22821944205010"></a>-</p>
 </td>
 </tr>
 </tbody>
@@ -3802,7 +3852,7 @@ AT指令类型如[表1](#table838912210233)所示。
 </tbody>
 </table>
 
-#### SLE security managemen模块指令描述<a name="ZH-CN_TOPIC_0000001856157385"></a>
+#### SLE security management模块指令描述<a name="ZH-CN_TOPIC_0000001856157385"></a>
 
 
 
@@ -6266,7 +6316,7 @@ typedef enum {
         >```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >把第四个参数设置为2，可以读取该property的描述符的值：
+    >SSAPCWRITEREQ把第四个参数设置为2，可以读取该property的描述符的值：
     >```
     >AT+SSAPCREADREQ=0,0,0x12,2
     >OK

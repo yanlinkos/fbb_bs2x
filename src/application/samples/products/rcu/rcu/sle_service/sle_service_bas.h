@@ -20,8 +20,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 void sle_set_battert(int32_t battert_value);
-errcode_t sle_rcu_bas_service_add(void);
-errcode_t sle_add_bas_service(void);
+errcode_t sle_add_bas_service(uint8_t server_id);
 
 #ifdef __cplusplus
 #if __cplusplus

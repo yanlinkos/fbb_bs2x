@@ -130,6 +130,7 @@ int32_t linear_map(int32_t input, int32_t m, int32_t n, int32_t lower, int32_t u
 void set_screen_size(uint16_t width, uint16_t height);
 uint16_t get_screen_width(void);
 uint16_t get_screen_height(void);
+int32_t vdt_usb_uac_send_data(const uint8_t *data1, int len1, const uint8_t *data2, int len2);
 
 #ifdef __cplusplus
 #if __cplusplus

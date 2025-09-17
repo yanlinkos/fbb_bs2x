@@ -164,6 +164,7 @@ errcode_t sle_air_mouse_server_send_cmd(air_mouse_cmd_e cmd);
 void set_screen_size(uint16_t width, uint16_t height);
 uint16_t get_screen_width(void);
 uint16_t get_screen_height(void);
+void sle_set_em_data(uint8_t enable);
 
 #ifdef __cplusplus
 #if __cplusplus

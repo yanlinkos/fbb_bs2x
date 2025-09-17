@@ -187,6 +187,7 @@ static int32_t rcu_state_sleep_to_work(uintptr_t arg)
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_RCU_SERVER)
     /* 连接态：减小连接间隔；广播态：不操作。 */
     ble_rcu_standby_to_work();
+    ble_rcu_sleep_to_work();
 #endif
     return 0;
 }

@@ -9,25 +9,27 @@
 #include "securec.h"
 #include "stdbool.h"
 #include "soc_osal.h"
+#include "common_def.h"
+#include "rcu.h"
+#include "vdt_codec.h"
+#include "amic_voice.h"
+#include "bts_low_latency.h"
 #include "bts_device_manager.h"
 #include "ble_rcu_server_adv.h"
 #include "ble_hid_rcu_server.h"
+#include "ble_rcu_server_control.h"
 #include "ble_rcu_server.h"
 
 #define BLE_RCU_SERVICE_NUM 		3
 #define BLE_RCU_TASK_DELAY_MS 		200
 #define UART16_LEN 					2
 
-static uint16_t g_ble_rcu_conn_id;
-static ble_rcu_notify_connect ble_notify_connect_cb = NULL;
-uint16_t g_connection_state = GAP_BLE_STATE_DISCONNECTED;
 static uint16_t g_ble_enable = false;
-static bd_addr_t g_ble_addr = { 0 };
 /* 低功耗连接参数信息 */
-static gap_conn_param_update_t g_worktostandby = { 0, 6, 9, 30, 3000 };
-static gap_conn_param_update_t g_standbytowork = { 0, 9, 9, 2, 3000 };
+static gap_conn_param_update_t g_worktostandby = { 0, 20, 20, 16, 3000 };
+static gap_conn_param_update_t g_standbytowork = { 0, 9, 9, 1, 1000 };
 
-static bool g_low_power_state = false; /* false:关闭, true:打开 */
+uint8_t g_ble_out_low_latency_data[LOW_LATENCY_DATA_MAX] = { 0 };
 
 static void ble_rcu_adv_enable_cbk(uint8_t adv_id, adv_status_t status)
 {
@@ -39,35 +41,28 @@ static void ble_rcu_adv_disable_cbk(uint8_t adv_id, adv_status_t status)
     osal_printk("adv disable adv_id: %d, status:%d\n", adv_id, status);
 }
 
-uint16_t get_g_connection_state(void)
+uint8_t *ble_low_latency_get_data_cbk(uint8_t *length, uint16_t *att_handle, uint16_t conn_handle)
 {
-    return g_connection_state;
+    unused(conn_handle);
+    get_amic_encode_data(length, g_ble_out_low_latency_data);
+    *att_handle = ble_rcu_get_amic_handle();
+    return g_ble_out_low_latency_data;
 }
 
-static void ble_rcu_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_ble_conn_state_t conn_state,
-                                       gap_ble_pair_state_t pair_state, gap_ble_disc_reason_t disc_reason)
+void ble_set_em_data_cbk(uint16_t co_handle, uint8_t status)
 {
-    g_ble_rcu_conn_id = conn_id;
-    g_connection_state = conn_state;
-    osal_printk("connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason 0x%x\n",
-                conn_id, conn_state, pair_state, disc_reason);
-    osal_printk("addr:\n");
-    for (uint8_t i = 0; i < BD_ADDR_LEN; i++) {
-        osal_printk("%2x", addr->addr[i]);
-    }
-    osal_printk("\n");
-    if (conn_state == GAP_BLE_STATE_CONNECTED) {
-        memcpy_s(&g_ble_addr, sizeof(bd_addr_t), addr, sizeof(bd_addr_t));
-    } else if (conn_state == GAP_BLE_STATE_DISCONNECTED) {
-        memset_s(&g_ble_addr, sizeof(bd_addr_t), 0, sizeof(bd_addr_t));
-        if (!g_low_power_state) {
-            ble_rcu_set_adv_data();
-            ble_rcu_start_adv();
-        }
-    }
-    if (ble_notify_connect_cb != NULL) {
-        ble_notify_connect_cb(conn_id, conn_state);
-    }
+    unused(status);
+    unused(co_handle);
+
+    osal_printk("pair ble_set_em_data_cbk\r\n");
+}
+
+void ble_low_latency_cbk_reg(void)
+{
+    ble_low_latency_callbacks_t cbks = {0};
+    cbks.hid_data_cb = ble_low_latency_get_data_cbk;
+    cbks.ble_set_em_data_cb = ble_set_em_data_cbk;
+    ble_low_latency_register_callbacks(&cbks);
 }
 
 static void ble_enable_cbk(uint8_t status)
@@ -83,44 +78,44 @@ static void bt_core_enable_cb_register(void)
     dev_cb.ble_enable_cb = ble_enable_cbk;
     gap_cb.start_adv_cb = ble_rcu_adv_enable_cbk;
     gap_cb.stop_adv_cb = ble_rcu_adv_disable_cbk;
-    gap_cb.conn_state_change_cb = ble_rcu_connect_change_cbk;
-    if (gap_ble_register_callbacks(&gap_cb) != ERRCODE_BT_SUCCESS ||
-        bts_dev_manager_register_callbacks(&dev_cb) != ERRCODE_BT_SUCCESS) {
+    gap_cb.conn_state_change_cb = ble_control_notify_connect;
+    if ((gap_ble_register_callbacks(&gap_cb) != ERRCODE_BT_SUCCESS) ||
+        (bts_dev_manager_register_callbacks(&dev_cb) != ERRCODE_BT_SUCCESS)) {
         osal_printk("register ble_enable_cbk failed\r\n");
     }
 }
 
 void ble_rcu_work_to_standby(void)
 {
-    if (g_connection_state == GAP_BLE_STATE_CONNECTED) {
-        g_worktostandby.conn_handle = g_ble_rcu_conn_id;
-        gap_ble_connect_param_update(&g_worktostandby);
-    }
+    ble_control_connect_param_update(&g_worktostandby);
 }
 
 void ble_rcu_standby_to_work(void)
 {
-    if (g_connection_state == GAP_BLE_STATE_CONNECTED) {
-        g_standbytowork.conn_handle = g_ble_rcu_conn_id;
-        gap_ble_connect_param_update(&g_standbytowork);
-    }
-    g_low_power_state = false;
+    ble_control_set_power_state(false);
+    ble_control_connect_param_update(&g_standbytowork);
+    ble_control_update_local_latency(1);
 }
 
 void ble_rcu_standby_to_sleep(void)
 {
-    if (g_connection_state == GAP_BLE_STATE_CONNECTED) {
-        gap_ble_disconnect_remote_device(&g_ble_addr);
-        g_low_power_state = true;
-    } else if (g_connection_state == GAP_BLE_STATE_DISCONNECTED) {
-        gap_ble_stop_adv(BTH_GAP_BLE_ADV_HANDLE_DEFAULT);
-    }
+#ifdef CONFIG_RCU_IS_SLEEP_DISCONNECT
+    ble_control_set_power_state(true);
+    ble_control_set_is_connect_callback(true);
+#endif
+    ble_control_update_local_latency(0);
+#ifdef CONFIG_RCU_IS_SLEEP_DISCONNECT
+    ble_control_disconnect_all_remote_device();
+#endif
 }
 
 void ble_rcu_sleep_to_work(void)
 {
-    gap_ble_start_adv(BTH_GAP_BLE_ADV_HANDLE_DEFAULT);
-    g_low_power_state = false;
+    ble_control_set_is_connect_callback(false);
+    ble_control_set_power_state(false);
+#ifdef CONFIG_RCU_IS_SLEEP_DISCONNECT
+    ble_control_connect_all_remote_device();
+#endif
 }
 
 void ble_rcu_server_init(void)
@@ -131,12 +126,5 @@ void ble_rcu_server_init(void)
         osal_msleep(BLE_RCU_TASK_DELAY_MS);
     }
     ble_hid_rcu_server_init();
-    ble_rcu_set_adv_data();
-    ble_rcu_start_adv();
     osal_printk("init ok\r\n");
-}
-
-void ble_rcu_server_register_cb(ble_rcu_notify_connect cb)
-{
-    ble_notify_connect_cb = cb;
 }

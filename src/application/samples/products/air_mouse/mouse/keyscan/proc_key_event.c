@@ -18,6 +18,7 @@
 #include "../led/air_mouse_led.h"
 #include "../sle_air_mouse_server/sle_air_mouse_server.h"
 #include "../../air_mouse_common.h"
+#include "amic_voice.h"
 
 typedef struct {
     uint8_t one_key;
@@ -42,6 +43,18 @@ key_press_flag_t g_key_press_flag = {0};
 void init_key_press_flag(void)
 {
     (void)memset_s(&g_key_press_flag, sizeof(g_key_press_flag), 0, sizeof(g_key_press_flag));
+}
+
+void rcu_amic_init(void)
+{
+    sle_set_em_data(1);
+    amic_init();
+}
+
+void rcu_amic_deinit(void)
+{
+    sle_set_em_data(0);
+    amic_deinit();
 }
 
 // 指向功能开/关处理
@@ -120,6 +133,7 @@ static void one_key_process(uint8_t key)
             g_key_press_flag.slp_pause = 1;
             ret = SlpPauseRangingCommand();
             osal_printk("S14 pause ranging, 0x%08X\r\n", ret);
+            rcu_amic_init();
             break;
         case RCU_KEY_S12:  // 鼠标左键
             g_key_press_flag.left_key = 1;
@@ -177,6 +191,7 @@ static void key_up_process(void)
         sle_air_mouse_server_send_cmd(AM_CMD_LEFT_KEY_UP);
     }
     if (g_key_press_flag.slp_pause == 1) {
+        rcu_amic_deinit();
         // 抬起按键后继续测距
         ErrcodeSlpClient ret = SlpContinueRangingCommand();
         osal_printk("ranging continue, 0x%08x\r\n", ret);

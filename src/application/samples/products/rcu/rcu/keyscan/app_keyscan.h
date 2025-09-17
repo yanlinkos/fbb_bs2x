@@ -10,6 +10,7 @@
 #ifndef APP_KEYSCAN_H
 #define APP_KEYSCAN_H
 
+#include "app_msg_queue.h"
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {
@@ -32,10 +33,9 @@ extern "C" {
 #define RCU_CONSUMER_KEY_NUM               6
 #define RCU_CONSUMER_KEY_OFFSET            8
 #define RCU_KEYBOARD_KEY                   0x07
+#define RCU_MOUSE_KEY                      0x0a
 #define RCU_CONSUMER_KEY                   0x0c
 
-#define DURATION_MS_OF_WORK_TO_STANDBY     2000
-#define DURATION_MS_OF_STANDBY_TO_SLEEP    30000
 #define DURATION_MS_OF_SLEEP_TO_UDS        30000
 
 typedef union mouse_key {
@@ -103,12 +103,6 @@ typedef enum {
     RCU_KEY_MAX
 } key_name_e;
 
-typedef enum {
-    TV = 0,
-    SET_TOP_BOX,
-    NONE_DEVICE
-} device_control_target_e;
-
 typedef struct {
     key_name_e key_value;                    // key value
     uint8_t usage_id;                        // Usage ID
@@ -116,23 +110,12 @@ typedef struct {
     uint8_t ir_value;                        // ir value
 } key_config_t;
 
-typedef enum {
-    CONNECT_NONE,
-    CONNECT_SLE,
-    CONNECT_BLE
-} connect_type_e;
-
-typedef struct {
-    device_control_target_e device_type;
-    uint8_t con_id;
-    uint8_t state;
-} connect_device_info_t;
-
 typedef struct {
     uint8_t num;
     uint8_t key_value[KEY_MAX_NUM];
 } key_t;
 
+void stop_all_adv(void);
 void keyevent_process(uint8_t *key_buf, uint8_t keylen, APP_MSG_DATA_TYPE event);
 void app_keyscan_init(void);
 

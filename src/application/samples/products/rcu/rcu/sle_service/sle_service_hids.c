@@ -20,6 +20,7 @@
 #define SLE_HID_POINT 1
 #define RCU_SEND_BUFF_LENGTH       20
 
+static uint8_t g_server_id;
 static uint8_t g_cccd[2] = {0x01, 0x0};
 static sle_item_handle_t g_hid_service_hdl[SLE_HID_INDEX_MAX] = {0};
 
@@ -201,8 +202,9 @@ static errcode_t sle_add_device_descriptor(sle_service_hids_t* hid_service, uint
     errcode_t ret;
     uint16_t device_input = SLE_HID_INDEX_HID_CONTROL + 1 + HID_SERVICE_STEP * index_multiple;
 
-    ret = sle_add_property(g_hid_service_property[HID_INDEX_REPORT], g_sle_hid_group_uuid[HID_INDEX_REPORT],
-        SLE_INPUT_REPORT_LENGTH, hid_service->input_report, &hid_service->item_handle[device_input]);
+    ret = sle_add_property(g_server_id, g_hid_service_property[HID_INDEX_REPORT],
+        g_sle_hid_group_uuid[HID_INDEX_REPORT], SLE_INPUT_REPORT_LENGTH,
+        hid_service->input_report, &hid_service->item_handle[device_input]);
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_printk("[uuid server] sle add report fail, ret:%x, indet:%x\r\n",
                     ret, SLE_HID_INDEX_KEYBOARD_INPUT);
@@ -222,7 +224,7 @@ static errcode_t sle_add_device_descriptor(sle_service_hids_t* hid_service, uint
     hid_service->input_report_descriptor[2] = hid_service->item_handle[device_input].handle_out;
     hid_service->input_report_descriptor[3] = 0;     // [3] rpt handle high
 
-    ret = sle_add_property(g_hid_service_property[HID_INDEX_REF], g_sle_hid_group_uuid[HID_INDEX_REF],
+    ret = sle_add_property(g_server_id, g_hid_service_property[HID_INDEX_REF], g_sle_hid_group_uuid[HID_INDEX_REF],
         SLE_SRV_ENCODED_REPORT_LEN, hid_service->input_report_descriptor,
         &hid_service->item_handle[device_input + HID_REF_OFFSET]);
     if (ret != ERRCODE_SLE_SUCCESS) {
@@ -237,7 +239,7 @@ static errcode_t sle_hids_property_and_descriptor_add(sle_service_hids_t* hid_se
 {
     errcode_t ret = ERRCODE_SLE_SUCCESS;
     // report_map_datas
-    ret = sle_add_property(g_hid_service_property[HID_INDEX_MAP], g_sle_hid_group_uuid[HID_INDEX_MAP],
+    ret = sle_add_property(g_server_id, g_hid_service_property[HID_INDEX_MAP], g_sle_hid_group_uuid[HID_INDEX_MAP],
         hid_service->map_data_len, hid_service->report_map_datas, &hid_service->item_handle[SLE_HID_INDEX_REPORT_MAP]);
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_printk("[uuid server] sle add report map ref fail, ret:%x, index:%x\r\n",
@@ -246,9 +248,9 @@ static errcode_t sle_hids_property_and_descriptor_add(sle_service_hids_t* hid_se
     }
 
     // control_point
-    ret = sle_add_property(g_hid_service_property[HID_INDEX_CONTROL], g_sle_hid_group_uuid[HID_INDEX_CONTROL],
-        sizeof(hid_service->hid_control_point), &hid_service->hid_control_point,
-        &hid_service->item_handle[SLE_HID_INDEX_HID_CONTROL]);
+    ret = sle_add_property(g_server_id, g_hid_service_property[HID_INDEX_CONTROL],
+        g_sle_hid_group_uuid[HID_INDEX_CONTROL], sizeof(hid_service->hid_control_point),
+        &hid_service->hid_control_point, &hid_service->item_handle[SLE_HID_INDEX_HID_CONTROL]);
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_printk("[uuid server] sle add hid ctrl point fail, ret:%x, index:%x\r\n",
                     ret, SLE_HID_INDEX_HID_CONTROL);
@@ -267,7 +269,7 @@ static errcode_t sle_rcu_hid_service_add(sle_service_hids_t* hid_service)
     errcode_t ret = ERRCODE_SLE_SUCCESS;
     
     // add HID service
-    ret = sle_service_add(g_sle_hid_group_uuid[HID_INDEX_SERVICE],
+    ret = sle_service_add(g_server_id, g_sle_hid_group_uuid[HID_INDEX_SERVICE],
         hid_service->item_handle, SLE_HID_INDEX_SERVICE, SLE_HID_INDEX_MAX);
     if (ret != ERRCODE_SLE_SUCCESS) {
         return ERRCODE_SLE_FAIL;
@@ -285,10 +287,11 @@ static errcode_t sle_rcu_hid_service_add(sle_service_hids_t* hid_service)
     return ERRCODE_SLE_SUCCESS;
 }
 
-errcode_t sle_add_hid_service(void)
+errcode_t sle_add_hid_service(uint8_t server_id)
 {
     uint8_t sle_input_report[SLE_INPUT_REPORT_LENGTH] = {0};
     uint8_t input_report_descriptor[SLE_SRV_ENCODED_REPORT_LEN] = {0};
+    g_server_id = server_id;
     sle_service_hids_t hid_service = { 0 };
     hid_service.hid_control_point = SLE_HID_POINT;
     hid_service.cccd = g_cccd;

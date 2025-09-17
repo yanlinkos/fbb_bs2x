@@ -30,12 +30,7 @@
 #define BLE_HID_INFO_COUNTRY_CODE                           0x00
 /* HID spec version 1.11 */
 #define BLE_HID_VERSION                                     0x0101
-/* HID keyboard input report id */
-#define BLE_HID_KEYBOARD_REPORT_ID                          1
-/* HID mouse input report id */
-#define BLE_HID_MOUSE_REPORT_ID                             4
-/* HID consumer input report id */
-#define BLE_HID_CONSUMER_REPORT_ID                          3
+
 /* HID power input report id */
 #define BLE_HID_POWER_REPORT_ID                             2
 /* HID input report type */
@@ -56,7 +51,8 @@
 #define INPUT_KEYBOARD                                      0
 #define INPUT_MOUSE                                         2
 #define INPUT_CONSUMER                                      4
-#define INPUT_POWER                                         6
+#define INPUT_AMIC                                          6
+#define INPUT_POWER                                         8
 
 #define input(size)                                         (0x80 | (size))
 #define output(size)                                        (0x90 | (size))
@@ -119,26 +115,8 @@ static uint8_t g_hid_information_val[] = { uint16_to_byte(BLE_HID_VERSION), BLE_
 static uint8_t g_control_point_val[] = {0x00, 0x00};
 /* HID client characteristic configuration value for test */
 static uint8_t g_ccc_val[] = {0x01, 0x00};
-/* HID keyboard input report reference value for test  [report id 1, input] */
-static uint8_t g_keyboard_report_reference_val_input[] = {BLE_HID_KEYBOARD_REPORT_ID,
-                                                          BLE_REPORT_REFERENCE_REPORT_TYPE_INPUT_REPORT};
-/* HID keyboard output report reference value for test [report id 1, output] */
-static uint8_t g_keyboard_report_reference_val_output[] = {BLE_HID_KEYBOARD_REPORT_ID,
-                                                           BLE_REPORT_REFERENCE_REPORT_TYPE_OUTPUT_REPORT};
-
-/* HID mouse input report reference value for test  [report id 4, input] */
-static uint8_t g_mouse_report_reference_val_input[] = {BLE_HID_MOUSE_REPORT_ID,
-                                                       BLE_REPORT_REFERENCE_REPORT_TYPE_INPUT_REPORT};
-/* HID mouse output report reference value for test [report id 4, output] */
-static uint8_t g_mouse_report_reference_val_output[] = {BLE_HID_MOUSE_REPORT_ID,
-                                                        BLE_REPORT_REFERENCE_REPORT_TYPE_OUTPUT_REPORT};
-
-/* HID consumer input report reference value for test  [report id 3, input] */
-static uint8_t g_consumer_report_reference_val_input[] = {BLE_HID_CONSUMER_REPORT_ID,
-                                                          BLE_REPORT_REFERENCE_REPORT_TYPE_INPUT_REPORT};
-/* HID consumer output report reference value for test [report id 3, output] */
-static uint8_t g_consumer_report_reference_val_output[] = {BLE_HID_CONSUMER_REPORT_ID,
-                                                           BLE_REPORT_REFERENCE_REPORT_TYPE_OUTPUT_REPORT};
+static uint8_t g_ccc_val_input[] = { 0x01, 0x00 }; // notify
+static uint8_t g_ccc_val_output[] = { 0x00, 0x00 };
 
 /* HID power input report reference value for test  [report id 2, input] */
 static uint8_t g_power_report_reference_val_input[] = {BLE_HID_POWER_REPORT_ID,
@@ -174,6 +152,15 @@ static uint8_t g_consumer_input_report_value[] = {0x00, 0x00};
 /* HID consumer output report value for test */
 static uint8_t g_consumer_output_report_value[] = {0x00};
 
+/* HID amic input report value  for test
+ * input report format:
+ * data0         | data1
+ * comsumer_key0 | comsumer_key1
+ */
+static uint8_t g_amic_input_report_value[] = {0x00, 0x00, 0x00};
+/* HID amic output report value for test */
+static uint8_t g_amic_output_report_value[] = {0x00};
+
 /* HID power input report value  for test
  * input report format:
  * data0         | data1
@@ -195,6 +182,8 @@ static uint16_t g_hid_keyboard_input_report_att_hdl = INVALID_ATT_HDL;
 static uint16_t g_hid_mouse_input_report_att_hdl = INVALID_ATT_HDL;
 /* hid consumer input report att handle */
 static uint16_t g_hid_consumer_input_report_att_hdl = INVALID_ATT_HDL;
+/* hid amic input report att handle */
+static uint16_t g_hid_amic_input_report_att_hdl = INVALID_ATT_HDL;
 /* hid power input report att handle */
 static uint16_t g_hid_power_input_report_att_hdl = INVALID_ATT_HDL;
 /* hid input report count */
@@ -295,6 +284,11 @@ static uint8_t g_srv_hid_rcu_report_map[] = {
     end_collection(0),
 };
 
+uint16_t ble_rcu_get_amic_handle(void)
+{
+    return g_hid_amic_input_report_att_hdl;
+}
+
 /* 将uint16的uuid数字转化为bt_uuid_t */
 static void bts_data_to_uuid_len2(uint16_t uuid_data, bt_uuid_t *out_uuid)
 {
@@ -391,11 +385,11 @@ static void ble_hid_add_descriptor_keyboard_report_reference(uint8_t server_id, 
     descriptor.desc_uuid = hid_report_reference_uuid;
     descriptor.permissions = GATT_ATTRIBUTE_PERMISSION_READ;
     if (is_input_flag) {
-        descriptor.value = g_keyboard_report_reference_val_input;
-        descriptor.value_len = sizeof(g_keyboard_report_reference_val_input);
+        descriptor.value = g_ccc_val_input;
+        descriptor.value_len = sizeof(g_ccc_val_input);
     } else {
-        descriptor.value = g_keyboard_report_reference_val_output;
-        descriptor.value_len = sizeof(g_keyboard_report_reference_val_output);
+        descriptor.value = g_ccc_val_output;
+        descriptor.value_len = sizeof(g_ccc_val_output);
     }
     gatts_add_descriptor(server_id, srvc_handle, &descriptor);
 }
@@ -410,11 +404,11 @@ static void ble_hid_add_descriptor_mouse_report_reference(uint8_t server_id, uin
     descriptor.desc_uuid = hid_report_reference_uuid;
     descriptor.permissions = GATT_ATTRIBUTE_PERMISSION_READ;
     if (is_input_flag) {
-        descriptor.value = g_mouse_report_reference_val_input;
-        descriptor.value_len = sizeof(g_mouse_report_reference_val_input);
+        descriptor.value = g_ccc_val_input;
+        descriptor.value_len = sizeof(g_ccc_val_input);
     } else {
-        descriptor.value = g_mouse_report_reference_val_output;
-        descriptor.value_len = sizeof(g_mouse_report_reference_val_output);
+        descriptor.value = g_ccc_val_output;
+        descriptor.value_len = sizeof(g_ccc_val_output);
     }
     gatts_add_descriptor(server_id, srvc_handle, &descriptor);
 }
@@ -429,11 +423,29 @@ static void ble_hid_add_descriptor_consumer_report_reference(uint8_t server_id, 
     descriptor.desc_uuid = hid_report_reference_uuid;
     descriptor.permissions = GATT_ATTRIBUTE_PERMISSION_READ;
     if (is_input_flag) {
-        descriptor.value = g_consumer_report_reference_val_input;
-        descriptor.value_len = sizeof(g_consumer_report_reference_val_input);
+        descriptor.value = g_ccc_val_input;
+        descriptor.value_len = sizeof(g_ccc_val_input);
     } else {
-        descriptor.value = g_consumer_report_reference_val_output;
-        descriptor.value_len = sizeof(g_consumer_report_reference_val_output);
+        descriptor.value = g_ccc_val_output;
+        descriptor.value_len = sizeof(g_ccc_val_output);
+    }
+    gatts_add_descriptor(server_id, srvc_handle, &descriptor);
+}
+
+/* 添加描述符：HID amic report reference */
+static void ble_hid_add_descriptor_amic_report_reference(uint8_t server_id, uint16_t srvc_handle, bool is_input_flag)
+{
+    bt_uuid_t hid_report_reference_uuid = { 0 };
+    bts_data_to_uuid_len2(BLE_UUID_REPORT_REFERENCE, &hid_report_reference_uuid);
+    gatts_add_desc_info_t descriptor;
+    descriptor.desc_uuid = hid_report_reference_uuid;
+    descriptor.permissions = GATT_ATTRIBUTE_PERMISSION_READ;
+    if (is_input_flag) {
+        descriptor.value = g_ccc_val_input;
+        descriptor.value_len = sizeof(g_ccc_val_input);
+    } else {
+        descriptor.value = g_ccc_val_output;
+        descriptor.value_len = sizeof(g_ccc_val_output);
     }
     gatts_add_descriptor(server_id, srvc_handle, &descriptor);
 }
@@ -550,6 +562,37 @@ static void ble_hid_add_character_consumer_output_report(uint8_t server_id, uint
     ble_hid_add_descriptor_consumer_report_reference(server_id, srvc_handle, false);
 }
 
+/* 添加特征：HID amic input report(device to host) */
+static void ble_hid_add_character_amic_input_report(uint8_t server_id, uint16_t srvc_handle)
+{
+    bt_uuid_t hid_report_uuid = { 0 };
+    bts_data_to_uuid_len2(BLE_UUID_REPORT, &hid_report_uuid);
+    gatts_add_chara_info_t character;
+    character.chara_uuid = hid_report_uuid;
+    character.permissions = GATT_ATTRIBUTE_PERMISSION_READ | GATT_ATTRIBUTE_PERMISSION_WRITE;
+    character.properties = GATT_CHARACTER_PROPERTY_BIT_NOTIFY | GATT_CHARACTER_PROPERTY_BIT_READ;
+    character.value_len = sizeof(g_amic_input_report_value);
+    character.value = g_amic_input_report_value;
+    gatts_add_characteristic(server_id, srvc_handle, &character);
+    ble_hid_add_descriptor_ccc(server_id, srvc_handle);
+    ble_hid_add_descriptor_amic_report_reference(server_id, srvc_handle, true);
+}
+
+/* 添加特征：HID amic output report(host to device) */
+static void ble_hid_add_character_amic_output_report(uint8_t server_id, uint16_t srvc_handle)
+{
+    bt_uuid_t hid_report_uuid = { 0 };
+    bts_data_to_uuid_len2(BLE_UUID_REPORT, &hid_report_uuid);
+    gatts_add_chara_info_t character;
+    character.chara_uuid = hid_report_uuid;
+    character.properties = GATT_CHARACTER_PROPERTY_BIT_READ | GATT_CHARACTER_PROPERTY_BIT_WRITE_NO_RSP;
+    character.permissions = GATT_ATTRIBUTE_PERMISSION_READ | GATT_ATTRIBUTE_PERMISSION_WRITE;
+    character.value_len = sizeof(g_amic_output_report_value);
+    character.value = g_amic_output_report_value;
+    gatts_add_characteristic(server_id, srvc_handle, &character);
+    ble_hid_add_descriptor_amic_report_reference(server_id, srvc_handle, false);
+}
+
 /* 添加特征：HID power input report(device to host) */
 static void ble_hid_add_character_power_input_report(uint8_t server_id, uint16_t srvc_handle)
 {
@@ -616,6 +659,10 @@ static void ble_hid_add_characters_and_descriptors(uint8_t server_id, uint16_t s
     ble_hid_add_character_consumer_input_report(server_id, srvc_handle);
     /* Consmuer Output Report */
     ble_hid_add_character_consumer_output_report(server_id, srvc_handle);
+    /* Amic Input Report */
+    ble_hid_add_character_amic_input_report(server_id, srvc_handle);
+    /* Amic Output Report */
+    ble_hid_add_character_amic_output_report(server_id, srvc_handle);
     /* Power Input Report */
     ble_hid_add_character_power_input_report(server_id, srvc_handle);
     /* Power Output Report */
@@ -675,6 +722,8 @@ static void  ble_hid_server_characteristic_add_cbk(uint8_t server_id, bt_uuid_t 
             g_hid_mouse_input_report_att_hdl = result->value_handle;
         } else if (g_input_report_count == INPUT_CONSUMER) {
             g_hid_consumer_input_report_att_hdl = result->value_handle;
+        } else if (g_input_report_count == INPUT_AMIC) {
+            g_hid_amic_input_report_att_hdl = result->value_handle;
         } else if (g_input_report_count == INPUT_POWER) {
             g_hid_power_input_report_att_hdl = result->value_handle;
         }

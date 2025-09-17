@@ -9,6 +9,7 @@
 #ifndef SLE_AIR_MOUSE_CLIENT_H
 #define SLE_AIR_MOUSE_CLIENT_H
 
+#include "osal_event.h"
 #include "sle_ssap_client.h"
 #include "slp.h"
 
@@ -17,6 +18,9 @@
 extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
+
+#define VDT_TRANSFER_EVENT          1
+extern osal_event g_trans_event_id;
 
 void sle_air_mouse_client_init(void);
 
@@ -32,6 +36,8 @@ void sle_client_slp_command_register_cbks(void);
 
 void set_slp_cursor_speed(SlpCursorSpeed mode);
 SlpCursorSpeed get_slp_cursor_speed(void);
+
+void send_amic_data_uac(void);
 
 #ifdef __cplusplus
 #if __cplusplus

@@ -233,3 +233,30 @@ config AIR_MOUSE_IMU_INT2_PIN
     range 32 32 if AIR_MOUSE_SELF_BOARD
     range 28 28 if AIR_MOUSE_EVB4_FOR_1T2R
     prompt "Set the imu int2 pin num."
+config ADC_USE_PIN1
+    int
+    prompt "Choose ADC USE pin1."
+    default 30
+    depends on SAMPLE_SUPPORT_AIR_MOUSE
+
+config ADC_USE_PIN2
+    int
+    prompt "Choose ADC USE pin2."
+    default 31
+    depends on SAMPLE_SUPPORT_AIR_MOUSE
+
+config USB_UAC_MAX_RECORD_SIZE
+    hex
+    prompt "Set the max recorder size of USB UAC."
+    default 0x400
+    help
+        This option means the max recorder size of USB UAC.
+    depends on SAMPLE_SUPPORT_AIR_MOUSE
+
+config USB_PDM_TRANSFER_LEN_BY_DMA
+    int
+    prompt "Set the length of transfer by DMA."
+    default 256
+    help
+        This option means the length of transfer by DMA.
+    depends on SAMPLE_SUPPORT_AIR_MOUSE

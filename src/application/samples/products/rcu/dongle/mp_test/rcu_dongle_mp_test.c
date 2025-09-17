@@ -112,14 +112,12 @@ void rcu_dongle_mp_test_set_test_station(uint8_t *tlv)
     g_current_test_station = tlv[TLV_TYPE_VALUE];
     osal_printk("dongle need set work station:%d\r\n", g_current_test_station);
     sle_addr_t peer_addr = {0, {0x10, 0x00, 0x00, 0x00, 0x00, 0x00}};
-#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_TYPE)
     sle_set_save_pair_keys_mode(SLE_SAVE_SMP_KEYS_MANU);
     errcode_sle_t ret = sle_set_nv_smp_keys(&g_key[g_current_test_station - 1], &g_own_addr[g_current_test_station - 1],
         &peer_addr, 0);
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_printk("Set test station fail.  error_code: %x \r\n", ret);
     }
-#endif
     sle_set_local_addr(&g_own_addr[g_current_test_station - 1]);
     sle_rcu_start_scan();
 }

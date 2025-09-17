@@ -3,6 +3,11 @@ set(SOURCES_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/dongle/air_mouse_usb/usb_init_app.c
     ${CMAKE_CURRENT_SOURCE_DIR}/dongle/sle_air_mouse_client/sle_air_mouse_client.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sle_air_mouse_with_dongle.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic/vdt_codec.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic/amic_voice.c
+)
+set(HEADER_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic
 )
 endif()
 
@@ -11,6 +16,16 @@ set(SOURCES_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/mouse/sle_air_mouse_server/sle_air_mouse_server_adv.c
     ${CMAKE_CURRENT_SOURCE_DIR}/mouse/sle_air_mouse_server/sle_air_mouse_server.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sle_air_mouse_with_dongle.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic/vdt_codec.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic/vdt_pdm.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic/amic_voice.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/sle_service/sle_service_ntf.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/common/app_common.c
+)
+set(HEADER_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/sle_service
+    ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/common
 )
 endif()
 
@@ -35,4 +50,4 @@ set(SOURCES_LIST
 endif()
 
 set(SOURCES "${SOURCES}" ${SOURCES_LIST} PARENT_SCOPE)
-set(PUBLIC_HEADER "${PUBLIC_HEADER}" "${CMAKE_CURRENT_SOURCE_DIR}" PARENT_SCOPE)
+set(PUBLIC_HEADER "${PUBLIC_HEADER}" "${CMAKE_CURRENT_SOURCE_DIR}" ${HEADER_LIST} PARENT_SCOPE)
