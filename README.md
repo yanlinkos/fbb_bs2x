@@ -4,6 +4,10 @@
 
   fbb_bs2x仓是星闪bs21e解决方案代码仓，搭载LiteOS系统，主要用于鼠标、键盘、测距、电子消费类等应用场景，该SDK包从统一开发平台FBB（Family Big Box，统一开发框架，统一API）构建而来，在该平台上开发的应用很容易被移植到其他星闪解决方案上，有效降低开发者门槛，缩短开发周期，支持开发者快速开发星闪产品。软件文档在线化链接：https://docs.hisilicon.com/repos/fbb_bs2x/zh-CN/master/
 
+## Release-notes
+
+[BS2X-1.0.17](docs/zh-CN/software/release-notes/BS2X-1.0.17.md)
+
 ## 目录介绍
 
 | 目录   | 介绍                                                         |
