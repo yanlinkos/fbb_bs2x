@@ -10,6 +10,8 @@
 #include "soc_osal.h"
 #include "securec.h"
 #include "product.h"
+#include "timer.h"
+#include "chip_core_irq.h"
 #include "bts_le_gap.h"
 #include "bts_device_manager.h"
 #include "sle_device_manager.h"
@@ -29,6 +31,8 @@
 #define SLE_UART_WAIT_SLE_CORE_READY_MS 5000
 #define SLE_UART_RECV_CNT               1000
 #define SLE_UART_LOW_LATENCY_2K         2000
+#define SLE_UART_LOW_LATENCY_1K         1000
+#define SLE_BUFF_MAX_SIZE               256
 #define BT_INDEX_4                      4
 #define BT_INDEX_0                      0
 #ifndef SLE_UART_SERVER_NAME
@@ -181,7 +185,11 @@ static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errc
 {
 #ifdef CONFIG_SAMPLE_SUPPORT_LOW_LATENCY_TYPE
         sle_low_latency_rx_enable();
+#if (CHIP_BS20 == 1)
+        sle_low_latency_set(get_g_sle_uart_conn_id(), true, SLE_UART_LOW_LATENCY_1K);
+#else
         sle_low_latency_set(get_g_sle_uart_conn_id(), true, SLE_UART_LOW_LATENCY_2K);
+#endif
         sle_uart_client_sample_set_phy_param();
         osal_msleep(SLE_UART_TASK_DELAY_MS);
         sle_set_mcs(get_g_sle_uart_conn_id(), SLE_UART_QPSK_MCS);
@@ -304,7 +312,7 @@ void sle_uart_client_low_latency_recv_data_cbk(uint16_t len, uint8_t *value)
     uapi_uart_write(CONFIG_SLE_UART_BUS, value, len, 0);
 #endif
 }
-
+#if ((CHIP_BS21E == 1) || (CHIP_BS20 == 1))
 void sle_uart_client_low_latency_recv_data_cbk_register(void)
 {
     osal_printk("uart recv low latency data register success\r\n");
@@ -312,6 +320,22 @@ void sle_uart_client_low_latency_recv_data_cbk_register(void)
     cbk_func.low_latency_rx_cb = (low_latency_general_rx_callback)sle_uart_client_low_latency_recv_data_cbk;
     sle_low_latency_rx_register_callbacks(&cbk_func);
 }
+#else
+void dongle_cbk(timer_index_t index)
+{
+    int ret = osal_irq_lock();
+    unused(index);
+    uint8_t value[SLE_BUFF_MAX_SIZE] = {0};
+    uint16_t data_len = 0;
+    sle_low_latency_rx_get_data(value, SLE_BUFF_MAX_SIZE, &data_len);
+    if (value == NULL || data_len == 0) {
+        osal_irq_restore(ret);
+        return;
+    }
+    sle_uart_client_low_latency_recv_data_cbk(data_len, value);
+    osal_irq_restore(ret);
+}
+#endif
 #endif
 
 void sle_uart_client_init(ssapc_notification_callback notification_cb, ssapc_indication_callback indication_cb)
@@ -320,6 +344,13 @@ void sle_uart_client_init(ssapc_notification_callback notification_cb, ssapc_ind
     sle_uart_client_sample_connect_cbk_register();
     sle_uart_client_sample_ssapc_cbk_register(notification_cb, indication_cb);
 #ifdef CONFIG_SAMPLE_SUPPORT_LOW_LATENCY_TYPE
+#if ((CHIP_BS21E == 1) || (CHIP_BS20 == 1))
     sle_uart_client_low_latency_recv_data_cbk_register();
+#else
+    timer_irq_info_t irq_info;
+    irq_info.irq = TIMER_1_IRQN;
+    irq_info.priority = 0;
+    uapi_timer_start_high_precision(TIMER_INDEX_1, TIMER_MODE_PERIODIC, 125, &irq_info, dongle_cbk); // 125us定时
+#endif
 #endif
 }
