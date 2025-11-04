@@ -11,7 +11,7 @@
 | CPU主频          | 64M   | 64M    | 64M    |
 | FLASH            | 1M    | 1M     | 1M     |
 | RAM              | 128K  | 160K   | 160K   |
-| SLE              | 1K    | 2K     | 2K     |
+| SLE              | 1K    | 2K     | 4K     |
 | 空口速率         | 4Mbps | 12Mbps | 12Mbps |
 | USB              | 支持  | 支持   | 支持   |
 | 有线回报率       | 1K    | 4K     | 8K     |
