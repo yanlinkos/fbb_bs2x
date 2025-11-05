@@ -34,7 +34,7 @@
 
 | 硬件资料                                                     | 介绍                                       | 二维码购买链接                                               |
 | ------------------------------------------------------------ | ------------------------------------------ | ------------------------------------------------------------ |
-| [购买链接](https://www.ickey.cn/detail/1003001022725627/BS21Q331.html#) | 云汉芯城BS21E芯片，采用星闪BS21E解决方案。 | <img src="vendor/HH-D03/doc/media/readme/image-20250625161256895.png" alt="image-20250625161256895" style="zoom:50%;" /> |
+| [购买链接](https://www.ickey.cn/detail/1003001022725627/BS21Q331.html#) | 云汉芯城BS21E芯片，采用星闪BS21E解决方案。 | <img src="./vendor/HH-D03/doc/media/readme/21.jpg" alt="21" style="zoom:50%;" /> |
 | [购买链接](https://www.ickey.cn/detail/1003001026273687/BS20Q332.html) | 云汉芯城BS20芯片，采用星闪BS20解决方案。   | <img src="./vendor/HH-D03/doc/media/readme/20.png" alt="20" style="zoom:50%;" /> |
 | [购买链接](https://www.ickey.cn/detail/1003001026273686/BS22Q332.html) | 云汉芯城BS22芯片，采用星闪BS22解决方案。   | <img src="./vendor/HH-D03/doc/media/readme/22.png" alt="22" style="zoom:50%;" /> |
 
