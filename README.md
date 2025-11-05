@@ -34,7 +34,9 @@
 
 | 硬件资料                                                     | 介绍                                       | 二维码购买链接                                               |
 | ------------------------------------------------------------ | ------------------------------------------ | ------------------------------------------------------------ |
-| [购买链接](https://www.ickey.cn/detail/1003001022725627/BS21Q331.html#) | 云汉芯城BS21E芯片，采用星闪BS21E解决方案。 | <img src="vendor/HH-D03/doc/media/readme/image-20250625161256895.png" alt="image-20250625161256895" style="zoom:50%;" /> |
+| [购买链接](https://www.ickey.cn/detail/1003001022725627/BS21Q331.html#) | 云汉芯城BS21E芯片，采用星闪BS21E解决方案。 | <img src="./vendor/HH-D03/doc/media/readme/21.jpg" alt="21" style="zoom:50%;" /> |
+| [购买链接](https://www.ickey.cn/detail/1003001026273687/BS20Q332.html) | 云汉芯城BS20芯片，采用星闪BS20解决方案。   | <img src="./vendor/HH-D03/doc/media/readme/20.png" alt="20" style="zoom:50%;" /> |
+| [购买链接](https://www.ickey.cn/detail/1003001026273686/BS22Q332.html) | 云汉芯城BS22芯片，采用星闪BS22解决方案。   | <img src="./vendor/HH-D03/doc/media/readme/22.png" alt="22" style="zoom:50%;" /> |
 
 模组等产品均由相应产家自行销售，由其对产品质量负责，如侵犯他人知识产权的由其自行承担全部责任及赔偿。海思不提供任何保证及担保，亦不承担任何责任及赔偿。
 
