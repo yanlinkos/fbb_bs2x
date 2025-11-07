@@ -38,6 +38,8 @@
 | [购买链接](https://www.ickey.cn/detail/1003001026273687/BS20Q332.html) | 云汉芯城BS20芯片，采用星闪BS20解决方案。   | <img src="./vendor/HH-D03/doc/media/readme/20.png" alt="20" style="zoom:50%;" /> |
 | [购买链接](https://www.ickey.cn/detail/1003001026273686/BS22Q332.html) | 云汉芯城BS22芯片，采用星闪BS22解决方案。   | <img src="./vendor/HH-D03/doc/media/readme/22.png" alt="22" style="zoom:50%;" /> |
 
+**免费样片申请活动：[活动链接](https://developers.hisilicon.com/active?activity_id=4112f69ad3c0430fb1d488da2616aa7f&channelCode=hispark)**
+
 模组等产品均由相应产家自行销售，由其对产品质量负责，如侵犯他人知识产权的由其自行承担全部责任及赔偿。海思不提供任何保证及担保，亦不承担任何责任及赔偿。
 
 ## 软件资料介绍
