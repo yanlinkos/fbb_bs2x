@@ -60,7 +60,7 @@
 | DK221星闪2K鼠标完整解决方案（方格电子） | [方格电子DK221星闪2K鼠标解决方案购买链接（淘宝）](https://e.tb.cn/h.69IMdsPhGFQWDgS?tk=b25cVdob237) | 后续提供                                                     |
 | EB21开发板(利尔达)                      | [利尔达EB21开发板购买链接  (淘宝)](https://e.tb.cn/h.hkUHZCgkSmrD7U3?tk=GjbE4WfqivCMF287) | ![image-20250801143652676](./vendor/Lierda-EB21/image-20250801143652676.png) |
 | 2825星闪外设板（利尔达）                | [利尔达2825星闪外设板（淘宝）](https://e.tb.cn/h.h9s5pP5eEBYr5M5?tk=gimv4WfzzIG) | ![image-20250801144216037](./vendor/Lierda-EB21/image-20250801144216037.png) |
-| WR_BS282X-M1（星闪工业模组）            | [星闪工业模组购买链接（微信）](https://gitee.com/wen-zhuangwei/fbb_bs2x_1/tree/master/vendor/WR_BS282X-M1) | ![image-20251113181704152](./vendor/Lierda-EB21/image-20251113181704152.png) |
+| WR_BS282X-M1（星闪工业模组）            | [星闪工业模组购买链接（邮箱）](https://gitee.com/wen-zhuangwei/fbb_bs2x_1/tree/master/vendor/WR_BS282X-M1) | ![image-20251113181704152](./vendor/Lierda-EB21/image-20251113181704152.png) |
 
 开发板等产品均由相应产家自行销售，由其对产品质量负责，如侵犯他人知识产权的由其自行承担全部责任及赔偿。海思不提供任何保证及担保，亦不承担任何责任及赔偿。
 
