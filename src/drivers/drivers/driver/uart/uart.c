@@ -380,7 +380,7 @@ errcode_t uapi_uart_register_parity_error_callback(uart_bus_t bus, uart_error_ca
     uart_rx_state_t *rx_state = &g_uart_rx_state_array[bus];
     uint32_t irq_sts = uart_porting_lock(bus);
     rx_state->parity_error_callback = callback;
-    ret = hal_uart_ctrl(bus, UART_CTRL_EN_PARITY_ERR_INT, 0);
+    ret = hal_uart_ctrl(bus, UART_CTRL_EN_PARITY_ERR_INT, 1);
     uart_porting_unlock(bus, irq_sts);
 
     return ret;
@@ -396,7 +396,7 @@ errcode_t uapi_uart_register_frame_error_callback(uart_bus_t bus, uart_error_cal
     uart_rx_state_t *rx_state = &g_uart_rx_state_array[bus];
     uint32_t irq_sts = uart_porting_lock(bus);
     rx_state->frame_error_callback = callback;
-    ret = hal_uart_ctrl(bus, UART_CTRL_EN_FRAME_ERR_INT, 0);
+    ret = hal_uart_ctrl(bus, UART_CTRL_EN_FRAME_ERR_INT, 1);
     uart_porting_unlock(bus, irq_sts);
 
     return ret;
@@ -412,7 +412,7 @@ errcode_t uapi_uart_register_overrun_error_callback(uart_bus_t bus, uart_error_c
     uart_rx_state_t *rx_state = &g_uart_rx_state_array[bus];
     uint32_t irq_sts = uart_porting_lock(bus);
     rx_state->overrun_error_callback = callback;
-    ret = hal_uart_ctrl(bus, UART_CTRL_EN_OVERRUN_ERR_INT, 0);
+    ret = hal_uart_ctrl(bus, UART_CTRL_EN_OVERRUN_ERR_INT, 1);
     uart_porting_unlock(bus, irq_sts);
 
     return ret;

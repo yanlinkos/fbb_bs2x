@@ -183,7 +183,7 @@ static void ssaps_server_write_request_cbk(uint8_t server_id, uint16_t conn_id, 
 static void vdt_set_phy_param(void)
 {
     sle_set_phy_t param = { 0 };
-    param.tx_format = 1;         /* 无线帧类型2 */
+    param.tx_format = 1;         /* 无线帧类型2 0 :无线帧类型1(GFSK); 1:无线帧类型2(QPSK) */
     param.rx_format = 1;         /* 无线帧类型2 */
     param.tx_phy = 0;            /* 0 1M 1 2M 2 4M */
     param.rx_phy = 0;
@@ -278,12 +278,20 @@ static errcode_t ota_upgrade_state_notify_cb(ota_upgrade_state_t upgrade_state, 
 #if defined(CONFIG_PM_SYS_SUPPORT)
             /* 睡眠否决票 uapi_pm_add_sleep_veto */
             ret = uapi_pm_set_state_trans_duration(0xFFFFFFFF, 0xFFFFFFFF);
+            uapi_pm_wkup_process(0);
+#if defined(CONFIG_SLE_UPG_ENABLE)
+            sle_rcu_set_ota_stage(SLE_RCU_OTA_RUNNING);
+#endif  /* CONFIG_SLE_UPG_ENABLE */
 #endif
             break;
         case OTA_UPGRADE_STATE_END:
 #if defined(CONFIG_PM_SYS_SUPPORT)
             /* 移除睡眠否决票uapi_pm_remove_sleep_veto */
+            uapi_pm_work_state_reset();
             ret = uapi_pm_set_state_trans_duration(DURATION_MS_OF_WORK_TO_STANDBY, DURATION_MS_OF_STANDBY_TO_SLEEP);
+#if defined(CONFIG_SLE_UPG_ENABLE)
+            sle_rcu_set_ota_stage(SLE_RCU_OTA_STOP);
+#endif  /* CONFIG_SLE_UPG_ENABLE */
 #endif
             break;
         default:

@@ -30,7 +30,7 @@
 #endif
 
 #define CUSTOMER_USED_PAGES                 0
-#define NV_IMAGE_PAGES                      2
+#define NV_IMAGE_PAGES                      (NV_IMAGE_LEN / 0x1000)
 #define SSB_IMAGE_PAGES                     0
 #define DTB_IMAGE_PAGES                     0
 #define RECOVERY_IMAGE_PAGES                0
@@ -54,7 +54,11 @@
 #else
 #define SYS_DEBUG_MODE_ENABLE               NO
 #endif
+#ifdef CONFIG_SUPPORT_LOG_THREAD
 #define APP_LOGGING_LENGTH                  0xC00
+#else
+#define APP_LOGGING_LENGTH                  0x0
+#endif
 
 /********************Other module board config********************/
 #define BTC_SWITCH_COEX                     NO

@@ -92,6 +92,7 @@ typedef enum panic_id {
     PANIC_BTS_WRITE_PROPERTY_FAIL = 66,
     PANIC_MMC_HOST = 67,
     PANIC_BTC_OSCEN_TO = 68,
+    PANIC_EFUSE = 69,
     PANIC_RGB888 = 70,
     PANIC_AP_COMMU = 71,
     PANIC_CPU_CLOCKS = 72,

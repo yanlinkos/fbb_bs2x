@@ -13,6 +13,7 @@
 #include "osal_task.h"
 #include "bts_def.h"
 #include "bts_le_gap.h"
+#include "ble_rcu_until.h"
 #include "bts_device_manager.h"
 #include "ble_rcu_client.h"
 
@@ -272,6 +273,17 @@ static void ble_rcu_gap_ble_scan_result_callback(gap_scan_result_data_t *scan_re
 
     find_connect_server = ble_rcu_find_unconnect_server_by_addr(scan_result_data->addr.addr);
     int ret = memcmp(scan_result_data->adv_data + BLE_DEV_NAME_OFFSET + 3, arr, sizeof(arr));
+    if (ret != 0) {
+        uint8_t local_addr[BD_ADDR_LEN] = {0x05, 0x04, 0x03, 0x02, 0x0a, 0x0b};
+        if (scan_result_data->addr.addr[BLE_ADDR_INDEX0] == local_addr[BLE_ADDR_INDEX0] &&
+            scan_result_data->addr.addr[BLE_ADDR_INDEX1] == local_addr[BLE_ADDR_INDEX1] &&
+            scan_result_data->addr.addr[BLE_ADDR_INDEX2] == local_addr[BLE_ADDR_INDEX2] &&
+            scan_result_data->addr.addr[BLE_ADDR_INDEX3] == local_addr[BLE_ADDR_INDEX3] &&
+            scan_result_data->addr.addr[BLE_ADDR_INDEX4] == local_addr[BLE_ADDR_INDEX4] &&
+            scan_result_data->addr.addr[BLE_ADDR_INDEX5] == local_addr[BLE_ADDR_INDEX5]) {
+            ble_rcu_scan_remove_adv_list((uint8_t *)&scan_result_data->addr.addr);
+        }
+    }
     if ((find_connect_server <= CONFIG_RCU_MULTICON_NUM) && (ret == 0)) {
         osal_printk("%s find server addr:[0x%02x:0x%02x:xx:xx:xx:0x%02x], index = %d\r\n",
             BLE_RCU_DONGLE_LOG,

@@ -7,7 +7,7 @@ set(COMPONENT_NAME "slp_client")
 set(MODULE_NAME "slp")
 set(AUTO_DEF_FILE_ID TRUE)
 
-
+return_if_not_build()
 #加载子目录
 add_subdirectory_if_exist(narrow_band)
 add_subdirectory_if_exist(common)
@@ -58,13 +58,12 @@ set(LOG_DEF
 
 #指定静态库生成位置
 set(LIB_OUT_PATH ${BIN_DIR}/${CHIP}/libs/slp/${TARGET_COMMAND})
-return_if_not_build()
 
 set(LIB_PATH "${CMAKE_CURRENT_SOURCE_DIR}/${TARGET_COMMAND}/lib${COMPONENT_NAME}.a")
 if(EXISTS ${LIB_PATH})
     set(LIBS ${LIB_PATH})
 else()
-    message(WARNING "Library ${LIB_PATH} does not exist, skipping.")
+    message(STATUS "Library ${LIB_PATH} does not exist, skipping.")
 endif()
 
 build_component()

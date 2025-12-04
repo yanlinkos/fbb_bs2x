@@ -23,6 +23,7 @@
 #
 CONFIG_USER_FIRMWARE_VERSION="0.0.0.1"
 # CONFIG_SYSTEM_CONTROL_ENABLE is not set
+# CONFIG_CODE_MINIATURE_ENABLE is not set
 # CONFIG_SAMPLE_ENABLE is not set
 # CONFIG_DRIVERS_USB_DFU_GADGET is not set
 # CONFIG_MIDDLEWARE_SUPPORT_UPDATE is not set
@@ -794,6 +795,7 @@ CONFIG_AT_CMD_MAX_LENGTH=128
 # end of Config AT
 
 # CONFIG_MIDDLEWARE_SUPPORT_CODEC is not set
+# CONFIG_NV_SUPPORT_ENCRYPT is not set
 # end of Utils
 # end of Middleware
 
@@ -894,7 +896,11 @@ CONFIG_SUPPORT_NFC_SERVICE=y
 #
 # end of wifi
 
+#
+# radar
+#
 # CONFIG_RADAR_SERVICE is not set
+# end of radar
 # end of Protocol
 
 #

@@ -75,6 +75,8 @@ typedef struct usb_hid_rcu_consumer_report {
 } usb_hid_rcu_consumer_report_t;
 
 int32_t rcu_dongle_set_report_desc_hid(void);
+int32_t rcu_dongle_set_custom_report_desc_hid(void);
+int32_t rcu_dongle_get_custom_report_desc_hid(void);
 
 #ifdef __cplusplus
 #if __cplusplus

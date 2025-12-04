@@ -150,7 +150,7 @@ void sle_air_mouse_server_adv_init(void)
     sle_set_default_announce_param();
     sle_set_default_announce_data();
     sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
-#ifdef CONFIG_AIR_MOUSE_HR_BOARD
+#if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD
     set_led_status(LED_STATUS_PAIRING);
 #endif
     osal_printk("%s sle_air_mouse_server_adv_init out\r\n", SLE_AIR_MOUSE_DONGLE_SERVER_LOG);

@@ -825,6 +825,9 @@ void ble_hid_rcu_server_init(void)
     }
     osal_printk("[hid][INFO]beginning add service\r\n");
     ble_hid_add_service(); /* 添加HID服务 */
+#if defined(CONFIG_BT_UPG_ENABLE)
+    bth_ota_init();
+#endif
 }
 
 /* device向host发送数据：input report */

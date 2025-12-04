@@ -26,6 +26,13 @@ extern "C" {
 #define SLE_RCU_SERVER_LOG     "[sle rcu server]"
 #define SLE_RCU_SSAP_RPT_HANDLE    2
 
+#if defined(CONFIG_SLE_UPG_ENABLE)
+typedef enum {
+    SLE_RCU_OTA_RUNNING = 0x01,
+    SLE_RCU_OTA_STOP = 0x02
+} sle_rcu_ota_stage_e;
+#endif
+
 errcode_t sle_low_latency_register_callbacks(sle_low_latency_callbacks_t *cbks);
 errcode_t sle_low_latency_set_em_data(uint16_t co_handle, uint8_t enable);
 errcode_t sle_rcu_server_init(ssaps_read_request_callback ssaps_read_callback,
@@ -44,6 +51,11 @@ void sle_rcu_sleep_to_work(void);
 void sle_low_latency_cbk_reg(void);
 uint8_t rcu_get_server_id(void);
 uint16_t get_g_connid(void);
+
+#if defined(CONFIG_SLE_UPG_ENABLE)
+void sle_rcu_set_ota_stage(uint8_t ota_stage);
+uint8_t sle_rcu_get_ota_stage(void);
+#endif
 
 #ifdef __cplusplus
 #if __cplusplus

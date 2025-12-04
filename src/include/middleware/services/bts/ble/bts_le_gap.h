@@ -683,6 +683,68 @@ typedef struct {
 
 /**
  * @if Eng
+ * @brief Enum of set nv store smp keys mode switch
+ * @else
+ * @brief NV保存密钥用户设置开关
+ * @endif
+ */
+typedef enum {
+    NV_STORE_SMP_KEYS_ENCRYPT = 0,          /*!< @if Eng nv encrypts and store smp keys
+                                                        @else NV加密保存密钥 @endif */
+    NV_STORE_SMP_KEYS_PLAINTEXT = 1,            /*!< @if Eng nv store smp keys in plaintext
+                                                        @else   NV明文保存密钥 @endif */
+} nv_store_smp_keys_mode_switch_t;
+
+/**
+ * @if Eng
+ * @brief Enum of BLE feature switch.
+ * @else
+ * @brief BLE特性开关枚举。
+ * @endif
+ */
+typedef enum {
+    BLE_FEATURE_DISABLE = 0x00,                   /*!< @if Eng feature disable
+                                                        @else   特性关闭 @endif */
+    BLE_FEATURE_ENABLE  = 0x01,                   /*!< @if Eng feature enable
+                                                        @else   特性开启 @endif */
+} ble_feature_switch_t;
+
+/**
+ * @if Eng
+ * @brief Enum of BLE add ral policy.
+ * @else
+ * @brief BLE添加ral策略枚举。
+ * @endif
+ */
+typedef enum {
+    BLE_FEATURE_ADD_RAL_DEFAULT     = 0x00,                 /*!< @if Eng default add ral policy
+                                                                 @else   默认添加ral策略 @endif */
+    BLE_FEATURE_ADD_RAL_ONLY_RANDOM_ADDR    = BLE_FEATURE_ADD_RAL_DEFAULT,
+                                                            /*!< @if Eng only add random address to ral
+                                                                 @else   仅将随机地址添加到ral @endif */
+
+    BLE_FEATURE_ADD_RAL_EVERY_ADDR          = 0x01,         /*!< @if Eng add every address to ral
+                                                                 @else   将所有地址添加到ral @endif */
+} ble_feature_add_ral_policy_t;
+
+/**
+ * @if Eng
+ * @brief Enum of BLE feature.
+ * @else
+ * @brief BLE特性枚举。
+ * @endif
+ */
+typedef enum {
+    BLE_FEATURE_CONNNECTION_ASYNC = 0x00,       /*!< @if Eng async connection
+                                                            { @ref ble_feature_switch_t }.
+                                                     @else   异步连接 @endif */
+    BLE_FEATURE_ADD_RAL_POLICY    = 0x01,       /*!< @if Eng policy of adding device to resolving address list
+                                                            { @ref ble_feature_add_ral_policy_t }.
+                                                     @else   添加设备到地址解析列表的策略 @endif */
+} ble_feature_type_t;
+
+/**
+ * @if Eng
  * @brief Callback invoked in response to advertising being enabled.
  * @par When registered, this callback notifies the upper layer whether advertising is enabled successfully.
  * @attention 1. This function is called in bts context,should not be blocked or do long time waiting.
@@ -2054,6 +2116,44 @@ errcode_t gap_ble_set_local_passkey(uint8_t enable, uint32_t tk);
  * @endif
  */
 errcode_t gap_ble_passkey_entry(uint16_t conn_id, uint32_t tk);
+
+/**
+ * @if Eng
+ * @brief Use this funtion to set nv store smp keys encrypted or not
+ * @par   Use this funtion to set nv store smp keys encrypted or not
+ * @attention NULL
+ * @param  [in] is_encrypted set nv store smp keys encrypted or not { @ref nv_store_smp_keys_mode_switch_t }.
+ * @retval error code.
+ * @else
+ * @brief  NV存储配对密钥是否加密可设置
+ * @par    NV存储配对密钥是否加密可设置
+ * @attention 无
+ * @param  [in] is_encrypted NV存储配对密钥是否加密可设置。 { @ref nv_store_smp_keys_mode_switch_t }。
+ * @retval 执行结果错误码。
+ * @endif
+ */
+errcode_t gap_ble_set_nv_store_smp_keys_mode(uint8_t is_encrypted);
+
+/**
+ * @if Eng
+ * @brief  Configure connection feature。
+ * @par    Configure connection feature。
+ * @param  [in]  feature Set the feature number. For details, see @ref ble_feature_type_t 。
+ * @param  [in]  val Config the corresponding feature, see @ref ble_feature_type_t 。
+ * @retval ERRCODE_SUCC Success。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @else
+ * @brief  配置连接特性。
+ * @par    配置连接特性。
+ * @param  [in]  feature 表示要设置的特性编号，详情见 @ref ble_feature_type_t。
+ * @param  [in]  val 配置对应的特性，详情见 @ref ble_feature_type_t。
+ * @retval ERRCODE_SUCC 成功。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @endif
+ */
+errcode_t ble_set_feature(ble_feature_type_t feature, uint8_t val);
 
 /**
  * @}

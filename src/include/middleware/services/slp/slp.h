@@ -79,9 +79,9 @@ typedef struct {
  */
 typedef enum {
     SLP_SEC_MODE_LPLS = 0,          /*!< @if Eng slp low power consumption low security mode
-                                     @else slp低功耗低安全模式 @endif */
+                                         @else slp低功耗低安全模式 @endif */
     SLP_SEC_MODE_HPHS               /*!< @if Eng slp high power consumption high security mode
-                                     @else slp高功耗高安全模式 @endif */
+                                         @else slp高功耗高安全模式 @endif */
 } SlpSecMode;
 
 /**
@@ -92,10 +92,10 @@ typedef enum {
  * @endif
  */
 typedef enum {
-    SLP_ENCRYPT_MODE_AES128 = 0,       /*!< @if Eng slp aes-128 encryption mode
-                                     @else slp aes-128 加密模式 @endif */
-    SLP_ENCRYPT_MODE_SM4               /*!< @if Eng slp sm4 encryption mode
-                                     @else slp sm4加密模式 @endif */
+    SLP_ENCRYPT_MODE_AES128 = 0,    /*!< @if Eng slp aes-128 encryption mode
+                                         @else slp aes-128 加密模式 @endif */
+    SLP_ENCRYPT_MODE_SM4            /*!< @if Eng slp sm4 encryption mode
+                                         @else slp sm4加密模式 @endif */
 } SlpEncryptMode;
 
 /**
@@ -106,10 +106,10 @@ typedef enum {
  * @endif
  */
 typedef enum {
-    SLP_WB_SHARED_KEY = 0,       /*!< @if Eng slp wideband shared key
-                                  @else slp 宽带共享密钥 @endif */
-    SLP_NB_SESSION_KEY           /*!< @if Eng slp wideband shared key
-                                  @else slp 窄带会话密钥 @endif */
+    SLP_WB_SHARED_KEY = 0,          /*!< @if Eng slp wideband shared key
+                                         @else slp 宽带共享密钥 @endif */
+    SLP_NB_SESSION_KEY              /*!< @if Eng slp wideband shared key
+                                         @else slp 窄带会话密钥 @endif */
 } SlpSessionKeyMode;
 
 /**
@@ -120,14 +120,18 @@ typedef enum {
  * @endif
  */
 typedef struct {
-    uint8_t secMode;            /*!< @if Eng security mode, @ref SlpSecMode
-                                     @else 安全模式，参考 { @ref SlpSecMode }. @endif */
-    uint8_t encryptMode;        /*!< @if Eng encrypt mode, @ref SlpEncryptMode
-                                     @else 加密模式，参考 { @ref SlpEncryptMode }. @endif */
-    uint8_t sessionKeyMode;     /*!< @if Eng session key mode, @ref SlpSessionKeyMode
-                                     @else 会话密钥模式，参考 { @ref SlpSessionKeyMode }. @endif */
-    uint8_t sessionKeyIdx;      /*!< @if Eng session key index when sessionKeyMode is WB_SHARED_KEY, 0~15
-                                     @else 会话密钥索引值，会话密钥模式是宽带共享密钥时有效，取值范围0~15 @endif */
+    uint16_t secMode : 1;           /*!< @if Eng security mode, @ref SlpSecMode
+                                         @else 安全模式，参考 { @ref SlpSecMode }. @endif */
+    uint16_t encryptMode : 1;       /*!< @if Eng encrypt mode, @ref SlpEncryptMode
+                                         @else 加密模式，参考 { @ref SlpEncryptMode }. @endif */
+    uint16_t sessionKeyMode : 1;    /*!< @if Eng session key mode, @ref SlpSessionKeyMode
+                                         @else 会话密钥模式，参考 { @ref SlpSessionKeyMode }. @endif */
+    uint16_t sessionKeyIdx : 4;     /*!< @if Eng session key index when sessionKeyMode is WB_SHARED_KEY, 0~15
+                                         @else 会话密钥索引值，会话密钥模式是宽带共享密钥时有效，取值范围0~15 @endif */
+    uint16_t rangingFreq : 8;       /*!< @if Eng ranging frequency, value:1~20, unit: Hz
+                                         @else 测距频率，取值：1~20，单位：Hz @endif */
+    uint16_t reserved : 1;          /*!< @if Eng reserve
+                                         @else 保留比特位 @endif */
 } SlpSecurityParam;
 
 /**
@@ -138,21 +142,23 @@ typedef struct {
  * @endif
  */
 typedef struct {
-    uint8_t codeLen;            /*!< @if Eng preamble code length, 0-31(16), 1-63(8), 2-91(4), 3-127(4)
-                                     @else 前导码长度 @endif */
-    uint8_t syncCodeIdx;        /*!< @if Eng sync code index, 0~15, 多用户场景建议 codeLen31: 0~11, codeLen63: 0~5
-                                     codeLen91/127: 0~15
-                                     @else sync段的码字索引值 @endif */
-    uint8_t syncSymNum;         /*!< @if Eng sync symbol number, 0-16, 1-32, 2-64, 3-96, 4-128, 5-256
-                                     @else sync段的符号数量 @endif */
-    uint8_t ctsSegNum;          /*!< @if Eng segment number of cts, 0-1, 1-2, 2-4, 3-8, 4-16, 5-32
-                                     @else cts域中segment段的数量 @endif */
-    uint8_t ctsSegSymNum;       /*!< @if Eng segment symbol number, 0-16, 1-32
-                                     @else 一个segment段中的符号数量 @endif */
-    uint8_t gapBaseSymNum;      /*!< @if Eng gap base symbol number, 0-12, 1-25, 2-50, 3-125, 4-250, 5-500, 6-1000
-                                     @else gap段基准的符号数量 @endif */
-    uint8_t ctsCpLen;           /*!< @if Eng cts cp length, 0-0, 1-64, 2-96, 3-128
-                                     @else cts段中cp长度 @endif */
+    uint32_t codeLen : 2;            /*!< @if Eng preamble code length, 0-31(16), 1-63(8), 2-91(4), 3-127(4)
+                                          @else 前导码长度 @endif */
+    uint32_t syncCodeIdx : 4;        /*!< @if Eng sync code index, 0~15, 多用户场景建议 codeLen31: 0~11, codeLen63: 0~5
+                                        codeLen91/127: 0~15
+                                          @else sync段的码字索引值 @endif */
+    uint32_t syncSymNum : 3;         /*!< @if Eng sync symbol number, 0-16, 1-32, 2-64, 3-96, 4-128, 5-256
+                                          @else sync段的符号数量 @endif */
+    uint32_t ctsSegNum : 3;          /*!< @if Eng segment number of cts, 0-1, 1-2, 2-4, 3-8, 4-16, 5-32
+                                          @else cts域中segment段的数量 @endif */
+    uint32_t ctsSegSymNum : 1;       /*!< @if Eng segment symbol number, 0-16, 1-32
+                                          @else 一个segment段中的符号数量 @endif */
+    uint32_t gapBaseSymNum : 3;      /*!< @if Eng gap base symbol number, 0-12, 1-25, 2-50, 3-125, 4-250, 5-500, 6-1000
+                                          @else gap段基准的符号数量 @endif */
+    uint32_t ctsCpLen : 2;           /*!< @if Eng cts cp length, 0-0, 1-64, 2-96, 3-128
+                                          @else cts段中cp长度 @endif */
+    uint32_t reserved : 14;               /*!< @if Eng cts cp length, 0-0, 1-64, 2-96, 3-128
+                                          @else cts段中cp长度 @endif */
 } SlpFrameParam;
 
 /**
@@ -181,13 +187,13 @@ typedef enum {
  * @endif
  */
 typedef enum {
-    SLP_USAGE_RANGING_AOX = 0,        /*!< @if Eng slp ranging and aox usage mode
+    SLP_SCENE_RANGING_AOX = 0,        /*!< @if Eng slp ranging and aox usage mode
                                            @else slp测距测角使用模式 @endif */
-    SLP_USAGE_AIR_MOUSE,              /*!< @if Eng slp air mouse usage mode
-                                           @else slp空中鼠标使用模式 @endif */
-    SLP_USAGE_AIR_MOUSE_CAR,          /*!< @if Eng slp air mouse car usage mode
+    SLP_SCENE_AIR_MOUSE_TV,           /*!< @if Eng slp air mouse usage mode
+                                           @else slp电视空中鼠标使用模式 @endif */
+    SLP_SCENE_AIR_MOUSE_CAR,          /*!< @if Eng slp air mouse car usage mode
                                            @else slp车机空中鼠标使用模式 @endif */
-} SlpUsageMode;
+} SlpSceneMode;
 
 /**
  * @if Eng
@@ -281,6 +287,22 @@ typedef enum {
 
 /**
  * @if Eng
+ * @brief Enum of tx continuous mode
+ * @else
+ * @brief Tx常发模式
+ * @endif
+ */
+typedef enum {
+    SLP_TX_CONTINUOUS_DISABLE = 0,          /*!< @if Eng do not enter tx continuous mode
+                                                 @else 不进入常发模式  @endif */
+    SLP_TX_CONTINUOUS_START,                /*!< @if Eng tx continuous start
+                                                 @else 启动Tx常发 @endif */
+    SLP_TX_CONTINUOUS_STOP,                 /*!< @if Eng tx continuous stop
+                                                 @else 关闭Tx常发 @endif */
+} SlpTxContinuousMode;
+
+/**
+ * @if Eng
  * @brief Struct of slp ranging parameters
  * @else
  * @brief slp测距参数
@@ -289,8 +311,8 @@ typedef enum {
 typedef struct {
     uint8_t chIdx;                          /*!< @if Eng channel index, @ref SlpChannel
                                                  @else 通道号，参考 { @ref SlpChannel }. @endif */
-    uint8_t usageMode;                      /*!< @if Eng slp usage mode, @ref SlpUsageMode
-                                                 @else slp使用模式，参考 { @ref SlpUsageMode }. @endif */
+    uint8_t sceneMode;                      /*!< @if Eng slp usage mode, @ref SlpSceneMode
+                                                 @else slp使用模式，参考 { @ref SlpSceneMode }. @endif */
     uint8_t slpRangingMode;                 /*!< @if Eng slp ranging mode, @ref SlpRangingMode
                                                  @else slp测距模式，参考 { @ref SlpRangingMode }. @endif */
     uint8_t multiNodeMode;                  /*!< @if Eng slp multiple node mode, @ref SlpMultiNodeMode
@@ -299,8 +321,6 @@ typedef struct {
                                                  @else slp测距轮用法，参考 { @ref SlpRangingRoundUsage }. @endif */
     uint8_t mrSource;                       /*!< @if Eng slp measurement request source, @ref SlpMrSource
                                                  @else slp测量值请求源，参考 { @ref SlpMrSource }. @endif */
-    uint8_t rangingFreq;                    /*!< @if Eng ranging frequency, value:1~20, unit: Hz
-                                                 @else 测距频率，取值：1~20，单位：Hz @endif */
     uint8_t validRoundNum;                  /*!< @if Eng valid ranging round number, value: 0~255, 0: infinity round
                                                  @else 有效测距轮数，取值范围：0~255，其中0表示无限轮 @endif */
     uint8_t aoxDirection;                   /*!< @if Eng aox direction, @ref SlpAoxDirection
@@ -309,16 +329,16 @@ typedef struct {
                                                  @else 窄带同步模式，参考 { @ref SlpNbSyncMode }. @endif */
     uint8_t deviceNum;                      /*!< @if Eng device number, value:2
                                                  @else 参与测距的设备个数，取值：2 @endif */
-    uint8_t txMode;                         /*!< @if Eng tx mode
-                                                 @else Tx发射模式 @endif */
+    uint8_t txMode;                         /*!< @if Eng tx mode, @ref SlpTxContinuousMode
+                                                 @else Tx发射模式，参考 { @ref SlpTxContinuousMode }. @endif */
     uint32_t firstAoxAntDis;                /*!< @if Eng first aox ant dis, unit: nm
                                                  @else 第一测角帧天线间距 单位：纳米 @endif */
     uint32_t sessionId;                     /*!< @if Eng session identifier
                                                  @else 会话标识符，随机值，每次启动测距，值不同 @endif */
     uint32_t txPower;                       /*!< @if Eng tx power code
                                                  @else Tx功率码字 @endif */
-    SlpDeviceAddr deviceAddr[SLP_MAX_DEVICE_NUM]; /*!< @if Eng device address list, the fist address is initiator
-                                                 @else 设备地址列表，第1个是测距发起者的地址 @endif */
+    SlpDeviceAddr deviceAddr[SLP_MAX_DEVICE_NUM];   /*!< @if Eng device address list, the fist address is initiator
+                                                         @else 设备地址列表，第1个是测距发起者的地址 @endif */
 } SlpRangingParam;
 
 /**
@@ -336,38 +356,6 @@ typedef struct {
     SlpRangingParam rangingParam;       /*!< @if Eng slp ranging parameters
                                              @else slp测距参数 @endif */
 } SlpStartRangingParam;
-
-/**
- * @if Eng
- * @brief Enum of slp screen resolution
- * @else
- * @brief slp屏幕分辨率
- * @endif
- */
-typedef enum {
-    SLP_SCREEN_720P = 0,              /*!< @if Eng slp screen resolution 720p
-                                           @else slp屏幕分辨率720p @endif */
-    SLP_SCREEN_1080P,                 /*!< @if Eng slp screen resolution 1080p
-                                           @else slp屏幕分辨率1080p @endif */
-    SLP_SCREEN_4K,                    /*!< @if Eng slp screen resolution 4K
-                                           @else slp屏幕分辨率4K @endif */
-    SLP_SCREEN_8K                     /*!< @if Eng slp screen resolution 8K
-                                           @else slp屏幕分辨率8k @endif */
-} SlpScreenResolution;
-
-/**
- * @if Eng
- * @brief Enum of slp display mode
- * @else
- * @brief slp投影点坐标的显示模式
- * @endif
- */
-typedef enum {
-    SLP_REL_DISPLAY_MODE = 0,         /*!< @if Eng point relative coordinate display mode
-                                           @else 投影点相对坐标显示模式 @endif */
-    SLP_ABS_DISPLAY_MODE,             /*!< @if Eng point relative coordinate display mode
-                                           @else 投影点绝对坐标显示模式 @endif */
-} SlpDisplayMode;
 
 /**
  * @if Eng
@@ -396,10 +384,6 @@ typedef enum {
 typedef struct {
     uint8_t cursorSpeed;               /*!< @if Eng slp cursor speed, @ref SlpCursorSpeed
                                             @else slp光标移动速度，参考 { @ref SlpCursorSpeed }. @endif */
-    uint8_t resolution;                /*!< @if Eng slp screen resolution 720p, @ref SlpScreenResolution
-                                            @else slp屏幕分辨率720p，参考 { @ref SlpScreenResolution }. @endif */
-    uint8_t displayMode;               /*!< @if Eng display mode of slp point coordinates, @ref SlpDisplayMode
-                                            @else slp投影点坐标的显示模式，参考 { @ref SlpDisplayMode }. @endif */
     uint16_t width;                    /*!< @if Eng screen width, unit: mm
                                             @else 屏幕宽度，单位：毫米 @endif */
     uint16_t height;                   /*!< @if Eng screen height, unit: mm
@@ -409,16 +393,81 @@ typedef struct {
 
 /**
  * @if Eng
+ * @brief Union of the slp antenna control word
+ * @else
+ * @brief slp射频开关控制码字共用体
+ * @endif
+ */
+typedef union {
+    struct {
+        uint8_t ctrl0 : 1;          /*!< @if Eng Enable or disable the function of antenna control pin 0, 0:dis, 1:en
+                                         @else 开启或关闭天线控制管脚 0 的对应功能，0:关闭, 1:开启 @endif */
+        uint8_t ctrl1 : 1;          /*!< @if Eng Enable or disable the function of antenna control pin 1, 0:dis, 1:en
+                                         @else 开启或关闭天线控制管脚 1 的对应功能，0:关闭, 1:开启 @endif */
+        uint8_t ctrl2 : 1;          /*!< @if Eng Enable or disable the function of antenna control pin 2, 0:dis, 1:en
+                                         @else 开启或关闭天线控制管脚 2 的对应功能，0:关闭, 1:开启 @endif */
+        uint8_t ctrl3 : 1;          /*!< @if Eng Enable or disable the function of antenna control pin 3, 0:dis, 1:en
+                                         @else 开启或关闭天线控制管脚 3 的对应功能，0:关闭, 1:开启 @endif */
+        uint8_t ctrl4 : 1;          /*!< @if Eng Enable or disable the function of antenna control pin 4, 0:dis, 1:en
+                                         @else 开启或关闭天线控制管脚 4 的对应功能，0:关闭, 1:开启 @endif */
+        uint8_t ctrl5 : 1;          /*!< @if Eng Enable or disable the function of antenna control pin 5, 0:dis, 1:en
+                                         @else 开启或关闭天线控制管脚 5 的对应功能，0:关闭, 1:开启 @endif */
+        uint8_t reserve : 2;        /*!< @if Eng reserve
+                                         @else 保留比特位 @endif */
+    } bits;                         /*!< @if Eng Bit field structure
+                                         @else 位域结构体 @endif */
+    uint8_t u8;                     /*!< @if Eng 8-bit unsigned integer
+                                         @else 8位无符号整数 @endif */
+} SlpRfSwBit;
+
+/**
+ * @if Eng
+ * @brief Struct of slp antenna switch control codeword
+ * @else
+ * @brief slp天线切换码字结构体
+ * @endif
+ */
+typedef struct {
+    SlpRfSwBit tx;                     /*!< @if Eng tx antenna switch control codeword
+                                             @else tx天线切换码字 @endif */
+    SlpRfSwBit rx;                     /*!< @if Eng rx antenna switch control codeword
+                                             @else rx天线切换码字 @endif */
+} SlpAntSwCode;
+
+/**
+ * @if Eng
+ * @brief Struct of slp RF switch control parameter
+ * @else
+ * @brief slp射频开关控制参数结构体
+ * @endif
+ */
+typedef struct {
+    bool pwrCtrl;                       /*!< @if Eng Is the RF switch power supply independently controlled
+                                             @else 射频开关电源是否独立控制 @endif */
+    SlpRfSwBit antSwCtrlEn;             /*!< @if Eng RF switch control pin enable
+                                             @else 射频开关控制管脚使能 @endif */
+    SlpAntSwCode ant0Code;              /*!< @if Eng Antenna 0 switching codeword
+                                             @else 天线 0 切换码字 @endif */
+    SlpAntSwCode ant1Code;              /*!< @if Eng Antenna 1 switching codeword
+                                             @else 天线 1 切换码字 @endif */
+    SlpAntSwCode ant2Code;              /*!< @if Eng Antenna 2 switching codeword
+                                             @else 天线 2 切换码字 @endif */
+} SlpRfSwParam;
+
+/**
+ * @if Eng
  * @brief Struct of slp local attribute
  * @else
  * @brief slp本机属性
  * @endif
  */
 typedef struct {
-    SlpDeviceAddr localAddr;        /*!< @if Eng local address
-                                         @else 本机地址 @endif */
-    SlpScreenParam screenParam;     /*!< @if Eng screen parameters
-                                         @else 屏幕参数 @endif */
+    SlpDeviceAddr localAddr;            /*!< @if Eng local address
+                                             @else 本机地址 @endif */
+    SlpScreenParam screenParam;         /*!< @if Eng screen parameters
+                                             @else 屏幕参数 @endif */
+    SlpRfSwParam rfSwParam;             /*!< @if Eng RF switch parameters
+                                             @else 射频开关控制参数 @endif */
 } SlpLocalAtt;
 
 /**
@@ -459,7 +508,7 @@ typedef struct {
                                              @else 次版本号 @endif */
     uint16_t patch;                     /*!< @if Eng patch version
                                              @else 修订版本号 @endif */
-} SlpVersionRpt;
+} SlpVersion;
 
 /**
  * @if Eng
@@ -534,27 +583,37 @@ typedef void (*SlpReportRangingCallback)(SlpRangingRpt *rangingRpt);
 
 /**
  * @if Eng
+ * @brief Struct of slp cursor result information, The upper left corner of the screen is used as the coordinate origin,
+          and the horizontal rightward direction is the positive direction of the X axis.
+ * @else
+ * @brief slp光标点上报结果，以屏幕左上角为原点，水平向右为x轴正方向，竖直向下为y轴正方向。
+ * @endif
+ */
+typedef struct {
+    int32_t x;                  /*!< @if Eng x-axis coordinate value. unit: um.
+                                     @else x轴坐标值，单位：微米 @endif */
+    int32_t y;                  /*!< @if Eng y-axis coordinate value. unit: um.
+                                     @else y轴坐标值，单位：微米。 @endif */
+    bool key;                   /*!< @if Eng The flag indicates whether to press the key. 0:release, 1:press.
+                                     @else 按键状态标志位，0:释放，1:按下。 @endif */
+} SlpCursorRslt;
+
+/**
+ * @if Eng
  * @brief Callback invoked when report cursor data
  * @par Callback invoked when report cursor data
  * @attention 1.This function is called in SLP context,should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the slp automatically.
- * @param  [in]  x x-axis coordinate value. The upper left corner of the screen is used as the coordinate origin,
-                   and the horizontal rightward direction is the positive direction of the X axis. unit: um.
- * @param  [in]  y y-axis coordinate value. The upper left corner of the screen is used as the coordinate origin,
-                   and the vertical downward direction is the positive direction of the y axis. unit: um.
- * @param  [in]  flag The flag indicates whether to press the key. The values 0 and 1 indicate release and press,
-                      respectively.
+ * @param  [in]  cursorResult cursor result.
  * @else
  * @brief  光标数据上报的回调函数。
  * @par    光标数据上报的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  x x轴坐标值，以屏幕左上角为圆点，水平向右为x轴正方向，单位：微米。
- * @param  [in]  y y轴坐标值，以屏幕左上角为圆点，垂直向下为y轴正方向，单位：微米。
- * @param  [in]  flag 是否按下按键标志位，0表示释放，1表示按下。
+ * @param  [in]  cursorResult 光标点数据。
  * @endif
  */
-typedef void (*SlpReportCursorCallback)(int32_t x, int32_t y, uint8_t flag);
+typedef void (*SlpReportCursorCallback)(SlpCursorRslt *cursorRslt);
 
 /**
  * @if Eng
@@ -591,9 +650,59 @@ typedef enum {
                                              @else ICM42670型号的IMU  @endif */
     SLP_IMU_TYPE_BMI325,                /*!< @if Eng BMI325 model IMU
                                              @else BMI325型号的IMU  @endif */
+    SLP_IMU_TYPE_SMI230,                /*!< @if Eng SMI230 model IMU
+                                             @else SMI230型号的IMU  @endif */
+    SLP_IMU_TYPE_ASM330,                /*!< @if Eng ASM330 model IMU
+                                             @else ASM330型号的IMU  @endif */
     SLP_IMU_TYPE_UNKNOWN = 0xFF,        /*!< @if Eng Unknown IMU model
                                              @else 未知的IMU型号 @endif */
 } SlpImuType;
+
+/**
+ * @if Eng
+ * @brief Struct of slp version report interface
+ * @else
+ * @brief slp 支持的特性，0:支持，1:不支持
+ * @endif
+ */
+typedef struct {
+    uint32_t ranging : 1;               /*!< @if Eng ranging
+                                             @else 测距 @endif */
+    uint32_t aox : 1;                   /*!< @if Eng aox
+                                             @else 测角 @endif */
+    uint32_t highSecurity : 1;          /*!< @if Eng high security
+                                             @else 高安全 @endif */
+    uint32_t radar : 1;                 /*!< @if Eng radar
+                                             @else 雷达 @endif */
+    uint32_t imuDriver : 1;             /*!< @if Eng imu driver
+                                             @else IMU驱动 @endif */
+    uint32_t algAirMouse : 1;           /*!< @if Eng imu driver
+                                             @else 指向遥控器算法 @endif */
+    uint32_t algRadar : 1;              /*!< @if Eng algorithm of air mouse
+                                             @else 雷达算法 @endif */
+    uint32_t reserved : 25;             /*!< @if Eng algorithm of air mouse
+                                             @else 保留 @endif */
+} SlpCapability;
+
+/**
+ * @if Eng
+ * @brief Struct of slp version report interface
+ * @else
+ * @brief slp 版本号上报接口出参结构体
+ * @endif
+ */
+typedef struct {
+    SlpVersion narrowBand;              /*!< @if Eng version number of narrow band system.
+                                             @else 窄带软件版本号 @endif */
+    SlpVersion wideBand;                /*!< @if Eng version number of wide band system.
+                                             @else 宽带软件版本号 @endif */
+    SlpCapability capability;           /*!< @if Eng slp capability
+                                             @else 版本支持的特性 @endif */
+    uint32_t chipId;                    /*!< @if Eng chip ID of wide band system
+                                             @else 宽带读取到的芯片ID值 @endif */
+    SlpImuType imuType;                 /*!< @if Eng imu type
+                                             @else 宽带识别到的IMU型号 @endif */
+} SlpVersionRpt;
 
 /**
  * @if Eng
@@ -601,23 +710,16 @@ typedef enum {
  * @par Callback invoked when report version data
  * @attention 1.This function is called in SLP context, should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the slp automatically.
- * @param  [in]  narrowVersion version number of narrow band system.
- * @param  [in]  wideVersion version number of wide band system.
- * @param  [in]  chipId chip ID of wide band system.
- * @param  [in]  imuType type of imu.
+ * @param  [in]  versionRpt version data of SLP.
  * @else
- * @brief  版本号上报的回调函数。
- * @par    版本号上报的回调函数。
+ * @brief  版本信息上报回调函数。
+ * @par    版本信息上报回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  narrowVersion 窄带系统版本号。
- * @param  [in]  wideVersion 宽带系统版本号。
- * @param  [in]  chipId 宽带读取到的芯片ID值。
- * @param  [in]  imuType 宽带识别到的IMU型号。
+ * @param  [in]  versionRpt SLP版本信息。
  * @endif
  */
-typedef void (*SlpReportVersionCallback)(
-    SlpVersionRpt *narrowVersion, SlpVersionRpt *wideVersion, uint32_t chipId, SlpImuType imuType);
+typedef void (*SlpReportVersionCallback)(SlpVersionRpt *versionRpt);
 
 /**
  * @if Eng
@@ -636,6 +738,40 @@ typedef void (*SlpReportVersionCallback)(
  * @endif
  */
 typedef void (*SlpReportCfoCallback)(int32_t cfo, uint32_t threshold);
+
+/**
+ * @if Eng
+ * @brief Callback invoked when report slp register value
+ * @par Callback invoked when report slp register value
+ * @attention 1.This function is called in SLP context, should not be blocked or do long time waiting.
+ * @param  [in]  addr address of slp register
+ * @param  [in]  value value of slp register.
+ * @else
+ * @brief  slp寄存器值上报的回调函数。
+ * @par  slp寄存器值上报的回调函数。
+ * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
+ * @param  [in]  addr slp寄存器地址。
+ * @param  [in]  value slp寄存器值。
+ * @endif
+ */
+typedef void (*SlpReportRegValueCallback)(uint32_t addr, uint32_t value);
+
+/**
+ * @if Eng
+ * @brief Callback invoked when report slp tsensor
+ * @par Callback invoked when report slp tsensor
+ * @attention 1.This function is called in SLP context, should not be blocked or do long time waiting.
+ * @param  [in]  tsensor tsensor of slp, unit: °C
+ * @else
+ * @brief  slp温度上报的回调函数。
+ * @par  slp温度上报的回调函数。
+ * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
+ * @param  [in]  tsensor slp芯片温度， 单位：摄氏度。
+ * @endif
+ */
+typedef void (*SlpReportTsensorCallback)(int16_t tsensor);
 
 /**
  * @if Eng
@@ -856,6 +992,53 @@ void SlpTask(void* param);
 
 /**
  * @if Eng
+ * @brief The minimum buffer size required for SLP to support different features, unit：bytes
+ * @else
+ * @brief slp支持不同特性时所需要的最小buffer大小，单位：字节
+ * @endif
+ */
+typedef enum {
+    SLP_UART_BUF_LEN_BASE = 256,           /*!< @if Eng slp ranging、aox and air mouse
+                                                @else 测距、测角、指向业务 @endif */
+    SLP_UART_BUF_LEN_RADAR = 4096,         /*!< @if Eng slp radar
+                                                @else 雷达业务 @endif */
+    SLP_UART_BUF_LEN_CIR_RPT = 4096,       /*!< @if Eng slp cir report
+                                                @else cir上报功能 @endif */
+} SlpUartBufLen;
+
+/**
+ * @if Eng
+ * @brief Struct of slp uart buffer info
+ * @attention 1.Users need to create static buffer.
+ * @else
+ * @brief slp uart缓冲区
+ * @attention 1.用户需要创建静态缓冲区。
+ * @endif
+ */
+typedef struct {
+    uint8_t *buffer;                       /*!< @if Eng slp uart buffer
+                                                @else slp uart缓冲区 @endif */
+    uint16_t len;                          /*!< @if Eng slp uart buffer length, see @ref SlpUartBufLen
+                                                @else slp uart缓冲区长度，参考 @ref SlpUartBufLen @endif */
+} SlpUartBufferInfo;
+
+/**
+ * @if Eng
+ * @brief SLP setting uart buffer parameters.
+ * @par  [in] info uart buffer parameters, see @ref SlpUartBufferInfo
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @else
+ * @brief SLP设置uart缓冲区参数。
+ * @par  [in] info uart缓冲区参数，参考 @ref SlpUartBufferInfo
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @endif
+ */
+ErrcodeSlpClient SlpSetUartBuffer(const SlpUartBufferInfo *info);
+
+/**
+ * @if Eng
  * @brief  SLP power on, complete SLP loading.
  * @par Description: SLP power on, complete SLP loading.
  * @retval ERRCODE_SLPC_SUCCESS Success.
@@ -868,6 +1051,21 @@ void SlpTask(void* param);
  * @endif
  */
 ErrcodeSlpClient SlpPowerOnCommand(void);
+
+/**
+ * @if Eng
+ * @brief  Read SLP Version Data.
+ * @par Description: Read SLP Version Data.
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @else
+ * @brief  SLP读取版本信息。
+ * @par Description: 读取SLP版本信息。
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @endif
+ */
+ErrcodeSlpClient SlpReadVersionCommand(void);
 
 /**
  * @if Eng
@@ -1126,6 +1324,10 @@ typedef struct {
                                                              @else slp上报版本号回调函数。 @endif */
     SlpReportCfoCallback rptCfoCbk;                     /*!< @if Eng slp report cfo and frame threshold callback.
                                                              @else slp上报cfo和当前帧的cfo阈值。 @endif */
+    SlpReportRegValueCallback rptRegValueCbk;           /*!< @if Eng slp report slp register value callback.
+                                                             @else slp上报寄存器值。 @endif */
+    SlpReportTsensorCallback rptTsensorCbk;             /*!< @if Eng slp report tsensor callback.
+                                                             @else slp上报芯片温度回调函数。 @endif */
 } SlpReportCallbacks;
 
 /**
@@ -1161,6 +1363,158 @@ ErrcodeSlpClient SlpRegisterReportCallbacks(SlpReportCallbacks *func);
  * @endif
  */
 ErrcodeSlpClient SlpClickDebounceCommand(uint8_t state);
+
+/**
+ * @if Eng
+ * @brief Enum of IMU coordinate axis index
+ * @else
+ * @brief IMU坐标轴索引枚举
+ * @endif
+ */
+typedef enum {
+    SLP_IMU_AXIS_X = 0,                 /*!< @if Eng X-axis defined by the IMU
+                                             @else IMU定义的X轴 @endif */
+    SLP_IMU_AXIS_Y,                     /*!< @if Eng Y-axis defined by the IMU
+                                             @else IMU定义的Y轴 @endif */
+    SLP_IMU_AXIS_Z,                     /*!< @if Eng Z-axis defined by the IMU
+                                             @else IMU定义的Z轴 @endif */
+} SlpImuAxisIdx;
+
+/**
+ * @if Eng
+ * @brief Struct of converting SLP axis to IMU axis parameters
+ * @else
+ * @brief 指向坐标轴转IMU坐标轴参数接口体
+ * @endif
+ */
+typedef struct {
+    uint8_t imuAxisIdx;                 /*!< @if Eng IMU coordinate axis index, @ref SlpImuAxisIdx
+                                             @else IMU坐标轴索引，参考 { @ref SlpImuAxisIdx } @endif */
+    int8_t direction;                  /*!< @if Eng axis direction, 1:same, -1:opposite
+                                             @else 坐标轴方向，1:同向，-1:反向 @endif */
+} SlpAirMouseAxis;
+
+/**
+ * @if Eng
+ * @brief Struct of the conversion parameter between the SLP coordinate system and the IMU coordinate system
+ * @else
+ * @brief 指向坐标系和IMU坐标系转换参数结构体
+ * @endif
+ */
+typedef struct {
+    SlpAirMouseAxis front;              /*!< @if Eng The IMU coordinate axis corresponding to the front direction
+                                             @else 前方向对应的IMU坐标轴 @endif */
+    SlpAirMouseAxis right;              /*!< @if Eng The IMU coordinate axis corresponding to the right direction
+                                             @else 右方向对应的IMU坐标轴 @endif */
+    SlpAirMouseAxis down;               /*!< @if Eng The IMU coordinate axis corresponding to the down direction
+                                             @else 下方向对应的IMU坐标轴 @endif */
+} SlpTransformParam;
+
+/**
+ * @if Eng
+ * @brief  Set the transformation parameters between the SLP coordinate system and the IMU coordinate system.
+ * @par Description: Set the transformation parameters between the SLP coordinate system and the IMU coordinate system.
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @param  [in]  param Coordinate system transformation parameters, see @ref SlpTransformParam
+ * @else
+ * @brief  设置指向坐标系与IMU坐标系转换参数。
+ * @par Description: 设置指向坐标系与IMU坐标系转换参数。
+ * @param  [in]  param 指向坐标系与IMU坐标系转换参数，参考 @ref SlpTransformParam
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @endif
+ */
+ErrcodeSlpClient SlpSetTransformParam(SlpTransformParam *param);
+
+/**
+ * @if Eng
+ * @brief Struct of the Device installation position parameters
+ * @else
+ * @brief Dongle安装位置参数结构体
+ * @endif
+ */
+typedef struct {
+    int16_t downtilt;         /*!< @if Eng Dongle tail downtilt, unit:°, range:[-45, 45]
+                                   @else Dongle尾部下倾角，单位：度，取值范围：[-45, 45] @endif */
+    int16_t verDisToCarSeat;  /*!< @if Eng Vertical distance to car seat, positive when car seat is below, unit:mm
+                                   @else Dongle到汽车座椅的垂直距离，汽车座椅在下为正，单位：毫米 @endif */
+    int16_t verDisToSreenTop; /*!< @if Eng Vertical distance to screen top, positive when screen top is below, unit:mm
+                                   @else Dongle到屏幕顶部的垂直距离，屏幕顶部在下为正，单位：毫米 @endif */
+    int16_t horDisToSreen;    /*!< @if Eng Horizontal distance to screen, positive when screen is in front, unit:mm
+                                   @else Dongle到屏幕的水平距离，屏幕在前为正，单位：毫米 @endif */
+} SlpInstParam;
+
+/**
+ * @if Eng
+ * @brief  Set SLP Device installation position parameters.
+ * @par Description: Set SLP Device installation position parameters.
+ * @param  [in]  param Device installation position parameters, see @ref SlpInstParam
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @else
+ * @brief  设置Dongle安装位置参数。
+ * @par Description: 设置Dongle安装位置参数。
+ * @param  [in]  param Dongle安装位置参数，参考 @ref SlpInstParam
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @endif
+ */
+ErrcodeSlpClient SlpSetInstParam(SlpInstParam *param);
+
+/**
+ * @if Eng
+ * @brief  Read SLP Tsensor.
+ * @par Description: Read SLP Tsensor.
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @else
+ * @brief  读取SLP芯片温度。
+ * @par Description: 读取SLP芯片温度。
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @endif
+ */
+ErrcodeSlpClient SlpReadTsensorCommand(void);
+
+/**
+ * @if Eng
+ * @brief Enum of slp log level
+ * @else
+ * @brief Slp of log level
+ * @endif
+ */
+typedef enum {
+    SLP_LOG_LEVEL_NONE = 0,             /*!< @if Slp log level error
+                                             @else Slp无日志级别 @endif */
+    SLP_LOG_LEVEL_ERROR,                /*!< @if Slp log level error
+                                             @else Slp错误日志级别 @endif */
+    SLP_LOG_LEVEL_WARNING,              /*!< @if Slp log level warning
+                                             @else Slp警告日志级别 @endif */
+    SLP_LOG_LEVEL_INFO,                 /*!< @if Slp log level info
+                                             @else Slp默认日志级别 @endif */
+    SLP_LOG_LEVEL_DEBUG,                /*!< @if Slp log level debug
+                                             @else Slp调试日志级别 @endif */
+} SlpLogLevel;
+
+/**
+ * @if Eng
+ * @brief  Slp set Log Level.
+ * @par Description: Slp set Log Level.
+ * @param  [in]  nbLevel narrow band log level, see @ref SlpLogLevel
+ * @param  [in]  wbLevel wide band log level, see @ref SlpLogLevel
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @else
+ * @brief  设置slp日志级别。
+ * @par Description: 设置slp日志级别。
+ * @param  [in]  nbLevel 窄带日志级别，参考 @ref SlpLogLevel
+ * @param  [in]  wbLevel 宽带日志级别，参考 @ref SlpLogLevel
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @endif
+ */
+ErrcodeSlpClient SlpSetLogLevel(SlpLogLevel nbLevel, SlpLogLevel wbLevel);
 
 /**
  * @}

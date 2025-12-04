@@ -12,6 +12,7 @@
 #include "osal_event.h"
 #include "sle_ssap_client.h"
 #include "slp.h"
+#include "../../air_mouse_common.h"
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -34,8 +35,8 @@ sle_addr_t *get_sle_air_mouse_server_addr(void);
 
 void sle_client_slp_command_register_cbks(void);
 
-void set_slp_cursor_speed(SlpCursorSpeed mode);
-SlpCursorSpeed get_slp_cursor_speed(void);
+errcode_t sle_air_mouse_client_send_cmd(air_mouse_cmd_e cmd);
+void air_mouse_read_rssi_timer_cbk(unsigned long arg);
 
 void send_amic_data_uac(void);
 

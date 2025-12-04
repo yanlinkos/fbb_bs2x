@@ -1090,10 +1090,12 @@ static errcode_t spi_register_rx_callback(spi_bus_t bus, const spi_xfer_data_t *
     if (spi_porting_get_device_mode(bus) == SPI_MODE_MASTER && attr.tmod == HAL_SPI_TRANS_MODE_RX) {
         uint32_t frame_bytes = hal_spi_frame_size_trans_to_frame_bytes(attr.frame_size);
         if (frame_bytes == 0) {
+            spi_porting_unlock(bus, irq_sts);
             return ERRCODE_SPI_CONFIG_FAIL;
         }
         attr.ndf = g_spi_rx_state[bus].rx_buffer_size / frame_bytes;
         if (uapi_spi_set_attr(bus, &attr) != ERRCODE_SUCC) {
+            spi_porting_unlock(bus, irq_sts);
             return ERRCODE_SPI_CONFIG_FAIL;
         }
         uint32_t data_tx = 0;

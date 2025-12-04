@@ -233,6 +233,7 @@ static uint16_t g_b_ctl_b_crg_soft_rst_n = 0;
 #define DTCM_SHARE_MODE           0xF90
 #define SHARE_MODE_GT             12
 #define SHARE_MODE_CFG            8
+#endif
 
 typedef struct reg_cfg {
     uint8_t reg_addr;
@@ -281,15 +282,6 @@ static void pm_sleep_wait_time_config(void)
         writew(SLEEP_CFG1 + g_sleep_wait_time_config1[i].reg_addr, g_sleep_wait_time_config1[i].value);
     }
 }
-
-#else
-static rtc_handle_t g_pm_rtc = NULL;
-
-static void pm_rtc1_irq(uintptr_t data)
-{
-    unused(data);
-}
-#endif
 
 static void pm_clear_slp_wkup_event(void)
 {
@@ -473,6 +465,7 @@ void pm_port_start_wakeup_timer(uint32_t sleep_ms)
 
 static void pm_ulp_gpio_int_sample_clk_sel_32k(bool enable)
 {
+#if (CONFIG_PM_POWER_GATING_ENABLE == 1)
     if (enable) {
         /* ULP_GPIO interrupt sampling clock: 32k. */
         reg16_setbit(ULP_AON_CTL_ULP_GPIO_CLK_CFG_REG, PM_PCLK_INTR_SEL_BIT);
@@ -480,6 +473,9 @@ static void pm_ulp_gpio_int_sample_clk_sel_32k(bool enable)
         /* ULP_GPIO interrupt sampling clock: pclk. */
         reg16_clrbit(ULP_AON_CTL_ULP_GPIO_CLK_CFG_REG, (uint16_t)PM_PCLK_INTR_SEL_BIT);
     }
+#else
+    writew(0x570041C0, (uint16_t)enable); // aperp 32k
+#endif
 }
 
 static void pm_port_handle_before_enter_sleep(void)
@@ -488,7 +484,11 @@ static void pm_port_handle_before_enter_sleep(void)
     writew(PMU1_CTL_LPM_MCPU_SLP_EVT_CLR_REG, PM_LPM_MCPU_SLP_ALL_MASK);      // Clear status.
     writew(PMU1_CTL_LPM_MCPU_SLP_EVT_EN_REG, PM_LPM_MCPU_SLP_ALL_MASK);           // Enable.
     writew(PMU1_CTL_LPM_MCPU_WKUP_EVT_CLR_REG, PM_LPM_MCPU_WKUP_ALL_MASK);  // Clear status.
+#if (CONFIG_PM_POWER_GATING_ENABLE == 1)
     writew(PMU1_CTL_LPM_MCPU_WKUP_EVT_EN_REG, PM_LPM_MCPU_WKUP_MASK);       // Enable.
+#else
+    writew(PMU1_CTL_LPM_MCPU_WKUP_EVT_EN_REG, PM_LPM_MCPU_WKUP_ALL_MASK);       // Enable.
+#endif
 
 #if defined(CONFIG_PM_ENABLE_WAKEUP_INTERRUPT)
     // Clear wkup int.
@@ -513,7 +513,7 @@ static void pm_config_based_on_cldo_state(bool on)
         writew(ULP_AON_CTL_PMU_BUCK_EN_CFG_REG, 0x1);
         writew(ULP_AON_CTL_PMU_SYSLDO_ECO_EN_CFG_REG, 0x0);
         writew(ULP_AON_CTL_VDD0P7_TO_SYS_ISO_CFG_REG, 0);
-        writew(ULP_AON_CTL_BUCK_VSET_ECO_CFG_REG, 0x1); // buck电压硬件控; 睡眠时间短的话这里要改成保持vset_nor
+        writew(ULP_AON_CTL_BUCK_VSET_ECO_CFG_REG, 0x0); // buck电压硬件控; 睡眠时间短的话这里要改成保持vset_nor
         writew(ULP_AON_CTL_PMU_UVLO_EN_CFG_REG, 0x1); // uvlo强制打开
     } else {
         /* Turn off cldo during sleep. */
@@ -564,7 +564,7 @@ void pm_port_sleep_config_int(void)
 
     writew(ULP_AON_CTL_ULP_WKUP_INT_EN_REG, 0);                     // Disable.
     writew(ULP_AON_CTL_ULP_WKUP_INT_CLR_REG, PM_ULP_WKUP_ALL_MASK);     // Clear status.
-    writew(ULP_AON_CTL_ULP_WKUP_INT_EN_REG, PM_ULP_WKUP_MASK);      // Enable.
+    writew(ULP_AON_CTL_ULP_WKUP_INT_EN_REG, PM_ULP_WKUP_ALL_MASK);      // Enable.
 #endif
     /* Ulp sleep event. */
     writew(ULP_AON_CTL_ULP_SLP_EVT_EN_REG, 0);  // Disable.
@@ -573,7 +573,7 @@ void pm_port_sleep_config_int(void)
     /* Ulp wakeup event. */
     writew(ULP_AON_CTL_ULP_WKUP_EVT_EN_REG, 0);                     // Disable.
     writew(ULP_AON_CTL_ULP_WKUP_EVT_CLR_REG, PM_ULP_WKUP_ALL_MASK); // Clear status.
-    writew(ULP_AON_CTL_ULP_WKUP_EVT_EN_REG, PM_ULP_WKUP_ALL_MASK);      // Enable.
+    writew(ULP_AON_CTL_ULP_WKUP_EVT_EN_REG, PM_ULP_WKUP_MASK);      // Enable.
 }
 
 #if (CONFIG_PM_POWER_GATING_ENABLE == 1)

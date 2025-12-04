@@ -45,6 +45,8 @@ void ble_control_callbacks(uint8_t ble_index)
     while (1) {
         if (g_ble_callbacks[ble_index].func != NULL) {
             g_ble_callbacks[ble_index].func(ble_index, &g_ble_callbacks[ble_index].addr); // 调用回调函数，传递数据
+        } else {
+            break;
         }
         osal_msleep(APP_DEFAULT_MAX_TIME);
         num++;
@@ -88,8 +90,8 @@ void ble_control_notify_connect(uint16_t conn_id, bd_addr_t *addr, gap_ble_conn_
         memset_s(&g_ble_callbacks[ble_index], sizeof(ble_callback_entry_t), 0, sizeof(ble_callback_entry_t));
     } else if (conn_state == GAP_BLE_STATE_DISCONNECTED) {
         set_app_ble_conn_status(conn_id, APP_CONNECT_STATUS_DISCONNECT);
+        ble_add_callback(ble_callback_to_adv, ble_index, addr);
         if (!g_low_power_state) {
-            ble_add_callback(ble_callback_to_adv, ble_index, addr);
             if (ble_index == TV) {
                 app_timer_process_start(TIME_CMD_BLE_TV_CALL, APP_BLE_CALL_TIME);
             } else if (ble_index == OTT) {

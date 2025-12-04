@@ -110,6 +110,7 @@
 							.text.smp_require_end_key_recovery_replace \
 							.text.smp_require_end_replace \
 							.text.bt_init_stack_replace \
+							.text.smp_pairing_request_recv_replace \
 							)
 	    . = ALIGN(8);
 	} > FLASH_PROGRAM

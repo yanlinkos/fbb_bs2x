@@ -115,3 +115,76 @@ if(${COMPONENT_NAME} IN_LIST TARGET_COMPONENT)
 endif()
  
 build_component()
+
+set(COMPONENT_NAME "gmssl_sm3_hkdf")
+
+set(PUBLIC_DEFINES
+   "GMSSL_ERROR_H" # TODO 改private 开源软件需要调用stdio, 芯片无法提供, cmake定义开源软件的保护宏强制跳过
+)
+
+set(COMPONENT_PUBLIC_CCFLAGS
+    "-includegmssl_stdio_adapter.h" # TODO 改private 开源软件需要调用stdio, 芯片无法提供, 强制插入替代定义
+)
+ 
+set(SOURCES
+    ${GMSSL_PATH}/src/hkdf.c
+    ${GMSSL_PATH}/src/digest.c
+    ${GMSSL_PATH}/src/hmac.c
+    ${GMSSL_PATH}/src/sm3.c
+)
+
+set(PUBLIC_HEADER
+    ${GMSSL_PATH}/include/
+    ${GMSSL_PATH}/include/gmssl/
+    ${GMSSL_PATH}/src/
+    ${CMAKE_DIR}/open_source # TODO 改private 开源软件需要调用stdio, 芯片无法提供, 强制插入替代定义
+)
+
+set(COMPONENT_CCFLAGS
+    "-Wno-sign-compare"
+)
+
+if(${COMPONENT_NAME} IN_LIST TARGET_COMPONENT)
+    install_sdk(${GMSSL_PATH} "*")
+endif()
+ 
+build_component()
+
+set(COMPONENT_NAME "gmssl_aes_gcm")
+
+set(PUBLIC_HEADER
+    ${CMAKE_DIR}/open_source/ # TODO 改private 开源软件需要调用stdio, 芯片无法提供, 强制插入替代定义
+)
+
+set(PUBLIC_DEFINES
+    "GMSSL_ERROR_H" # TODO 改private 开源软件需要调用stdio, 芯片无法提供, cmake定义开源软件的保护宏强制跳过
+)
+
+set(COMPONENT_PUBLIC_CCFLAGS
+   "-includegmssl_stdio_adapter.h" # TODO 改private 开源软件需要调用stdio, 芯片无法提供, 强制插入替代定义
+)
+ 
+set(SOURCES
+    ${GMSSL_PATH}/src/aes_modes.c
+    ${GMSSL_PATH}/src/aes.c
+    ${GMSSL_PATH}/src/gcm.c
+    ${GMSSL_PATH}/src/hex.c
+    ${GMSSL_PATH}/src/gf128.c
+)
+ 
+set(PRIVATE_HEADER
+    ${GMSSL_PATH}/include/
+    ${GMSSL_PATH}/include/gmssl/
+    ${GMSSL_PATH}/src/
+)
+
+set(COMPONENT_CCFLAGS
+    "-Wno-unused-parameter"
+)
+
+if(${COMPONENT_NAME} IN_LIST TARGET_COMPONENT)
+    install_sdk(${GMSSL_PATH} "*")
+endif()
+ 
+build_component()
+

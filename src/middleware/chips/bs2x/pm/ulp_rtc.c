@@ -50,12 +50,10 @@ static uint32_t ulp_rtc_get_mr_count(void)
 static void ulp_rtc_handler(void)
 {
     UNUSED(ulp_rtc_get_mr_count);
-    uint32_t status = osal_irq_lock();
 #if defined(PM_SLEEP_DEBUG_ENABLE) && (PM_SLEEP_DEBUG_ENABLE == YES)
     PRINT("[ulp rtc irq]: MR = 0x%x, DR = 0x%x\r\n", ulp_rtc_get_mr_count(), ulp_rtc_get_count());
 #endif
     osal_irq_clear(ULP_INT_IRQN);
-    osal_irq_restore(status);
 }
 
 void ulp_rtc_init(void)
@@ -66,7 +64,7 @@ void ulp_rtc_init(void)
     osal_irq_enable(ULP_INT_IRQN);
     writel(ULP_AON_CTL_ULP_NP_RTC_EN_REG, 0x0); // Disable ulp_rtc.
     writel(ULP_AON_CTL_ULP_NP_RTC_EN_REG, 0x1); // Enable ulp_rtc.
-    writel(ULP_AON_CTL_ULP_NP_RTC_CLK_DIV_L_REG, 0x1);  // 0x1: 实际上是2分频
+    writel(ULP_AON_CTL_ULP_NP_RTC_CLK_DIV_L_REG, 0x7);  // 0x7: 实际上是8分频
 }
 
 void ulp_rtc_deinit(void)
@@ -78,7 +76,7 @@ void ulp_rtc_deinit(void)
 
 void ulp_rtc_start(uint32_t time_ms)
 {
-    uint32_t count = (uint32_t)((uint64_t)time_ms << 0xE) / 1000; // 1s == 1000ms, rtc freq:32768.
+    uint32_t count = (uint32_t)((uint64_t)time_ms << 0xE) / 1000 / 4; // 1s == 1000ms, rtc freq:32768.
     writew(PMU_D_CORE_RTCLR0, 0x0);
     writew(PMU_D_CORE_RTCLR1, 0x0);
     writew(PMU_D_CORE_RTCLR2, 0x0);
@@ -105,5 +103,5 @@ uint64_t ulp_rtc_get_count(void)
     current_count = current_count + (readl(PMU_D_CORE_RTCDR1) << ULP_RTC_MATCH_REG_LEN);
     current_count = current_count + (readl(PMU_D_CORE_RTCDR2) << ULP_RTC_MATCH_REG_LEN1);
     current_count = current_count + (readl(PMU_D_CORE_RTCDR3) << ULP_RTC_MATCH_REG_LEN2);
-    return current_count * 0x2; // 因2分频
+    return current_count * 0x8; // 因8分频
 }

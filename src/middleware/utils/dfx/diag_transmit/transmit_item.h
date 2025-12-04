@@ -20,8 +20,8 @@ extern "C" {
 #define TRANSMIT_OUT_TIME           30 /* 单位秒 */
 #define TRANSMIT_RETRY_TIME         1  /* 单位秒 */
 
-#define DEFAULT_TRANSMIT_BLOCK_NUMBER   8       /* 默认每次请求的数据包数量 */
-#define DEFAULT_TRANSMIT_BLOCK_SIZE     0x100   /* 默认每个包发送数据最大值 */
+#define DEFAULT_TRANSMIT_BLOCK_NUMBER   1       /* 默认每次请求的数据包数量 */
+#define DEFAULT_TRANSMIT_BLOCK_SIZE     0x200   /* 默认每个包发送数据最大值 */
 
 typedef enum {
     TRANSMIT_LOCAL_TYPE_SAVE_FILE,

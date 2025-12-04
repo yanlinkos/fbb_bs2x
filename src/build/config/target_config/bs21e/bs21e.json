@@ -124,7 +124,7 @@
     "loader_boot": "interim_binary/bs21e/bin/boot_bin",
     "liteos_kconfig": "kernel/liteos/liteos_v208.6.0_b017/Huawei_LiteOS/tools/build/config",
     "liteos_script": "kernel/liteos/liteos_v208.6.0_b017/show_menuconfig.py",
-    "target_default": "STANDARD-BS21E-N1100E",
+    "target_default": "STANDARD-BS21E-1100E",
     "target_preset": [
         "standard-bs21e-1100e",
         "bs21e-1100e-rcu",

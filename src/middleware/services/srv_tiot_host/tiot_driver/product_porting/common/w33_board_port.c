@@ -25,10 +25,15 @@ static void w33_board_set_power_enable(void)
     if (W33_PIN_POWER_EN == TIOT_PIN_NONE) {
         return;
     }
+#ifdef CONFIG_AIR_MOUSE_HX_BOARD
+    (void)uapi_gpio_set_dir((pin_t)W33_PIN_POWER_EN, GPIO_DIRECTION_OUTPUT);
+    (void)uapi_gpio_set_val((pin_t)W33_PIN_POWER_EN, GPIO_LEVEL_LOW);
+#else
     (void)uapi_pin_set_mode((pin_t)W33_PIN_POWER_EN, (pin_mode_t)HAL_PIO_FUNC_GPIO);
     (void)uapi_gpio_set_dir((pin_t)W33_PIN_POWER_EN, GPIO_DIRECTION_OUTPUT);
     (void)uapi_gpio_set_val((pin_t)W33_PIN_POWER_EN, GPIO_LEVEL_HIGH);
     (void)uapi_pin_set_pull((pin_t)W33_PIN_POWER_EN, PIN_PULL_UP);
+#endif
     osal_mdelay(W33_PWEN_TON_WAIT_MS);
 }
 
@@ -37,8 +42,13 @@ static void w33_board_set_power_disable(void)
     if (W33_PIN_POWER_EN == TIOT_PIN_NONE) {
         return;
     }
+#ifdef CONFIG_AIR_MOUSE_HX_BOARD
+    (void)uapi_gpio_set_dir((pin_t)W33_PIN_POWER_EN, GPIO_DIRECTION_INPUT);
+    (void)uapi_pin_set_pull((pin_t)W33_PIN_POWER_EN, PIN_PULL_UP);
+#else
     (void)uapi_gpio_set_val((pin_t)W33_PIN_POWER_EN, GPIO_LEVEL_LOW);
     (void)uapi_pin_set_pull((pin_t)W33_PIN_POWER_EN, PIN_PULL_NONE);
+#endif
     osal_mdelay(W33_PWEN_TOFF_WAIT_MS);
 }
 #endif
@@ -86,10 +96,11 @@ void w33_board_deinit(void *param)
 
     w33_board_hw_info *hw_info = g_w33_board_info.hw_infos;
     const uint32_t *w33_pins = hw_info->pm_info;
-    /* 确保PWREN管脚下拉 */
-    (void)uapi_gpio_set_val((pin_t)w33_pins[W33_PIN_POWER_CTRL], GPIO_LEVEL_LOW);
-    (void)uapi_pin_set_pull((pin_t)w33_pins[W33_PIN_POWER_CTRL], PIN_PULL_NONE);
-
+    if (w33_pins[W33_PIN_POWER_CTRL] != TIOT_PIN_NONE) {
+        /* 确保PWREN管脚下拉 */
+        (void)uapi_gpio_set_val((pin_t)w33_pins[W33_PIN_POWER_CTRL], GPIO_LEVEL_LOW);
+        (void)uapi_pin_set_pull((pin_t)w33_pins[W33_PIN_POWER_CTRL], PIN_PULL_NONE);
+    }
 #if defined(CONFIG_PINCTRL_SUPPORT_IE)
     /* 下电后输入管脚关闭ie */
     (void)uapi_pin_set_ie((pin_t)w33_pins[W33_PIN_DEVICE_WAKEUP_HOST], PIN_IE_0);

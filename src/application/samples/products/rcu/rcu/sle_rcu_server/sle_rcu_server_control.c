@@ -46,6 +46,8 @@ void sle_control_callbacks(uint8_t sle_index)
     while (1) {
         if (g_sle_callbacks[sle_index].func != NULL) {
             g_sle_callbacks[sle_index].func(sle_index, &g_sle_callbacks[sle_index].addr); // 调用回调函数，传递数据
+        } else {
+            break;
         }
         if (sle_index == get_current_control_obj()) {
             osal_msleep(APP_CONTROL_MAX_TIME);
@@ -96,9 +98,9 @@ void sle_control_notify_connect(uint16_t conn_id, const sle_addr_t *addr, sle_ac
         memset_s(&g_sle_callbacks[sle_index], sizeof(sle_callback_entry_t), 0, sizeof(sle_callback_entry_t));
     } else if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
         set_app_sle_conn_status(conn_id, APP_CONNECT_STATUS_DISCONNECT);
+        sle_add_callback(sle_callback_to_adv, sle_index, addr);
 #if !defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
         if (!g_low_power_state) {
-            sle_add_callback(sle_callback_to_adv, sle_index, addr);
             if (sle_index == TV) {
                 app_timer_process_start(TIME_CMD_SLE_TV_CALL, APP_SLE_CALL_TIME);
             } else if (sle_index == OTT) {

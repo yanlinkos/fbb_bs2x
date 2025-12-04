@@ -7,6 +7,10 @@ if(DEFINED CONFIG_TURNKEY_ENABLE)
     add_subdirectory_if_exist(game_mouse)
 endif()
 
+if(DEFINED CONFIG_HP_ENABLE)
+    add_subdirectory_if_exist(hp_mouse)
+endif()
+
 if(DEFINED CONFIG_SAMPLE_SUPPORT_USB_KEYBOARD)
     add_subdirectory_if_exist(usb_keyboard)
 endif()

@@ -66,6 +66,11 @@ static uint8_t g_sle_hid_group_uuid[TYPE_MAX][SLE_UUID_LEN] = {
     /* amic uuid */
     { 0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0xEA,
       0xB7, 0x20, 0x00, 0x00, 0x00, 0x00, 0x23, 0x23 },
+#if defined(CONFIG_SLE_UPG_ENABLE)
+    /* OTA uuid */
+    { 0x37, 0xbe, 0xa8, 0x80, 0xfc, 0x70, 0x11, 0xea,
+      0xb7, 0x20, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff },
+#endif
 };
 
 bool cmp_property_handle(int handle, uint8_t *type)
@@ -106,6 +111,13 @@ ssapc_write_param_t *get_sle_rcu_send_param(void)
 {
     return &g_sle_rcu_send_param;
 }
+
+#if defined(CONFIG_SLE_UPG_ENABLE)
+uint16_t get_sle_ota_send_handle(void)
+{
+    return g_property_handle[TYPE_OTA].handle;
+}
+#endif
 
 uint8_t get_ssap_find_ready(void)
 {

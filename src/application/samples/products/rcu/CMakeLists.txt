@@ -102,11 +102,22 @@ list(APPEND SOURCES_LIST
 list(APPEND HEADER_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/dongle/sle_rcu_dongle
 )
+
+if(DEFINED CONFIG_SLE_UPG_ENABLE)
+list(APPEND SOURCES_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/dongle/sle_ota/sle_ota_cmd.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/dongle/sle_ota/sle_ota_cmd_handler.c
+)
+list(APPEND HEADER_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/dongle/sle_ota
+)
+endif()
 endif()
 
 if(DEFINED CONFIG_SAMPLE_SUPPORT_BLE_CLIENT)
 list(APPEND SOURCES_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/dongle/ble_rcu_dongle/ble_rcu_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/dongle/ble_rcu_dongle/ble_rcu_until.c
 )
 list(APPEND HEADER_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/dongle/ble_rcu_dongle
