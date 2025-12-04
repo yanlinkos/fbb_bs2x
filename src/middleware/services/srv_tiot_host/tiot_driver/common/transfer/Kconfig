@@ -50,6 +50,18 @@ menu "Packet Handle Support"
         bool "TIOT PACKET"
     config XFER_PACKET_NCI
         bool "NCI PACKET"
+    
+    if XFER_PACKET_TIOT
+        menu "Sub-message type selection"
+        comment "Supported sub-message"
+            config XFER_SUBSYS1_SUBMSG
+            bool
+            prompt "Support SUBSYS1 sub-messages"
+            default n
+            help
+                Support SUBSYS1 sub-messages.
+        endmenu
+    endif
 endmenu
 
 config XFER_DEFAULT_RX_BUFF

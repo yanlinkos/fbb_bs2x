@@ -78,3 +78,35 @@
 	     *libriscv.a:*fault*.o* (.text.* .rodata.*)
 	    . = ALIGN(8);
 	} > FLASH_PROGRAM
+
+	.bgle_xip :
+	{
+	    . = ALIGN(8);
+		*libbgtp.a:*.o* (.text.evt_task_ble_acl_update_param_with_instant_replace .text.evt_task_ble_acl_cancel_cbk_replace \
+						.text.evt_task_ble_acl_set_interval_replace .text.evt_task_ble_adv_get_stop_status_replace \
+						.text.fsm_msg_update_saved_msg_replace .text.es_init_eeq_elt_pool \
+						.text.lm_ble_scan_set_ext_scan_en_param_replace .text.dts_gle_intc_delete \
+						.text.dts_ble_intc_init .text.dts_gle_intc_init .text.dts_interrupt_init .text.dts_ble_intc_delete \
+						.text.fsm_is_static_msg .text.fsm_msg_list_free .text.fsm_reset_ram \
+						.text.evt_task_gle_acb_abnormal_cbk .text.evt_task_gle_acb_init_link_segment \
+						.text.evt_task_gle_acb_low_latency_map_init .text.evt_sched_delete_task \
+						.text.evt_task_gle_acb_update_link_segment .text.evt_task_gle_acb_low_latency_init_tog_txdesc \
+						.text.evt_task_gle_acb_update_low_latency_param_with_instant .text.evt_task_gle_iob_low_latency_update_acb_sed_info \
+						.text.evt_task_gle_acb_free_txdesc_from_tog .text.evt_task_gle_acb_low_latency_switch_md \
+						.text.evt_task_gle_acb_low_latency_set_intv_change_flag .text.evt_task_gle_acb_update_low_latency_param \
+						.text.evt_task_gle_acb_low_latency_update_phy .text.evt_task_gle_acb_update_low_latency_sed_info)
+		*libbt_host.a:*.o* (.text.gaph_smp_cfm_cbk_replace .text.smp_key_distribute_go_replace \
+							.text.smp_tk_ask_replace .text.smp_ecdh_public_key_generate_replace \
+							.text.smp_ecdh_pairing_public_key_recv_replace .text.bth_init_replace \
+							.text.smp_rand_replace .text.smp_pairing_request_recv_replace \
+							.text.smp_key_distribute_recv_replace .text.gatt_error_cfm_replace\
+							.text.smp_key_distribute_send_replace \
+							.text.smpc_ev_le_long_term_key_request_replace \
+							.text.smp_key_distribute_fill_replace \
+							.text.smp_pairing_pdu_send_replace \
+							.text.smp_calc_erir_patch_2 \
+							.text.smp_calc_ltk_patch \
+							.text.smp_calc_x_div_patch \
+							)
+	    . = ALIGN(8);
+	} > FLASH_PROGRAM

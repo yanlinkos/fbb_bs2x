@@ -47,7 +47,7 @@
  */
 /* Consider using NV region contents to determine actual number of pages and stores */
 #define KV_STORE_PAGES_SCPU    0
-#define KV_STORE_PAGES_ACPU    1
+#define KV_STORE_PAGES_ACPU    ((NV_IMAGE_LEN / KV_PAGE_SIZE) - 1)
 
 #define MCORE_REGISTER_NV_NOTIFY_MAX_NUM 10
 
@@ -56,7 +56,11 @@
  * 此长度影响NV内部处理数据所需的内存大小，如内存紧张，则不宜太大。
  * 在需要加密NV但又不支持分段加解密的情况下，最好设置为最大值4096，以避免数据被分段处理。
  */
+#if defined (CONFIG_NV_SUPPORT_ENCRYPT) && (CONFIG_NV_SUPPORT_ENCRYPT == 1)
+#define NV_KEY_DATA_CHUNK_LEN            640
+#else
 #define NV_KEY_DATA_CHUNK_LEN            128
+#endif
 
 /*
  * NV支持异步存储时(CONFIG_NV_SUPPORT_ASYNCHRONOUS_STORE特性宏设置为NV_YES)相关配置项

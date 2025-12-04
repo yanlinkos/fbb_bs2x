@@ -71,3 +71,8 @@ if MIDDLEWARE_SUPPORT_UPDATE
         osource  "middleware/utils/update/Kconfig"
     endmenu
     endif
+
+config NV_SUPPORT_ENCRYPT
+bool
+prompt "nv support encrypt"
+default n

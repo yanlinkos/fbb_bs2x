@@ -45,6 +45,25 @@ endchoice
 osource "application/samples/products/game_mouse/Kconfig"
 endif
 
+config HP_ENABLE
+    bool
+    prompt "Enable Hp."
+    default n
+    help
+        This option means support Hp.
+
+if HP_ENABLE
+choice
+    prompt "Select mouse hp mode"
+    default MOUSE_8K_HP
+    config MOUSE_8K_HP
+        bool "Select mouse 8k hp."
+    config MOUSE_2K_HP
+        bool "Select mouse 2k hp."
+endchoice
+osource "application/samples/products/hp_mouse/Kconfig"
+endif
+
 config SAMPLE_SUPPORT_AIR_MOUSE_WITH_DONGLE
     bool
     prompt "Support air mouse sample."

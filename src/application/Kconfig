@@ -85,6 +85,13 @@ config DISABLE_GPIO_INTERRUPT_DURING_PAD_SWITCHING
 
 endif
 
+config CODE_MINIATURE_ENABLE
+    bool
+    prompt "Enable Code Miniaturization."
+    default n
+     help
+        This option means support miniaturization.
+
 config SAMPLE_ENABLE
     bool
     prompt "Enable Sample."

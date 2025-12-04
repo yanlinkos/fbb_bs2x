@@ -16,7 +16,6 @@
 
 #include <stdint.h>
 #include "slp_errcode.h"
-#include "errcode.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,16 +40,16 @@ typedef struct {
 
 /**
  * @if Eng
- * @brief Struct of slp phase calibration data
+ * @brief Struct of slp aox calibration data
  * @else
- * @brief slp相位校准数据
+ * @brief slp测角校准数据
  * @endif
  */
 typedef struct {
-    SlpCirIqForCali cirIq0;                 /*!< @if Eng phase calibration data of antenna 0.
-                                                 @else 天线0的相位校准数据。 @endif */
-    SlpCirIqForCali cirIq1;                 /*!< @if eng phase calibration data of antenna 1.
-                                                 @else 天线1的相位校准数据。 @endif */
+    SlpCirIqForCali cirIq0;         /*!< @if Eng aox calibration data of antenna 0.
+                                         @else 天线0的测角校准数据。 @endif */
+    SlpCirIqForCali cirIq1;         /*!< @if eng aox calibration data of antenna 1.
+                                         @else 天线1的测角校准数据。 @endif */
 } SlpAoxCaliData;
 
 /**
@@ -69,33 +68,35 @@ typedef struct {
                                          @else 俯仰角结果, 单位: 0.01度。 @endif */
     uint8_t aoxElevFom;             /*!< @if Eng FOM (Figure Of Merit) of the elevation.
                                          @else 俯仰角置信度。 @endif */
+    uint32_t round;                 /*!< @if Eng round.
+                                         @else 轮数。 @endif */
 } SlpAoxRslt;
 
 /**
  * @if Eng
- * @brief Struct of slp phase calibration result
+ * @brief Struct of slp aox calibration result
  * @else
- * @brief slp相位校准结果
+ * @brief slp测角校准结果
  * @endif
  */
 typedef struct {
-    int32_t decoupleMatIqD11I;      /*!< @if Eng i of calibration result d11.
-                                         @else 相位校准结果d11的i。 @endif */
-    int32_t decoupleMatIqD11Q;      /*!< @if Eng q of calibration result d11.
-                                         @else 相位校准结果d11的1。 @endif */
-    int32_t decoupleMatIqD12I;      /*!< @if Eng i of calibration result d12.
-                                         @else 相位校准结果d12的i。 @endif */
-    int32_t decoupleMatIqD12Q;      /*!< @if Eng q of calibration result d12.
-                                         @else 相位校准结果d12的q。 @endif */
-    int32_t decoupleMatIqD21I;      /*!< @if Eng i of calibration result d21.
-                                         @else 相位校准结果d21的i。 @endif */
-    int32_t decoupleMatIqD21Q;      /*!< @if Eng q of calibration result d21.
-                                         @else 相位校准结果d21的q。 @endif */
-    int32_t decoupleMatIqD22I;      /*!< @if Eng i of calibration result d22.
-                                         @else 相位校准结果d22的i。 @endif */
-    int32_t decoupleMatIqD22Q;      /*!< @if Eng q of calibration result d22.
-                                         @else 相位校准结果d22的q。 @endif */
-} SlpPhaseCaliPara;
+    int32_t para0;                  /*!< @if Eng aox cali result para 0.
+                                         @else 测角校准参数0 @endif */
+    int32_t para1;                  /*!< @if Eng aox cali result para 1.
+                                         @else 测角校准参数1 @endif */
+    int32_t para2;                  /*!< @if Eng aox cali result para 2.
+                                         @else 测角校准参数2 @endif */
+    int32_t para3;                  /*!< @if Eng aox cali result para 3.
+                                         @else 测角校准参数3 @endif */
+    int32_t para4;                  /*!< @if Eng aox cali result para 4.
+                                         @else 测角校准参数4 @endif */
+    int32_t para5;                  /*!< @if Eng aox cali result para 5.
+                                         @else 测角校准参数5 @endif */
+    int32_t para6;                  /*!< @if Eng aox cali result para 6.
+                                         @else 测角校准参数6 @endif */
+    int32_t para7;                  /*!< @if Eng aox cali result para 7.
+                                         @else 测角校准参数7 @endif */
+} SlpAoxCaliPara;
 
 /**
  * @if Eng
@@ -115,33 +116,31 @@ typedef struct {
 
 /**
  * @if Eng
- * @brief Struct of slp factory phase calibration data report interface
+ * @brief Struct of slp factory aox calibration data report interface
  * @else
- * @brief slp产测相位校准数据上报
+ * @brief slp产测测角校准数据上报
  * @endif
  */
 typedef struct {
     int32_t tof;                    /*!< @if Eng time of flight, unit: 1/64 ns.
                                          @else 测距结果, 飞行时间, 单位: 1/64纳秒. @endif */
-    SlpAoxCaliData aoxCaliData;     /*!< @if Eng phase calibration data.
-                                         @else 相位校准数据. @endif */
+    SlpAoxCaliData aoxCaliData;     /*!< @if Eng aox calibration data.
+                                         @else 测角校准数据. @endif */
     SlpAoxRslt aoxRslt;             /*!< @if Eng angle measurement result.
                                          @else 测角结果. @endif */
-    uint32_t imuAccNorm;            /*!< @if Eng IMU acceleration norm, unit: 1e-5m/(s^2).
-                                         @else 惯导中加速度的模, 单位: 1e-5m/(s^2). @endif */
-} SlpFactoryAoxCaliRpt;
+} SlpFactoryRangingAoxDataRpt;
 
 /**
  * @if Eng
  * @brief Struct of slp factory report interface
  * @else
- * @brief slp产测相位校准结果上报
+ * @brief slp产测测角校准结果上报
  * @endif
  */
 typedef struct {
-    SlpPhaseCaliPara caliPara;      /*!< @if Eng phase calibration result.
-                                         @else 相位校准结果. @endif */
-} SlpFactoryCaliParaRpt;
+    SlpAoxCaliPara caliPara;        /*!< @if Eng aox calibration para.
+                                         @else 测角校准结果. @endif */
+} SlpFactoryAoxCaliParaRpt;
 #pragma pack()
 
 /**
@@ -154,8 +153,10 @@ typedef struct {
 typedef enum {
     SLP_FACTORY_TEST_NONE = 0,      /*!< @if Eng slp normal service mode
                                          @else slp 正常业务模式 @endif */
-    SLP_FACTORY_TEST_AOX_CALI,      /*!< @if Eng slp phase calibration mode
-                                         @else slp 相位校准模式 @endif */
+    SLP_FACTORY_TEST_AOX_CALI,      /*!< @if Eng slp aox calibration mode
+                                         @else slp 测角校准模式 @endif */
+    SLP_FACTORY_TEST_IMU_DETECT,    /*!< @if Eng imu detect mode
+                                         @else slp IMU检测模式 @endif */
 } SlpFactoryTestMode;
 
 /**
@@ -179,35 +180,35 @@ ErrcodeSlpClient SlpSetFactoryTestMode(uint8_t mode);
  * @if Eng
  * @brief Write the calibration value.
  * @par Description: Write the calibration value.
- * @param  [in]  caliPara cali result, see @ref SlpPhaseCaliPara
+ * @param  [in]  caliPara cali result, see @ref SlpAoxCaliPara
  * @retval ERRCODE_SUCC Success.
  * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
  * @else
  * @brief 写入校准值。
  * @par Description: 写入校准值。
- * @param  [in]  caliPara 校准值，参考 @ref SlpPhaseCaliPara
+ * @param  [in]  caliPara 校准值，参考 @ref SlpAoxCaliPara
  * @retval ERRCODE_SUCC 成功。
  * @retval Other        失败。参考 @ref ErrcodeSlpClient
  * @endif
  */
-errcode_t SlpWritePhaseCaliPara(SlpPhaseCaliPara *caliPara);
+uint32_t SlpWriteAoxCaliPara(SlpAoxCaliPara *caliPara);
 
 /**
  * @if Eng
  * @brief Read the calibration value.
  * @par Description: Read the calibration value.
- * @param  [in]  caliPara cali para, see @ref SlpPhaseCaliPara
+ * @param  [in]  caliPara cali para, see @ref SlpAoxCaliPara
  * @retval ERRCODE_SUCC Success.
  * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
  * @else
  * @brief 读取校准值。
  * @par Description: 读取校准值。
- * @param  [in]  caliPara 校准值，参考 @ref SlpPhaseCaliPara
+ * @param  [in]  caliPara 校准值，参考 @ref SlpAoxCaliPara
  * @retval ERRCODE_SUCC 成功。
  * @retval Other        失败。参考 @ref ErrcodeSlpClient
  * @endif
  */
-errcode_t SlpReadPhaseCaliPara(SlpPhaseCaliPara *caliPara);
+uint32_t SlpReadAoxCaliPara(SlpAoxCaliPara *caliPara);
 
 /**
  * @if Eng
@@ -224,7 +225,7 @@ errcode_t SlpReadPhaseCaliPara(SlpPhaseCaliPara *caliPara);
  * @retval Other        失败。参考 @ref errcode_t
  * @endif
  */
-errcode_t SlpWriteTxPower(uint32_t *txPower);
+uint32_t SlpWriteTxPower(uint32_t *txPower);
 
 /**
  * @if Eng
@@ -241,7 +242,7 @@ errcode_t SlpWriteTxPower(uint32_t *txPower);
  * @retval Other        失败。参考 @ref errcode_t
  * @endif
  */
-errcode_t SlpReadTxPower(uint32_t *txPower);
+uint32_t SlpReadTxPower(uint32_t *txPower);
 
 /**
  * @if Eng
@@ -258,7 +259,7 @@ errcode_t SlpReadTxPower(uint32_t *txPower);
  * @retval Other        失败。参考 @ref errcode_t
  * @endif
  */
-errcode_t SlpWriteBoardAntTrxTimeDelay(uint32_t timeDelay);
+uint32_t SlpWriteBoardAntTrxTimeDelay(uint32_t timeDelay);
 
 /**
  * @if Eng
@@ -275,24 +276,24 @@ errcode_t SlpWriteBoardAntTrxTimeDelay(uint32_t timeDelay);
  * @retval Other        失败。参考 @ref errcode_t
  * @endif
  */
-errcode_t SlpReadBoardAntTrxTimeDelay(uint32_t *timeDelay);
+uint32_t SlpReadBoardAntTrxTimeDelay(uint32_t *timeDelay);
 
 /**
  * @if Eng
  * @brief Write the calibration value to the peer device.
  * @par Description: Write the calibration value to the peer device.
- * @param  [in]  caliPara cali para, see @ref SlpPhaseCaliPara
+ * @param  [in]  caliPara cali para, see @ref SlpAoxCaliPara
  * @retval ERRCODE_SUCC Success.
  * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
  * @else
  * @brief 向对端设备写入校准值。
  * @par Description: 向对端设备写入校准值。
- * @param  [in]  caliPara 校准值，参考 @ref SlpPhaseCaliPara
+ * @param  [in]  caliPara 校准值，参考 @ref SlpAoxCaliPara
  * @retval ERRCODE_SUCC 成功。
  * @retval Other        失败。参考 @ref ErrcodeSlpClient
  * @endif
  */
-ErrcodeSlpClient SlpWritePhaseCaliPara2Onb(SlpPhaseCaliPara *caliPara);
+ErrcodeSlpClient SlpWriteAoxCaliPara2Onb(SlpAoxCaliPara *caliPara);
 
 /**
  * @if Eng
@@ -307,7 +308,7 @@ ErrcodeSlpClient SlpWritePhaseCaliPara2Onb(SlpPhaseCaliPara *caliPara);
  * @retval Other        失败。参考 @ref ErrcodeSlpClient
  * @endif
  */
-ErrcodeSlpClient SlpReadPhaseCaliParaFromOnb(void);
+ErrcodeSlpClient SlpReadAoxCaliParaFromOnb(void);
 
 /**
  * @if Eng
@@ -352,7 +353,7 @@ ErrcodeSlpClient SlpReadTrxDelayFromOnb(void);
  * @retval Other        失败。参考 @ref errcode_t
  * @endif
  */
-errcode_t SlpWriteGyroZeroOffset(SlpGyroZeroOffset *offset);
+uint32_t SlpWriteGyroZeroOffset(SlpGyroZeroOffset *offset);
 
 /**
  * @if Eng
@@ -367,7 +368,22 @@ errcode_t SlpWriteGyroZeroOffset(SlpGyroZeroOffset *offset);
  * @retval Other        失败。参考 @ref errcode_t
  * @endif
  */
-errcode_t SlpReadGyroZeroOffset(SlpGyroZeroOffset *offset);
+uint32_t SlpReadGyroZeroOffset(SlpGyroZeroOffset *offset);
+
+/**
+ * @if Eng
+ * @brief  SLP enable imu detection.
+ * @par Description: SLP enable imu detection.
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @else
+ * @brief  SLP开启IMU检测。
+ * @par Description: SLP开启IMU检测。
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @endif
+ */
+ErrcodeSlpClient SlpEnableImuDetectionCommand(void);
 
 /**
  * @if Eng
@@ -375,16 +391,16 @@ errcode_t SlpReadGyroZeroOffset(SlpGyroZeroOffset *offset);
  * @par Callback invoked when report factory test result
  * @attention 1.This function is called in SLP context,should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the slp automatically.
- * @param  [in]  factoryRpt factory test phase calibration data.
+ * @param  [in]  factoryRpt factory test aox calibration data.
  * @else
- * @brief 产测相位校准数据上报函数。
- * @par 产测相位校准数据上报函数。
+ * @brief 产测测角校准数据上报函数。
+ * @par 产测测角校准数据上报函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  factoryRpt 产测相位校准数据。
+ * @param  [in]  factoryRpt 产测测角校准数据。
  * @endif
  */
-typedef void (*SlpReportFactoryAoxCaliCallback)(SlpFactoryAoxCaliRpt *factoryRpt);
+typedef void (*SlpReportOriginDataCallback)(SlpFactoryRangingAoxDataRpt *factoryRpt);
 
 /**
  * @if Eng
@@ -392,16 +408,16 @@ typedef void (*SlpReportFactoryAoxCaliCallback)(SlpFactoryAoxCaliRpt *factoryRpt
  * @par Callback invoked when report factory test result
  * @attention 1.This function is called in SLP context,should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the slp automatically.
- * @param  [in]  factoryRpt factory test phase calibration result.
+ * @param  [in]  factoryRpt factory test aox calibration result.
  * @else
- * @brief 相位校准结果上报函数。
- * @par    相位校准结果上报函数。
+ * @brief 测角校准结果上报函数。
+ * @par    测角校准结果上报函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  factoryRpt 相位校准结果。
+ * @param  [in]  factoryRpt 测角校准结果。
  * @endif
  */
-typedef void (*SlpReportFactoryCaliParaCallback)(SlpFactoryCaliParaRpt *factoryRpt);
+typedef void (*SlpReportAoxCaliParaCallback)(SlpFactoryAoxCaliParaRpt *factoryRpt);
 
 /**
  * @if Eng
@@ -439,20 +455,51 @@ typedef void (*SlpReportGyroZeroOffsetCallback)(SlpGyroZeroOffset *offset);
 
 /**
  * @if Eng
+ * @brief Struct of slp factory aox calibration data report interface
+ * @else
+ * @brief slp产测测角校准数据上报
+ * @endif
+ */
+typedef struct {
+    uint32_t accNorm;               /*!< @if Eng IMU acceleration norm, unit: 1e-5m/(s^2).
+                                         @else 惯导中加速度的模, 单位: 1e-5m/(s^2). @endif */
+} SlpFactoryImuDataRpt;
+
+/**
+ * @if Eng
+ * @brief Callback invoked when report imu factory data
+ * @par Callback invoked when report imu factory data
+ * @attention 1.This function is called in SLP context, should not be blocked or do long time waiting.
+ * @attention 2.The memories of pointer are requested and freed by the slp automatically.
+ * @param  [in]  rpt factory data of imu.
+ * @else
+ * @brief  IMU产测数据上报的回调函数。
+ * @par  IMU产测数据上报的回调函数。
+ * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
+ * @param  [in]  rpt imu产测数据。
+ * @endif
+ */
+typedef void (*SlpReportFactoryImuDataCallback)(SlpFactoryImuDataRpt *rpt);
+
+/**
+ * @if Eng
  * @brief Struct of slp factory result report callbacks
  * @else
  * @brief 产测结果上报回调
  * @endif
  */
 typedef struct {
-    SlpReportFactoryAoxCaliCallback rptFactoryAoxCaliCbk;   /*!< @if Eng report phase calibration data callback.
-                                                                 @else 上报相位校准数据回调函数。 @endif */
-    SlpReportFactoryCaliParaCallback rptFactoryCaliParaCbk; /*!< @if Eng slp report phase calibration result callback.
-                                                                 @else 上报相位校准结果回调函数。 @endif */
+    SlpReportOriginDataCallback rptOriginDataCbk;           /*!< @if Eng report ranging aox calibration data callback.
+                                                                 @else 上报测距测角校准原始数据回调函数。 @endif */
+    SlpReportAoxCaliParaCallback rptAoxCaliParaCbk;         /*!< @if Eng slp report aox calibration result callback.
+                                                                 @else 上报测角校准参数回调函数。 @endif */
     SlpReportFactoryTrxDelayCallback rptFactoryTrxDelayCbk; /*!< @if Eng slp report trx time delay result callback.
                                                                  @else 上报板级+天线时延校准结果回调函数。 @endif */
     SlpReportGyroZeroOffsetCallback rptZeroOffsetCbk;       /*!< @if Eng slp report trx time delay result callback.
                                                                  @else 陀螺仪零偏校准值结果上报回调函数。 @endif */
+    SlpReportFactoryImuDataCallback rptImuDataCbk;          /*!< @if Eng slp report IMU factory data callback.
+                                                                 @else 上报IMU产测数据回调函数。 @endif */
 } SlpFactoryReportCallbacks;
 
 /**

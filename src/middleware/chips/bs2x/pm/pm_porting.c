@@ -339,6 +339,9 @@ static uint16_t g_protocol_wakeup_advance_time = 0;
 // time from btcbb wakeup to tx/rx en, us
 static uint16_t g_protocol_work_advance_time = 0;
 
+// sysldo睡眠电压0.75v
+static uint8_t g_sysldo_default_val = 0x1;
+
 void pm_set_protocol_wakeup_advance_time(uint16_t advance_time)
 {
     g_protocol_wakeup_advance_time = advance_time;
@@ -357,6 +360,16 @@ void pm_set_protocol_work_advance_time(uint16_t advance_time)
 uint16_t pm_get_protocol_work_advance_time(void)
 {
     return g_protocol_work_advance_time;
+}
+
+uint8_t pm_get_sysldo_default_val(void)
+{
+    return g_sysldo_default_val;
+}
+
+void pm_set_sysldo_default_val(uint8_t val)
+{
+    g_sysldo_default_val = val;
 }
 
 static void pm_protocol_wakeup_time_init(void)
@@ -405,10 +418,10 @@ static void pm_sleep_wait_time_config(void)
 
 __attribute__((section(".PMRAMCODE"))) void pm_auto_cg_config(void)
 {
-        writew(0x57000a00, 0x0);    // AON_AUTO_CG_CFG
+        writew(0x57000a00, 0x100);  // AON_AUTO_CG_CFG
         writew(0x52000190, 0x0);    // DAP_H2P_AUTOCG_BYPASS
         writew(0x52000194, 0x0);    // DMA_LP_CTL
-        writew(0x52000a2c, 0x0);    // BUS_CG_CTL0
+        writew(0x52000a2c, 0x10);   // BUS_CG_CTL0
         writew(0x52000a30, 0x0);    // BUS_CG_CTL1
         writew(0x52000a34, 0x0);    // BUS_CG_CTL2
         writew(0x52000ba4, 0x4);    // PWM_AUTO_CG_BYPASS_EN
@@ -441,8 +454,9 @@ static void pm_register_dev_resume_interface(void)
 
 static void pm_pmu_regs_config_for_slp(void)
 {
-    // cldo和sysldo睡眠电压改成最小，即0.7v
-    writew(0x5702C08C, 0x0);
+    // cldo和sysldo睡眠电压改成0.75v
+    pm_set_sysldo_default_val(0x1);
+    writew(0x5702C08C, pm_get_sysldo_default_val());
     // 睡眠时关闭cpu/bus/dma时钟
     writew(0x520003e4, 0x0);
     writew(0x57000060, 0x0);    // CLK_1M_DIV
@@ -479,6 +493,21 @@ static void pm_pmu_regs_config_for_slp(void)
 
     // EFUSE disable autoread.
     writew(0x5702C99C, 0x0);
+}
+
+void pm_bg_refresh_config(bool high_temp)
+{
+    unused(high_temp);
+#if defined(PM_REDUCE_BG_REFRESH_RATE)
+    // 常温下配置1ms开/16ms关(0x20/0x1FF)，高温下切换为2ms开/8ms关(0x40/0x100)。
+    if (high_temp) {
+        writew(0x5702C4D0, 0x40);
+        writew(0x5702C4D4, 0x100);
+    } else {
+        writew(0x5702C4D0, 0x20);
+        writew(0x5702C4D4, 0x1FF);
+    }
+#endif
 }
 
 void uapi_pm_lpc_init(void)

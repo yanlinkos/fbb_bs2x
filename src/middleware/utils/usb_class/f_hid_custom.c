@@ -591,17 +591,18 @@ static int hid_ep_data_init(struct hid_dev_s *hid, uint8_t index, struct usbdev_
   hid_data->write_head = 0;
   hid_data->write_tail = 0;
 
-#if defined(CONFIG_DRIVERS_USB_HID_OUTPUT_REPORT) && defined(CONFIG_DRIVERS_USB_HID_OUTPUT_REPORT_EVENT)
+#if defined(CONFIG_DRIVERS_USB_HID_OUTPUT_REPORT)
   hid_data->read_len = 0;
   hid_data->read_buf = malloc(HID_OUT_DATA_SIZE);
   if (hid_data->read_buf == NULL)
     {
       return -1;
     }
+#if defined(CONFIG_DRIVERS_USB_HID_OUTPUT_REPORT_EVENT)
   (void)LOS_EventInit(&hid_data->read_event);
   hid_data->event_flag = true;
 #endif
-
+#endif
   return 0;
 }
 
@@ -609,15 +610,15 @@ static void hid_ep_data_deinit(struct hid_dev_s *hid, uint8_t index, struct usbd
 {
   struct hid_data_ctl *hid_data = &hid->hid_data[index];
 
-#if defined(CONFIG_DRIVERS_USB_HID_OUTPUT_REPORT) && defined(CONFIG_DRIVERS_USB_HID_OUTPUT_REPORT_EVENT)
+#if defined(CONFIG_DRIVERS_USB_HID_OUTPUT_REPORT)
+#if defined(CONFIG_DRIVERS_USB_HID_OUTPUT_REPORT_EVENT)
   /* Destroy read event */
-
   if (hid_data->event_flag == true)
     {
       hid_data->event_flag = false;
       (void)LOS_EventDestroy(&hid_data->read_event);
     }
-
+#endif
   if (hid_data->read_buf != NULL)
     {
       free(hid_data->read_buf);

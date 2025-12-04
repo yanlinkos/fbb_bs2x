@@ -22,6 +22,10 @@
 #include "implementation/usb_init.h"
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_CLIENT)
 #include "sle_rcu_client.h"
+#if defined(CONFIG_SLE_UPG_ENABLE)
+#include "sle_ota_cmd.h"
+#include "sle_ota_cmd_handler.h"
+#endif
 #endif
 #if defined(CONFIG_SAMPLE_SUPPORT_BLE_CLIENT)
 #include "ble_rcu_client.h"
@@ -54,6 +58,12 @@
 #define RCU_VDT_TRANSFER_EVENT              1
 #define RCU_UAC_BUFFER_COUNT                4
 #define RCU_UAC_BUFFER_LEN                  512
+
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_CLIENT) && defined(CONFIG_SLE_UPG_ENABLE)
+#define SLE_OTA_TASK_STACK_SIZE             0x800
+#define SLE_OTA_TASK_PRIO                   26
+#define HID_RECV_MAX_LENGTH                 64
+#endif
 
 static osal_event g_trans_event_id;
 static bool g_rcu_dongle_inited = false;
@@ -142,6 +152,7 @@ static uint8_t rcu_dongle_init_internal(device_type dtype)
 
     if (dtype == DEV_UAC_HID) {
         g_rcu_dongle_hid_index = rcu_dongle_set_report_desc_hid();
+        rcu_dongle_set_custom_report_desc_hid();
     }
 
     if (usbd_set_device_info(dtype, &str_manufacturer, &str_product, &str_serial_number, dev_id) != 0) {
@@ -238,7 +249,6 @@ static void sle_rcu_data_distribute(ssapc_handle_value_t *data)
     if (!cmp_property_handle(data->handle, &type)) {
         return;
     }
-
     switch (type) {
         case TYPE_KEYBOARD:
             rcu_reporter_data_distribute(data);
@@ -246,6 +256,11 @@ static void sle_rcu_data_distribute(ssapc_handle_value_t *data)
         case TYPE_AMIC:
             sle_rcu_amic_data_handle(data);
             break;
+#if defined(CONFIG_SLE_UPG_ENABLE)
+        case TYPE_OTA:
+            sle_ota_data_handle(data);
+            break;
+#endif
         default:
             break;
     }
@@ -426,6 +441,22 @@ static void *rcu_dongle_task(const char *arg)
     return NULL;
 }
 
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_CLIENT) && defined(CONFIG_SLE_UPG_ENABLE)
+static void *sle_ota_task(const char *arg)
+{
+    unused(arg);
+    uint8_t recv_hid_data[HID_RECV_MAX_LENGTH];
+    while (1) {
+        int32_t len_hid_rcv =
+            fhid_recv_data(rcu_dongle_get_custom_report_desc_hid(), (char *)recv_hid_data, HID_RECV_MAX_LENGTH);
+        if (len_hid_rcv > 0) {
+            sle_ota_recv_handler(recv_hid_data, len_hid_rcv);
+        }
+    }
+    return NULL;
+}
+#endif
+
 static void rcu_dongle_entry(void)
 {
     osal_task *task_handle = NULL;
@@ -439,6 +470,13 @@ static void rcu_dongle_entry(void)
     if (task_handle != NULL) {
         osal_kthread_set_priority(task_handle, RCU_DONGLE_TASK_PRIO);
     }
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_CLIENT) && defined(CONFIG_SLE_UPG_ENABLE)
+    task_handle = osal_kthread_create((osal_kthread_handler)sle_ota_task, 0, "SLEOtaTask",
+                                      SLE_OTA_TASK_STACK_SIZE);
+    if (task_handle != NULL) {
+        osal_kthread_set_priority(task_handle, SLE_OTA_TASK_PRIO);
+    }
+#endif
 #if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
     task_handle = osal_kthread_create((osal_kthread_handler)rcu_dongle_mp_test_task, 0, "MassProductionTestTask",
                                       RCU_MP_TEST_TASK_STACK_SIZE);

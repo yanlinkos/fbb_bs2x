@@ -11,7 +11,7 @@
 #define SLE_AIR_MOUSE_SERVER_H
 
 #include "sle_ssap_server.h"
-#include "../../dongle/air_mouse_usb/usb_init_app.h"
+#include "../../usb/air_mouse_usb.h"
 #include "../../air_mouse_common.h"
 #include "slp.h"
 
@@ -150,7 +150,7 @@ errcode_t sle_hid_mouse_server_send_mouse_key_report(uint8_t key, uint8_t left_k
  * @li sle_ssap_server.h
  * @endif
  */
-errcode_t sle_hid_mouse_server_send_keyboard_report(uint8_t key, uint8_t value);
+errcode_t sle_hid_mouse_server_send_keyboard_report(const key_config_t *config);
 
 void init_power_on_start_time(void);
 void set_announce_keyscan_flag(void);
@@ -158,13 +158,10 @@ const SlpDeviceAddr *get_slp_air_mouse_addr(void);
 void imu_wakeup_callback(uint8_t ulp_gpio);
 void sle_server_slp_command_register_cbks(void);
 void set_slp_start_ranging_param(SlpStartRangingParam *param);
-void set_slp_cursor_speed(SlpCursorSpeed mode);
-SlpCursorSpeed get_slp_cursor_speed(void);
-errcode_t sle_air_mouse_server_send_cmd(air_mouse_cmd_e cmd);
-void set_screen_size(uint16_t width, uint16_t height);
-uint16_t get_screen_width(void);
-uint16_t get_screen_height(void);
+void slp_start_ranging(void);
+errcode_t sle_air_mouse_server_send_cmd(air_mouse_cmd_e cmd, uint8_t *data, uint16_t len);
 void sle_set_em_data(uint8_t enable);
+void air_mouse_read_rssi_timer_cbk(unsigned long arg);
 
 #ifdef __cplusplus
 #if __cplusplus

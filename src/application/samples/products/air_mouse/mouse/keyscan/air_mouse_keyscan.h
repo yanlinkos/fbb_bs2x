@@ -33,7 +33,7 @@ typedef struct {
 } key_t;
 
 void air_mouse_keyscan_init(void);
-uint8_t get_key_value(rcu_key_index_e key);
+const key_config_t *get_key_value(rcu_key_index_e key);
 
 #ifdef __cplusplus
 #if __cplusplus

@@ -55,7 +55,7 @@ target = {
     },
     'bs21e-1100e-slp': {
         'base_target_name': 'standard-bs21e-1100e',
-        'defines': ['SUPPORT_SLP_CLIENT', 'PRODUCT_AIR_MOUSE'],
+        'defines': ['SUPPORT_SLP_CLIENT', 'PRODUCT_AIR_MOUSE', '-:ITCM_MAX_WATERLINE=0x51010'],
         'ram_component': [
             # Middleware Region
             'imu_wakeup_porting',

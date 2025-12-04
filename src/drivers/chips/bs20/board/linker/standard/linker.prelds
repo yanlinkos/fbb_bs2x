@@ -52,16 +52,35 @@ ENTRY(_start)
 #define SYMBOL_ORIGIN 0xFFFFF000
 #define SYMBOL_LEN 0x200
 
+#ifdef OS_DFX_SUPPORT
+#define ITCM_DFX_LEN_TEMP ITCM_DFX_LEN
+#else
+#define ITCM_DFX_LEN_TEMP 0
+#endif
+
+#ifdef SUPPORT_LOG_BUF_IN_ITCM
+#define ITCM_LOG_BUF_LEN_TEMP LOGGING_REGION_LENGTH
+#else
+#define ITCM_LOG_BUF_LEN_TEMP 0
+#endif
+
+#ifdef SUPPORT_STACK_IN_ITCM
+#define ITCM_APP_STACK_LEN_TEMP APP_STACK_TOTAL_LEN
+#else
+#define ITCM_APP_STACK_LEN_TEMP 0
+#endif
+
 /* FLASH sector size is 2K */
 /* make this table consistent with the configuration given by the security core */
 MEMORY
 {
     ROM                         : ORIGIN = ROM_START,                   LENGTH = ROM_LENGTH
+    ITCM                        : ORIGIN = APP_RAMTEXT_ORIGIN, LENGTH = APP_RAMTEXT_LENGTH - ITCM_DFX_LEN_TEMP - ITCM_LOG_BUF_LEN_TEMP - ITCM_APP_STACK_LEN_TEMP
 #ifdef OS_DFX_SUPPORT
-    ITCM                        : ORIGIN = APP_RAMTEXT_ORIGIN, LENGTH = APP_RAMTEXT_LENGTH - ITCM_DFX_LEN
     ITCM_DFX                    : ORIGIN = ORIGIN(ITCM) + LENGTH(ITCM), LENGTH = ITCM_DFX_LEN
-#else
-    ITCM                        : ORIGIN = APP_RAMTEXT_ORIGIN, LENGTH = APP_RAMTEXT_LENGTH
+#endif
+#ifdef SUPPORT_STACK_IN_ITCM
+    ITCM_STACK                  : ORIGIN = APP_USER_STACK_BASEADDR, LENGTH = APP_STACK_TOTAL_LEN
 #endif
     DTCM                        : ORIGIN = APP_DTCM_ORIGIN,             LENGTH = APP_DTCM_LENGTH - PRESERVED_REGION_LENGTH
     PRESERVE                    : ORIGIN = PRESERVED_REGION_ORIGIN,     LENGTH = PRESERVED_REGION_LENGTH
@@ -110,11 +129,15 @@ SECTIONS
         __nmi_stack_top__ = .;
         __nmi_stack_top = .;
         g_system_stack_end = .;
+#ifdef SUPPORT_STACK_IN_ITCM
+    } > ITCM_STACK
+#else
 #ifdef CONFIG_SUPPORT_LOG_THREAD
         . += LOGGING_REGION_LENGTH;
         . = ALIGN(16);
 #endif
     } > DTCM
+#endif
     g_system_stack_size = g_system_stack_end - g_system_stack_begin;
     g_stack_system = g_system_stack_size;
 }
@@ -511,7 +534,7 @@ SECTIONS
     .bss (NOLOAD) :
     {
 #else
-    .bss  (NOLOAD) : ALIGN(0x80)
+    .bss  (NOLOAD) : ALIGN(0x10)
     {
         PROVIDE (__int_stack_start = .);
         *(.int_stack);
@@ -570,3 +593,8 @@ SECTIONS
 }
 
 ASSERT((__data_load__ - __flash_text_end_) < 8, "The new section is not linked.");
+
+#if (CHECK_ITCM_WATERLINE == YES) && defined(ITCM_MAX_WATERLINE) && (ITCM_MAX_WATERLINE != 0)
+/* check the itcm size */
+ASSERT(__bss_end__ < ITCM_MAX_WATERLINE, "The Itcm Size Overflow Maximum Waterline!");
+#endif

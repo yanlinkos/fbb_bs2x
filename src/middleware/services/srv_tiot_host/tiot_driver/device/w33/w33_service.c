@@ -45,6 +45,9 @@
 
 typedef enum {
     W33_RX_SUBSYS_0 = 0,
+#ifdef CONFIG_XFER_SUBSYS1_SUBMSG // gnss msg subsys
+    W33_RX_SUBSYS_1,     // fm msg subsys
+#endif
     W33_RX_SUBSYS_MAX
 } w33_rx_subsys_id;
 
@@ -52,7 +55,10 @@ static tiot_controller g_w33_controllers[CONFIG_W33_DEV_NUM] = { 0 };
 #ifdef CONFIG_W33_UART
 /* 仅UART需要，使用SPI可优化. */
 static tiot_packet_context g_w33_pkt_ctx[CONFIG_W33_DEV_NUM];
-static tiot_packet g_w33_pkt_queue_nodes[CONFIG_W33_DEV_NUM][W33_PACKET_QUEUE_NODES];
+static tiot_packet g_w33_pkt_queue_nodes[CONFIG_W33_DEV_NUM][W33_PACKET_QUEUE_NODES];   // gnss msg queue
+#ifdef CONFIG_XFER_SUBSYS1_SUBMSG
+static tiot_packet g_w33_pkt_queue_nodes_1[CONFIG_W33_DEV_NUM][W33_PACKET_QUEUE_NODES]; // fm msg queue
+#endif
 static tiot_packet_queue g_w33_pkt_queues[CONFIG_W33_DEV_NUM][W33_RX_SUBSYS_MAX];
 #endif
 #ifndef CONFIG_BOARD_DYNAMIC_ALLOC
@@ -66,6 +72,11 @@ static uint16_t w33_packet_manager_match_func(uint32_t subsys_code)
     if ((subsys_code == GNSS_LAST_MSG)) {
         return W33_RX_SUBSYS_0;
     }
+#ifdef CONFIG_XFER_SUBSYS1_SUBMSG
+    if (subsys_code == FM_LAST_MSG) {
+        return W33_RX_SUBSYS_1;
+    }
+#endif
     return W33_RX_SUBSYS_MAX;
 }
 
@@ -115,6 +126,10 @@ static int32_t w33_service_packet_init(tiot_controller *ctrl, uint8_t dev_id)
 #endif
     g_w33_pkt_queues[dev_id][W33_RX_SUBSYS_0].queue_nodes = g_w33_pkt_queue_nodes[dev_id];
     g_w33_pkt_queues[dev_id][W33_RX_SUBSYS_0].queue_size = W33_PACKET_QUEUE_NODES;
+#ifdef CONFIG_XFER_SUBSYS1_SUBMSG
+    g_w33_pkt_queues[dev_id][W33_RX_SUBSYS_1].queue_nodes = g_w33_pkt_queue_nodes_1[dev_id];
+    g_w33_pkt_queues[dev_id][W33_RX_SUBSYS_1].queue_size = W33_PACKET_QUEUE_NODES;
+#endif
     tiot_packet_context *pkt_ctx = &g_w33_pkt_ctx[dev_id];
     ret = tiot_packet_init(pkt_ctx, &ctrl->transfer, &param);
     if (ret != 0) {

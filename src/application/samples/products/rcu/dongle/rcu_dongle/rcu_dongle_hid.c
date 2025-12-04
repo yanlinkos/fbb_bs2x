@@ -7,6 +7,7 @@
  * 2023-09-21, Create file. \n
  */
 #include "gadget/f_hid.h"
+#include "osal_debug.h"
 
 #define input(size)             (0x80 | (size))
 #define output(size)            (0x90 | (size))
@@ -25,6 +26,8 @@
 #define usage(size)                 (0x08 | (size))
 #define usage_minimum(size)         (0x18 | (size))
 #define usage_maximum(size)         (0x28 | (size))
+
+static int32_t g_sle_rcu_dongle_custom_hid_index = 0;
 
 static const uint8_t g_report_desc_hid[ ] = {
     usage_page(1),      0x01,
@@ -142,6 +145,20 @@ uint8_t g_custom_report_desc[] = {
 int32_t rcu_dongle_set_report_desc_hid(void)
 {
     int32_t index1 = hid_add_report_descriptor(g_report_desc_hid, sizeof(g_report_desc_hid), 0);
-    hid_add_report_descriptor(g_custom_report_desc, sizeof(g_custom_report_desc), 0);
     return index1;
+}
+
+int32_t rcu_dongle_set_custom_report_desc_hid(void)
+{
+    g_sle_rcu_dongle_custom_hid_index =
+        hid_add_report_descriptor(g_custom_report_desc, sizeof(g_custom_report_desc), 0);
+    if (g_sle_rcu_dongle_custom_hid_index < 0) {
+        osal_printk("[rcu dongle hid] set custom report desc hid fail!\r\n");
+    }
+    return g_sle_rcu_dongle_custom_hid_index;
+}
+
+int32_t rcu_dongle_get_custom_report_desc_hid(void)
+{
+    return g_sle_rcu_dongle_custom_hid_index;
 }

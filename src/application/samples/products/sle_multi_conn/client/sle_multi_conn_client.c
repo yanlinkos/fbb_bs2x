@@ -535,7 +535,7 @@ void sle_multi_conn_indication_cb(uint8_t client_id, uint16_t conn_id, ssapc_han
                 conn_id);
 }
 
-void sle_multi_conn_client_init(ssapc_notification_callback notification_cb, ssapc_indication_callback indication_cb)
+static errcode_t client_sle_set_local_addr(void)
 {
     uint64_t config_addr = CONFIG_SLE_MULTI_CONN_CLIENT_ADDR;
     uint8_t local_addr[SLE_ADDR_LEN] = {
@@ -550,20 +550,26 @@ void sle_multi_conn_client_init(ssapc_notification_callback notification_cb, ssa
     local_address.type = 0;
     (void)memcpy_s(local_address.addr, SLE_ADDR_LEN, local_addr, SLE_ADDR_LEN);
     // client地址设置
-    sle_set_local_addr(&local_address);
-    osal_printk("%s sle_set_local_addr: [%02x:%02x:%02x:%02x:%02x:%02x]\n",
+    errcode_t ret;
+    ret = sle_set_local_addr(&local_address);
+    osal_printk("%s sle_set_local_addr: [%02x:%02x:%02x:%02x:%02x:%02x], set_local_addr ret: 0x%x\n",
                 SLE_MULTI_CONN_CLIENT_LOG,
                 local_address.addr[SLE_ADDR_INDEX0],
                 local_address.addr[SLE_ADDR_INDEX1],
                 local_address.addr[SLE_ADDR_INDEX2],
                 local_address.addr[SLE_ADDR_INDEX3],
                 local_address.addr[SLE_ADDR_INDEX4],
-                local_address.addr[SLE_ADDR_INDEX5]);
+                local_address.addr[SLE_ADDR_INDEX5],
+                ret);
+    return ret;
+}
 
+void sle_multi_conn_client_init(ssapc_notification_callback notification_cb, ssapc_indication_callback indication_cb)
+{
     // server地址库设置
     sle_client_target_server_init();
     osal_printk("%s sle_client_tartget_server_init:\n", SLE_MULTI_CONN_CLIENT_LOG);
-    //
+    // 注册sle扫描回调
     sle_multi_conn_client_sample_seek_cbk_register();
     osal_printk("%s sle_multi_conn_client_sample_seek_cbk_register\n", SLE_MULTI_CONN_CLIENT_LOG);
 
@@ -586,6 +592,8 @@ static void sle_multi_conn_client_sample_sle_power_on_cbk(uint8_t status)
 static void sle_multi_conn_client_sample_sle_enable_cbk(uint8_t status)
 {
     unused(status);
+    // 设置client地址
+    client_sle_set_local_addr();
     // 清除G端配对信息
     sle_remove_all_pairs();
     // 开始扫描任务

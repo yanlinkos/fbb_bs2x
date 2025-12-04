@@ -19,6 +19,7 @@ void bth_sle_common_at_cmd_register(void);
 #endif
 #include "at_porting.h"
 #ifdef SUPPORT_SLP_CLIENT
+#include "slp_radar_at.h"
 #include "slp_at.h"
 #endif
 #ifdef SUPPORT_CARKEY
@@ -52,6 +53,7 @@ void bth_sle_common_at_cmd_register(void);
 static osal_task g_at_task = { 0 };
 static osal_task g_testsuite_task = { 0 };
 #endif
+static unsigned long g_custom_at_msg_queue;
 static uint8_t g_at_uart_rx_buffer[AT_RX_BUFF_SIZE];
 
 /* at uart write port */
@@ -105,19 +107,31 @@ static void at_uart_init(void)
 
 static void at_base_api_queue_create(uint32_t msg_count, uint32_t msg_size, unsigned long *queue_id)
 {
-    osal_msg_queue_create(NULL, (unsigned short)msg_count, queue_id, 0, (unsigned short)msg_size);
+    unsigned long *id = queue_id;
+    if (g_custom_at_msg_queue != 0) {
+        id = &g_custom_at_msg_queue;
+    }
+    osal_msg_queue_create(NULL, (unsigned short)msg_count, id, 0, (unsigned short)msg_size);
 }
 
 static uint32_t at_base_api_msg_queue_write(unsigned long queue_id, void *msg_ptr,
                                             uint32_t msg_size, uint32_t timeout)
 {
-    return osal_msg_queue_write_copy(queue_id, msg_ptr, msg_size, timeout);
+    unsigned long id = queue_id;
+    if (g_custom_at_msg_queue != 0) {
+        id = g_custom_at_msg_queue;
+    }
+    return osal_msg_queue_write_copy(id, msg_ptr, msg_size, timeout);
 }
 
 static uint32_t at_base_api_msg_queue_read(unsigned long queue_id, void *buf_ptr,
                                            uint32_t *buf_size, uint32_t timeout)
 {
-    return osal_msg_queue_read_copy(queue_id, buf_ptr, buf_size, timeout);
+    unsigned long id = queue_id;
+    if (g_custom_at_msg_queue != 0) {
+        id = g_custom_at_msg_queue;
+    }
+    return osal_msg_queue_read_copy(id, buf_ptr, buf_size, timeout);
 }
 
 static void at_base_api_task_pause(void)
@@ -189,6 +203,13 @@ at_ret_t uapi_at_sw_testsuite(void)
 }
 #endif
 
+void uapi_at_register_custom_msg_queue(unsigned long queue_id)
+{
+    uint32_t ret = osal_irq_lock();
+    g_custom_at_msg_queue = queue_id;
+    osal_irq_restore(ret);
+}
+
 void uapi_at_cmd_init(void)
 {
     at_uart_init();
@@ -208,6 +229,7 @@ void uapi_at_cmd_init(void)
     uapi_at_bt_register_cmd(uapi_get_bt_at_table(), uapi_get_bt_table_size());
 #ifdef SUPPORT_SLP_CLIENT
     SlpAtRegister();
+    SlpRadarAtRegister();
 #endif
 #ifdef SUPPORT_CARKEY
     carkey_at_register();

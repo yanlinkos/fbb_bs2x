@@ -842,7 +842,15 @@ static int app_keyscan_callback(int key_num, uint8_t key_value[])
         memcpy_s(msg.buffer, APP_MSG_BUFFER_LEN, NULL, KEY_MAX_NUM);
         msg.length = 0;
 #if defined(CONFIG_PM_SYS_SUPPORT)
+#if defined(CONFIG_SLE_UPG_ENABLE)
+        if (sle_rcu_get_ota_stage() == SLE_RCU_OTA_STOP) {
+            uapi_pm_set_state_trans_duration(DURATION_MS_OF_WORK_TO_STANDBY, DURATION_MS_OF_STANDBY_TO_SLEEP);
+        } else {
+            uapi_pm_set_state_trans_duration(0xFFFFFFFF, 0xFFFFFFFF);
+        }
+#else
         uapi_pm_set_state_trans_duration(DURATION_MS_OF_WORK_TO_STANDBY, DURATION_MS_OF_STANDBY_TO_SLEEP);
+#endif  /* CONFIG_SLE_UPG_ENABLE */
 #endif
     } else {
 #if defined(CONFIG_PM_SYS_SUPPORT)

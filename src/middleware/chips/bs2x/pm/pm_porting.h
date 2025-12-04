@@ -56,6 +56,8 @@ void pm_set_protocol_work_advance_time(uint16_t advance_time);
 
 uint16_t pm_get_protocol_work_advance_time(void);
 
+void pm_bg_refresh_config(bool high_temp);
+
 typedef void (*pm_usb_cbk_t)(void);
 
 void pm_usb_suspend_cbk(void);
@@ -73,6 +75,10 @@ void pm_gpio_state_print(void);
 void pm_gpio_group_config(gpio_info_cfg_t *cfg, uint8_t array_num);
 
 bool pm_is_xo_32k_enabled(void);
+
+uint8_t pm_get_sysldo_default_val(void);
+
+void pm_set_sysldo_default_val(uint8_t val);
 /**
  * @}
  */

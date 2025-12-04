@@ -110,6 +110,59 @@ typedef enum {
 
 /**
  * @if Eng
+ * @brief  SSAP errcode.
+ * @else
+ * @brief  SSAP 错误码。
+ * @endif
+ */
+typedef enum {
+    SSAP_ERRCODE_PDU_INVALID                            = 0x01,    /*!< @if Eng invalid PDU
+                                                                        @else   服务端接收的 PDU 无效 @endif */
+    SSAP_ERRCODE_PDU_NOT_SUPPORTED                      = 0x02,    /*!< @if Eng PDU not support
+                                                                        @else   服务端不支持处理接收的 @endif */
+    SSAP_ERRCODE_UNKNOW                                 = 0x03,    /*!< @if Eng PDU unknow
+                                                                        @else   服务端执行请求时发生未知错误 @endif */
+    SSAP_ERRCODE_INVALID_HANDLE                         = 0x04,    /*!< @if Eng invalid handle
+                                                                        @else   请求中的句柄无效 @endif */
+    SSAP_ERRCODE_INSUFFICIENT_RESOURCES                 = 0x05,    /*!< @if Eng insufficient resources
+                                                                        @else   服务端没有足够资源完成请求 @endif */
+    SSAP_ERRCODE_READ_NOT_PERMITTED                     = 0x06,    /*!< @if Eng prohibit reading
+                                                                        @else   服务端禁止客户端读取值 @endif */
+    SSAP_ERRCODE_WRITE_NOT_PERMITTED                    = 0x07,    /*!< @if Eng prohibit writing
+                                                                        @else   服务端禁止客户端写入值 @endif */
+    SSAP_ERRCODE_INSUFFICIENT_AUTHENTICATION            = 0x08,    /*!< @if Eng client no authentication
+                                                                        @else   客户端未经过认证 @endif */
+    SSAP_ERRCODE_INSUFFICIENT_AUTHORIZATION             = 0x09,    /*!< @if Eng client no authorizaion
+                                                                        @else   客户端未被授权 @endif */
+    SSAP_ERRCODE_INSUFFICIENT_ENCRYPTION                = 0x0A,    /*!< @if Eng bearer not encrypted
+                                                                        @else   传输 PDU 的承载未加密 @endif */
+    SSAP_ERRCODE_ATTRIBUTE_NOT_FOUND                    = 0x0B,    /*!< @if Eng entries not found
+                                                                        @else   服务端未找到对应条目 @endif */
+    SSAP_ERRCODE_INVALID_METHOD_CALL                    = 0x0C,    /*!< @if Eng method access error
+                                                                        @else   方法访问错误 @endif */
+    SSAP_ERRCODE_INVALID_ATTRIBUTE_VALUE_TYPE           = 0x0D,    /*!< @if Eng data type incorrected
+                                                                        @else   客户端发送写入数据类型
+                                                                                不符的错误 @endif */
+    SSAP_ERRCODE_INVALID_ATTRIBUTE_VALUE_LENGTH         = 0x0E,    /*!< @if Eng data value length incorrected
+                                                                        @else   客户端发送写入值长度不符的错误 @endif */
+    SSAP_ERRCODE_OUT_OF_RANGE                           = 0x0F,    /*!< @if Eng data value incorrected
+                                                                        @else   客户端写入的值超出范围 @endif */
+    SSAP_ERRCODE_SERVER_SUBCONTRACT_NOT_SUPPORTED       = 0x10,    /*!< @if Eng subcontract not support
+                                                                        @else   服务端不支持信令的分包发送 @endif */
+    SSAP_ERRCODE_ATTRIBUTE_NUM_OVER_LIMIT               = 0x11,    /*!< @if Eng attribute number over limit
+                                                                        @else   请求数量超出服务端的支持能力 @endif */
+    SSAP_ERRCODE_SERVER_FRAGMENT_NUMBER_NOT_SUPPORTED   = 0x12,    /*!< @if Eng fragment number not support
+                                                                        @else   服务端不支持信令分片序号功能 @endif */
+    SSAP_ERRCODE_SERVER_SUBCONTRACT_NOT_FULLY_RECEIVED  = 0x13,    /*!< @if Eng subcontract not fully receive
+                                                                        @else   服务端未接收所有分包 @endif */
+    SSAP_ERRCODE_SERVER_TRANSACTION_NUM_NOT_SUPPORTED   = 0x14,    /*!< @if Eng transaction number not support
+                                                                        @else   服务端不支持消息事务号 @endif */
+    SSAP_ERRCODE_SERVER_RELIABLE_MODE_NOT_SUPPORTED     = 0x15,    /*!< @if Eng reliable mode not support
+                                                                        @else   服务端不支持可靠模式 @endif */
+} ssap_errcode_t;
+
+/**
+ * @if Eng
  * @brief  SSAP operation indication.
  * @else
  * @brief  SSAP 操作指示。
@@ -136,7 +189,7 @@ typedef enum {
                                                              /*!< @if Eng client descriptor value can be written
                                                                    @else 客户端描述符可被写入 @endif */
     SSAP_OPERATE_INDICATION_BIT_DESCRIPTOR_SERVER_CONFIGURATION_WRITE = 0x400,
-                                                             /*!< @if Eng server description value can be written
+                                                             /*!< @if Eng server descriptor value can be written
                                                                    @else 服务端述符可被写入 @endif */
     SSAP_OPERATE_INDICATION_MAX = 0x7FF,                  /*!< @if Eng maximum of operation indication
                                                                @else   操作指示最大值 @endif */

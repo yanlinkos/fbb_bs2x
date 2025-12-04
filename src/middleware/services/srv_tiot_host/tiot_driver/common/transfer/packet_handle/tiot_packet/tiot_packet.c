@@ -42,6 +42,11 @@ static tiot_pkt_msg_handler g_tiot_pkt_msg_handle[MSG_BUTT] = {
     [GNSS_FIRST_MSG] = tiot_packet_recv_seperated_data,    // GNSS_FIRST_MSG = 0x02,  GNSS串口消息，第一个分段消息
     [GNSS_COMMON_MSG] = tiot_packet_recv_seperated_data,   // GNSS_COMMON_MSG = 0x03, GNSS串口消息，中间分段消息
     [GNSS_LAST_MSG] = tiot_packet_recv_seperated_data,     // GNSS_LAST_MSG = 0x04,   GNSS串口消息，最后一个分段消息
+#ifdef CONFIG_XFER_SUBSYS1_SUBMSG
+    [FM_FIRST_MSG] = tiot_packet_recv_seperated_data,      // FM_FIRST_MSG = 0x05,    FM串口消息，第一个分段消息
+    [FM_COMMON_MSG] = tiot_packet_recv_seperated_data,     // FM_COMMON_MSG = 0x06,   FM串口消息，中间分段消息
+    [FM_LAST_MSG] = tiot_packet_recv_seperated_data,       // FM_LAST_MSG = 0x07,     FM串口消息，最后一个分段消息
+#endif
     [OML_MSG] = tiot_packet_recv_not_seperated_data,       // OML_MSG = 0x0e,         OML串口消息
     [SLE_MSG] = tiot_packet_recv_not_seperated_data,       // SLE_MSG = 0x15,         SLE串口消息
 };
@@ -49,8 +54,33 @@ static tiot_pkt_msg_handler g_tiot_pkt_msg_handle[MSG_BUTT] = {
 static const tiot_packet_subsys_info g_tiot_pkt_subsys_info[SUBSYS_BUTT] = {
     { PKG_SEPRETED, GNSS_FIRST_MSG, GNSS_COMMON_MSG, GNSS_LAST_MSG },
     { PKG_NOT_SEPRETED, OML_MSG, OML_MSG, OML_MSG },
-    { PKG_NOT_SEPRETED, SYS_MSG, SYS_MSG, SYS_MSG }
+    { PKG_NOT_SEPRETED, SYS_MSG, SYS_MSG, SYS_MSG },
+#ifdef CONFIG_XFER_SUBSYS1_SUBMSG
+    { PKG_SEPRETED, FM_FIRST_MSG, FM_COMMON_MSG, FM_LAST_MSG },
+#endif
 };
+
+static subsys_type_enum get_subsys_by_msgtype(enum TIOT_PKT_DATA_MSG_TYPE_ENUM msg_type)
+{
+    switch (msg_type) {
+        case GNSS_FIRST_MSG:
+        case GNSS_COMMON_MSG:
+        case GNSS_LAST_MSG:
+            return SUBSYS_GNSS;
+        case OML_MSG:
+            return SUBSYS_OM;
+        case SYS_MSG:
+            return SUBSYS_SYS;
+#ifdef CONFIG_XFER_SUBSYS1_SUBMSG
+        case FM_FIRST_MSG:
+        case FM_COMMON_MSG:
+        case FM_LAST_MSG:
+            return SUBSYS_FM;
+#endif
+        default:
+            return SUBSYS_BUTT;
+    }
+}
 
 /* 将旧packet节点推入队列，若队列已满，则丢包. */
 static inline void tiot_cur_packet_to_queue(tiot_packet_context *ctx)
@@ -221,8 +251,10 @@ static void tiot_packet_recv_not_seperated_data(tiot_packet_context *ctx)
 static void tiot_packet_recv_seperated_data(tiot_packet_context *ctx)
 {
     uint8_t subsys_code = ctx->head.subsys_code;
+    subsys_type_enum subsys = get_subsys_by_msgtype(subsys_code);
+    const tiot_packet_subsys_info *subsys_info = &g_tiot_pkt_subsys_info[subsys];
     /* 包顺序检测 */
-    if (subsys_code == GNSS_FIRST_MSG) {
+    if (subsys_code == subsys_info->first) {
         /* First 包必须为第一个包 */
         if (ctx->frame_cnt != 1) {
             tiot_print_err("[TIoT:pkt]parse error: expect first packet.\r\n");
@@ -230,7 +262,7 @@ static void tiot_packet_recv_seperated_data(tiot_packet_context *ctx)
         }
         return;
     }
-    if (subsys_code == GNSS_COMMON_MSG) {
+    if (subsys_code == subsys_info->common) {
         /* 必须先有fisrt包再有common包，所以收到common包时frame_cnt最小为2 */
         if (ctx->frame_cnt < 2) {
             tiot_print_err("[TIoT:pkt]parse error: expect first-common packet.\r\n");
@@ -239,7 +271,7 @@ static void tiot_packet_recv_seperated_data(tiot_packet_context *ctx)
         return;
     }
     /* 收完Last包数据才处理之前的包序错误, 确保完整包被释放 */
-    if ((subsys_code == GNSS_LAST_MSG) && (ctx->frame_error == 1)) {
+    if ((subsys_code == subsys_info->last) && (ctx->frame_error == 1)) {
         tiot_print_err("[TIoT:pkt]packet order error, discard the whole packet.\r\n");
         tiot_cur_packet_discard(ctx);
         ctx->frame_error = 0;

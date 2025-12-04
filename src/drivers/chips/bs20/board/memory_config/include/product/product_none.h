@@ -29,7 +29,7 @@
 #endif
 
 #define CUSTOMER_USED_PAGES                 0
-#define NV_IMAGE_PAGES                      2
+#define NV_IMAGE_PAGES                      (NV_IMAGE_LEN / 0x1000)
 #define SSB_IMAGE_PAGES                     0
 #define DTB_IMAGE_PAGES                     0
 #define RECOVERY_IMAGE_PAGES                0

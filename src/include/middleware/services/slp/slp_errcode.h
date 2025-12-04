@@ -122,6 +122,8 @@ typedef enum {
                                                                  @else   slp在下电中错误码 @endif */
     ERRCODE_SLPC_POWERD_OFF,                                /*!< @if Eng error code of slp is powerd off error
                                                                  @else   slp已经下电错误码 @endif */
+    ERRCODE_SLPC_UART_BUFFER_TOO_SMALL,                     /*!< @if Eng error code of slp buffer is too small
+                                                                 @else   slp uart缓冲区过小错误码 @endif */
     ERRCODE_SLPC_MAX = ERRCODE_SLPC_END                     /*!< @if Eng maximum of SLP error code
                                                                  @else   SLPC 错误码最大值 @endif */
 } ErrcodeSlpClient;

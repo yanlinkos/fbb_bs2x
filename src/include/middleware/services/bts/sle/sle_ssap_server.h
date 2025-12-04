@@ -158,9 +158,9 @@ typedef struct {
     uint16_t request_id; /*!< @if Eng Request ID.
                               @else   请求 ID。 @endif */
     uint8_t status;      /*!< @if Eng Status code of read/write. Success:
-                                      ERRCODE_SLE_SUCCESS. For details about the exception { @ref errcode_sle_ssap_t }
+                                      ERRCODE_SLE_SUCCESS. For details about the exception { @ref ssap_errcode_t }
                               @else   读写结果的状态, 成功ERRCODE_SLE_SUCCESS
-                                      异常参考{ @ref errcode_sle_ssap_t } @endif */
+                                      异常参考{ @ref ssap_errcode_t } @endif */
     uint16_t value_len;  /*!< @if Eng Length of reponse data.
                               @else   响应的数据长度。 @endif */
     uint8_t *value;      /*!< @if Eng Reponse data.

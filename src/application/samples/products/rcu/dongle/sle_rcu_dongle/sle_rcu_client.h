@@ -18,9 +18,14 @@ extern "C" {
 #endif /* __cplusplus */
 
 typedef enum {
-    TYPE_KEYBOARD,
-    TYPE_AMIC,
-    TYPE_MAX
+    TYPE_KEYBOARD = 0,
+    TYPE_AMIC = 1,
+#if defined(CONFIG_SLE_UPG_ENABLE)
+    TYPE_OTA = 2,
+    TYPE_MAX = 3
+#else
+    TYPE_MAX = 2
+#endif
 } data_type_e;
 
 typedef struct property_uuid_handle {
@@ -33,6 +38,9 @@ void sle_rcu_client_init(ssapc_notification_callback notification_cb, ssapc_indi
 void sle_rcu_start_scan(void);
 uint16_t get_sle_rcu_conn_id(void);
 ssapc_write_param_t *get_sle_rcu_send_param(void);
+#if defined(CONFIG_SLE_UPG_ENABLE)
+uint16_t get_sle_ota_send_handle(void);
+#endif
 uint8_t get_ssap_find_ready(void);
 uint8_t get_sle_rcu_get_connect_state(void);
 uint8_t get_ssap_connect_param_update_ready(void);

@@ -52,6 +52,10 @@ static sle_connection_param_update_t g_standby_to_work = { 0, 30, 30, 2, 1000 };
 uint8_t g_out_low_latency_data[LOW_LATENCY_DATA_MAX] = { 0 };
 /* sle gamepad conn state */
 
+#if defined(CONFIG_SLE_UPG_ENABLE)
+static uint8_t sle_rcu_ota_stage = SLE_RCU_OTA_STOP;
+#endif
+
 bool get_g_ssaps_ready(void)
 {
     return g_ssaps_ready;
@@ -71,6 +75,17 @@ uint16_t get_g_sle_conn_hdl(uint32_t index)
 {
     return g_sle_conn_handle[index];
 }
+
+#if defined(CONFIG_SLE_UPG_ENABLE)
+void sle_rcu_set_ota_stage(uint8_t ota_stage)
+{
+    sle_rcu_ota_stage = ota_stage;
+}
+uint8_t sle_rcu_get_ota_stage()
+{
+    return sle_rcu_ota_stage;
+}
+#endif
 
 static void ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id,  ssap_exchange_info_t *mtu_size,
                                   errcode_t status)
@@ -164,11 +179,13 @@ static errcode_t sle_rcu_services_add(void)
     if (sle_server_id_register() != ERRCODE_SLE_SUCCESS) {
         return ERRCODE_SLE_FAIL;
     }
+#if defined(CONFIG_SLE_UPG_ENABLE)
     // add ota service
     ret = sle_ota_service_init(g_server_id);
     if (ret != ERRCODE_SLE_SUCCESS) {
         return ret;
     }
+#endif
     // add ntf service
     ret = sle_add_ntf_service(g_server_id);
     if (ret != ERRCODE_SLE_SUCCESS) {

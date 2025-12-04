@@ -191,16 +191,16 @@ uart_pin_config_t g_pin_config_map[UART_BUS_MAX_NUM] = {
         .tx_pin     = S_MGPIO26,
         .rx_pin     = S_MGPIO27,
 #elif defined(PRODUCT_AIR_MOUSE)
-        .tx_pin     = CONFIG_AIR_MOUSE_UART_TX_PIN,
-        .rx_pin     = CONFIG_AIR_MOUSE_UART_RX_PIN,
+        .tx_pin     = CONFIG_UART_H0_TX_PIN,
+        .rx_pin     = CONFIG_UART_H0_RX_PIN,
 #else
         .tx_pin     = CONFIG_UART_H0_TX_PIN,
         .rx_pin     = CONFIG_UART_H0_RX_PIN,
 #endif
 #if defined(CONFIG_UART_SUPPORT_FLOW_CTRL)
 #if defined(PRODUCT_AIR_MOUSE)
-        .cts_pin    = CONFIG_AIR_MOUSE_UART_CTS_PIN,
-        .rts_pin    = CONFIG_AIR_MOUSE_UART_RTS_PIN
+        .cts_pin    = CONFIG_UART_H0_CTS_PIN,
+        .rts_pin    = CONFIG_UART_H0_RTS_PIN
 #elif defined(PRODUCT_BRIDGE_PAD)
         .cts_pin    = CONFIG_UART_H0_CTS_PIN,
         .rts_pin    = CONFIG_UART_H0_RTS_PIN

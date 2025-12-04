@@ -28,10 +28,12 @@
 #include "keyscan.h"
 #include "amic_voice.h"
 #include "sle_service_ntf.h"
+#include "at.h"
 #ifdef CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_OTA
 #include "sle_ota.h"
 #endif
 #include "../common/air_mouse_timer.h"
+#include "../../timer/am_common_timer.h"
 
 #define SLE_ADV_HANDLE_DEFAULT              1
 #define USB_MOUSE_TASK_DELAY_MS             2000
@@ -41,7 +43,8 @@
 #define SLE_AIR_MOUSE_KEYBOARD_RPT_HANDLE   0x20 // 键盘按键上报HANDLE
 
 #define SLE_AIR_MOUSE_DEFAULT_SERVER_ID     1
-#define SLE_AIR_MOUSE_DEFAULT_CONNECT_ID    0
+
+#define SERVER_AT_MAX_NUM    10
 
 #define APP_UUID_LEN                        2
 #define UUID_LEN_2                          2
@@ -55,11 +58,15 @@
 #define MOUSE_APPEARANCE_LENGTH             3
 
 #define SEND_DATA_LEN_FOR_TV_CAR            250
+#define SLE_INTERVAL_FOR_TV_CAR             40 // 指向状态下sle interval为40 * 0.125ms = 5ms
+#define SLE_TIMEOUT_FOR_TV_CAR              500 // sle连接超时时间为500 * 10ms = 5s, 需满足timeout > 2 * interval * (latency + 1)
 
 // 用于判定是否进睡眠的变量
 static int16_t g_last_x = 0;
 static int16_t g_last_y = 0;
 static uint16_t g_static_count = 0;
+
+static bool g_slp_restart_flag = false; // 用于判断停止测距成功后是否重启测距
 
 static uint8_t g_app_uuid[APP_UUID_LEN] = {0x0, 0x0};
 static uint8_t g_server_id = 0;
@@ -97,10 +104,9 @@ static SlpDeviceAddr g_air_mouse_connect_addr = {{0x08, 0x02, 0x03, 0x04, 0x05, 
                                                                                            对端dongle的本机地址 */
 static uint8_t g_connect_id = 0;
 
-static uint8_t g_start_ranging_times = 0; // 启动测距的次数, 上电和低功耗时清零
-static bool g_sample_sleep = false; // sample中发送睡眠指令的标志，true表示sample发送睡眠指令,用于区分AT命令和sample逻辑
+bool g_rcu_sleep = false; // 遥控器整机睡眠指令判断标志，true表示遥控器整机睡眠，false表示是仅SLP睡眠
 
-static uint8_t g_ranging_report_cnt = 0; // 测量值上报计数
+static char g_serial_send_str[200];
 
 const SlpDeviceAddr *get_slp_air_mouse_addr(void)
 {
@@ -194,51 +200,10 @@ typedef enum {
     SLE_DIS_INDEX3, // pnp id
 } sle_dis_index_t;
 
-int32_t g_slp_cursor_report_x = 0;
-int32_t g_slp_cursor_report_y = 0;
-static usb_hid_mouse_report_t g_mouse_report = { 0 };
-static usb_hid_keyboard_report_t g_keyboard_report = { 0 };
-
-// 假设100HZ频率发送, 2^32/100/60/60 ≈ 11930.46 小时
-static uint32_t g_send_cursor_sequence_no = 0;  // 光标坐标消息发送序号
-static uint32_t g_send_key_sequence_no = 0;     // 按键消息发送序号
-
-SlpCursorSpeed g_slp_cursor_speed = SLP_CURSOR_SPEED_MEDIUM;  // slp光标速度
-
-uint16_t g_screen_width;   // 屏幕宽度, 单位: mm
-uint16_t g_screen_height;  // 屏幕高度, 单位: mm
-
 uint8_t g_out_low_latency_data[LOW_LATENCY_DATA_MAX] = { 0 };
-
-SlpCursorSpeed get_slp_cursor_speed(void)
-{
-    return g_slp_cursor_speed;
-}
-
-void set_screen_size(uint16_t width, uint16_t height)
-{
-    g_screen_width = width;
-    g_screen_height = height;
-}
-
-uint16_t get_screen_width(void)
-{
-    return g_screen_width;
-}
-
-uint16_t get_screen_height(void)
-{
-    return g_screen_height;
-}
-
-void set_slp_cursor_speed(SlpCursorSpeed mode)
-{
-    g_slp_cursor_speed = mode;
-}
 
 // 记录开始时间
 uint64_t g_power_on_start_time = 0; // ms
-uint64_t g_start_ranging_start_time = 0; // ms
 static bool g_announce_keyscan_flag = false;  // 是否是由keyscan触发的配对/解配对状态
 
 void init_power_on_start_time(void)  // 记录开始时间
@@ -249,16 +214,6 @@ void init_power_on_start_time(void)  // 记录开始时间
 void set_announce_keyscan_flag(void)
 {
     g_announce_keyscan_flag = true;
-}
-
-static void init_hid_report(void)
-{
-    (void)memset_s(&g_mouse_report, sizeof(usb_hid_mouse_report_t), 0, sizeof(usb_hid_mouse_report_t));
-    (void)memset_s(&g_keyboard_report, sizeof(usb_hid_keyboard_report_t), 0, sizeof(usb_hid_keyboard_report_t));
-    g_mouse_report.kind = HID_MOUSE_ABS_KIND;
-    g_keyboard_report.kind = HID_KEYBOARD_KIND;
-    g_send_cursor_sequence_no = 0;
-    g_send_key_sequence_no = 0;
 }
 
 errcode_t get_g_sle_air_mouse_pair_state(uint32_t *pair_state)
@@ -286,6 +241,55 @@ static void ssaps_read_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_re
         server_id, conn_id, read_cb_para->handle, status);
 }
 
+void slp_start_ranging(void)
+{
+    osal_printk("slp_start_ranging\r\n");
+    SlpStartRangingParam param = {0};
+    set_slp_start_ranging_param(&param);
+    ErrcodeSlpClient ret = SlpStartRangingCommand(&param);
+    if (ret != ERRCODE_SLPC_SUCCESS) {
+        osal_printk("[ERR] start ranging fail, ret:0x%x\r\n", ret);
+        return;
+    }
+    sle_air_mouse_server_send_cmd(AM_CMD_RANGING_START, NULL, 0);
+    rst_print_info();
+}
+
+static void proc_dongle_cmd(air_mouse_cmd_e cmd)
+{
+    ErrcodeSlpClient ret;
+    switch (cmd) {
+        case AM_CMD_RANGING_RESTART: // 重启测距
+            osal_printk("[cmd] ranging restart\r\n");
+            ret = SlpPowerOnCommand();
+            if (ret == ERRCODE_SLPC_SUCCESS) {
+                osal_printk("power on succ\r\n", ret);
+                break;
+            }
+            ret = SlpStopRangingCommand();
+            if (ret == ERRCODE_SLPC_SUCCESS) {
+                osal_printk("ranging stop succ\r\n");
+                g_slp_restart_flag = true;
+            } else if (ret == ERRCODE_SLPC_ALREADY_STOP_RANGING) {
+                osal_printk("ranging already stop\r\n");
+                slp_start_ranging();
+            } else {
+                osal_printk("[ERR] stop ranging fail, ret:0x%x\r\n", ret);
+            }
+            break;
+        case AM_CMD_RCU_SLEEP: // 遥控器睡眠
+            ret = SlpSleepCommand(); // 回调中配置整机睡眠初始化动作
+            g_rcu_sleep = true;
+            if (ret != ERRCODE_SLPC_SUCCESS) {
+                osal_printk("SlpSleepCommand Error 0x%x\r\n", ret);
+            }
+            break;
+        default:
+            osal_printk("[ERR] recv undefined cmd:%u\r\n", cmd);
+            break;
+    }
+}
+
 static void ssaps_write_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_write_cb_t *write_cb_para,
     errcode_t status)
 {
@@ -293,9 +297,18 @@ static void ssaps_write_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_r
     unused(conn_id);
     unused(status);
     g_ssap_passage_supprot = true;
-
-    SlpPayloadInfo info = { write_cb_para->value, write_cb_para->length };
-    SlpRecvPayload(&info);
+    SlpPayloadInfo info = {write_cb_para->value, write_cb_para->length};
+    switch (write_cb_para->handle) {
+        case SLE_AIR_MOUSE_SSAP_RPT_HANDLE:
+            SlpRecvPayload(&info);
+            break;
+        case SLE_AIR_MOUSE_CMD_RPT_HANDLE:
+            proc_dongle_cmd(*(air_mouse_cmd_e *)write_cb_para->value);
+            break;
+        default:
+            osal_printk("[ERR] recv undefined handle:0x%x\r\n", write_cb_para->handle);
+            break;
+    }
 }
 
 static void ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id,  ssap_exchange_info_t *mtu_size,
@@ -337,30 +350,31 @@ void set_slp_start_ranging_param(SlpStartRangingParam *param)
     param->secParam.sessionKeyMode = SLP_WB_SHARED_KEY;
     param->secParam.sessionKeyIdx = 0;
 
+#if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_CIR_PRINT
+    param->secParam.rangingFreq = 15; // 测距频率15Hz
+#else
+    param->secParam.rangingFreq = 18; // 测距频率18Hz
+#endif
+
     // 3. rangingParam
     param->rangingParam.chIdx = SLP_CH_9;
 #if CONFIG_SLP_USAGE_RANGING_AOX
-    param->rangingParam.usageMode = SLP_USAGE_RANGING_AOX;
+    param->rangingParam.sceneMode = SLP_SCENE_RANGING_AOX;
 #elif CONFIG_SLP_USAGE_AIR_MOUSE
-    param->rangingParam.usageMode = SLP_USAGE_AIR_MOUSE;
+    param->rangingParam.sceneMode = SLP_SCENE_AIR_MOUSE_TV;
 #elif CONFIG_SLP_USAGE_AIR_MOUSE_CAR
-    param->rangingParam.usageMode = SLP_USAGE_AIR_MOUSE_CAR;
+    param->rangingParam.sceneMode = SLP_SCENE_AIR_MOUSE_CAR;
 #endif
     param->rangingParam.slpRangingMode = SLP_RANGING_AOA;
     param->rangingParam.multiNodeMode = SLP_ONE_TO_ONE;
     param->rangingParam.rangingRoundUsage = SLP_DS_TWR;
     param->rangingParam.mrSource = SLP_MR_RECV;
-#if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_CIR_PRINT
-    param->rangingParam.rangingFreq = 2; // 测距频率2Hz
-#else
-    param->rangingParam.rangingFreq = 20; // 测距频率20Hz
-#endif
     param->rangingParam.validRoundNum = 0; // 无限轮
     param->rangingParam.aoxDirection = SLP_RESPONSE_AOX;
     param->rangingParam.firstAoxAntDis = 12507618; // 12507618: CH9的1/3波长，单位：nm
     param->rangingParam.nbSyncMode = SLP_NB_SINGLE_SIDE_SYNC;
     param->rangingParam.deviceNum = 2; // 2: 默认2个设备
-    param->rangingParam.txMode = 0; // 0: 非常发模式
+    param->rangingParam.txMode = SLP_TX_CONTINUOUS_DISABLE; // 非常发模式
     param->rangingParam.sessionId = 0x20240101;
     // air mouse为测距发起者，所以air mouse的地址放在前面
     (void)memcpy_s(&param->rangingParam.deviceAddr[0].addr[0], sizeof(SlpDeviceAddr),
@@ -431,20 +445,13 @@ void imu_wakeup_callback(uint8_t ulp_gpio)
 {
     unused(ulp_gpio);
 
-    // 更新sle的interval为2.5ms
-    sle_conn_param_update(20, 0, 500); // 20: 2.5ms interval, 0: latency, 500: supervision_timeout
+    // 更新sle的interval为5ms
+    sle_conn_param_update(SLE_INTERVAL_FOR_TV_CAR, 0, SLE_TIMEOUT_FOR_TV_CAR);
 
     slp_resume();
 
     // 重启slp测距
-    g_start_ranging_times = 0;
-    SlpStartRangingParam param = {0};
-    set_slp_start_ranging_param(&param);
-    ErrcodeSlpClient ret = SlpStartRangingCommand(&param);
-    if (ret != ERRCODE_SLPC_SUCCESS) {
-        osal_printk("SlpStartRangingCommand Error 0x%x\r\n", ret);
-        return;
-    }
+    slp_start_ranging();
 }
 
 static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *addr,
@@ -464,10 +471,10 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
     sle_connection_param_update_t con_param = {0};
     con_param.conn_id = conn_id;
     g_connect_id = conn_id;
-    con_param.interval_max = 20; // 20:2.5ms, 单位slot, 每个0.125ms
-    con_param.interval_min = 20; // 20:2.5ms, 单位slot, 每个0.125ms
+    con_param.interval_max = SLE_INTERVAL_FOR_TV_CAR; // sle interval设置为5ms
+    con_param.interval_min = SLE_INTERVAL_FOR_TV_CAR;
     con_param.max_latency = 0;
-    con_param.supervision_timeout = 500; // 设置连接延迟500*10ms,需满足timeout > 2 * interval * (latency + 1)
+    con_param.supervision_timeout = SLE_TIMEOUT_FOR_TV_CAR; // sle连接超时时间设置为5s
     if (conn_state == SLE_ACB_STATE_CONNECTED) {
         osal_printk("%s SLE_ACB_STATE_CONNECTED\r\n", SLE_AIR_MOUSE_DONGLE_SERVER_LOG);
         sle_update_connect_param(&con_param);
@@ -498,7 +505,6 @@ static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errc
         addr->addr[BT_INDEX_0], addr->addr[BT_INDEX_4], addr->addr[BT_INDEX_5]);
     g_mouse_sle_pair_status = status;
     if (g_mouse_sle_pair_status == 0) {
-        init_hid_report();
         // SLE连接配对成功后，SLP上电，完成SLP加载
         init_power_on_start_time();
         ErrcodeSlpClient ret = SlpPowerOnCommand();
@@ -506,7 +512,7 @@ static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errc
             osal_printk("SlpPowerOnCommand Error 0x%x\r\n", ret);
             return;
         }
-#ifdef CONFIG_AIR_MOUSE_HR_BOARD
+#if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD
         app_timer_process_stop(TIME_CMD_PAIR);
 #endif
     }
@@ -515,8 +521,8 @@ static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errc
 void read_rssi_callback(uint16_t conn_id, int8_t rssi, errcode_t status)
 {
     UNUSED(conn_id);
-    osal_printk("[cursor] x:%d, y:%d, rx:%d, ry:%d, rssi:%d, conn_id:%u, status:0x%08X\r\n", g_mouse_report.x,
-        g_mouse_report.y, g_slp_cursor_report_x, g_slp_cursor_report_y, rssi, conn_id, status);
+    UNUSED(status);
+    update_am_print_info_rssi(rssi);
 }
 
 static void sle_conn_register_cbks(void)
@@ -888,25 +894,55 @@ static errcode_t sle_air_mouse_server_send_slp_payload(uint8_t *payload, uint16_
 }
 
 // 发送数据：HID键盘光标
-errcode_t sle_air_mouse_server_send_cmd(air_mouse_cmd_e cmd)
+static errcode_t sle_hid_mouse_server_send_cursor_report(SlpCursorRslt *cursor_rslt)
 {
     ssaps_ntf_ind_t param = { 0 };
-    param.handle = SLE_AIR_MOUSE_CMD_RPT_HANDLE;
-    param.value_len = (uint16_t)sizeof(air_mouse_cmd_e);
-    param.value = osal_vmalloc(sizeof(air_mouse_cmd_e));
+    param.handle = SLE_AIR_MOUSE_CURSOR_RPT_HANDLE;
+    param.value_len = sizeof(SlpCursorRslt);
+    param.value = osal_vmalloc(sizeof(SlpCursorRslt));
     if (param.value == NULL) {
         osal_printk("send input report new fail\r\n");
         return ERRCODE_SLE_MALLOC_FAIL;
     }
-    *(air_mouse_cmd_e *)param.value = cmd;
+
+    if (memcpy_s(param.value, param.value_len, cursor_rslt, sizeof(SlpCursorRslt)) != EOK) {
+        osal_printk("send cursor memcpy fail\r\n");
+        osal_vfree(param.value);
+        return ERRCODE_SLE_MEMCPY_FAIL;
+    }
 
     ssaps_notify_indicate(SLE_AIR_MOUSE_DEFAULT_SERVER_ID, SLE_AIR_MOUSE_DEFAULT_CONNECT_ID, &param);
     osal_vfree(param.value);
     return ERRCODE_SLE_SUCCESS;
 }
 
+// 发送控制命令
+errcode_t sle_air_mouse_server_send_cmd(air_mouse_cmd_e cmd, uint8_t *data, uint16_t len)
+{
+    ssaps_ntf_ind_t param = { 0 };
+    param.handle = SLE_AIR_MOUSE_CMD_RPT_HANDLE;
+    param.value_len = (uint16_t)sizeof(air_mouse_cmd_e) + len;
+    param.value = osal_vmalloc(param.value_len);
+    if (param.value == NULL) {
+        osal_printk("send input report new fail\r\n");
+        return ERRCODE_SLE_MALLOC_FAIL;
+    }
+    *(air_mouse_cmd_e *)param.value = cmd;
+    if (len != 0) {
+        if (memcpy_s(param.value + sizeof(air_mouse_cmd_e), param.value_len - sizeof(air_mouse_cmd_e), data, len) !=
+            EOK) {
+            osal_printk("send input report memcpy fail\r\n");
+            osal_vfree(param.value);
+            return ERRCODE_SLE_MEMCPY_FAIL;
+        }
+    }
+    ssaps_notify_indicate(SLE_AIR_MOUSE_DEFAULT_SERVER_ID, SLE_AIR_MOUSE_DEFAULT_CONNECT_ID, &param);
+    osal_vfree(param.value);
+    return ERRCODE_SLE_SUCCESS;
+}
+
 // 发送数据：HID键盘按键
-errcode_t sle_hid_mouse_server_send_keyboard_report(uint8_t key, uint8_t value)
+errcode_t sle_hid_mouse_server_send_keyboard_report(const key_config_t *config)
 {
     ssaps_ntf_ind_t param = { 0 };
     param.handle = SLE_AIR_MOUSE_KEYBOARD_RPT_HANDLE;
@@ -916,13 +952,10 @@ errcode_t sle_hid_mouse_server_send_keyboard_report(uint8_t key, uint8_t value)
         osal_printk("send input report new fail\r\n");
         return ERRCODE_SLE_MALLOC_FAIL;
     }
-    g_send_key_sequence_no += 1;
-    g_keyboard_report.key[0] = value;
-    osal_printk("key send, no, %u, key, %u, value, %u\r\n", g_send_key_sequence_no, key, value);
-    keyboard_report_t keyboard_report;
-    keyboard_report.sequence_no = g_send_key_sequence_no;
-    keyboard_report.key = key;
-    keyboard_report.report = g_keyboard_report;
+    osal_printk("key send, key, %u, value, %u\r\n", config->key, config->usage_id);
+    static keyboard_report_t keyboard_report = {0};
+    keyboard_report.sequence_no++;
+    keyboard_report.config = *config;
 
     if (memcpy_s(param.value, sizeof(keyboard_report_t), &keyboard_report, sizeof(keyboard_report_t)) != EOK) {
         osal_printk("send keyboard sequence_no memcpy fail\r\n");
@@ -958,6 +991,15 @@ static void imu_wakeup_init(void)
     uint32_t irq_status = osal_irq_lock();
     slp_sleep_pin_config(); // 配置SLP管脚
     (void)uapi_keyscan_suspend(0); // 配置按键管脚
+
+    // 参考设计板，深睡管脚管控，避免漏电
+    uapi_pin_set_pull(S_MGPIO0, 1); // LED灯IO有板级上拉，避免漏电
+    uapi_pin_set_pull(S_MGPIO1, 1); // LED灯IO有板级上拉，避免漏电
+    uapi_pin_set_pull(S_MGPIO7, 1); // i2c有板级上拉，避免漏电
+    uapi_pin_set_pull(S_MGPIO8, 1); // i2c有板级上拉，避免漏电
+    uapi_pin_set_pull(S_MGPIO9, 1); // i2c有板级上拉，避免漏电
+    uapi_pin_set_pull(S_MGPIO18, 2); // 充电芯片charger，避免漏电
+
     uapi_gpio_deinit();
     ulp_gpio_init();
     // 配置ulp唤醒管脚，绑定唤醒回调
@@ -992,35 +1034,23 @@ static void check_into_sleep(int16_t x, int16_t y)
         if (ret != ERRCODE_SLPC_SUCCESS) {
             osal_printk("SlpSleepCommand Error 0x%x\r\n", ret);
         }
-        g_sample_sleep = true;
+        g_rcu_sleep = true;
     }
 }
 
-void cursor_report_cbk(int32_t x, int32_t y, uint8_t key_state)
+void cursor_report_cbk(SlpCursorRslt *cursor_rslt)
 {
-    UNUSED(key_state);
-    // 如果需要睡眠，此处调用
+    update_am_print_info_cursor(cursor_rslt);
+    sle_hid_mouse_server_send_cursor_report(cursor_rslt);
+    // 如果需要遥控器睡眠，此处调用
     if (CONFIG_LOW_POWER_MODE == 1) {
-        check_into_sleep(x, y);
+        check_into_sleep(cursor_rslt->x, cursor_rslt->y);
     }
 }
 
 void ranging_report_cbk(SlpRangingRpt *rangingRpt)
 {
-    g_ranging_report_cnt++;
-    if (g_ranging_report_cnt % 20 != 0) {  // 20: 每20轮打印一次
-        return;
-    }
-    g_ranging_report_cnt = 0;
-
-    osal_printk("[slp rpt] d:%d mm,azi:%dx0.01 deg,f:%u,elev:%dx0.01 deg,f:%u",
-        rangingRpt->distance, rangingRpt->aoxAzi, rangingRpt->aoxAziFom, rangingRpt->aoxElev, rangingRpt->aoxElevFom);
-    uint8_t *pAddr = rangingRpt->providerAddr.addr;
-    osal_printk("|pAddr:%02x:%02x:%02x:%02x:%02x:%02x",
-        pAddr[0], pAddr[1], pAddr[2], pAddr[3], pAddr[4], pAddr[5]); // 1:idx,2:idx,3:idx,4:idx,5:idx
-    uint8_t *rAddr = rangingRpt->requestorAddr.addr;
-    osal_printk("|rAddr:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
-        rAddr[0], rAddr[1], rAddr[2], rAddr[3], rAddr[4], rAddr[5]); // 1:idx,2:idx,3:idx,4:idx,5:idx
+    update_am_print_info_ranging(rangingRpt);
 }
 
 static void rpt_errcode_cbk(ErrcodeSlpClient errcode)
@@ -1041,40 +1071,39 @@ static void rpt_errcode_cbk(ErrcodeSlpClient errcode)
 static void rpt_cir_cbk(SlpCirRpt *cirRpt)
 {
     if (cirRpt == NULL) {
-        osal_printk("[ERROR][rpt_cir_cbk] cirRpt is null\r\n");
+        sprintf_s(g_serial_send_str, sizeof(g_serial_send_str), "[ERROR][rpt_cir_cbk] cirRpt is null\r\n");
+        air_mouse_print(g_serial_send_str, false);
+        return;
     }
     uint8_t role = cirRpt->role;
     if (role == 1) {
-        osal_printk("Role is INITIATOR\r\n");
-        osal_printk("Response Cir Bw:%u\r\n", cirRpt->bwPollOrResp);
+        sprintf_s(g_serial_send_str, sizeof(g_serial_send_str), "cir,i,resp,bw,%u", cirRpt->bwPollOrResp);
+        air_mouse_print(g_serial_send_str, false);
         for (uint16_t i = 0; i < SLP_RANGING_CIR_RECORD_NUM; i = i + 10) { // 10: 10个一组
-            osal_printk("Pwr: idx %u, %u %u %u %u %u %u %u %u %u %u\r\n", i,
+            sprintf_s(g_serial_send_str, sizeof(g_serial_send_str),
+                ",%u,%u,%u,%u,%u,%u,%u,%u,%u,%u",
                 cirRpt->cirPwrPollOrResp[i], cirRpt->cirPwrPollOrResp[i + 1], // 1:索引
                 cirRpt->cirPwrPollOrResp[i + 2], cirRpt->cirPwrPollOrResp[i + 3], // 2 3:索引
                 cirRpt->cirPwrPollOrResp[i + 4], cirRpt->cirPwrPollOrResp[i + 5], // 4 5:索引
                 cirRpt->cirPwrPollOrResp[i + 6], cirRpt->cirPwrPollOrResp[i + 7], // 6 7:索引
                 cirRpt->cirPwrPollOrResp[i + 8], cirRpt->cirPwrPollOrResp[i + 9]); // 8 9:索引
+            air_mouse_print(g_serial_send_str, false);
         }
-        osal_printk("Horizontal Aox Ant0 Bw:%u, Ant1 Bw:%u\r\n", cirRpt->bwHorizontalAox0, cirRpt->bwHorizontalAox1);
-        // 前两百个IQ是ant0的, 后两个IQ是ant1的
+        sprintf_s(g_serial_send_str, sizeof(g_serial_send_str), ",aox,bw,%u,%u", cirRpt->bwHorizontalAox0,
+            cirRpt->bwHorizontalAox1);
+        air_mouse_print(g_serial_send_str, false);
         for (uint16_t i = 0; i < SLP_AOX_CIR_RECORD_NUM; i = i + 10) { // 10: 10个一组, 格式为 I Q I Q I Q I Q I Q
-            osal_printk("IQ: idx %u, %d %d %d %d %d %d %d %d %d %d\r\n", i / 2, // 2:IQ
+            sprintf_s(g_serial_send_str, sizeof(g_serial_send_str), ",%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", // 2:IQ
                 cirRpt->horizontalAoxIq[i], cirRpt->horizontalAoxIq[i + 1], // 1:索引
                 cirRpt->horizontalAoxIq[i + 2], cirRpt->horizontalAoxIq[i + 3], // 2 3:索引
                 cirRpt->horizontalAoxIq[i + 4], cirRpt->horizontalAoxIq[i + 5], // 4 5:索引
                 cirRpt->horizontalAoxIq[i + 6], cirRpt->horizontalAoxIq[i + 7], // 6 7:索引
                 cirRpt->horizontalAoxIq[i + 8], cirRpt->horizontalAoxIq[i + 9]); // 8 9:索引
+            air_mouse_print(g_serial_send_str, false);
         }
+        sprintf_s(g_serial_send_str, sizeof(g_serial_send_str), ",END\r\n");
+        air_mouse_print(g_serial_send_str, false);
     }
-}
-
-static void rpt_version_cbk(
-    SlpVersionRpt *narrowVersion, SlpVersionRpt *wideVersion, uint32_t chipId, SlpImuType imuType)
-{
-    // 打印SLP版本号
-    osal_printk("_VERSION_ Narrow Band: %u.%u.%u, Wide Band: %u.%u.%u, chipId: 0x%02X, imuType: 0x%02X\r\n",
-        narrowVersion->major, narrowVersion->minor, narrowVersion->patch, wideVersion->major, wideVersion->minor,
-        wideVersion->patch, chipId, imuType);
 }
 
 static void rpt_cfo_cbk(int32_t cfo, uint32_t threshold)
@@ -1086,14 +1115,37 @@ static void rpt_cfo_cbk(int32_t cfo, uint32_t threshold)
     }
 }
 
+static void rpt_reg_value_cbk(uint32_t addr, uint32_t value)
+{
+    osal_printk("slp addr:0x%x, value:0x%x\r\n", addr, value);
+}
+
+void rpt_version_cbk(SlpVersionRpt *versionRpt)
+{
+    print_slp_version(versionRpt);
+
+    // 如果SLE已配对, 且上电加载完成，则启动测距
+    if (g_mouse_sle_pair_status == 0) {
+#if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_CIR_PRINT
+        SlpEnCirReportCommand();
+#endif
+        // 启动测距
+        slp_start_ranging();
+    } else {
+        osal_printk("pair status err:%u\r\n", g_mouse_sle_pair_status);
+    }
+}
+
 static void register_slp_report_callback(void)
 {
     SlpReportCallbacks cbks = {0};
+    cbks.rptCursorCbk = cursor_report_cbk;
     cbks.rptRangingCbk = ranging_report_cbk;
     cbks.rptErrcodeCbk = rpt_errcode_cbk;
     cbks.rptCirCbk = rpt_cir_cbk;
     cbks.rptVersionCbk = rpt_version_cbk;
     cbks.rptCfoCbk = rpt_cfo_cbk;
+    cbks.rptRegValueCbk = rpt_reg_value_cbk;
     if (SlpRegisterReportCallbacks(&cbks) != ERRCODE_SLPC_SUCCESS) {
         osal_printk("register slp_report_callback failed\r\n");
     }
@@ -1108,60 +1160,33 @@ static void slp_power_on_cbk(ErrcodeSlpClient errcode)
 {
     osal_printk("slp_power_on_cbk errcode: 0x%x, duration: %u ms\r\n", errcode,
         (uint32_t)(uapi_tcxo_get_ms() - g_power_on_start_time));
-    g_start_ranging_times = 0; // 复位
 
-    // 如果SLE已配对, 且上电加载完成，则启动测距
-    if (g_mouse_sle_pair_status == 0 && errcode == ERRCODE_SLPC_SUCCESS) {
-#if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_CIR_PRINT
-        SlpEnCirReportCommand();
-#endif
-        // 启动测距
-        g_start_ranging_start_time = uapi_tcxo_get_ms();
-        SlpStartRangingParam param = {0};
-        set_slp_start_ranging_param(&param);
-        errcode = SlpStartRangingCommand(&param);
-        if (errcode != ERRCODE_SLPC_SUCCESS) {
-            osal_printk("SlpStartRangingCommand Error 0x%x\r\n", errcode);
-            return;
-        }
-        g_start_ranging_times++;
-    } else {
-        osal_printk("slp_power_on_cbk Error 0x%x\r\n", errcode);
-    }
+    ErrcodeSlpClient ret = SlpReadVersionCommand();
+    osal_printk("SlpReadVersionCommand, ret:0x%x\r\n", ret);
 }
 
 static void slp_start_ranging_cbk(ErrcodeSlpClient errcode)
 {
+    rst_print_info();
+#if CONFIG_SLP_USAGE_RANGING_AOX || CONFIG_SLP_USAGE_AIR_MOUSE
+    air_mouse_timer_start(AM_TIMER_TYPE_PRINT);
+#endif
+    air_mouse_timer_start(AM_TIMER_TYPE_RSSI);
     osal_printk("slp_start_ranging_cbk errcode: 0x%x\r\n", errcode);
-
-    // 如果上电或低功耗后已启动10次测距，则不再重复启动
-    if (g_start_ranging_times >= 10) {
-        osal_printk("slp start ranging times: %u\r\n", g_start_ranging_times);
-        return;
-    }
-
-    // 启动测距出错时(未收到dongle的payload)，如果配对正常，则间隔500ms重新启动测距
-    if (g_mouse_sle_pair_status == 0 && errcode == ERRCODE_SLPC_RECV_PAYLOAD_FAILED) {
-        osal_msleep(500); // 500:500ms
-        // 启动测距
-        SlpStartRangingParam param = {0};
-        set_slp_start_ranging_param(&param);
-        g_start_ranging_times++;
-        errcode = SlpStartRangingCommand(&param);
-        if (errcode != ERRCODE_SLPC_SUCCESS) {
-            osal_printk("SlpStartRangingCommand Error 0x%x\r\n", errcode);
-            return;
-        }
-    }
 }
 
 static void slp_stop_ranging_cbk(ErrcodeSlpClient errcode)
 {
-    osal_printk("slp_stop_ranging_cbk errcode: 0x%x\r\n", errcode);
+    osal_printk("slp_stop_ranging_cbk errcode:0x%x, restart_flag:%u\r\n", errcode, g_slp_restart_flag);
+    if (g_slp_restart_flag) {
+        g_slp_restart_flag = false;
+        slp_start_ranging();
+    }
 }
 
 static void slp_power_off_cbk(ErrcodeSlpClient errcode)
 {
+    air_mouse_timer_stop_all();
     osal_printk("slp_power_off_cbk Error 0x%x\r\n", errcode);
     if (errcode != ERRCODE_SLPC_SUCCESS) {
         osal_printk("slp_power_off_cbk Error 0x%x\r\n", errcode);
@@ -1173,17 +1198,17 @@ static void slp_sleep_cbk(ErrcodeSlpClient errcode)
 {
     osal_printk("slp_sleep_cbk errcode: 0x%x\r\n", errcode);
 
-    // 如果不是sample逻辑发送的睡眠指令，则不进行后续操作
-    if (!g_sample_sleep) {
+    // 如果不是遥控器整机睡眠，则不进行后续操作
+    if (!g_rcu_sleep) {
         return;
     }
 
-    g_sample_sleep = false;
+    g_rcu_sleep = false;
     // 如果SLP睡眠完成，则更新SLE interval
     if (errcode == ERRCODE_SLPC_SUCCESS) {
         imu_wakeup_init();
         // 更新SLE的interval为10ms
-        sle_conn_param_update(80, 30, 500); // 80: 10ms interval, 30: latency, 500: supervision_timeout
+        sle_conn_param_update(80, 100, 500); // 80: 10ms interval, 100: latency, 500: supervision_timeout
     } else {
         osal_printk("slp_sleep_cbk Error 0x%x\r\n", errcode);
     }
@@ -1221,6 +1246,7 @@ void sle_server_slp_command_register_cbks(void)
 
 static void slp_report_gyro_zero_offset_cbk(SlpGyroZeroOffset *offset)
 {
+    sle_air_mouse_server_send_cmd(AM_CMD_GYRO_ZERO_OFFSET, (uint8_t *)offset, sizeof(SlpGyroZeroOffset));
     osal_printk("[slp nv] update gyro zero offset, x:%d, y:%d, z:%d\r\n", offset->x, offset->y, offset->z);
 }
 
@@ -1267,11 +1293,44 @@ void sle_low_latency_cbk_reg(void)
     sle_low_latency_register_callbacks(&cbks);
 }
 
+/* --------------------------------------- slp_rcu_sleep_req （遥控器整机睡眠）--------------------------------------- */
+static at_ret_t slp_at_rcu_sleep_req(void)
+{
+    ErrcodeSlpClient ret = ERRCODE_SLPC_SUCCESS;
+    g_rcu_sleep = true;
+    ret = SlpSleepCommand();
+    if (ret != ERRCODE_SLPC_SUCCESS) {
+        osal_printk("[SLP][AT] slp send sleep req cmd fail, ret: 0x%X", ret);
+        return AT_RET_SYNTAX_ERROR;
+    }
+
+    return AT_RET_OK;
+}
+
+static at_cmd_entry_t g_slp_server_at_table[] = {
+    {
+        "SLPRCUSLEEP",
+        1, // ID
+        0, // Attribute
+        NULL,
+        slp_at_rcu_sleep_req,
+        NULL,
+        NULL,
+        NULL,
+    },
+};
+
+static errcode_t slp_server_at_register(void)
+{
+    return uapi_at_cmd_table_register(
+        g_slp_server_at_table, (sizeof(g_slp_server_at_table) / sizeof(g_slp_server_at_table[0])), SERVER_AT_MAX_NUM);
+}
+
 errcode_t sle_air_mouse_server_init(void)
 {
+    g_slp_restart_flag = false;
     g_announce_keyscan_flag = false;
-    g_sample_sleep = false;
-    g_ranging_report_cnt = 0;
+    g_rcu_sleep = false;
     bt_core_enable_cb_register();
     while (g_sle_enable == false) {
         osal_msleep(USB_MOUSE_TASK_DELAY_MS);
@@ -1281,15 +1340,15 @@ errcode_t sle_air_mouse_server_init(void)
     sle_conn_register_cbks();
     sle_air_mouse_ssaps_register_cbks();
 
-    /* 注册服务，handle值依次为2、4、6 ... */
+    /* 注册服务 */
     sle_air_mouse_server_add();   // slp数传
     sle_air_mouse_cursor_add();   // 鼠标坐标传输
     sle_air_mouse_cmd_add();      // 命令传输
     sle_air_mouse_keyboard_add(); // 键盘按键传输
 
-    init_hid_report(); // 变量初始化
     register_slp_report_callback(); // 注册坐标上报、imu异常上报回调函数
     SlpRegisterSendPayloadCallback(server_send_slp_payload_cbk); // 注册server端 slp发送payload函数
+    slp_server_at_register(); // 应用层AT指令注册
     register_slp_factory_test_rpt_callback();
 
     sle_sample_dis_server_add();

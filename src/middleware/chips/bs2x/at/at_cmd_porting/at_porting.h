@@ -72,4 +72,10 @@ const at_cmd_entry_t *uapi_get_bt_at_table(void);
  * @param None
  */
 uint32_t uapi_get_bt_table_size(void);
+
+/**
+ * @brief  Use custom message.queue.
+ * @param [in] queue_id custom message.queue id.
+ */
+void uapi_at_register_custom_msg_queue(unsigned long queue_id);
 #endif

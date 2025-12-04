@@ -160,19 +160,45 @@ typedef enum {
     ERRCODE_SSAP_ENTRIES_NOT_FOUND = ERRCODE_SLE_SSAP_BASE + 0x0B,                /*!< @if Eng entries not found
                                                                                        @else   服务端未找到对应条目
                                                                                        @endif */
-    ERRCODE_SSAP_DATA_NOT_FOUND = ERRCODE_SLE_SSAP_BASE + 0x0C,                   /*!< @if Eng data not found
-                                                                                       @else   服务端未找到对应类型数据
+    ERRCODE_SSAP_INVALID_METHOD_CALL = ERRCODE_SLE_SSAP_BASE + 0x0C,              /*!< @if Eng method access error
+                                                                                       @else   方法访问错误
                                                                                        @endif */
     ERRCODE_SSAP_INCORRECT_DATA_TYPE = ERRCODE_SLE_SSAP_BASE + 0x0D,              /*!< @if Eng data type incorrected
                                                                                        @else   客户端发送写入数据类型
                                                                                                不符的错误
                                                                                        @endif */
-    ERRCODE_SSAP_INCORRECT_DATA_VALUE = ERRCODE_SLE_SSAP_BASE + 0x0E,             /*!< @if Eng data value incorrected
-                                                                                       @else   客户端发送写入值不符
+    ERRCODE_SSAP_INCORRECT_DATA_VALUE_LENGTH = ERRCODE_SLE_SSAP_BASE + 0x0E,      /*!< @if Eng data value length
+                                                                                               incorrected
+                                                                                       @else   客户端发送写入值长度不符
                                                                                                的错误
                                                                                        @endif */
     ERRCODE_SSAP_VALUE_OUT_OF_RANGE = ERRCODE_SLE_SSAP_BASE + 0x0F,               /*!< @if Eng data value incorrected
                                                                                        @else   客户端写入的值超出范围
+                                                                                       @endif */
+    ERRCODE_SSAP_SUBCONTRACT_NOT_SUPPORT = ERRCODE_SLE_SSAP_BASE + 0x10,          /*!< @if Eng subcontract not support
+                                                                                       @else   服务端不支持信令的分包发送
+                                                                                       @endif */
+    ERRCODE_SSAP_ATTRIBUTE_NUM_OVER_LIMIT = ERRCODE_SLE_SSAP_BASE + 0x11,         /*!< @if Eng attribute number
+                                                                                               over limit
+                                                                                       @else   请求数量超出服务端的支持
+                                                                                               能力
+                                                                                       @endif */
+    ERRCODE_SSAP_FRAGMENT_NUMBER_NOT_SUPPORT = ERRCODE_SLE_SSAP_BASE + 0x12,      /*!< @if Eng fragment number
+                                                                                               not support
+                                                                                       @else   服务端不支持信令分片序号
+                                                                                               功能
+                                                                                       @endif */
+    ERRCODE_SSAP_SUBCONTRACT_NOT_FULLY_RECEIVE = ERRCODE_SLE_SSAP_BASE + 0x13,    /*!< @if Eng subcontract not fully
+                                                                                               receive
+                                                                                       @else   服务端未接收所有分包
+                                                                                       @endif */
+    ERRCODE_SSAP_TRANSACTION_NUM_NOT_SUPPORT = ERRCODE_SLE_SSAP_BASE + 0x14,      /*!< @if Eng transaction number not
+                                                                                               support
+                                                                                       @else   服务端不支持消息事务号
+                                                                                       @endif */
+    ERRCODE_SSAP_RELIABLE_MODE_NOT_SUPPORT = ERRCODE_SLE_SSAP_BASE + 0x15,        /*!< @if Eng reliable mode not
+                                                                                               support
+                                                                                       @else   服务端不支持可靠模式
                                                                                        @endif */
     ERRCODE_SSAP_UPPERLAYER_APPLICATION_ERROR_MIN = ERRCODE_SLE_SSAP_BASE + 0xAF, /*!< @if Eng reserve
                                                                                        @else   预留给上层协议定义应用

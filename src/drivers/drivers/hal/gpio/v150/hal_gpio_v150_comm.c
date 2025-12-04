@@ -61,8 +61,10 @@ int hal_gpio_v150_irq_handler(int irq_num, const void *tmp)
             }
             if ((intr_state & 0x1) != 0) {
                 // 调用回调
-                hal_gpio_v150_callback_get(channel, group, group_pin)(
-                    (pin_t)hal_gpio_v150_pin_id_get(channel, group, group_pin), 0);
+                gpio_callback_t gpio_v150_callback = hal_gpio_v150_callback_get(channel, group, group_pin);
+                if (gpio_v150_callback != NULL) {
+                    gpio_v150_callback((pin_t)hal_gpio_v150_pin_id_get(channel, group, group_pin), 0);
+                }
             }
             intr_state >>= 1;
         }

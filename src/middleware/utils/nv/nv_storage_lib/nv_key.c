@@ -176,6 +176,19 @@ errcode_t kv_key_read_data(kv_key_handle_t *key, uint8_t *dest_location)
             return res;
         }
     }
+#if (CONFIG_NV_SUPPORT_HASH_FOR_CRYPT == NV_NO)
+    if (crypto_handle != INVAILD_CRYPTO_HANDLE) {
+        /* 在使用GCM TAG时，先读取一次TAG并设置给解密模块 */
+        /* Read key hash, which could be unencrypted */
+        const kv_attributes_t attributes = kv_key_attributes(key);
+        uint32_t padded_data_len = kv_key_padded_data_length(attributes, key->header.length);
+        uintptr_t hash_location = key_data_location + (uintptr_t)padded_data_len;
+        uint8_t tag[KV_CRYPTO_HASH_SIZE] = {0};
+        (void)kv_key_read_data_from_flash((uintptr_t)tag, hash_location,
+            KV_CRYPTO_HASH_SIZE, INVAILD_CRYPTO_HANDLE);
+        (void)nv_crypto_set_tag(crypto_handle, (uint8_t *)tag, NV_AES_GCM_TAG_LENGTH);
+    }
+#endif
 #endif
 
     /* Read key data, using AES engine if encrypted */
@@ -204,6 +217,18 @@ STATIC errcode_t kv_helper_compare_key_data_chunks(const kv_key_handle_t *key, c
     errcode_t res = ERRCODE_SUCC;
 
     uintptr_t key_data_location = (uintptr_t)key->key_location + (uintptr_t)sizeof(kv_key_header_t);
+#if (CONFIG_NV_SUPPORT_HASH_FOR_CRYPT == NV_NO) && (CONFIG_NV_SUPPORT_ENCRYPT == NV_YES)
+    if (info->crypto_handle != INVAILD_CRYPTO_HANDLE) {
+        const kv_attributes_t attributes = kv_key_attributes(key);
+        uint32_t decryptable_data_len = kv_key_padded_data_length(attributes, key->header.length);
+        /* 在使用GCM TAG时，先读取一次TAG并设置给解密模块 */
+        /* Read key hash, which could be unencrypted */
+        uintptr_t hash_location = key_data_location + decryptable_data_len;
+        (void)kv_key_read_data_from_flash((uintptr_t)info->key_data_chunk, hash_location,
+            KV_CRYPTO_HASH_SIZE, INVAILD_CRYPTO_HANDLE);
+        (void)nv_crypto_set_tag(info->crypto_handle, info->key_data_chunk, NV_AES_GCM_TAG_LENGTH);
+    }
+#endif
     uint32_t key_data_offset = 0;
     while (key_data_offset < key->header.length) {
         const uint16_t chunk_len = (uint16_t)uapi_min(NV_KEY_DATA_CHUNK_LEN, key->header.length - key_data_offset);

@@ -42,7 +42,21 @@
 #include "main_test.h"
 #endif
 #include "memory_info.h"
+#include "log_buffer_reader.h"
+#include "diag_adapt_sdt.h"
 #include "app_os_init.h"
+
+#define KICK_DOG_INTERVAL_MS        5000
+#define HSO_LOG_MSG_LEN             1
+#define HSO_LOG_MSG                 0xff
+#define MSG_MAX_SIZE                8
+#define MSG_MAX_LEN                 24
+
+#if defined (CONFIG_CODE_MINIATURE_ENABLE)
+#define ATTR_WEAK
+#else
+#define ATTR_WEAK                    __attribute__((weak))
+#endif
 
 /*
  *  优先级范围 0-31
@@ -70,8 +84,10 @@
 #else
 #define APP_STACK_SIZE                      0x500
 #endif
+#ifndef CONFIG_CODE_MINIATURE_ENABLE
 #define LOG_STACK_SIZE                      0x600
 #define AT_STACK_SIZE                       0x700
+#endif
 #define BT_STACK_SIZE                       0xA00
 /* host schedule task stack. */
 #define BTH_SCHEDULE_STACK_SIZE             0xC00
@@ -86,8 +102,10 @@
 #else
 /* 线程栈分配，推荐比水线高30%  */
 #define APP_STACK_SIZE                      0xA00
+#ifndef CONFIG_CODE_MINIATURE_ENABLE
 #define LOG_STACK_SIZE                      0x600
 #define AT_STACK_SIZE                       0xC00
+#endif
 #define BT_STACK_SIZE                       0xA00
 /* host schedule task stack. */
 #define BTH_SCHEDULE_STACK_SIZE             0xC00
@@ -124,6 +142,12 @@ void sdk_msg_thread(void);
 #endif
 #if defined(CONFIG_SLE_AMIC_TRANS_PATH_CHECK)
 void sle_vdt_get_trans_path_value(void);
+#endif
+
+#if defined (CONFIG_CODE_MINIATURE_ENABLE)
+void at_channel_check_and_enable(void);
+void at_msg_process(void *msg);
+static unsigned long g_uart_msg_queue;
 #endif
 
 /* bth schedule task attr. */
@@ -167,11 +191,13 @@ const task_attr_t g_bth_schedule_attr = {
  */
 static const app_task_attr_t g_app_tasks[] = {
     {"app", NULL, APP_STACK_SIZE, TASK_PRIORITY_APP, (osal_kthread_handler)app_main},
+#ifndef CONFIG_CODE_MINIATURE_ENABLE
 #if (USE_COMPRESS_LOG_INSTEAD_OF_SDT_LOG == NO) && defined(CONFIG_SUPPORT_LOG_THREAD)
     {"log", NULL, LOG_STACK_SIZE, TASK_PRIORITY_LOG, (osal_kthread_handler)log_main},
 #endif
 #ifdef AT_COMMAND
     {"at", NULL, AT_STACK_SIZE, TASK_PRIORITY_CMD, (osal_kthread_handler)uapi_at_msg_main},
+#endif
 #endif
 #ifdef BGLE_TASK_EXIST
     {"bt", NULL, BT_STACK_SIZE, TASK_PRIORITY_BT, (osal_kthread_handler)bt_thread_handle},
@@ -215,9 +241,18 @@ __attribute__((weak)) void app_os_init(void)
 #endif
 }
 
-__attribute__((weak)) void app_main(void *unused)
+#if defined (CONFIG_CODE_MINIATURE_ENABLE) && defined (CONFIG_SUPPORT_LOG_THREAD)
+void write_hso_log_msg(void)
 {
-    UNUSED(unused);
+    uint8_t msg = HSO_LOG_MSG;
+    if (osal_msg_queue_get_msg_num(g_uart_msg_queue) <= MSG_MAX_LEN - 0x1) { // 0x1 hso 消息做限制，避免队列塞满。
+        osal_msg_queue_write_copy(g_uart_msg_queue, &msg, HSO_LOG_MSG_LEN, LOS_NO_WAIT);
+    }
+}
+#endif
+
+static void app_main_task_init(void)
+{
     hal_reboot_clear_history();
     system_boot_reason_print();
     system_boot_reason_process();
@@ -230,7 +265,64 @@ __attribute__((weak)) void app_main(void *unused)
 #ifdef OS_DFX_SUPPORT
     print_os_task_id_and_name();
 #endif
+#if defined (CONFIG_CODE_MINIATURE_ENABLE)
+#ifdef AT_COMMAND
+    at_channel_check_and_enable();
+    uapi_at_register_custom_msg_queue(g_uart_msg_queue);
+#endif
+#if defined (CONFIG_SUPPORT_LOG_THREAD)
+    register_log_trigger(write_hso_log_msg);
+#endif
+#endif
+}
 
+/* 打开CONFIG_CODE_MINIATURE_ENABLE后app_main不支持替换 */
+#if defined (CONFIG_CODE_MINIATURE_ENABLE)
+void app_main(void *unused)
+{
+    unused(unused);
+    uint8_t msg[MSG_MAX_LEN];
+    uint32_t msg_size = sizeof(msg);
+    log_reader_ret_t lr_ret;
+    log_memory_region_section_t lregion;
+    log_buffer_header_t lb_header = { 0 };
+    uint8_t *b1 = NULL;
+    uint32_t l1 = 0;
+    uint8_t *b2 = NULL;
+    uint32_t l2 = 0;
+    osal_msg_queue_create(NULL, (unsigned short)MSG_MAX_LEN, &g_uart_msg_queue, 0, sizeof(msg));
+    app_main_task_init();
+    while (1) {
+        // Check if there are messages
+        while (log_buffer_reader_lock_next(&lregion, &lb_header) == LOG_READER_RET_OK) {
+            // Claim the message available
+            lr_ret = log_buffer_reader_claim_next(lregion, &b1, &l1, &b2, &l2);
+            // we are sure there is a new message
+            if ((lr_ret != LOG_READER_RET_OK) || ((lb_header.length - sizeof(lb_header)) != (l1 + l2))) {
+                log_buffer_reader_error_recovery(lregion);
+                break;
+            }
+            zdiag_adapt_sdt_msg_proc(b1, l1, b2, l2);
+            log_buffer_reader_discard(lregion);
+            uapi_watchdog_kick();
+        }
+        msg_size = sizeof(msg);
+        if (osal_msg_queue_read_copy(g_uart_msg_queue, msg, &msg_size, KICK_DOG_INTERVAL_MS) != LOS_OK) {
+            uapi_watchdog_kick();
+            continue;
+        }
+        if (msg_size != HSO_LOG_MSG_LEN) {
+#ifdef AT_COMMAND
+            at_msg_process(&msg);
+#endif
+        }
+    }
+}
+#else
+ATTR_WEAK void app_main(void *unused)
+{
+    UNUSED(unused);
+    app_main_task_init();
     while (1) {  //lint !e716 Main Loop
         (void)osal_msleep(TASK_COMMON_APP_DELAY_MS);
         oml_pf_log_print0(LOG_BCORE_PLT_DRIVER_REBOOT, LOG_NUM_DEBUG, LOG_LEVEL_INFO, "App main");
@@ -254,3 +346,4 @@ __attribute__((weak)) void app_main(void *unused)
 #endif
     }
 }
+#endif

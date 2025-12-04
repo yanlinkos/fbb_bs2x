@@ -32,8 +32,12 @@ int32_t tiot_board_pin_set_level(uint32_t pin, uint8_t level)
     }
 #endif
     errcode_t errcode;
-    gpio_level_t gpio_level = (level == TIOT_PIN_LEVEL_LOW) ? GPIO_LEVEL_LOW : GPIO_LEVEL_HIGH;
-    errcode = uapi_gpio_set_val((pin_t)pin, gpio_level);
+    if (pin == TIOT_PIN_NONE) {
+        errcode =  ERRCODE_SUCC;
+    } else {
+        gpio_level_t gpio_level = (level == TIOT_PIN_LEVEL_LOW) ? GPIO_LEVEL_LOW : GPIO_LEVEL_HIGH;
+        errcode = uapi_gpio_set_val((pin_t)pin, gpio_level);
+    }
     return err2ret(errcode);
 }
 

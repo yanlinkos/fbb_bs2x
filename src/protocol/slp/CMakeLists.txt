@@ -9,8 +9,3 @@ if(${CHIP} MATCHES "bs21|bs25|ws63")
     option(BUILD_HICFBB_GLP "Option for build hicfbb glp" ON) # 基于hicfbb平台编译glp
     include(bs2x.cmake)
 endif()
-
-if(BUILD_SIMULATOR)
-    add_subdirectory(wide_band)
-    add_subdirectory(narrow_band)
-endif()

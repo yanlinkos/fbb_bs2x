@@ -41,6 +41,9 @@ typedef enum {
     SUBSYS_GNSS = 0x00,
     SUBSYS_OM  = 0x01,
     SUBSYS_SYS  = 0x02,
+#ifdef CONFIG_XFER_SUBSYS1_SUBMSG
+    SUBSYS_FM  = 0x03,
+#endif
     SUBSYS_BUTT
 } subsys_type_enum;
 

@@ -10,12 +10,12 @@
 #include "nv_porting.h"
 
 #if (CONFIG_NV_SUPPORT_ENCRYPT == NV_YES)
-#include "cipher.h"
-#include "cipher_aead.h"
 #include "common_def.h"
 #include "efuse.h"
 #include "storage_common.h"
 #include "trng.h"
+#include "hkdf.h"
+#include "aes.h"
 
 #define INVALID_HANDLE         (0xFFFFFFFF)
 #define NV_HEADER_LENGTH       16
@@ -31,6 +31,9 @@
 #define PASSWORD_LEN           16
 #define OTP_RANDOM_POS         108
 #define DIE_ID_POS             0
+#define NV_PRK_LENGTH          32
+#define GMSSL_ERRCODE_SUCC 1
+#define GMSSL_ERRCODE_FAIL (-1)
 
 STATIC uint8_t ta_uuid[] = {0xCA, 0x2B, 0xF7, 0x6A, 0xFF, 0x79, 0x4E, 0xAC,
                             0xA6, 0x3D, 0x4E, 0x0A, 0xAA, 0xEE, 0x6C, 0x77};
@@ -51,6 +54,14 @@ typedef struct {
     uint32_t rnd;
     uint32_t die_id;
 } kv_crypto_key_info_t;
+
+typedef struct {
+    AES_KEY key;
+    uint8_t iv[NV_IV_LENGTH];
+    uint8_t iv_len;
+    uint8_t tag[NV_TAG_LENGTH];
+    uint8_t tag_len;
+} drv_symc_ctx;
 
 static errcode_t make_section_key(uint8_t *section_key,
                                   const kv_key_header_t *header,
@@ -125,7 +136,9 @@ static errcode_t get_password(uint8_t *password, uint32_t password_len,
     uint8_t salt[SALT_LEN] = {0};
     uint8_t material1[MATERIAL_LEN] = {0};
     errcode_t ret = ERRCODE_FAIL;
-    uapi_drv_cipher_hkdf_t hkdf_param = {0};
+        
+    uint8_t prk[NV_PRK_LENGTH] = { 0 };
+    size_t prk_length = NV_PRK_LENGTH;
 
     ret = get_salt(salt, SALT_LEN, die_id, header);
     storage_chk_goto(ret != ERRCODE_SUCC, err_exit, "get salt failed!\n");
@@ -133,34 +146,36 @@ static errcode_t get_password(uint8_t *password, uint32_t password_len,
     ret = get_material1(material1, MATERIAL_LEN);
     storage_chk_goto(ret != ERRCODE_SUCC, err_exit, "get material1 failed!\n");
 
-    hkdf_param.hmac_type = UAPI_DRV_CIPHER_HASH_TYPE_HMAC_SHA256;
-    hkdf_param.ikm = material1;
-    hkdf_param.ikm_length = MATERIAL_LEN;
-    hkdf_param.info = NULL;
-    hkdf_param.info_length = 0;
-    hkdf_param.salt = salt;
-    hkdf_param.salt_length = SALT_LEN;
+    const DIGEST *digest;
+    digest = DIGEST_sm3();
+    ret = hkdf_extract(digest, (const uint8_t *)salt, SALT_LEN, (const uint8_t *)material1, MATERIAL_LEN,
+        (uint8_t *)prk, &prk_length);
+    storage_chk_goto(ret != GMSSL_ERRCODE_SUCC, err_exit, "hkdf_extract failed!\n");
 
-    ret = uapi_drv_cipher_hkdf(&hkdf_param, password, password_len);
-    storage_chk_goto(ret != ERRCODE_SUCC, err_exit,
-                     "uapi_drv_cipher_hkdf failed!\n");
+    ret = hkdf_expand(digest, (const uint8_t *)prk, prk_length, NULL, 0, password_len, password);
+    storage_chk_goto(ret != GMSSL_ERRCODE_SUCC, err_exit, "hkdf_expand failed!\n");
 
     ret = ERRCODE_SUCC;
+    return ret;
 err_exit:
     (void)memset_s(salt, sizeof(salt), 0, sizeof(salt));
     (void)memset_s(material1, sizeof(material1), 0, sizeof(material1));
+    (void)memset_s(prk, sizeof(prk), 0, sizeof(prk));
     return ret;
 }
+
 
 /* 创建加解密通道 */
 errcode_t nv_crypto_claim_aes(uint32_t *crypto_handle,
                               const kv_key_header_t *header)
 {
-    uint32_t cipher = INVALID_HANDLE;
     uint32_t die_id[NV_DIE_ID_LEN_WORDS] = {0};
     uint8_t password[PASSWORD_LEN] = {0};
-    uint8_t iv[NV_IV_LENGTH] = {0};
-    errcode_t ret;
+    *crypto_handle = INVAILD_CRYPTO_HANDLE;
+    drv_symc_ctx *ctx = osal_vzalloc(sizeof(drv_symc_ctx));
+    storage_chk_return(ctx == NULL, ERRCODE_FAIL, "create ctx failed!\n");
+    *crypto_handle = (uint32_t)(uintptr_t)ctx;
+    errcode_t ret = ERRCODE_FAIL;
 
     // /* 获取Die_id */
     ret = uapi_efuse_get_die_id((uint8_t *)die_id, NV_DIE_ID_LENGTH_BYTES);
@@ -171,28 +186,34 @@ errcode_t nv_crypto_claim_aes(uint32_t *crypto_handle,
     storage_chk_goto(ret != ERRCODE_SUCC, err_exit, "get_password failed!\n");
 
     /* 获取iv */
-    ret = make_iv(iv, header, die_id[NV_DIE_ID_LOW_32]);
+    ret = make_iv((uint8_t *)ctx->iv, header, die_id[NV_DIE_ID_LOW_32]);
     storage_chk_goto(ret != ERRCODE_SUCC, err_exit, "make_iv failed!\n");
+    ctx->iv_len = NV_IV_LENGTH;
+    ctx->tag_len = NV_TAG_LENGTH;
+    ret = aes_set_encrypt_key(&ctx->key, (const uint8_t *)password, PASSWORD_LEN);
+    storage_chk_goto(ret != GMSSL_ERRCODE_SUCC, err_exit, "aes_set_encrypt_key failed!\n");
+    return ERRCODE_SUCC;
 
-    ret =
-        uapi_drv_cipher_symc_gcm_create(&cipher, password, PASSWORD_LEN, 0, iv,
-                                        sizeof(iv), NULL, 0, NV_TAG_LENGTH);
-    storage_chk_goto(ret != ERRCODE_SUCC, err_exit,
-                     "uapi_drv_cipher_symc_gcm_create failed!\n");
-
-    *crypto_handle = cipher;
 err_exit:
+    (void)memset_s(ctx, sizeof(drv_symc_ctx), 0, sizeof(drv_symc_ctx));
     (void)memset_s(password, sizeof(password), 0, sizeof(password));
     (void)memset_s(die_id, sizeof(die_id), 0, sizeof(die_id));
-    (void)memset_s(iv, sizeof(iv), 0, sizeof(iv));
-    return ret;
+    osal_vfree(ctx);
+    *crypto_handle = INVAILD_CRYPTO_HANDLE;
+    return ERRCODE_FAIL;
 }
 
 /* 释放加解密通道 */
 void nv_crypto_release_aes(uint32_t crypto_handle)
 {
-    if (crypto_handle != INVALID_HANDLE) {
-        uapi_drv_cipher_symc_gcm_destroy(crypto_handle);
+    if (crypto_handle ==  INVAILD_CRYPTO_HANDLE) {
+        return;
+    }
+
+    drv_symc_ctx *ctx = (drv_symc_ctx *)(uintptr_t)crypto_handle;
+    if (ctx != NULL) {
+        (void)memset_s(ctx, sizeof(drv_symc_ctx), 0, sizeof(drv_symc_ctx));
+        osal_vfree(ctx);
     }
 }
 
@@ -201,12 +222,13 @@ errcode_t nv_crypto_encode(uint32_t crypto_handle, const uintptr_t src,
                            uintptr_t dest, uint32_t length)
 {
     errcode_t ret;
+    drv_symc_ctx *ctx = (drv_symc_ctx *)(uintptr_t)crypto_handle;
+    storage_chk_return(ctx == NULL, ERRCODE_FAIL, "get ctx failed\n");
 
-    ret = uapi_drv_cipher_symc_gcm_encrypt_update(crypto_handle, (uint8_t *)src,
-                                                  (uint8_t *)dest, length);
-    storage_chk_return(ret != ERRCODE_SUCC, ERRCODE_FAIL, "encrypt failed!\n");
-
-    return ret;
+    ret = aes_gcm_encrypt(&ctx->key, (const uint8_t *)ctx->iv, ctx->iv_len, NULL, 0, (const uint8_t *)src, length,
+        (uint8_t *)dest, ctx->tag_len, (uint8_t *)ctx->tag);
+    storage_chk_return(ret != GMSSL_ERRCODE_SUCC, ERRCODE_FAIL, "aes_gcm_encrypt failed\n");
+    return ERRCODE_SUCC;
 }
 
 /* NV数据解密 */
@@ -214,11 +236,13 @@ errcode_t nv_crypto_decode(uint32_t crypto_handle, const uintptr_t src,
                            uintptr_t dest, uint32_t length)
 {
     errcode_t ret;
-
-    ret = uapi_drv_cipher_symc_gcm_decrypt_update(crypto_handle, (uint8_t *)src,
-                                                  (uint8_t *)dest, length);
-    storage_chk_return(ret != ERRCODE_SUCC, ERRCODE_FAIL, "decrypt failed!\n");
-    return ret;
+    drv_symc_ctx *ctx = (drv_symc_ctx *)(uintptr_t)crypto_handle;
+    storage_chk_return(ctx == NULL, ERRCODE_FAIL, "get ctx failed\n");
+    
+    ret = aes_gcm_decrypt(&ctx->key, (const uint8_t *)ctx->iv, ctx->iv_len, NULL, 0, (const uint8_t *)src, length,
+        (uint8_t *)ctx->tag, ctx->tag_len, (uint8_t *)dest);
+    storage_chk_return(ret != GMSSL_ERRCODE_SUCC, ERRCODE_FAIL, "aes_gcm_decrypt tag verify failed\n");
+    return ERRCODE_SUCC;
 }
 
 /* 获取加密Tag */
@@ -226,16 +250,12 @@ errcode_t nv_crypto_get_tag(uint32_t crypto_handle, uint8_t *tag,
                             uint32_t *tag_len)
 {
     errcode_t ret;
-    if (*tag_len < NV_TAG_LENGTH) {
-        return ERRCODE_NV_INVALID_PARAMS;
-    }
+    drv_symc_ctx *ctx = (drv_symc_ctx *)(uintptr_t)crypto_handle;
+    storage_chk_return(ctx == NULL, ERRCODE_FAIL, "get ctx failed\n");
 
-    /* get tag */
-    ret = uapi_drv_cipher_symc_gcm_encrypt_get_tag(crypto_handle, tag,
-                                                   NV_TAG_LENGTH);
-    storage_chk_return(ret != ERRCODE_SUCC, ERRCODE_FAIL, "get tag failed!\n");
-
-    *tag_len = NV_TAG_LENGTH;
+    *tag_len = ctx->tag_len;
+    ret = memcpy_s(tag, ctx->tag_len, ctx->tag, ctx->tag_len);
+    storage_chk_return(ret != EOK, ERRCODE_FAIL, "memcpy_s failed\n");
     return ERRCODE_SUCC;
 }
 
@@ -244,23 +264,20 @@ errcode_t nv_crypto_set_tag(uint32_t crypto_handle, uint8_t *tag,
                             uint32_t tag_len)
 {
     errcode_t ret;
+    drv_symc_ctx *ctx = (drv_symc_ctx *)(uintptr_t)crypto_handle;
+    storage_chk_return(ctx == NULL, ERRCODE_FAIL, "get ctx failed\n");
 
-    ret = uapi_drv_cipher_symc_gcm_decrypt_set_tag(crypto_handle, tag, tag_len);
-    storage_chk_return(ret != ERRCODE_SUCC, ERRCODE_FAIL, "set tag failed!\n");
-
-    return ret;
+    ret = memcpy_s(ctx->tag, sizeof(ctx->tag), tag, tag_len);
+    storage_chk_return(ret != EOK, ERRCODE_FAIL, "memcpy_s failed\n");
+    ctx->tag_len = tag_len;
+    return ERRCODE_SUCC;
 }
 
 /* 校验Tag */
 errcode_t nv_crypto_validate_tag(uint32_t crypto_handle)
 {
-    errcode_t ret;
-
-    ret = uapi_drv_cipher_symc_gcm_decrypt_verify_tag(crypto_handle);
-    storage_chk_return(ret != ERRCODE_SUCC, ERRCODE_FAIL,
-                       "verify tag failed!\n");
-
-    return ret;
+    unused(crypto_handle);
+    return ERRCODE_SUCC;
 }
 
 /* 获取随机数 */
