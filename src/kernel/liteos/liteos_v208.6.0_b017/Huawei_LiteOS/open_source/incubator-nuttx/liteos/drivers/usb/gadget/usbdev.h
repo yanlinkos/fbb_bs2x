@@ -295,7 +295,7 @@ struct usbdev_req_s
   CODE void (*callback)(FAR struct usbdev_ep_s *ep,
                         FAR struct usbdev_req_s *req);
   FAR void  *priv; /* Used only by callee */
-
+  uint8_t   zero;
   uint8_t  last_flag; /* Flag of the last request block */
   int is_complete;
 
@@ -304,7 +304,6 @@ struct usbdev_req_s
 #ifdef CONFIG_USBDEV_EXTEND_USB3_DEVICE_CONTROLLER
   uintptr_t dma;
   uint32_t  stream_id;
-  uint8_t   zero;
 #endif
 };
 

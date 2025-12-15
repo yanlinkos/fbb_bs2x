@@ -58,7 +58,6 @@ static void ulp_rtc_handler(void)
 
 void ulp_rtc_init(void)
 {
-    reg16_clrbit(ULP_INT_CFG, ULP_GPIO_INT_EN_BIT);
     osal_irq_request(ULP_INT_IRQN, (osal_irq_handler)ulp_rtc_handler, NULL, NULL, NULL);
     osal_irq_set_priority(ULP_INT_IRQN, irq_prio(ULP_INT_IRQN));
     osal_irq_enable(ULP_INT_IRQN);
