@@ -80,11 +80,18 @@
 </th>
 </tr>
 </thead>
-<tbody><tr id="row1078055125815"><td class="cellrowborder" valign="top" width="20.05%" headers="mcps1.1.4.1.1 "><p id="p1378185125816"><a name="p1378185125816"></a><a name="p1378185125816"></a>02</p>
+<tbody><tr id="row11740172661818"><td class="cellrowborder" valign="top" width="20.05%" headers="mcps1.1.4.1.1 "><p id="p77413268187"><a name="p77413268187"></a><a name="p77413268187"></a>03</p>
+</td>
+<td class="cellrowborder" valign="top" width="22.91%" headers="mcps1.1.4.1.2 "><p id="p15741142641811"><a name="p15741142641811"></a><a name="p15741142641811"></a>2025-12-01</p>
+</td>
+<td class="cellrowborder" valign="top" width="57.04%" headers="mcps1.1.4.1.3 "><a name="ul1953381118"></a><a name="ul1953381118"></a><ul id="ul1953381118"><li>新增“<a href="定制化NV结构使用介绍.md">定制化NV结构使用介绍</a>”章节内容。</li><li>新增“<a href="通过NV自定义传输数据最大长度.md">通过NV自定义传输数据最大长度</a>”章节内容。</li></ul>
+</td>
+</tr>
+<tr id="row1078055125815"><td class="cellrowborder" valign="top" width="20.05%" headers="mcps1.1.4.1.1 "><p id="p1378185125816"><a name="p1378185125816"></a><a name="p1378185125816"></a>02</p>
 </td>
 <td class="cellrowborder" valign="top" width="22.91%" headers="mcps1.1.4.1.2 "><p id="p1589341615811"><a name="p1589341615811"></a><a name="p1589341615811"></a>2025-03-26</p>
 </td>
-<td class="cellrowborder" valign="top" width="57.04%" headers="mcps1.1.4.1.3 "><p id="p578135145818"><a name="p578135145818"></a><a name="p578135145818"></a>更新“<a href="新增NV项.md">新增NV项</a>”小节内容。</p>
+<td class="cellrowborder" valign="top" width="57.04%" headers="mcps1.1.4.1.3 "><p id="p578135145818"><a name="p578135145818"></a><a name="p578135145818"></a>更新“<a href="新增NV项.md">新增NV项</a>”章节内容。</p>
 </td>
 </tr>
 <tr id="row1065912148574"><td class="cellrowborder" valign="top" width="20.05%" headers="mcps1.1.4.1.1 "><p id="p0413131712"><a name="p0413131712"></a><a name="p0413131712"></a>01</p>
@@ -98,7 +105,7 @@
 </td>
 <td class="cellrowborder" valign="top" width="22.91%" headers="mcps1.1.4.1.2 "><p id="p1536052844214"><a name="p1536052844214"></a><a name="p1536052844214"></a>2024-02-29</p>
 </td>
-<td class="cellrowborder" valign="top" width="57.04%" headers="mcps1.1.4.1.3 "><a name="ul1761623912427"></a><a name="ul1761623912427"></a><ul id="ul1761623912427"><li>更新“<a href="新增NV项.md">新增NV项</a>”小节内容。</li><li>更新“<a href="编译生成NV镜像.md">编译生成NV镜像</a>”小节内容。</li></ul>
+<td class="cellrowborder" valign="top" width="57.04%" headers="mcps1.1.4.1.3 "><a name="ul1761623912427"></a><a name="ul1761623912427"></a><ul id="ul1761623912427"><li>更新“<a href="新增NV项.md">新增NV项</a>”章节内容。</li><li>更新“<a href="编译生成NV镜像.md">编译生成NV镜像</a>”章节内容。</li></ul>
 </td>
 </tr>
 <tr id="row5947359616410"><td class="cellrowborder" valign="top" width="20.05%" headers="mcps1.1.4.1.1 "><p id="p2149706016410"><a name="p2149706016410"></a><a name="p2149706016410"></a>00B01</p>
@@ -128,6 +135,7 @@ NV项可通过两种方式进行存储：编译预置和API写入。
 
 
 ## 新增NV项<a name="ZH-CN_TOPIC_0000001837645765"></a>
+
 
 
 
@@ -250,6 +258,8 @@ NV项可通过两种方式进行存储：编译预置和API写入。
         2.  只对列表前面若干个成员赋值。（末尾未赋值的成员默认赋值为0）。
 
         注：赋值只支持十进制格式。
+
+### 新节点1<a name="ZH-CN_TOPIC_0000002482769782"></a>
 
 ### 新增NV项示例<a name="ZH-CN_TOPIC_0000001790966292"></a>
 
@@ -692,4 +702,165 @@ NV模块主要提供以下API：
 -   uapi\_nv\_write\_with\_attr：可同时配置key属性和注册回调函数。目前NV代码中没有使用到回调函数，传NULL忽略即可。
 -   NV属性结构体和NV空间状态结构体说明详见nv.h文件。
 -   NV write和read接口使用到信号量同步获取，禁止在中断回调中使用。
+
+# 定制化NV结构使用介绍<a name="ZH-CN_TOPIC_0000002482689810"></a>
+
+**bth\_ble\_nv\_reserved\_struct\_t<a name="section677114221918"></a>**
+
+**表 1**  bth\_ble\_nv\_reserved\_struct\_t结构体基本信息
+
+<a name="table121001919191615"></a>
+<table><tbody><tr id="row410117196162"><th class="firstcol" valign="top" width="27.07%" id="mcps1.2.3.1.1"><p id="p1685753816169"><a name="p1685753816169"></a><a name="p1685753816169"></a>key_id</p>
+</th>
+<td class="cellrowborder" valign="top" width="72.92999999999999%" headers="mcps1.2.3.1.1 "><p id="p1085723810161"><a name="p1085723810161"></a><a name="p1085723810161"></a>0xE</p>
+</td>
+</tr>
+<tr id="row1101171916169"><th class="firstcol" valign="top" width="27.07%" id="mcps1.2.3.2.1"><p id="p18857183841613"><a name="p18857183841613"></a><a name="p18857183841613"></a>结构体名称</p>
+</th>
+<td class="cellrowborder" valign="top" width="72.92999999999999%" headers="mcps1.2.3.2.1 "><p id="p20857238121611"><a name="p20857238121611"></a><a name="p20857238121611"></a>bth_ble_nv_reserved_struct_t</p>
+</td>
+</tr>
+<tr id="row210161913161"><th class="firstcol" valign="top" width="27.07%" id="mcps1.2.3.3.1"><p id="p198571638171619"><a name="p198571638171619"></a><a name="p198571638171619"></a>长度</p>
+</th>
+<td class="cellrowborder" valign="top" width="72.92999999999999%" headers="mcps1.2.3.3.1 "><p id="p108584381168"><a name="p108584381168"></a><a name="p108584381168"></a>128字节（每个0是一个字节，默认值为十进制数）</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+**表 2**  字节使用记录
+
+<a name="table4473225131712"></a>
+<table><thead align="left"><tr id="row124733253171"><th class="cellrowborder" valign="top" width="11.35%" id="mcps1.2.4.1.1"><p id="p104732025171714"><a name="p104732025171714"></a><a name="p104732025171714"></a>字节偏移</p>
+</th>
+<th class="cellrowborder" valign="top" width="27.57%" id="mcps1.2.4.1.2"><p id="p4473152511711"><a name="p4473152511711"></a><a name="p4473152511711"></a>字节描述</p>
+</th>
+<th class="cellrowborder" valign="top" width="61.08%" id="mcps1.2.4.1.3"><p id="p447315250172"><a name="p447315250172"></a><a name="p447315250172"></a>功能描述</p>
+</th>
+</tr>
+</thead>
+<tbody><tr id="row11473112521712"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p144731425141713"><a name="p144731425141713"></a><a name="p144731425141713"></a>0</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p1047322514171"><a name="p1047322514171"></a><a name="p1047322514171"></a>customize_flag</p>
+</td>
+<td class="cellrowborder" rowspan="2" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p104737254177"><a name="p104737254177"></a><a name="p104737254177"></a>定制化使能flag，每个bit对应一个定制化开关。</p>
+</td>
+</tr>
+<tr id="row20473112581716"><td class="cellrowborder" valign="top" headers="mcps1.2.4.1.1 "><p id="p17473325181714"><a name="p17473325181714"></a><a name="p17473325181714"></a>1</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.2.4.1.2 "><p id="p9473192519176"><a name="p9473192519176"></a><a name="p9473192519176"></a>customize_flag</p>
+</td>
+</tr>
+<tr id="row13473122514178"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p5473325191715"><a name="p5473325191715"></a><a name="p5473325191715"></a>2</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p54735254171"><a name="p54735254171"></a><a name="p54735254171"></a>gfsk power</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p7473625131720"><a name="p7473625131720"></a><a name="p7473625131720"></a>GFSK(BLE和GLE帧1)调制类型的功率定制化。</p>
+</td>
+</tr>
+<tr id="row24731025121714"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p1747382516172"><a name="p1747382516172"></a><a name="p1747382516172"></a>3</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p8473625141718"><a name="p8473625141718"></a><a name="p8473625141718"></a>psk power</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p1347332551714"><a name="p1347332551714"></a><a name="p1347332551714"></a>GLE PSK调制类型的功率定制化。</p>
+</td>
+</tr>
+<tr id="row44731925151712"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p1947362512179"><a name="p1947362512179"></a><a name="p1947362512179"></a>4</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p17473325171711"><a name="p17473325171711"></a><a name="p17473325171711"></a>em_customized_data_tx_size低8位</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p144738251173"><a name="p144738251173"></a><a name="p144738251173"></a>星闪低时延传输时业务需要的最大发送包长。</p>
+</td>
+</tr>
+<tr id="row194731325161713"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p144735250171"><a name="p144735250171"></a><a name="p144735250171"></a>5</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p204739255173"><a name="p204739255173"></a><a name="p204739255173"></a>em_customized_data_tx_size高8位</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p174741425181712"><a name="p174741425181712"></a><a name="p174741425181712"></a>星闪低时延传输时业务需要的最大发送包长。</p>
+</td>
+</tr>
+<tr id="row647452551718"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p847412253170"><a name="p847412253170"></a><a name="p847412253170"></a>6</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p18474182520176"><a name="p18474182520176"></a><a name="p18474182520176"></a>max_nb_active_link</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p134748251173"><a name="p134748251173"></a><a name="p134748251173"></a>星闪低时延传输时业务需要的最大链接数量。</p>
+</td>
+</tr>
+<tr id="row247419253175"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p347415254170"><a name="p347415254170"></a><a name="p347415254170"></a>7</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p194741025171716"><a name="p194741025171716"></a><a name="p194741025171716"></a>fem switch</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p1147422551713"><a name="p1147422551713"></a><a name="p1147422551713"></a>RT201 fem管脚适配开关。</p>
+</td>
+</tr>
+<tr id="row17474192520175"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p54747251176"><a name="p54747251176"></a><a name="p54747251176"></a>8</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p147462581713"><a name="p147462581713"></a><a name="p147462581713"></a>ctrim_flag</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p74741825101715"><a name="p74741825101715"></a><a name="p74741825101715"></a>XO ctrim电容值写过flash标志位。</p>
+</td>
+</tr>
+<tr id="row6474172521720"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p154741253172"><a name="p154741253172"></a><a name="p154741253172"></a>9</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p54741925151710"><a name="p54741925151710"></a><a name="p54741925151710"></a>ctrim_value</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p5474225111710"><a name="p5474225111710"></a><a name="p5474225111710"></a>XO ctrim电容值。</p>
+</td>
+</tr>
+<tr id="row14474122521717"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p18474625181715"><a name="p18474625181715"></a><a name="p18474625181715"></a>10</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p1474825161714"><a name="p1474825161714"></a><a name="p1474825161714"></a>em_customized_data_rx_size低8位</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p44748251178"><a name="p44748251178"></a><a name="p44748251178"></a>rx em buffer大小的低8位。</p>
+</td>
+</tr>
+<tr id="row19474172516171"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p11474202511176"><a name="p11474202511176"></a><a name="p11474202511176"></a>11</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p1047472511719"><a name="p1047472511719"></a><a name="p1047472511719"></a>em_customized_data_rx_size高8位</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p1474152516175"><a name="p1474152516175"></a><a name="p1474152516175"></a>rx em buffer大小的高8位。</p>
+</td>
+</tr>
+<tr id="row1747462518179"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p124741125201713"><a name="p124741125201713"></a><a name="p124741125201713"></a>12</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p154748255176"><a name="p154748255176"></a><a name="p154748255176"></a>em_customized_acl_txbuff_nb</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p1547552551718"><a name="p1547552551718"></a><a name="p1547552551718"></a>定制化ACL EM DATA TXBUFF个数。</p>
+</td>
+</tr>
+<tr id="row1047542516178"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p9475142531714"><a name="p9475142531714"></a><a name="p9475142531714"></a>13</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p12475202561719"><a name="p12475202561719"></a><a name="p12475202561719"></a>em_customized_acl_data_size</p>
+</td>
+<td class="cellrowborder" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p3475025171720"><a name="p3475025171720"></a><a name="p3475025171720"></a>定制化ACL EM DATA大小。</p>
+</td>
+</tr>
+<tr id="row5475202512175"><td class="cellrowborder" valign="top" width="11.35%" headers="mcps1.2.4.1.1 "><p id="p3475182517171"><a name="p3475182517171"></a><a name="p3475182517171"></a>14</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.2.4.1.2 "><p id="p1847592510179"><a name="p1847592510179"></a><a name="p1847592510179"></a>g_max_temp</p>
+</td>
+<td class="cellrowborder" rowspan="2" align="left" valign="top" width="61.08%" headers="mcps1.2.4.1.3 "><p id="p19475102551719"><a name="p19475102551719"></a><a name="p19475102551719"></a>记录芯片最高温度和最低温度。芯片最高温度初始设置为-40，最低温度初始设置为125。在nv中保存使用的数据类型和实际使用中不同，-40经过转换为216。因此在nv中最高温度初始值实际配置为216。</p>
+</td>
+</tr>
+<tr id="row1017952101719"><td class="cellrowborder" valign="top" headers="mcps1.2.4.1.1 "><p id="p1212135251717"><a name="p1212135251717"></a><a name="p1212135251717"></a>15</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.2.4.1.2 "><p id="p141219527177"><a name="p141219527177"></a><a name="p141219527177"></a>g_min_temp</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+# 通过NV自定义传输数据最大长度<a name="ZH-CN_TOPIC_0000002523876767"></a>
+
+NV根据字节使用记录表可以设置需要发送的数据长度，修改如[图1](#fig73832028619)所示。
+
+**图 1**  NV自定义传输数据长度60字节示例<a name="fig73832028619"></a>  
+![](figures/NV自定义传输数据长度60字节示例.png "NV自定义传输数据长度60字节示例")
+
+需要注意的是
+
+-   对于low latency模式，不同回报率下支持发送的最大数据长度的能力不同，8K回报率最多支持用户发送5Byte，4K最多支持用户发送16Byte，2K最多支持用户发送36Byte，1K最多支持用户发送250Byte。
+-   对于非low latency模式，最多支持用户发送255Byte。
+-   em\_customized\_data\_tx\_size和em\_customized\_data\_rx\_size根据需要设置为传输数据的最大长度。
+-   max\_nb\_active\_link需设置为非0，最大值为8。
 

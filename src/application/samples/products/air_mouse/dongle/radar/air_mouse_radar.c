@@ -17,18 +17,22 @@
 #define RADAR_DEFAULT_TX_POWER_IDX 34
 #define RADAR_DEFAULT_RAW_DATA_START_BIN    0
 #define RADAR_DEFAULT_RAW_DATA_END_BIN      (29)
-#define DEFAULT_ANT_INTR_CNT10US_RADAR_ONLY (158)
+#define RADAR_DEFAULT_SUBFRAME_PERIOD       (1816)
+#define RADAR_DEFAULT_ANT_SWITCH_INTERVAL   (158)
 #define RADAR_DEFAULT_LNA_CODE              (0xF)
 #define RADAR_DEFAULT_VGA_CODE              (0x1D)
 #define RADAR_DEFAULT_ANT_CH_NUM            (8)
+#define RADAR_DEFAULT_ANT_CODE_TABLE { 1, 0, 3, 2, 5, 4, 7, 6 }
 #else
 #define RADAR_DEFAULT_TX_POWER_IDX 38
 #define RADAR_DEFAULT_RAW_DATA_START_BIN    0
 #define RADAR_DEFAULT_RAW_DATA_END_BIN      (44)
-#define DEFAULT_ANT_INTR_CNT10US_RADAR_ONLY (687)
+#define RADAR_DEFAULT_SUBFRAME_PERIOD       (687)
+#define RADAR_DEFAULT_ANT_SWITCH_INTERVAL   (687)
 #define RADAR_DEFAULT_LNA_CODE              (0xF)
 #define RADAR_DEFAULT_VGA_CODE              (0x01)
 #define RADAR_DEFAULT_ANT_CH_NUM            (1)
+#define RADAR_DEFAULT_ANT_CODE_TABLE { 0, 0, 0, 0, 0, 0, 0, 0 }
 #endif
 
 #define RADAR_DEFAULT_SPREAD_FACTOR     (8)
@@ -43,8 +47,10 @@
 #define RADAR_RAW_DATA_CNT_INIT_VALUE 0xFFFF
 #define RADAR_RAW_DATA_PRINT_INFO_PERIOD 100
 #define RADAR_RAW_DATA_NORMAL_RPT_INTERVAL 1
+#define RADAR_DEFAULT_SW_CTRL_EN (7)
 
 static uint16_t g_raw_data_frame_cnt = RADAR_RAW_DATA_CNT_INIT_VALUE;
+static uint8_t g_default_ant_code[RADAR_MAX_ANT_CH_NUM] = RADAR_DEFAULT_ANT_CODE_TABLE;
 
 static void InitHardwarePara(radar_hardware_para_t *hwPara)
 {
@@ -54,10 +60,13 @@ static void InitHardwarePara(radar_hardware_para_t *hwPara)
         hwPara->rf_para.tx_power_idx[i] = RADAR_DEFAULT_TX_POWER_IDX;
         hwPara->rf_para.agc_para.lna_code[i] = RADAR_DEFAULT_LNA_CODE;
         hwPara->rf_para.agc_para.vga_code[i] = RADAR_DEFAULT_VGA_CODE;
+        hwPara->rf_para.ant_code[i] = g_default_ant_code[i];
     }
-    hwPara->frame_para.subframe_period = DEFAULT_ANT_INTR_CNT10US_RADAR_ONLY;
+    hwPara->frame_para.subframe_period = RADAR_DEFAULT_SUBFRAME_PERIOD;
+    hwPara->frame_para.ant_switch_interval = RADAR_DEFAULT_ANT_SWITCH_INTERVAL;
     hwPara->raw_data_para.start_bin = RADAR_DEFAULT_RAW_DATA_START_BIN;
     hwPara->raw_data_para.end_bin = RADAR_DEFAULT_RAW_DATA_END_BIN;
+    hwPara->rf_para.ant_sw_ctrl_en.u8 = RADAR_DEFAULT_SW_CTRL_EN;
 
     hwPara->wave_para.spread_factor = RADAR_DEFAULT_SPREAD_FACTOR;
     hwPara->wave_para.acc_rshift_bit = RADAR_DEFAULT_ACC_RSHIFT_BIT;

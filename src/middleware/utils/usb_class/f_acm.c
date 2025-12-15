@@ -532,6 +532,7 @@ static int acm_set_serial_config(struct acm_dev_s *priv,
     {
       EP_DISABLE(datactrl->epbulkout);
       datactrl->epbulkout_enabled = false;
+      LOS_AtomicSet(&datactrl->send_char, 0);
     }
 
   ret = acm_set_ep_config(datactrl->epbulkout, ACM_BULKOUT_EP_IDX,
