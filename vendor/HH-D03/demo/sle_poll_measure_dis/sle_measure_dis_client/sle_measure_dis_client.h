@@ -27,6 +27,10 @@
 
 #define MAX_SERVERS 5                                           
 
+#define SLE_MEASURE_05HZ    4 /* 0.5Hz测距频率，测距时作为主机最多连接八个从机*/
+#define SLE_MEASURE_1HZ     2 /* 1Hz测距频率，测距时作为主机最多连接5个从机*/
+#define SLE_MEASURE_2HZ     1 /* 2Hz测距频率，测距时作为主机最多连接三个从机*/
+
 typedef enum {
     SLEM_PROFILE_MSG_IQ = 0xFFFFFFEA,
 } slem_profile_msg_type_t;

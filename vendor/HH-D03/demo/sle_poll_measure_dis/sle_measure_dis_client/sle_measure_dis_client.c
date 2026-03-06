@@ -50,7 +50,7 @@ errcode_t measure_dis_slem_set_param(uint16_t conn_id)
     sle_set_channel_sounding_param_ex_t param = {
         .acb_interval = 0,   
         .con_anchor_num = 5,  /*表示连接锚点（Connection Anchor）的数量*/
-        .cs_interval = 1,     /*代表信道探测（Channel Sounding）的间隔*/
+        .cs_interval = SLE_MEASURE_1HZ,     /*代表信道探测（Channel Sounding）的间隔，即测距频率*/
         .freq_space = 0,      /*频率间隔*/
         .is_cs_param_chg = 0, /*指示是否更改了信道探测参数*/
         .refresh_rate = 1,    /*信道探测参数或相关状态更新的频率*/
