@@ -268,13 +268,16 @@ def lzma_compress_bin(src_file, dst_file, lzma_tool):
         cmd_list0.append('755')
         cmd_list0.append(lzma_tool)
     elif platform.system().lower() == "windows":
+        # Prevent garbled characters in the return of 'cacls' command under Windows Os.
+        cmd_list0.append('chcp 65001 > nul & ') # 65001: utf-8
         cmd_list0.append('cacls')
         cmd_list0.append(lzma_tool)
         cmd_list0.append('/p everyone:f /e')
     str_cmd=' '.join(cmd_list0)
-    ret = subprocess.run(str_cmd, shell=True)
+    ret = subprocess.run(str_cmd, shell=True, encoding='utf-8', capture_output=True)
     if ret.returncode != 0:
         sys.exit("chmod lzma tool failed: %s" % ret)
+    print(ret.stdout)
 
     cmd_list = []
     cmd_list.append(lzma_tool)
@@ -282,9 +285,11 @@ def lzma_compress_bin(src_file, dst_file, lzma_tool):
     cmd_list.append(src_file)
     cmd_list.append(dst_file)
     str_cmd=' '.join(cmd_list)
-    ret = subprocess.run(str_cmd, shell=True)
+    ret = subprocess.run(str_cmd, shell=True, encoding='utf-8', capture_output=True)
     if ret.returncode != 0:
         sys.exit("run lzma tool failed: %s" % ret)
+    ret_cleaned = ret.stdout.replace('\b', '').strip() # Clean up '\b' in the return of lzma tool.
+    print(ret_cleaned)
 
 def build_diff_cfg_file(fota_obj, basename, image_pairs, image_bin_file):
     diff_cfg_file = os.path.join(fota_obj.temp_dir, '%s_diff.cfg'%basename)
