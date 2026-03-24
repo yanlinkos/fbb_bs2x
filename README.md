@@ -37,10 +37,7 @@
 | [购买链接](https://www.ickey.cn/detail/1003001022725627/BS21Q331.html#) | 云汉芯城可购买BS21E芯片，内置星闪BS21E解决方案，SLE回报率2k  | <img src="./vendor/HH-D03/doc/media/readme/21.jpg" alt="21" style="zoom:50%;" /> |
 | [购买链接](https://www.ickey.cn/detail/1003001026273687/BS20Q332.html) | 云汉芯城可购买BS20芯片，内置星闪BS20解决方案，SLE回报率1k    | <img src="./vendor/HH-D03/doc/media/readme/20.png" alt="20" style="zoom:50%;" /> |
 | [购买链接](https://www.ickey.cn/detail/1003001026273686/BS22Q332.html) | 云汉芯城可购买BS22芯片，内置星闪BS22解决方案，SLE回报率4k    | <img src="./vendor/HH-D03/doc/media/readme/22.png" alt="22" style="zoom:50%;" /> |
-| [购买链接](https://item.taobao.com/item.htm?ft=t&id=1027829631332
-) | 利尔达EB21 星闪模组（BS21），包含[模组封装](https://alidocs.dingtalk.com/i/nodes/l6Pm2Db8D4PY6PZLTXpO6ZmE8xLq0Ee4?utm_scene=team_space
-)，[模组硬件设计指南](https://alidocs.dingtalk.com/i/nodes/bva6QBXJwaGg4GRjHl5659PbWn4qY5Pr?utm_scene=team_space
-) |                                                              |
+| [购买链接](https://item.taobao.com/item.htm?ft=t&id=1027829631332) | 利尔达EB21 星闪模组（BS21），包含[模组封装](https://alidocs.dingtalk.com/i/nodes/l6Pm2Db8D4PY6PZLTXpO6ZmE8xLq0Ee4?utm_scene=team_space)，[模组硬件设计指南](https://alidocs.dingtalk.com/i/nodes/bva6QBXJwaGg4GRjHl5659PbWn4qY5Pr?utm_scene=team_space) |                                                              |
 
 
 
@@ -76,9 +73,7 @@
 | HH-D03开发板（润和软件）                | [润和开发板星闪案例开发指南](vendor/HH-D03/demo)             | [HH-D03开发板硬件原理图及HH-D03 星闪开发板规格说明书](vendor/HH-D03/doc/hardware) |
 | HH-D121开发板（润和软件）               | [润和开发板星闪案例开发指南](vendor/HH-D03/demo)             | [HH-D121开发板硬件原理图及HH-D121 星闪开发板规格说明书](vendor/HH-D121/doc) |
 | BearPi-Pico_H2821E开发板（小熊派）      | [小熊派开发板星闪案例开发指南](vendor/BearPi-Pico_H2821E/doc/README.md) | [BearPi-Pico_H2821E开发板硬件原理图](vendor/BearPi-Pico_H2821E/doc/hardware/) |
-| EB21开发板(利尔达)                      | [利尔达EB21开发板硬件说明书](https://alidocs.dingtalk.com/i/nodes/NkDwLng8ZLZX5ZOwSjpgbqZqVKMEvZBY?utm_scene=team_space
-) | [EB21开发板硬件原理图](https://alidocs.dingtalk.com/i/nodes/mweZ92PV6MrNmrpGuvqnAq3LWxEKBD6p?utm_scene=team_space
-) |
+| EB21开发板(利尔达)                      | [利尔达EB21开发板硬件说明书](https://alidocs.dingtalk.com/i/nodes/NkDwLng8ZLZX5ZOwSjpgbqZqVKMEvZBY?utm_scene=team_space) |[EB21开发板硬件原理图](https://alidocs.dingtalk.com/i/nodes/mweZ92PV6MrNmrpGuvqnAq3LWxEKBD6p?utm_scene=team_space)|
 | DK221星闪2K鼠标完整解决方案（方格电子） | 暂不提供                                                     | 暂不提供                                                     |
 
 ## 示例教程
