@@ -32,11 +32,15 @@
 
 ## 购买渠道
 
-| 硬件资料                                                     | 介绍                                                        | 二维码购买链接                                               |
-| ------------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------------------------ |
-| [购买链接](https://www.ickey.cn/detail/1003001022725627/BS21Q331.html#) | 云汉芯城可购买BS21E芯片，内置星闪BS21E解决方案，SLE回报率2k | <img src="./vendor/HH-D03/doc/media/readme/21.jpg" alt="21" style="zoom:50%;" /> |
-| [购买链接](https://www.ickey.cn/detail/1003001026273687/BS20Q332.html) | 云汉芯城可购买BS20芯片，内置星闪BS20解决方案，SLE回报率1k   | <img src="./vendor/HH-D03/doc/media/readme/20.png" alt="20" style="zoom:50%;" /> |
-| [购买链接](https://www.ickey.cn/detail/1003001026273686/BS22Q332.html) | 云汉芯城可购买BS22芯片，内置星闪BS22解决方案，SLE回报率4k   | <img src="./vendor/HH-D03/doc/media/readme/22.png" alt="22" style="zoom:50%;" /> |
+| 硬件资料                                                     | 介绍                                                         | 二维码购买链接                                               |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [购买链接](https://www.ickey.cn/detail/1003001022725627/BS21Q331.html#) | 云汉芯城可购买BS21E芯片，内置星闪BS21E解决方案，SLE回报率2k  | <img src="./vendor/HH-D03/doc/media/readme/21.jpg" alt="21" style="zoom:50%;" /> |
+| [购买链接](https://www.ickey.cn/detail/1003001026273687/BS20Q332.html) | 云汉芯城可购买BS20芯片，内置星闪BS20解决方案，SLE回报率1k    | <img src="./vendor/HH-D03/doc/media/readme/20.png" alt="20" style="zoom:50%;" /> |
+| [购买链接](https://www.ickey.cn/detail/1003001026273686/BS22Q332.html) | 云汉芯城可购买BS22芯片，内置星闪BS22解决方案，SLE回报率4k    | <img src="./vendor/HH-D03/doc/media/readme/22.png" alt="22" style="zoom:50%;" /> |
+| [购买链接](https://item.taobao.com/item.htm?ft=t&id=1027829631332
+) | 利尔达EB21 星闪模组（BS21），包含[模组封装](https://alidocs.dingtalk.com/i/nodes/l6Pm2Db8D4PY6PZLTXpO6ZmE8xLq0Ee4?utm_scene=team_space
+)，[模组硬件设计指南](https://alidocs.dingtalk.com/i/nodes/bva6QBXJwaGg4GRjHl5659PbWn4qY5Pr?utm_scene=team_space
+) |                                                              |
 
 
 
@@ -58,7 +62,7 @@
 | HH-D03开发板（润和软件）                | [润和软件HH-D03开发板购买链接（淘宝）](https://e.tb.cn/h.6QTzoydYS0mUA5g?tk=aKlIV23zcP3) | <img src="vendor/HH-D03/doc/media/readme/image-20250515161422305.png" alt="image-20250515161422305" style="zoom: 33%;" /> |
 | BearPi-Pico_H2821E开发板（小熊派）      | [小熊派BearPi-Pico_H2821E开发板购买链接（淘宝）](https://item.taobao.com/item.htm?id=803331789469) | <img src="vendor/BearPi-Pico_H2821E/doc/media/BearPi-Pico_H2821E/pico-1.png" alt="image-20240809164437807" style="zoom: 25%;" /> |
 | DK221星闪2K鼠标完整解决方案（方格电子） | [方格电子DK221星闪2K鼠标解决方案购买链接（淘宝）](https://e.tb.cn/h.69IMdsPhGFQWDgS?tk=b25cVdob237) | 后续提供                                                     |
-| EB21开发板(利尔达)                      | [利尔达EB21开发板购买链接  (淘宝)](https://e.tb.cn/h.hkUHZCgkSmrD7U3?tk=GjbE4WfqivCMF287) | ![image-20250801143652676](./vendor/Lierda-EB21/image-20250801143652676.png) |
+| EB21开发板(利尔达)                      | [利尔达EB21开发板购买链接  (淘宝)](https://item.taobao.com/item.htm?ft=t&id=1027829631332) | ![image-20250801143652676](./vendor/Lierda-EB21/image-20250801143652676.png) |
 | 2825星闪外设板（利尔达）                | [利尔达2825星闪外设板（淘宝）](https://e.tb.cn/h.h9s5pP5eEBYr5M5?tk=gimv4WfzzIG) | ![image-20250801144216037](./vendor/Lierda-EB21/image-20250801144216037.png) |
 | WSRH_M_BS2X（星闪工业模组）             | [星闪工业模组购买链接（邮箱）](https://gitee.com/shenzhen-city-for-sirunhua/wr_-bs282-x-m1) | ![image-20251113181704152](./vendor/Lierda-EB21/45d27cf5c5c874d4b954e3f7525b0ffb.jpg) |
 | HH-D121开发板（润和软件）               | [润和软件HH-D121开发板购买链接（淘宝）](https://e.tb.cn/h.SEFRVWVPfNL9cQQ?tk=MJ3KfOVwlPg) | <img src="./vendor/HH-D121/doc/media/HH-D121开发板.png" alt="HH-D121开发板" style="zoom:50%;" /> |
@@ -72,6 +76,9 @@
 | HH-D03开发板（润和软件）                | [润和开发板星闪案例开发指南](vendor/HH-D03/demo)             | [HH-D03开发板硬件原理图及HH-D03 星闪开发板规格说明书](vendor/HH-D03/doc/hardware) |
 | HH-D121开发板（润和软件）               | [润和开发板星闪案例开发指南](vendor/HH-D03/demo)             | [HH-D121开发板硬件原理图及HH-D121 星闪开发板规格说明书](vendor/HH-D121/doc) |
 | BearPi-Pico_H2821E开发板（小熊派）      | [小熊派开发板星闪案例开发指南](vendor/BearPi-Pico_H2821E/doc/README.md) | [BearPi-Pico_H2821E开发板硬件原理图](vendor/BearPi-Pico_H2821E/doc/hardware/) |
+| EB21开发板(利尔达)                      | [利尔达EB21开发板硬件说明书](https://alidocs.dingtalk.com/i/nodes/NkDwLng8ZLZX5ZOwSjpgbqZqVKMEvZBY?utm_scene=team_space
+) | [EB21开发板硬件原理图](https://alidocs.dingtalk.com/i/nodes/mweZ92PV6MrNmrpGuvqnAq3LWxEKBD6p?utm_scene=team_space
+) |
 | DK221星闪2K鼠标完整解决方案（方格电子） | 暂不提供                                                     | 暂不提供                                                     |
 
 ## 示例教程
