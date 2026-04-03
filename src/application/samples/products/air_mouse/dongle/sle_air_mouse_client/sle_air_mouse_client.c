@@ -20,6 +20,7 @@
 #include "vdt_codec.h"
 #include "amic_voice.h"
 #include "slp_factory.h"
+#include "tcxo.h"
 #include "../../usb/air_mouse_usb.h"
 #include "../../timer/am_common_timer.h"
 #include "../radar/air_mouse_radar.h"
@@ -57,9 +58,44 @@ static uint32_t g_recv_key_sequence_no = 0;     // 按键消息接收序号
 osal_event g_trans_event_id;
 
 // 用于判定是否进睡眠的变量
+static int32_t g_deltaX = 0;
+static int32_t g_deltaY = 0;
 static int32_t g_last_x = 0;
 static int32_t g_last_y = 0;
 static uint16_t g_static_count = 0;
+
+static uint64_t g_power_on_start_time_client = 0; // ms
+static bool g_record_fisrt_rpt_cursor_time_flag = false; // 测距指向至首次上报光标时间统计标志
+
+// SLE配对过程中暂时关闭雷达以避免线程阻塞，以下标志位用于判断配对结束后是否开启雷达
+static bool g_radar_is_running_flag = false; // 雷达是否处于开启状态
+static bool g_sle_is_pairing_flag = false;   // 是否在处于配对中
+
+void set_radar_is_running_flag(bool flag)
+{
+    g_radar_is_running_flag = flag;
+}
+
+static void radar_start(void)
+{
+    osal_printk("[radar] start, radar:%u, pair:%u\r\n", g_radar_is_running_flag, g_sle_is_pairing_flag);
+    if (g_radar_is_running_flag && !g_sle_is_pairing_flag) {
+        air_mouse_radar_start();
+        return;
+    }
+}
+
+static void radar_temp_stop(void)
+{
+    osal_printk("[radar] temp stop\r\n");
+    air_mouse_radar_stop();
+    osal_msleep(100); // 100:预留处理时间避免slp_client线程没有及时响应stop命令
+}
+
+static void init_power_on_start_time_client(void)  // 记录开始时间
+{
+    g_power_on_start_time_client = uapi_tcxo_get_ms();
+}
 
 sle_addr_t *get_sle_air_mouse_server_addr(void)
 {
@@ -74,7 +110,7 @@ static void init_recv_sequence_no(void)
 
 static SlpDeviceAddr g_air_mouse_dongle_addr = {{0x08, 0x02, 0x03, 0x04, 0x05, 0x06}}; // air mouse dongle的本机地址
 static char g_serial_send_str[200];
-const SlpDeviceAddr *get_slp_air_mouse_dongl_addr(void)
+const SlpDeviceAddr *get_slp_air_mouse_dongle_addr(void)
 {
     return &g_air_mouse_dongle_addr;
 }
@@ -174,12 +210,10 @@ static void sle_air_mouse_client_pair_complete_cbk(uint16_t conn_id, const sle_a
     osal_printk("[uuid client] pair complete conn_id:%02x, status:0x%08x\r\n", conn_id, status);
     unused(addr);
     if (status == ERRCODE_SUCC) {
+        init_power_on_start_time_client();
         init_recv_sequence_no();
-        // SLE连接配对成功后，SLP上电，完成SLP加载
-        ErrcodeSlpClient ret = SlpPowerOnCommand();
-        if (ret != ERRCODE_SLPC_SUCCESS) {
-            osal_printk("SlpPowerOnCommand Error 0x%x\r\n", ret);
-        }
+        g_sle_is_pairing_flag = false;
+        radar_start();
     } else {
         sle_remove_all_pairs();
         sle_start_seek();
@@ -189,11 +223,27 @@ static void sle_air_mouse_client_pair_complete_cbk(uint16_t conn_id, const sle_a
 static void sle_air_mouse_client_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *addr,
     sle_acb_state_t conn_state, sle_pair_state_t pair_state, sle_disc_reason_t disc_reason)
 {
-    osal_printk("%s conn state changed disc_reason:0x%x\r\n", SLE_AIR_MOUSE_DONGLE_CLIENT_LOG, disc_reason);
+    osal_printk("%s conn state changed conn:0x%x, pair:0x%x,disc_reason:0x%x\r\n", SLE_AIR_MOUSE_DONGLE_CLIENT_LOG,
+        conn_state, pair_state, disc_reason);
     g_sle_air_mouse_client_conn_id = conn_id;
     g_sle_air_mouse_client_conn_state = conn_state;
     if (conn_state == SLE_ACB_STATE_CONNECTED) {
         osal_printk("%s SLE_ACB_STATE_CONNECTED\r\n", SLE_AIR_MOUSE_DONGLE_CLIENT_LOG);
+        // 绑定设备数量
+        sle_addr_t bond_addr_arr[1]; // 1:最多连接一个设备
+        uint16_t number = sizeof(bond_addr_arr) / sizeof(sle_addr_t);
+        sle_get_bonded_devices(bond_addr_arr, &number);
+        sle_addr_t bond_addr = bond_addr_arr[0]; // 0:最多连接一个设备
+        osal_printk("bonded num:%u, addr:0x%x:0x%x:0x%x:0x%x:0x%x\r\n", number,
+            bond_addr.addr[0], bond_addr.addr[1], bond_addr.addr[2], // 0:index, 1:index, 2:index
+            bond_addr.addr[3], bond_addr.addr[4]); // 3:index, 4:index
+        if (number == 1 && memcmp(&bond_addr.addr, addr->addr, sizeof(sle_addr_t)) != 0) { // 已经绑定该设备
+            g_sle_is_pairing_flag = false;
+            osal_printk("already bond\r\n");
+        } else {
+            g_sle_is_pairing_flag = true;
+            radar_temp_stop();
+        }
         if (pair_state == SLE_PAIR_NONE) {
             sle_pair_remote_device(addr);
         }
@@ -201,14 +251,14 @@ static void sle_air_mouse_client_connect_state_changed_cbk(uint16_t conn_id, con
         osal_printk("%s SLE_ACB_STATE_NONE\r\n", SLE_AIR_MOUSE_DONGLE_CLIENT_LOG);
     } else if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
         osal_printk("%s SLE_ACB_STATE_DISCONNECTED\r\n", SLE_AIR_MOUSE_DONGLE_CLIENT_LOG);
-        // SLE断连后，SLP下电
-        if (pair_state == SLE_PAIR_PAIRED) {
-            sle_remove_all_pairs();
+        if (disc_reason == SLE_DISCONNECT_BY_MIC_ERROR) {
+            errcode_t ret = sle_remove_paired_remote_device(addr);
+            osal_printk("mic failure, remove pair ltk, result: 0x%x.\r\n", ret);
         }
         sle_start_seek();
-        ErrcodeSlpClient ret = SlpPowerOffCommand();
+        ErrcodeSlpClient ret =  SlpStopRangingCommand();
         if (ret != ERRCODE_SLPC_SUCCESS) {
-            osal_printk("SlpPowerOffCommand Error 0x%x\r\n", ret);
+            osal_printk("SlpStopRangingCommand Error 0x%x\r\n", ret);
             return;
         }
     } else {
@@ -370,13 +420,55 @@ static void proc_am_cmd_gyro_zero_offset(uint8_t *data, uint16_t data_len)
         return;
     }
     SlpGyroZeroOffset *offset = (SlpGyroZeroOffset *)(data + sizeof(air_mouse_cmd_e));
-    int ret = sprintf_s(g_serial_send_str, sizeof(g_serial_send_str), "[FT]imu,dongle,offset,%d,%d,%d,END\r\n",
+    int ret = sprintf_s(g_serial_send_str, sizeof(g_serial_send_str), "[FT]imu,rcu,offset,%d,%d,%d,END\r\n",
         offset->x, offset->y, offset->z);
     if (ret <= 0) {
         osal_printk("rpt offset fail, %d\r\n", ret);
         return;
     }
     air_mouse_print(g_serial_send_str, true);
+}
+
+// 校准参数上报
+static void factory_report_tri_ant_cali_para(uint8_t *data, uint16_t data_len)
+{
+    if (data_len != sizeof(air_mouse_cmd_e) + sizeof(SlpTriAntAoxCaliPara)) {
+        osal_printk("len is not equal\r\n");
+        return;
+    }
+    if (*(air_mouse_cmd_e *)data != AM_CMD_RPT_TRI_ANT_PARA) {
+        osal_printk("cmd is not tri ant para\r\n");
+        return;
+    }
+    SlpTriAntAoxCaliPara *caliPara = (SlpTriAntAoxCaliPara *)(data + sizeof(air_mouse_cmd_e));
+    int ret = sprintf_s(g_serial_send_str, sizeof(g_serial_send_str),
+        "[FT]cp,%u,%u,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,END\r\n",
+        caliPara->para0, caliPara->para1, caliPara->para2, caliPara->para3, caliPara->para4, caliPara->para5,
+        caliPara->para6, caliPara->para7, caliPara->para8, caliPara->para9, caliPara->para10, caliPara->para11,
+        caliPara->para12, caliPara->para13, caliPara->para14, caliPara->para15, caliPara->para16, caliPara->para17);
+    if (ret <= 0) {
+        osal_printk("fac rpt cp fail, %d\r\n", ret);
+        return;
+    }
+    air_mouse_print((const char *)g_serial_send_str, true);
+}
+
+static void proc_am_cmd_ranging_start(void)
+{
+    g_record_fisrt_rpt_cursor_time_flag = true;
+    g_power_on_start_time_client = uapi_tcxo_get_ms();
+    rst_print_info();
+    air_mouse_timer_start(AM_TIMER_TYPE_PRINT);
+    air_mouse_timer_start(AM_TIMER_TYPE_RSSI);
+}
+
+static void proc_am_cmd_ranging_stop(void)
+{
+    SlpCursorRslt cursor_report = {0};
+    cursor_report.x = -1;
+    usb_send_cursor_report(&cursor_report); // 令光标消失
+    air_mouse_timer_stop(AM_TIMER_TYPE_PRINT);
+    air_mouse_timer_stop(AM_TIMER_TYPE_RSSI);
 }
 
 static void proc_cmd_rpt_data(uint8_t *data, uint16_t data_len)
@@ -386,10 +478,14 @@ static void proc_cmd_rpt_data(uint8_t *data, uint16_t data_len)
     usb_hid_consumer_report_t consumer_report = {0};
     osal_printk("[slp cmd] proc:%u, sizeof:%u\r\n", cmd, sizeof(air_mouse_cmd_e));
     switch (cmd) {
-        case AM_CMD_CURSOR_SPEED_LOW:
-        case AM_CMD_CURSOR_SPEED_MEDIUM:
-        case AM_CMD_CURSOR_SPEED_HIGH:
-            SlpSetCursorSpeedCommand((SlpCursorSpeed)cmd);
+        case AM_CMD_CURSOR_SPEED:
+            osal_printk("set cursor speed:%u\r\n", *(SlpCursorSpeed *)(data + sizeof(air_mouse_cmd_e)));
+            SlpSetCursorSpeedCommand(*(SlpCursorSpeed *)(data + sizeof(air_mouse_cmd_e)));
+            break;
+        case AM_CMD_SCRREN_SIZE:
+            set_screen_size(*(screen_size_e *)(data + sizeof(air_mouse_cmd_e)));
+            set_slp_local_att();
+            sle_air_mouse_client_send_cmd(AM_CMD_RANGING_RESTART, NULL, 0); // 设置完成后重启测距
             break;
         case AM_CMD_LEFT_KEY_UP:
             SlpClickDebounceCommand(0);
@@ -405,15 +501,16 @@ static void proc_cmd_rpt_data(uint8_t *data, uint16_t data_len)
             SlpSetFactoryTestMode(SLP_FACTORY_TEST_NONE);
             break;
         case AM_CMD_RANGING_START:
-            rst_print_info();
-            air_mouse_timer_start(AM_TIMER_TYPE_PRINT);
-            air_mouse_timer_start(AM_TIMER_TYPE_RSSI);
+            proc_am_cmd_ranging_start();
             break;
         case AM_CMD_RANGING_STOP:
-            air_mouse_timer_stop_all();
+            proc_am_cmd_ranging_stop();
             break;
         case AM_CMD_GYRO_ZERO_OFFSET:
             proc_am_cmd_gyro_zero_offset(data, data_len);
+            break;
+        case AM_CMD_RPT_TRI_ANT_PARA:
+            factory_report_tri_ant_cali_para(data, data_len);
             break;
         default:
             osal_printk("[ERR] undefined cmd: %u\r\n", cmd);
@@ -450,7 +547,10 @@ static void ssapc_notification_cbk(uint8_t client_id, uint16_t conn_id, ssapc_ha
     switch (data->handle) {
         case SLE_AIR_MOUSE_SSAP_RPT_HANDLE: { // Slp 消息
             SlpPayloadInfo info = { data->data, data->data_len };
-            SlpRecvPayload(&info);
+            ErrcodeSlpClient ret = SlpRecvPayload(&info);
+            if (ret != ERRCODE_SLPC_SUCCESS) {
+                osal_printk("slp recv payload fail, ret:0x%x, len:%u\r\n", ret, data->data_len);
+            }
             break;
         }
         case SLE_AIR_MOUSE_CURSOR_RPT_HANDLE:  // 光标更新
@@ -500,14 +600,28 @@ static errcode_t sle_air_mouse_client_send_slp_payload(uint8_t *payload, uint16_
 }
 
 /* client向server发控制命令 */
-errcode_t sle_air_mouse_client_send_cmd(air_mouse_cmd_e cmd)
+errcode_t sle_air_mouse_client_send_cmd(air_mouse_cmd_e cmd, uint8_t *data, uint16_t len)
 {
     ssapc_write_param_t param = {0};
     param.handle = SLE_AIR_MOUSE_CMD_RPT_HANDLE;
     param.type = 0; // 默认配置
-    param.data_len = (uint16_t)sizeof(cmd);
-    param.data = &cmd;
+    param.data_len = (uint16_t)sizeof(air_mouse_cmd_e) + len;
+    param.data = osal_vmalloc(param.data_len);
+    if (param.data == NULL) {
+        osal_printk("send input report new fail\r\n");
+        return ERRCODE_SLE_MALLOC_FAIL;
+    }
+    *(air_mouse_cmd_e *)param.data = cmd;
+    if (len != 0) {
+        if (memcpy_s(param.data + sizeof(air_mouse_cmd_e), param.data_len - sizeof(air_mouse_cmd_e), data, len) !=
+            EOK) {
+            osal_printk("send input report memcpy fail\r\n");
+            osal_vfree(param.data);
+            return ERRCODE_SLE_MEMCPY_FAIL;
+        }
+    }
     ssapc_write_cmd(SLE_AIR_MOUSE_DEFAULT_CLIENT_ID, SLE_AIR_MOUSE_DEFAULT_CONNECT_ID, &param);
+    osal_vfree(param.data);
     return ERRCODE_SLE_SUCCESS;
 }
 
@@ -517,9 +631,9 @@ static void factory_report_aox_cali_cbk(SlpFactoryRangingAoxDataRpt *factory_rpt
         "[FT]ac,%d,%d,%u,%d,%d,%u,%d,%u,%d,%u,%d,0,END\r\n",
         factory_rpt->aoxCaliData.cirIq0.cirI, factory_rpt->aoxCaliData.cirIq0.cirQ,
         factory_rpt->aoxCaliData.cirIq0.bitWidth, factory_rpt->aoxCaliData.cirIq1.cirI,
-        factory_rpt->aoxCaliData.cirIq1.cirQ, factory_rpt->aoxCaliData.cirIq1.bitWidth, factory_rpt->aoxRslt.aoxAzi,
-        factory_rpt->aoxRslt.aoxAziFom, factory_rpt->aoxRslt.aoxElev, factory_rpt->aoxRslt.aoxElevFom,
-        factory_rpt->tof);
+        factory_rpt->aoxCaliData.cirIq1.cirQ, factory_rpt->aoxCaliData.cirIq1.bitWidth,
+        factory_rpt->aoxRslt.aoxAzi, factory_rpt->aoxRslt.aoxAziFom,
+        factory_rpt->aoxRslt.aoxElev, factory_rpt->aoxRslt.aoxElevFom, factory_rpt->tof);
     if (ret <= 0) {
         osal_printk("fac rpt ac fail, %d\r\n", ret);
         return;
@@ -560,10 +674,10 @@ static void rpt_fac_imu_data_cbk(SlpFactoryImuDataRpt *rpt)
     air_mouse_print((const char *)g_serial_send_str, true);
 }
 
-static void slp_report_gyro_zero_offset_cbk(SlpGyroZeroOffset *offset)
+static void slp_report_gyro_zero_offset_cbk(SlpGyroZeroOffset *offset, bool updateNv)
 {
-    int ret = sprintf_s(g_serial_send_str, sizeof(g_serial_send_str), "[FT]imu,offset,%d,%d,%d,END\r\n", offset->x,
-        offset->y, offset->z);
+    int ret = sprintf_s(g_serial_send_str, sizeof(g_serial_send_str), "[FT]imu,offset,%d,%d,%d,nv,%u,END\r\n",
+        offset->x, offset->y, offset->z, updateNv);
     if (ret <= 0) {
         osal_printk("rpt offset fail, %d\r\n", ret);
         return;
@@ -571,14 +685,39 @@ static void slp_report_gyro_zero_offset_cbk(SlpGyroZeroOffset *offset)
     air_mouse_print((const char *)g_serial_send_str, true);
 }
 
+static void factory_report_tri_ant_aox_cali_cbk(SlpFactoryTriAntRangingAoxDataRpt *factory_rpt)
+{
+    int ret = sprintf_s(g_serial_send_str, sizeof(g_serial_send_str),
+        "[FT]ac_3_ant,%d,%d,%u,%d,%d,%u,%d,%d,%u,%d,%d,%u,%d,%u,%d,%u,%d,0,END\r\n",
+        factory_rpt->aoxAziCaliData.cirIq0.cirI, factory_rpt->aoxAziCaliData.cirIq0.cirQ,
+        factory_rpt->aoxAziCaliData.cirIq0.bitWidth, factory_rpt->aoxAziCaliData.cirIq1.cirI,
+        factory_rpt->aoxAziCaliData.cirIq1.cirQ, factory_rpt->aoxAziCaliData.cirIq1.bitWidth,
+        factory_rpt->aoxElevCaliData.cirIq0.cirI, factory_rpt->aoxElevCaliData.cirIq0.cirQ,
+        factory_rpt->aoxElevCaliData.cirIq0.bitWidth, factory_rpt->aoxElevCaliData.cirIq1.cirI,
+        factory_rpt->aoxElevCaliData.cirIq1.cirQ, factory_rpt->aoxElevCaliData.cirIq1.bitWidth,
+        factory_rpt->aoxRslt.aoxAzi, factory_rpt->aoxRslt.aoxAziFom,
+        factory_rpt->aoxRslt.aoxElev, factory_rpt->aoxRslt.aoxElevFom, factory_rpt->tof);
+    if (ret <= 0) {
+        osal_printk("fac rpt ac fail, %d\r\n", ret);
+        return;
+    }
+    air_mouse_print((const char *)g_serial_send_str, false);
+}
+
 void register_slp_factory_test_rpt_callback(void)
 {
+    // 从NV中读取陀螺仪零漂值
+    SlpGyroZeroOffset offset;
+    errcode_t ret = SlpReadGyroZeroOffset(&offset);
+    osal_printk("[slp nv] init gyro zero offset, ret:0x%x, x:%d, y:%d, z:%d\r\n", ret, offset.x, offset.y, offset.z);
+
     SlpFactoryReportCallbacks cbks = {0};
     cbks.rptOriginDataCbk = factory_report_aox_cali_cbk;
     cbks.rptAoxCaliParaCbk = factory_report_cali_para_cbk;
     cbks.rptFactoryTrxDelayCbk = factory_report_trx_delay_cbk;
     cbks.rptImuDataCbk = rpt_fac_imu_data_cbk;
     cbks.rptZeroOffsetCbk = slp_report_gyro_zero_offset_cbk;
+    cbks.rptTriAntOriginDataCbk = factory_report_tri_ant_aox_cali_cbk;
 
     if (SlpRegisterFactoryReportCallbacks(&cbks) != ERRCODE_SLPC_SUCCESS) {
         osal_printk("reg fac rpt cbk failed\r\n");
@@ -600,11 +739,13 @@ static void slp_power_on_cbk(ErrcodeSlpClient errcode)
 #if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_CIR_PRINT
     SlpEnCirReportCommand();
 #endif
-    osal_printk("slp_power_on_cbk errcode: 0x%x\r\n", errcode);
+    osal_printk("slp_power_on_cbk errcode: 0x%x, duration: %u ms\r\n", errcode,
+        (uint32_t)(uapi_tcxo_get_ms() - g_power_on_start_time_client));
     ErrcodeSlpClient ret = SlpReadVersionCommand();
     osal_printk("SlpReadVersionCommand, ret:0x%x\r\n", ret);
 
-    air_mouse_radar_start();
+    g_radar_is_running_flag = true;
+    radar_start();
 }
 
 static void slp_power_off_cbk(ErrcodeSlpClient errcode)
@@ -613,12 +754,22 @@ static void slp_power_off_cbk(ErrcodeSlpClient errcode)
         osal_printk("slp_power_off_cbk Error 0x%x\r\n", errcode);
         return;
     }
-    air_mouse_timer_stop_all();
+    air_mouse_timer_stop(AM_TIMER_TYPE_PRINT);
+    air_mouse_timer_stop(AM_TIMER_TYPE_RSSI);
+}
+
+static void slp_stop_ranging_cbk(ErrcodeSlpClient errcode)
+{
+    osal_printk("stop ranging cbk, 0x%x\r\n", errcode);
+    air_mouse_timer_stop(AM_TIMER_TYPE_PRINT);
+    air_mouse_timer_stop(AM_TIMER_TYPE_RSSI);
 }
 
 static void slp_set_local_att_cbk(ErrcodeSlpClient errcode)
 {
-    osal_printk("slp_set_local_att_cbk errcode: 0x%x\r\n", errcode);
+    if (errcode != ERRCODE_SLPC_SUCCESS) {
+        osal_printk("[ERR] slp_set_local_att_cbk: 0x%x\r\n", errcode);
+    }
 }
 
 static void rpt_errcode_cbk(ErrcodeSlpClient errcode)
@@ -640,6 +791,9 @@ static void rpt_errcode_cbk(ErrcodeSlpClient errcode)
                 return;
             }
             air_mouse_print((const char *)g_serial_send_str, true);
+            break;
+        case ERRCODE_SLPC_QUEUE_WRITE_FAILED: // 队列写入失败
+            osal_printk("[ERROR] send slpc msg fail\r\n");
             break;
         default:
             osal_printk("slp errcode: 0x%08x\r\n", errcode);
@@ -698,12 +852,45 @@ static void rpt_reg_value_cbk(uint32_t addr, uint32_t value)
     osal_printk("slp addr:0x%x, value:0x%x\r\n", addr, value);
 }
 
-static void check_into_sleep(int32_t x, int32_t y)
+static void rpt_slp_tsensor_cbk(int16_t tsensor)
 {
-    if ((g_last_x == x) && (g_last_y == y)) {
+    osal_printk("slp tsensor: %d degree\r\n", tsensor);
+}
+
+static void rpt_slp_imu_raw_data_cbk(const SlpImuRawData *imuRawData)
+{
+    static uint64_t g_curr_time = 0;
+    static uint8_t g_count = 0;
+    static uint8_t mf = 10; // 放大系数
+    g_count++;
+    if (g_count == 30) { // 30:打印周期
+        uint32_t duration = uapi_tcxo_get_us() - g_curr_time;
+        uint32_t freq = g_count * 1000 * 1000 * mf / duration; // unit:0.01Hz, 1000:放大系数
+        g_curr_time = uapi_tcxo_get_us();
+        g_count = 0;
+        if (g_curr_time != 0) {
+            osal_printk("imu_raw_data, freq:%3u.%u Hz, acc:%5d,%5d,%5d, gyro:%5d,%5d,%5d\r\n", freq / mf, freq % mf,
+                imuRawData->accX, imuRawData->accY, imuRawData->accZ, imuRawData->gyroX, imuRawData->gyroY,
+                imuRawData->gyroZ);
+        }
+    }
+}
+
+static void rpt_slp_air_mouse_mode_cbk(bool flag)
+{
+    update_am_print_info_am_mode(flag);
+}
+
+void check_into_sleep(int32_t x, int32_t y, int32_t threshhold)
+{
+    g_deltaX += x - g_last_x;
+    g_deltaY += y - g_last_y;
+    if ((g_deltaX <= threshhold && g_deltaX >= -threshhold) && (g_deltaY <= threshhold && g_deltaY >= -threshhold)) {
         g_static_count++;
     } else {
         g_static_count = 0;
+        g_deltaX = 0;
+        g_deltaY = 0;
     }
 
     g_last_x = x;
@@ -712,10 +899,13 @@ static void check_into_sleep(int32_t x, int32_t y)
     // SLEEP_COUNT_THRESHOLD次相同报点,则进入睡眠
     if (g_static_count >= SLEEP_COUNT_THRESHOLD) {
         g_static_count = 0;
+        g_deltaX = 0;
+        g_deltaY = 0;
         // 通知遥控器睡眠
         osal_printk("check sleep, same point %u\r\n", SLEEP_COUNT_THRESHOLD);
-        sle_air_mouse_client_send_cmd(AM_CMD_RCU_SLEEP);
-        air_mouse_timer_stop_all(); // 关闭光标、测距测角以及rssi打印的定时器，下次唤醒后重新启动
+        sle_air_mouse_client_send_cmd(AM_CMD_RCU_SLEEP, NULL, 0);
+        air_mouse_timer_stop(AM_TIMER_TYPE_PRINT);
+        air_mouse_timer_stop(AM_TIMER_TYPE_RSSI); // 关闭光标、测距测角以及rssi打印的定时器，下次唤醒后重新启动
     }
 }
 
@@ -724,14 +914,24 @@ void cursor_report_cbk(SlpCursorRslt *cursor_rslt)
     update_am_print_info_cursor(cursor_rslt);
     // 如果需要遥控器睡眠，此处调用
     if (CONFIG_LOW_POWER_MODE == 1) {
-        check_into_sleep(cursor_rslt->x, cursor_rslt->y);
+        check_into_sleep(cursor_rslt->x, cursor_rslt->y, 2500); // 车机睡眠检测，上下左右放宽2500um的缓冲区波动范围
     }
 #if CONFIG_AIR_MOUSE_CI_REPLAY_TEST
     memcpy_s(g_serial_send_str, sizeof(g_serial_send_str), cursor_rslt, sizeof(SlpCursorRslt));
+#if CONFIG_DRIVERS_USB_SERIAL_GADGET
     usb_send_serial_data((const char *)g_serial_send_str, sizeof(SlpCursorRslt));
+#endif
 #else
+#if CONFIG_AIR_MOUSE_USB
     usb_send_cursor_report(cursor_rslt);
 #endif
+#endif
+    if (g_record_fisrt_rpt_cursor_time_flag) {
+        g_record_fisrt_rpt_cursor_time_flag = false;
+        uint64_t startRangingTime = uapi_tcxo_get_ms();
+        osal_printk("duration from start ranging to first cursor report: %u ms\r\n",
+            (uint32_t)(startRangingTime - g_power_on_start_time_client));
+    }
 }
 
 void ranging_report_cbk(SlpRangingRpt *rangingRpt)
@@ -747,8 +947,12 @@ static void register_slp_report_callback(void)
     cbks.rptErrcodeCbk = rpt_errcode_cbk;
     cbks.rptCirCbk = rpt_cir_cbk;
     cbks.rptVersionCbk = rpt_version_cbk;
+    cbks.rptDieIdCbk = rpt_slp_die_id_cbk;
     cbks.rptCfoCbk = rpt_cfo_cbk;
     cbks.rptRegValueCbk = rpt_reg_value_cbk;
+    cbks.rptTsensorCbk = rpt_slp_tsensor_cbk;
+    cbks.rptImuRawDataCbk = rpt_slp_imu_raw_data_cbk;
+    cbks.rptAirMouseModeCbk = rpt_slp_air_mouse_mode_cbk;
     if (SlpRegisterReportCallbacks(&cbks) != ERRCODE_SLPC_SUCCESS) {
         osal_printk("register slp_report_callback failed\r\n");
     }
@@ -757,7 +961,9 @@ static void register_slp_report_callback(void)
 #if CONFIG_AIR_MOUSE_CI_REPLAY_TEST
 void rcu_test_output_report(uint8_t *data, uint32_t len)
 {
+#if CONFIG_DRIVERS_USB_SERIAL_GADGET
     usb_send_serial_data((const char *)data, len);
+#endif
     osal_printk("rcu test ouput, len:%u\r\n", len);
 }
 #endif
@@ -771,12 +977,31 @@ void sle_client_slp_command_register_cbks(void)
     SlpCommandCallbacks cbks = {0};
     cbks.powerOnCbk = slp_power_on_cbk;
     cbks.powerOffCbk = slp_power_off_cbk;
+    cbks.stopRangingCbk = slp_stop_ranging_cbk;
     cbks.sleepCbk = NULL;
     cbks.setLocalAttCbk = slp_set_local_att_cbk;
 
     SlpRegisterCommandCallbacks(&cbks);
     SlpRegisterSendPayloadCallback(client_send_slp_payload_cbk); // 注册client端 SLP发送payload函数
     register_slp_report_callback();
+}
+
+void set_slp_local_att(void)
+{
+    screen_size_t *screen_size = get_screen_size();
+    // 设置Slp本机属性
+    SlpLocalAtt att = {0};
+    att.screenParam.cursorSpeed = get_slp_cursor_speed();
+    att.screenParam.width = screen_size->x;
+    att.screenParam.height = screen_size->y;
+    osal_printk("set slp local att, speed:%u, size:%ux%u\r\n", att.screenParam.cursorSpeed, att.screenParam.width,
+        att.screenParam.height);
+    set_ant_sw_param(&att.rfSwParam);
+    (void)memcpy_s(&att.localAddr, sizeof(SlpDeviceAddr), get_slp_air_mouse_dongle_addr(), sizeof(SlpDeviceAddr));
+    ErrcodeSlpClient ret = SlpSetLocalAttCommand(&att);
+    if (ret != ERRCODE_SLPC_SUCCESS) {
+        osal_printk("SlpSetLocalAttCommand Error 0x%x\r\n", ret);
+    }
 }
 
 void sle_air_mouse_client_init(void)
@@ -790,7 +1015,8 @@ void sle_air_mouse_client_init(void)
     sle_air_mouse_client_connect_cbk_register();
     sle_air_mouse_ssapc_cbk_register();
     sle_remove_all_pairs();
-
+    g_radar_is_running_flag = false;
+    g_sle_is_pairing_flag = false;
 #if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_SLE_ADDR_CHECK
     osal_printk("local addr:");
     for (uint8_t index = 0; index < SLE_ADDR_LEN; index++) {

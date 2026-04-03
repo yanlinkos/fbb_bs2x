@@ -10,6 +10,7 @@
 #ifndef SLE_AIR_MOUSE_SERVER_H
 #define SLE_AIR_MOUSE_SERVER_H
 
+#include "sle_connection_manager.h"
 #include "sle_ssap_server.h"
 #include "../../usb/air_mouse_usb.h"
 #include "../../air_mouse_common.h"
@@ -20,6 +21,8 @@
 extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
+
+#define SLE_ADV_HANDLE_DEFAULT              1
 
 typedef struct {
     uint16_t handle_in;
@@ -80,39 +83,35 @@ errcode_t get_g_read_ssap_support(bool *param);
  * @if Eng
  * @brief  SLE read connect status.
  * @attention  NULL
- * @retval ERRCODE_SLE_SUCCESS    Excute successfully
- * @retval ERRCODE_SLE_FAIL       Execute fail
+ * @retval sle_acb_state_t    sle ACB connection state
  * @par Dependency:
  * @li sle_ssap_server.h
  * @else
  * @brief  SLE读取连接状态。
  * @attention  NULL
- * @retval ERRCODE_SLE_SUCCESS    执行成功
- * @retval ERRCODE_SLE_FAIL       执行失败
+ * @retval sle_acb_state_t    SLE ACB连接状态
  * @par 依赖:
  * @li sle_ssap_server.h
  * @endif
  */
-errcode_t get_g_sle_air_mouse_server_conn_state(uint8_t *conn_state);
+sle_acb_state_t get_sle_server_conn_state(void);
 
 /**
  * @if Eng
  * @brief  SLE read pair status.
  * @attention  NULL
- * @retval ERRCODE_SLE_SUCCESS    Excute successfully
- * @retval ERRCODE_SLE_FAIL       Execute fail
+ * @retval sle_pair_state_t    sle pairing state
  * @par Dependency:
  * @li sle_ssap_server.h
  * @else
  * @brief  SLE读取连接状态。
  * @attention  NULL
- * @retval ERRCODE_SLE_SUCCESS    执行成功
- * @retval ERRCODE_SLE_FAIL       执行失败
+ * @retval sle_pair_state_t    星闪配对状态
  * @par 依赖:
  * @li sle_ssap_server.h
  * @endif
  */
-errcode_t get_g_sle_air_mouse_pair_state(uint32_t *pair_state);
+sle_pair_state_t get_sle_server_pair_state(void);
 
 /**
  * @if Eng
@@ -152,16 +151,19 @@ errcode_t sle_hid_mouse_server_send_mouse_key_report(uint8_t key, uint8_t left_k
  */
 errcode_t sle_hid_mouse_server_send_keyboard_report(const key_config_t *config);
 
-void init_power_on_start_time(void);
-void set_announce_keyscan_flag(void);
+bool get_slp_ranging_start_flag(void);
+void set_rcu_sleep_flag(bool flag);
+void init_power_on_start_time_server(void);
+void set_announce_after_disc_flag(bool flag);
 const SlpDeviceAddr *get_slp_air_mouse_addr(void);
-void imu_wakeup_callback(uint8_t ulp_gpio);
+void wakeup_callback(uint8_t ulp_gpio);
 void sle_server_slp_command_register_cbks(void);
 void set_slp_start_ranging_param(SlpStartRangingParam *param);
 void slp_start_ranging(void);
 errcode_t sle_air_mouse_server_send_cmd(air_mouse_cmd_e cmd, uint8_t *data, uint16_t len);
 void sle_set_em_data(uint8_t enable);
 void air_mouse_read_rssi_timer_cbk(unsigned long arg);
+void set_slp_local_att(void);
 
 #ifdef __cplusplus
 #if __cplusplus

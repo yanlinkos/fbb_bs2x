@@ -23,6 +23,7 @@
 #include "mouse/rcu_main.h"
 #include "mouse/sle_air_mouse_server/sle_air_mouse_server_adv.h"
 #include "mouse/sle_air_mouse_server/sle_air_mouse_server.h"
+#include "mouse/at/air_mouse_rcu_at.h"
 #if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD
 #include "mouse/keyscan/air_mouse_keyscan.h"
 #include "mouse/led/air_mouse_led.h"
@@ -30,6 +31,7 @@
 #elif defined(CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_DONGLE)
 #include "dongle/sle_air_mouse_client/sle_air_mouse_client.h"
 #include "dongle/radar/air_mouse_radar.h"
+#include "dongle/at/air_mouse_dongle_at.h"
 #include "tcxo.h"
 #endif
 #include "slp.h"
@@ -69,7 +71,8 @@ static void *sle_air_mouse_task(const char *arg)
 {
     osal_printk("input sle_air_mouse_task\r\n");
     unused(arg);
-#if CONFIG_AIR_MOUSE_EVB4_BOARD || CONFIG_AIR_MOUSE_RADAR_2T4R_BOARD
+    air_mouse_rcu_at_register(); // AT命令初始化
+#if CONFIG_AIR_MOUSE_USB
     air_mouse_usb_init(); // USB初始化
 #endif
 #if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD
@@ -90,18 +93,8 @@ static void *sle_air_mouse_task(const char *arg)
 #else
     set_transform_param(SLP_IMU_TYPE_BMI270);
 #endif
-    // 设置Slp本机属性
-    SlpLocalAtt att = {0};
-    att.screenParam.cursorSpeed = get_slp_cursor_speed();
-    att.screenParam.width = get_screen_width();
-    att.screenParam.height = get_screen_height();
-    set_ant_sw_param(&att.rfSwParam);
-    (void)memcpy_s(&att.localAddr, sizeof(SlpDeviceAddr), get_slp_air_mouse_addr(), sizeof(SlpDeviceAddr));
-    ErrcodeSlpClient ret = SlpSetLocalAttCommand(&att);
-    if (ret != ERRCODE_SLPC_SUCCESS) {
-        osal_printk("SlpSetLocalAttCommand Error 0x%x\r\n", ret);
-        return NULL;
-    }
+    set_screen_size(SCREEN_SIZE_16X9_85_INCH);
+    set_slp_local_att();
 
     // SLE广播
     sle_air_mouse_server_init();
@@ -120,7 +113,10 @@ static void *sle_air_mouse_dongle_task(const char *arg)
     unused(arg);
     uapi_pm_add_sleep_veto(PM_VETO_ID_SLP);
 
+    air_mouse_dongle_at_register();  // AT命令初始化
+#if CONFIG_AIR_MOUSE_USB
     air_mouse_usb_init(); // USB初始化
+#endif
     sle_client_slp_command_register_cbks(); // 注册client端 SLP command回调
 
     set_slp_uart_buffer(); // 设置slp uart buffer
@@ -130,40 +126,22 @@ static void *sle_air_mouse_dongle_task(const char *arg)
 #else
     set_transform_param(SLP_IMU_TYPE_BMI270);
 #endif
-    // 设置Slp本机属性
-    SlpLocalAtt att = {0};
-    // car模式下screenParam在dongle端配置生效
-    att.screenParam.cursorSpeed = get_slp_cursor_speed();
-    att.screenParam.width = get_screen_width();
-    att.screenParam.height = get_screen_height();
-    set_ant_sw_param(&att.rfSwParam);
-    (void)memcpy_s(&att.localAddr, sizeof(SlpDeviceAddr), get_slp_air_mouse_dongl_addr(), sizeof(SlpDeviceAddr));
-    ErrcodeSlpClient ret = SlpSetLocalAttCommand(&att);
-    if (ret != ERRCODE_SLPC_SUCCESS) {
-        osal_printk("SlpSetLocalAttCommand Error 0x%x\r\n", ret);
-        return NULL;
-    }
+    set_screen_size(SCREEN_SIZE_16X9_85_INCH);
+    set_slp_local_att();
 
     SlpInstParam param = {
         .downtilt = 40, // dongle下倾角40°
-        .verDisToCarSeat = 500, // 座椅高度减dongle高度500mm
-        .verDisToSreenTop = 0, // 屏幕顶部高度减dongle高度0mm
+        .verDisToCarSeat = 500, // 座椅在dongle下方500mm
+        .verDisToSreenTop = 0, // 屏幕顶部与dongle垂直距离0mm
         .horDisToSreen = 0, // 屏幕与dongle水平距离0mm
     };
-    ret = SlpSetInstParam(&param); // 设置安装参数
+    ErrcodeSlpClient ret = SlpSetInstParam(&param); // 设置安装参数
     if (ret != ERRCODE_SLPC_SUCCESS) {
         osal_printk("SlpSetInstParam Error 0x%x\r\n", ret);
     }
 
-    air_mouse_radar_init();
-
-#if defined(CONFIG_AIR_MOUSE_CI_REPLAY_TEST)
     SlpPowerOnCommand(); // 上电后不开扫描, slp直接加载
-#elif defined(CONFIG_AIR_MOUSE_RADAR_ONLY)
-    SlpPowerOnCommand(); // 上电后不开扫描, slp直接加载
-    air_mouse_radar_start();
-#else
-
+#if !defined CONFIG_AIR_MOUSE_CI_REPLAY_TEST && !defined CONFIG_AIR_MOUSE_RADAR_ONLY
     sle_air_mouse_client_init(); // GLE 扫描连接
 
 #if CONFIG_AIR_MOUSE_UAC
@@ -191,14 +169,6 @@ static void *sle_air_mouse_dongle_task(const char *arg)
 
 static void sle_air_mouse_with_dongle_entry(void)
 {
-    /*
-        16:9长宽比下，长宽分别为（单位mm）:
-        85寸    屏宽1887， 屏高1092
-        17.3寸  屏宽382，  屏高215
-        15.6寸  屏宽345，  屏高194
-        13.2寸  屏宽292，  屏高164
-     */
-    set_screen_size(1887, 1092); // 85寸屏宽1887，屏高1092
     set_slp_cursor_speed(SLP_CURSOR_SPEED_MEDIUM);
     air_mouse_timer_init(); // 定时器初始化
     writew(0x5702c288, 0x3A00); //  slp 32M时钟驱动调制最大

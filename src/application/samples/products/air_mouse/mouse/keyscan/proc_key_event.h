@@ -11,6 +11,7 @@
 
 #include <stdint.h>
 #include "../common/air_mouse_queue.h"
+#include "../../air_mouse_common.h"
 
 #ifdef __cplusplus
 #if __cplusplus

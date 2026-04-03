@@ -95,6 +95,12 @@ void set_led_status(led_status_e status)
         case LED_STATUS_SPEED_MODE_HIGH:
             led_start_timer(LED_GREEN, LED_BLINK_PERIOD, LED_BLINK_PERIOD * 5);  // 5:闪烁3次
             break;
+        case LED_STATUS_SPEED_MODE_MEDIUM_LOW:
+            led_start_timer(LED_GREEN, LED_BLINK_PERIOD, LED_BLINK_PERIOD * 7);  // 7:闪烁4次
+            break;
+        case LED_STATUS_SPEED_MODE_MEDIUM_HIGH:
+            led_start_timer(LED_GREEN, LED_BLINK_PERIOD, LED_BLINK_PERIOD * 9);  // 9:闪烁5次
+            break;
         default:
             osal_printk("invalid LED status: %u\r\n", status);
             break;

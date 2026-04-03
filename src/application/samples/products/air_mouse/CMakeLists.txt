@@ -16,6 +16,7 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_DONGLE)
         ${SOURCES_LIST}
         ${CMAKE_CURRENT_SOURCE_DIR}/dongle/sle_air_mouse_client/sle_air_mouse_client.c
         ${CMAKE_CURRENT_SOURCE_DIR}/dongle/radar/air_mouse_radar.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/dongle/at/air_mouse_dongle_at.c
     )
 endif()
 
@@ -24,6 +25,7 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_AIR_MOUSE)
         ${SOURCES_LIST}
         ${CMAKE_CURRENT_SOURCE_DIR}/mouse/sle_air_mouse_server/sle_air_mouse_server_adv.c
         ${CMAKE_CURRENT_SOURCE_DIR}/mouse/sle_air_mouse_server/sle_air_mouse_server.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/mouse/at/air_mouse_rcu_at.c
         ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic/vdt_codec.c
         ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic/vdt_pdm.c
         ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic/amic_voice.c

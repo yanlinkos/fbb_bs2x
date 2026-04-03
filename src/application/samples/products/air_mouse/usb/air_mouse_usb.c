@@ -190,6 +190,8 @@ typedef enum {
     SERIAL_CMD_WRITE_TRX_DELAY_FROM_ONB, // 向对端写入板级和天线的时延校准值
     SERIAL_CMD_READ_TRX_DELAY_FROM_ONB,  // 从对端读取板级和天线的时延校准值
     SERIAL_CMD_RESTART,                  // 重启测距，切换至产测模式
+    SERIAL_CMD_WRITE_TRI_ANT_CALIPARA_2_NV,   // 向本端NV写入校准值、三天线
+    SERIAL_CMD_READ_TRI_ANT_CALIPARA_FROM_NV, // 从本端NV读取校准值、三天线
 } serial_cmd_type;
 
 #pragma pack(1)
@@ -200,14 +202,30 @@ typedef struct {
 } serial_cmd_msg_t;
 #pragma pack()
 
+#pragma pack(1)
+typedef struct {
+    uint8_t cmd_type; // serial_cmd_type
+    SlpTriAntAoxCaliPara cali_para_for_tri_ant;
+} serial_cmd_tri_ant_msg_t;
+#pragma pack()
+
 static bool g_usb_inited = false;
 static char g_usb_recv_data[USB_RECV_DATA_MAX_LEN];
 static int32_t g_usb_index = 0;
 int16_t g_cursor_coordinate_x = 0; // 光标x轴坐标，单位：像素
 int16_t g_cursor_coordinate_y = 0; // 光标y轴坐标，单位：像素
-uint16_t g_screen_width;           // 屏幕宽度, 单位: mm
-uint16_t g_screen_height;          // 屏幕高度, 单位: mm
 bool g_usb_init_success_flag = false;
+static uint32_t g_cursorSendNum = 0;  // 光标发送次数
+
+void RstCursorSendNum(void)
+{
+    g_cursorSendNum = 0;
+}
+
+uint32_t GetCursorSendNum(void)
+{
+    return g_cursorSendNum;
+}
 
 bool get_usb_init_status(void)
 {
@@ -225,22 +243,6 @@ bool get_usb_init_success_flag(void)
     return g_usb_init_success_flag;
 }
 
-void set_screen_size(uint16_t width, uint16_t height)
-{
-    g_screen_width = width;
-    g_screen_height = height;
-}
-
-uint16_t get_screen_width(void)
-{
-    return g_screen_width;
-}
-
-uint16_t get_screen_height(void)
-{
-    return g_screen_height;
-}
-
 bool get_usb_status(void)
 {
     return g_usb_inited;
@@ -254,8 +256,9 @@ int32_t get_usb_index(void)
 // 判断是否在屏幕外
 static bool check_cursor_out_of_screen(SlpCursorRslt *cursor_report)
 {
-    return cursor_report->x < 0 || cursor_report->x > (g_screen_width * MM_TO_UM) || // x出边框判断
-           cursor_report->y < 0 || cursor_report->y > (g_screen_height * MM_TO_UM);  // y出边框判断
+    screen_size_t* screen_size = get_screen_size();
+    return cursor_report->x < 0 || cursor_report->x > (screen_size->x * MM_TO_UM) || // x出边框判断
+           cursor_report->y < 0 || cursor_report->y > (screen_size->y * MM_TO_UM);   // y出边框判断
 }
 
 // 线性映射[m,n]->[lower, upper]
@@ -294,15 +297,16 @@ void usb_send_cursor_report(SlpCursorRslt *cursor_report)
         // 物理坐标映射至HID logical坐标
         // [0, g_screen_width] -> [MIN_X, MAX_X]
         // [0, g_screen_height] -> [MIN_Y, MAX_Y]
-        hid_pen_report.x = linear_map(cursor_report->x, 0, g_screen_width * MM_TO_UM, MIN_X, MAX_X);
-        hid_pen_report.y = linear_map(cursor_report->y, 0, g_screen_height * MM_TO_UM, MIN_Y, MAX_Y);
+        screen_size_t *screen_size = get_screen_size();
+        hid_pen_report.x = linear_map(cursor_report->x, 0, screen_size->x * MM_TO_UM, MIN_X, MAX_X);
+        hid_pen_report.y = linear_map(cursor_report->y, 0, screen_size->y * MM_TO_UM, MIN_Y, MAX_Y);
     }
-
+    g_cursorSendNum++;
     static uint8_t count = 0;
     size_t ret = fhid_send_data(g_usb_index, (char *)(&hid_pen_report), sizeof(usb_hid_pen_t));
     if (ret != sizeof(usb_hid_pen_t)) {
         if (++count == 120) { // 120:减少打印次数
-            osal_printk("[ERR] cursor send fail, size:%u, ret:%d\r\n", sizeof(usb_hid_pen_t), ret);
+            osal_printk("[ERR] cursor send fail, size:%u, ret:%u\r\n", sizeof(usb_hid_pen_t), ret);
             count = 0;
         }
     }
@@ -315,7 +319,7 @@ void usb_send_keyboard_report(usb_hid_keyboard_report_t *report)
     if (ret != sizeof(usb_hid_keyboard_report_t)) {
         osal_printk("send keyboard fail, 0x%x\r\n", ret);
     }
-    osal_printk("usb send keyboard, key:%u\r\n", report->key[0]);
+    osal_printk("usb send keyboard, key:0x%x\r\n", report->key[0]);
 }
 
 void usb_send_consumer_report(usb_hid_consumer_report_t *report)
@@ -325,15 +329,32 @@ void usb_send_consumer_report(usb_hid_consumer_report_t *report)
     if (ret != sizeof(usb_hid_consumer_report_t)) {
         osal_printk("send consumer fail, 0x%x\r\n", ret);
     }
-    osal_printk("usb send consumer, key:%u, %u\r\n", report->comsumer_key0, report->comsumer_key1);
+    osal_printk("usb send consumer, key:0x%x, %u\r\n", report->comsumer_key0, report->comsumer_key1);
 }
-
+#if CONFIG_DRIVERS_USB_SERIAL_GADGET
 void usb_send_serial_data(const char *buffer, uint16_t len)
 {
     ssize_t ret = usb_serial_write(g_usb_index, buffer, len);
     if (ret != len) {
         osal_printk("send serial data fail:%s, ret:%d, len:%u\n", buffer, ret, len);
     }
+}
+#endif
+
+void factor_report_tri_ant_aox_cali_para(SlpTriAntAoxCaliPara *factory_rpt)
+{
+    char serial_send_str[300];
+    int ret = sprintf_s(serial_send_str, sizeof(serial_send_str),
+        "[FT]cp_TriAntL,%u,%u,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,END\r\n",
+        factory_rpt->para0, factory_rpt->para1, factory_rpt->para2, factory_rpt->para3, factory_rpt->para4, factory_rpt->para5,
+        factory_rpt->para6, factory_rpt->para7, factory_rpt->para8, factory_rpt->para9, factory_rpt->para10, factory_rpt->para11,
+        factory_rpt->para12, factory_rpt->para13, factory_rpt->para14, factory_rpt->para15, factory_rpt->para16, factory_rpt->para17);
+    if (ret <= 0) {
+        osal_printk("fac rpt ac fail, %d\r\n", ret);
+        return;
+    }
+    air_mouse_print((const char *)serial_send_str, false);
+    (void)memset_s(serial_send_str, sizeof(serial_send_str), 0, sizeof(serial_send_str));
 }
 
 void serial_cmd_proc(serial_cmd_msg_t *serial_cmd_msg)
@@ -355,10 +376,41 @@ void serial_cmd_proc(serial_cmd_msg_t *serial_cmd_msg)
 #if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_DONGLE
             air_mouse_radar_stop(); // 校准时不开启雷达功能
             SlpSetFactoryTestMode(SLP_FACTORY_TEST_AOX_CALI);
-            air_mouse_radar_stop();
-            sle_air_mouse_client_send_cmd(AM_CMD_RANGING_RESTART);
+            sle_air_mouse_client_send_cmd(AM_CMD_RANGING_RESTART, NULL, 0);
 #else
             osal_printk("cmd restart not support\r\n");
+#endif
+            break;
+        default:
+            osal_printk("undefined cmd: %u\r\n", serial_cmd_msg->cmd_type);
+            break;
+    }
+}
+
+void serial_cmd_proc_for_tri_ant(serial_cmd_tri_ant_msg_t *serial_cmd_msg)
+{
+    switch (serial_cmd_msg->cmd_type) {
+        case SERIAL_CMD_RESTART:
+#if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_DONGLE
+            air_mouse_radar_stop(); // 校准时不开启雷达功能
+            SlpSetFactoryTestMode(SLP_FACTORY_TEST_AOX_CALI);
+            sle_air_mouse_client_send_cmd(AM_CMD_RANGING_RESTART, NULL, 0);
+#else
+            osal_printk("cmd restart not support\r\n");
+#endif
+            break;
+        case SERIAL_CMD_WRITE_TRI_ANT_CALIPARA_2_NV:
+#if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_DONGLE
+            sle_air_mouse_client_send_cmd(AM_CMD_WRITE_RCU_TRI_ANT_PARA, (uint8_t *)&serial_cmd_msg->cali_para_for_tri_ant, sizeof(SlpTriAntAoxCaliPara));
+#else
+            osal_printk("cmd write tri ant para not support\r\n");
+#endif
+            break;
+        case SERIAL_CMD_READ_TRI_ANT_CALIPARA_FROM_NV:
+#if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_DONGLE
+            sle_air_mouse_client_send_cmd(AM_CMD_READ_RCU_TRI_ANT_PARA, NULL, 0);
+#else
+            osal_printk("cmd read tri ant para not support\r\n");
 #endif
             break;
         default:
@@ -375,7 +427,7 @@ static int usb_serial_recv_data(void *data)
         ssize_t recv_len = usb_serial_read(0, g_usb_recv_data, USB_RECV_DATA_MAX_LEN);
         if (recv_len <= 0) {
             osal_msleep(USB_RECV_DATA_FAIL_DELAY);
-            osal_printk("serial recv fail, %d\r\n", recv_len);
+            osal_printk("serial recv fail\r\n");
             continue;
         }
 #if CONFIG_AIR_MOUSE_CI_REPLAY_TEST
@@ -389,6 +441,11 @@ static int usb_serial_recv_data(void *data)
             (void)memcpy_s(&serial_cmd_msg, sizeof(serial_cmd_msg_t), &g_usb_recv_data, recv_len);
             serial_cmd_proc(&serial_cmd_msg);
             osal_printk("recv cmd, len, %u, cmd, %u\r\n", recv_len, serial_cmd_msg.cmd_type);
+        } else if (recv_len == sizeof(serial_cmd_tri_ant_msg_t)) { // 三天线校准命令
+            serial_cmd_tri_ant_msg_t serial_cmd_tri_ant_msg;
+            (void)memcpy_s(&serial_cmd_tri_ant_msg, sizeof(serial_cmd_tri_ant_msg), &g_usb_recv_data, recv_len);
+            serial_cmd_proc_for_tri_ant(&serial_cmd_tri_ant_msg);
+            osal_printk("recv cmd, len, %u, cmd, %u\r\n", recv_len, serial_cmd_tri_ant_msg.cmd_type);
         } else {
             osal_printk("recv len: %u\r\n", recv_len);
         }
@@ -456,7 +513,7 @@ static int slp_usb_init(device_type dtype)
         return -1;
     }
 
-    // 切换usb为全速模式
+    // 切换usb为高速模式
     if (usb_device_set_speed(USB_HIGH_SPEED) != 0) {
         return -1;
     }
@@ -509,7 +566,9 @@ void air_mouse_usb_init(void)
 {
     usb_init_success_flag_register_callbacks(usb_init_success_flag_cbk);
     g_usb_index = slp_usb_init(DEV_SER_HID); // 设置描述符、设备ID、版本号等，返回usb设备HID
-    // uac_buf_init();
+#if CONFIG_AIR_MOUSE_UAC
+    uac_buf_init();
+#endif
     osal_printk("usb init, %d\n", g_usb_index);
     if (g_usb_index < 0) {
         osal_printk("usb init fail\n");

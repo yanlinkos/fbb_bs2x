@@ -18,9 +18,9 @@ extern "C" {
 #endif /* __cplusplus */
 
 typedef enum {
-    TIME_CMD_KEY_HOLD_LONG,  // 组合键长按时间
-    TIME_CMD_PAIR,
-    TIME_CMD_UNPAIR,
+    TIME_CMD_KEY_HOLD_LONG, // 组合键长按时间
+    TIME_CMD_PAIR,          // 建连配对
+    TIME_CMD_UNPAIR,        // 断连配对
     TIME_CMD_NUM,
 } app_timer_cmd_e;
 

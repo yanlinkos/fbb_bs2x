@@ -89,6 +89,8 @@ typedef struct usb_hid_rcu_consumer_report {
 } usb_hid_rcu_consumer_report_t;
 #pragma pack()
 
+void RstCursorSendNum(void);
+uint32_t GetCursorSendNum(void);
 void usb_init_success_flag_register_callbacks(void *callback); // f_hid_custom.c中定义
 bool get_usb_init_status(void);
 bool get_usb_init_success_flag(void);
@@ -97,10 +99,9 @@ void air_mouse_usb_deinit(void);
 void usb_send_cursor_report(SlpCursorRslt *cursor_report);
 void usb_send_keyboard_report(usb_hid_keyboard_report_t *report);
 void usb_send_consumer_report(usb_hid_consumer_report_t *report);
+#if CONFIG_DRIVERS_USB_SERIAL_GADGET
 void usb_send_serial_data(const char *buffer, uint16_t len);
-void set_screen_size(uint16_t width, uint16_t height);
-uint16_t get_screen_width(void);
-uint16_t get_screen_height(void);
+#endif
 int32_t linear_map(int32_t input, int32_t m, int32_t n, int32_t lower, int32_t upper);
 int32_t vdt_usb_uac_send_data(const uint8_t *data1, int len1, const uint8_t *data2, int len2);
 

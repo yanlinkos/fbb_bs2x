@@ -6,7 +6,7 @@
  */
 
 /**
- * @defgroup middleware_service_slp_api SLP RADAR AT
+ * @defgroup middleware_service_slp_radar_at_api SLP RADAR AT API
  * @ingroup  middleware_service_slp
  * @{
  */
@@ -31,6 +31,10 @@ extern "C" {
  * @endif
  */
 void SlpRadarAtRegister(void);
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

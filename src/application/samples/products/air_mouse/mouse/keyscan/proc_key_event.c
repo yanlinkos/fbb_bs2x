@@ -42,16 +42,20 @@ typedef struct {
     uint8_t slp_pause : 1;
     uint8_t left_key : 1;
     uint8_t keyboard : 1;
-    uint8_t reserved : 5;
+    uint8_t combine_key_first : 1; // 组合键第一个按键
+    uint8_t reserved : 4;
 } key_press_flag_t;  // 按键是否已经按下
 
 key_press_flag_t g_key_press_flag = {0};
+
+static screen_size_e g_screen_size_idx = SCREEN_SIZE_16X9_85_INCH;
 
 void init_key_press_flag(void)
 {
     (void)memset_s(&g_key_press_flag, sizeof(g_key_press_flag), 0, sizeof(g_key_press_flag));
 }
 
+#if CONFIG_AIR_MOUSE_UAC
 void rcu_amic_init(void)
 {
     sle_set_em_data(1);
@@ -63,27 +67,43 @@ void rcu_amic_deinit(void)
     sle_set_em_data(0);
     amic_deinit();
 }
+#endif
 
 // 指向功能开/关处理
 static void slp_key_proc(void)
 {
     uint16_t number;
     sle_get_paired_devices_num(&number);
-    if (number == 0) {  // 未匹配到对端设备
+    if (number == 0) {  // 未配对到对端设备
         osal_printk("paired devices num:0\r\n");
         return;
     }
     if (SlpPowerOffCommand() == ERRCODE_SLPC_POWERD_OFF) {  // 上下电状态切换
-        init_power_on_start_time();
+        init_power_on_start_time_server();
         SlpPowerOnCommand();
     } else {
         sle_air_mouse_server_send_cmd(AM_CMD_RANGING_STOP, NULL, 0);
     }
 }
 
-static void switch_to_next_cursor_speed(void)  // 切换至下一个光标速度模式
+// 切换slp本端和对端屏幕尺寸配置，重启指向业务后生效
+void switch_to_next_screen_size(void)
 {
-    SlpCursorSpeed next_mode = (get_slp_cursor_speed() + 1) % (SLP_CURSOR_SPEED_HIGH + 1);
+    g_screen_size_idx = (g_screen_size_idx + 1) % (SCREEN_SIZE_ARR_NUM);
+    ErrcodeSlpClient ret = SlpStopRangingCommand();
+    if (ret != ERRCODE_SLPC_SUCCESS) {
+        osal_printk("stop ranging fail, 0x%x\r\n", ret);
+    }
+    set_screen_size(g_screen_size_idx);
+    set_slp_local_att();
+    sle_air_mouse_server_send_cmd(AM_CMD_SCRREN_SIZE, (uint8_t *)&g_screen_size_idx, sizeof(screen_size_e));
+
+    set_led_status(g_screen_size_idx + LED_STATUS_SPEED_MODE_LOW);
+}
+
+void switch_to_next_cursor_speed(void)  // 切换至下一个光标速度模式
+{
+    SlpCursorSpeed next_mode = (get_slp_cursor_speed() + 1) % (SLP_CURSOR_SPEED_MEDIUM_HIGH  + 1);
     set_slp_cursor_speed(next_mode);
 #if CONFIG_SLP_USAGE_AIR_MOUSE
     ErrcodeSlpClient ret = SlpSetCursorSpeedCommand(next_mode); // tv场景在rcu侧调用
@@ -92,7 +112,7 @@ static void switch_to_next_cursor_speed(void)  // 切换至下一个光标速度
         return;
     }
 #elif CONFIG_SLP_USAGE_AIR_MOUSE_CAR
-    sle_air_mouse_server_send_cmd((air_mouse_cmd_e)next_mode, NULL, 0); // car场景在dongle侧调用
+    sle_air_mouse_server_send_cmd(AM_CMD_CURSOR_SPEED, &next_mode, sizeof(next_mode)); // car场景在dongle侧调用
 #else
 #endif
     osal_printk("cursor speed swtich to:%u\r\n", next_mode);
@@ -107,9 +127,43 @@ static void switch_to_next_cursor_speed(void)  // 切换至下一个光标速度
         case SLP_CURSOR_SPEED_HIGH:
             set_led_status(LED_STATUS_SPEED_MODE_HIGH);
             break;
+        case SLP_CURSOR_SPEED_MEDIUM_LOW:
+            set_led_status(LED_STATUS_SPEED_MODE_MEDIUM_LOW);
+            break;
+        case SLP_CURSOR_SPEED_MEDIUM_HIGH:
+            set_led_status(LED_STATUS_SPEED_MODE_MEDIUM_HIGH);
+            break;
         default:
             osal_printk("[ERR] other cursor speed:%u", next_mode);
             break;
+    }
+}
+
+// 确认键按下处理, 指向关闭时发送键值, 指向启动时发送控制命令调用防抖接口
+static void confirm_key_press(uint8_t key)
+{
+    if (get_slp_ranging_start_flag()) {
+#if CONFIG_SLP_USAGE_AIR_MOUSE
+        SlpClickDebounceCommand(1); // tv场景在rcu侧调用
+#elif CONFIG_SLP_USAGE_AIR_MOUSE_CAR
+        sle_air_mouse_server_send_cmd(AM_CMD_LEFT_KEY_DOWN, NULL, 0); // car场景在dongle侧调用
+#endif
+    } else {
+        sle_hid_mouse_server_send_keyboard_report(get_key_value(key));
+    }
+}
+
+// 确认键抬起处理, 指向关闭时发送键值, 指向启动时发送控制命令调用防抖接口
+static void confirm_key_release(void)
+{
+    if (get_slp_ranging_start_flag()) {
+#if CONFIG_SLP_USAGE_AIR_MOUSE
+        SlpClickDebounceCommand(0); // tv场景在rcu侧调用
+#elif CONFIG_SLP_USAGE_AIR_MOUSE_CAR
+        sle_air_mouse_server_send_cmd(AM_CMD_LEFT_KEY_UP, NULL, 0); // car场景在dongle侧调用
+#endif
+    } else {
+        sle_air_mouse_server_send_cmd(AM_CMD_KEYBOARD_UP, NULL, 0);
     }
 }
 
@@ -123,22 +177,20 @@ static void one_key_process(uint8_t key)
     }
     ErrcodeSlpClient ret;
     switch (key) {
-        case RCU_KEY_S9:  // 切换光标速度
-            switch_to_next_cursor_speed();
+        case RCU_KEY_S10:  // 组合键/Home键
+            g_key_press_flag.combine_key_first = 1;
             break;
         case RCU_KEY_S14:  // 模拟语音，按下暂停测距交互, 抬起继续测距交互
             g_key_press_flag.slp_pause = 1;
             ret = SlpPauseRangingCommand();
             osal_printk("S14 pause ranging, 0x%08X\r\n", ret);
+#if CONFIG_AIR_MOUSE_UAC
             rcu_amic_init();
+#endif
             break;
         case RCU_KEY_S12:  // 鼠标左键
             g_key_press_flag.left_key = 1;
-#if CONFIG_SLP_USAGE_AIR_MOUSE
-            SlpClickDebounceCommand(1); // tv场景在rcu侧调用
-#elif CONFIG_SLP_USAGE_AIR_MOUSE_CAR
-            ret = sle_air_mouse_server_send_cmd(AM_CMD_LEFT_KEY_DOWN, NULL, 0); // car场景在dongle侧调用
-#endif
+            confirm_key_press(key);
             break;
         case RCU_KEY_S16:  // slp开关
             sle_air_mouse_server_send_cmd(AM_CMD_SET_FACTORY_TEST_NONE, NULL, 0); // 设置为指向业务
@@ -159,22 +211,17 @@ static void one_key_process(uint8_t key)
     }
     ErrcodeSlpClient ret;
     switch (key) {
-        case RCU_KEY_S5:  // 切换光标速度
-            switch_to_next_cursor_speed();
-            break;
         case RCU_KEY_S19:  // 模拟语音，按下暂停测距交互, 抬起继续测距交互
             g_key_press_flag.slp_pause = 1;
             ret = SlpPauseRangingCommand();
             osal_printk("pause ranging, 0x%X\r\n", ret);
+#if CONFIG_AIR_MOUSE_UAC
             rcu_amic_init();
+#endif
             break;
         case RCU_KEY_S9:  // 鼠标左键
             g_key_press_flag.left_key = 1;
-#if CONFIG_SLP_USAGE_AIR_MOUSE
-            SlpClickDebounceCommand(1); // tv场景在rcu侧调用
-#elif CONFIG_SLP_USAGE_AIR_MOUSE_CAR
-            ret = sle_air_mouse_server_send_cmd(AM_CMD_LEFT_KEY_DOWN, NULL, 0); // car场景在dongle侧调用
-#endif
+            confirm_key_press(key);
             break;
         case RCU_KEY_S11:  // slp开关
             sle_air_mouse_server_send_cmd(AM_CMD_SET_FACTORY_TEST_NONE, NULL, 0); // 设置为指向业务
@@ -217,7 +264,8 @@ static void combine_key_process(key_t *key)
 // 按键释放处理
 static void key_up_process(void)
 {
-    osal_printk("[proc] key up, press_flag:0x%02x\r\n", g_key_press_flag);
+    osal_printk("[proc] key up, pause:%u, left_key:%u, keyboard:%u, key_first:%u\r\n", g_key_press_flag.slp_pause,
+        g_key_press_flag.left_key, g_key_press_flag.keyboard, g_key_press_flag.combine_key_first);
     if (get_led_status() != LED_STATUS_PAIRING && get_led_status() != LED_STATUS_UNPAIRING) {
         set_led_status(LED_STATUS_IDLE);
     }
@@ -225,18 +273,24 @@ static void key_up_process(void)
         g_key_press_flag.keyboard = 0;
         sle_air_mouse_server_send_cmd(AM_CMD_KEYBOARD_UP, NULL, 0);
     }
+    if (g_key_press_flag.combine_key_first == 1) {
+        g_key_press_flag.combine_key_first = 0;
+#if CONFIG_AIR_MOUSE_HR_BOARD
+        sle_hid_mouse_server_send_keyboard_report(get_key_value(RCU_KEY_S10));
+        sle_air_mouse_server_send_cmd(AM_CMD_KEYBOARD_UP, NULL, 0);
+#elif CONFIG_AIR_MOUSE_HX_BOARD
+        switch_to_next_cursor_speed();
+#endif
+    }
     if (g_key_press_flag.left_key == 1) {
         g_key_press_flag.left_key = 0;
-#if CONFIG_SLP_USAGE_AIR_MOUSE
-        SlpClickDebounceCommand(0); // tv场景在rcu侧调用
-#elif CONFIG_SLP_USAGE_AIR_MOUSE_CAR
-        sle_air_mouse_server_send_cmd(AM_CMD_LEFT_KEY_UP, NULL, 0); // car场景在dongle侧调用
-#else
-#endif
+        confirm_key_release();
     }
     if (g_key_press_flag.slp_pause == 1) { // 抬起按键后继续测距
         g_key_press_flag.slp_pause = 0;
+#if CONFIG_AIR_MOUSE_UAC
         rcu_amic_deinit();
+#endif
         ErrcodeSlpClient ret = SlpContinueRangingCommand();
         osal_printk("ranging continue, 0x%08x\r\n", ret);
     }
@@ -255,7 +309,6 @@ void key_event_process(msg_data_t *msg)
             one_key_process(key->array[0]);
             break;
         case 2:  // 2：组合键数量
-            key_up_process();
             combine_key_process(key);
             break;
         default:
