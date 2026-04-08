@@ -30,8 +30,11 @@ extern "C" {
 #define RADAR_MAX_WAVE_LEN 64     /* 波形最大长度 */
 #define RADAR_HW_PARA_RSV_BYTE 12 /* 预留长度 */
 #define RADAR_ALG_PARA_RSV_BYTE 8 /* 预留长度 */
+#define RADAR_MAX_SENSITIVITY_ARR_LEN 60 /* 灵敏度数组最大长度 */
 
 #define RADAR_AI_OFFSET_PARA_NUM 8 /* AI补偿参数个数 */
+
+#define RADAR_VENDOR_INFO_BYTE 2 /* 预留长度 */
 
 #pragma pack(1)
 
@@ -172,6 +175,52 @@ typedef enum {
 
 /**
  * @if Eng
+ * @brief  radar status.
+ * @else
+ * @brief  雷达状态。
+ * @endif
+ */
+typedef enum {
+    RADAR_STATUS_RADAR_ON,     /*!< @if Eng radar status: radar on
+                                                    @else   雷达使能状态 @endif */
+    RADAR_STATUS_RADAR_OFF     /*!< @if Eng radar status: radar off
+                                                    @else   雷达关闭状态 @endif */
+} radar_get_status_t;
+
+/**
+ * @if Eng
+ * @brief  radar frame mode.
+ * @else
+ * @brief  雷达帧模式。
+ * @endif
+ */
+typedef enum {
+    RADAR_FRAME_MODE_RANGING,               /*!< @if Eng radar frame mode: SLP ranging coexistence frame mode
+                                                @else   SLP测距共存帧模式 @endif */
+    RADAR_FRAME_MODE_DEFAULT,               /*!< @if Eng radar frame mode: single radar frame mode
+                                                @else   单雷达帧模式 @endif */
+    RADAR_FRAME_MODE_VENDOR,                /*!< @if Eng radar frame mode: vendor frame mode
+                                                @else   单雷达模式：厂商帧模式 @endif */
+} radar_frame_mode_t;
+
+/**
+ * @if Eng
+ * @brief  radar anti multipath mode.
+ * @else
+ * @brief  雷达抗多径虚警模式。
+ * @endif
+ */
+typedef enum {
+    RADAR_ANTI_MULTIPATH_DEFAULT_MODE,      /*!< @if Eng radar anti multipath mode: default mode
+                                                @else   抗多径虚警默认模式 @endif */
+    RADAR_ANTI_MULTIPATH_STRENGTHEN_MODE,   /*!< @if Eng radar anti multipath mode: strengthen mode
+                                                @else   抗多径虚警能力强化模式 @endif */
+    RADAR_ANTI_MULTIPATH_WEAKEN_MODE,       /*!< @if radar anti multipath mode: weaken mode
+                                                @else   抗多径虚警能力弱化模式 @endif */
+} radar_anti_multipath_mode_t;
+
+/**
+ * @if Eng
  * @brief  radar target detection result.
  * @else
  * @brief  雷达目标检测结果信息。
@@ -211,18 +260,24 @@ typedef struct {
  * @endif
  */
 typedef struct {
-    uint16_t data_len;               /*!< @if Eng radar raw data msg: data len
-                                            @else    雷达数据：数据长度 @endif */
-    uint16_t crc;                    /*!< @if Eng radar raw data msg: crc value
-                                            @else    雷达数据：数据crc校验值 @endif */
-    uint16_t counter;                /*!< @if Eng radar raw frame count: crc value
-                                            @else    雷达数据：数据上报帧号 @endif */
-    uint64_t tick_cnt;               /*!< @if Eng radar raw data msg: tick cnt
-                                            @else   雷达数据：数据帧32k时钟计数 @endif */
-    radar_raw_data_para_t data_para; /*!< @if Eng radar raw data msg: data para
-                                            @else    雷达数据: 数据参数 @endif */
-    complex_short_t *data;           /*!< @if Eng radar raw data msg: data pointer
-                                            @else    雷达数据：数据指针 @endif */
+    uint16_t data_len;                                   /*!< @if Eng radar raw data msg: data len
+                                                              @else    雷达数据：数据长度 @endif */
+    uint16_t crc;                                        /*!< @if Eng radar raw data msg: crc value
+                                                              @else    雷达数据：数据crc校验值 @endif */
+    uint16_t counter;                                    /*!< @if Eng radar raw frame count: crc value
+                                                              @else    雷达数据：数据上报帧号 @endif */
+    uint64_t tick_cnt;                                   /*!< @if Eng radar raw data msg: tick cnt
+                                                              @else   雷达数据：数据帧32k时钟计数 @endif */
+    radar_raw_data_para_t data_para;                     /*!< @if Eng radar raw data msg: data para
+                                                              @else    雷达数据: 数据参数 @endif */
+    radar_frame_mode_t mode;                               /*!< @if Eng radar raw data msg: radar frame mode
+                                                              @else    雷达数据：雷达帧模式 @endif */
+    uint8_t vendor_info[RADAR_VENDOR_INFO_BYTE];         /*!< @if Eng radar raw data msg: vendor infomation
+                                                              @else    雷达数据：vendor参数 @endif */
+    uint64_t reserve;                                    /*!< @if Eng radar raw data msg: reserve
+                                                              @else    雷达数据：保留字段 @endif */
+    complex_short_t *data;                               /*!< @if Eng radar raw data msg: data pointer
+                                                              @else    雷达数据：数据指针 @endif */
 } radar_raw_data_msg_t;
 
 /**
@@ -259,16 +314,18 @@ typedef struct {
  * @endif
  */
 typedef struct {
-    radar_rf_para_t rf_para;                 /*!< @if Eng radar hardware parameter: raw data parameter
-                                                    @else   雷达硬件参数：射频参数 @endif */
-    radar_frame_para_t frame_para;           /*!< @if Eng radar hardware parameter: raw data parameter
-                                                    @else   雷达硬件参数：帧参数 @endif */
-    radar_raw_data_para_t raw_data_para;     /*!< @if Eng radar hardware parameter: raw data parameter
-                                                    @else   雷达硬件参数：原始数据上报配置参数 @endif */
-    radar_wave_para_t wave_para;             /*!< @if Eng radar hardware parameter: wave parameter
-                                                    @else   雷达硬件参数：波形参数 @endif */
-    uint8_t reserve[RADAR_HW_PARA_RSV_BYTE]; /*!< @if Eng radar hardware parameter: reserve parameter
-                                                    @else   雷达硬件参数：预留位 @endif */
+    radar_rf_para_t rf_para;                            /*!< @if Eng radar hardware parameter: raw data parameter
+                                                             @else  雷达硬件参数：射频参数 @see radar_rf_para_t @endif */
+    radar_frame_para_t frame_para;                      /*!< @if Eng radar hardware parameter: raw data parameter
+                                                             @else  雷达硬件参数：帧参数 @see radar_frame_para_t @endif */
+    radar_raw_data_para_t raw_data_para;                /*!< @if Eng radar hardware parameter: raw data parameter
+                                                             @else  雷达硬件参数：原始数据上报配置参数 @see radar_raw_data_para_t @endif */
+    radar_wave_para_t wave_para;                        /*!< @if Eng radar hardware parameter: wave parameter
+                                                             @else  雷达硬件参数：波形参数 @see radar_wave_para_t @endif */
+    uint8_t vendor_info[RADAR_VENDOR_INFO_BYTE];        /*!< @if Eng radar hardware parameter: vendor infomation
+                                                             @else  雷达硬件参数：vendor参数 @see vendor_info @endif */
+    uint8_t reserve[RADAR_HW_PARA_RSV_BYTE];            /*!< @if Eng radar hardware parameter: reserve parameter
+                                                             @else  雷达硬件参数：预留位 @see reserve @endif */
 } radar_hardware_para_t;
 
 /**
@@ -279,14 +336,22 @@ typedef struct {
  * @endif
  */
 typedef struct {
-    uint32_t rpt_mode;     /*!< @if Eng radar algorithm basic parameter: report mode. default is 0.
+    uint32_t rpt_mode;      /*!< @if Eng radar algorithm basic parameter: report mode. default is 0.
                                 @else   雷达算法基础参数: 数据上报类型，默认值为0 @endif */
-    uint32_t sensitivity;  /*!< @if Eng radar algorithm basic parameter: detection sensitivity. default is 0.
+    uint32_t sensitivity;   /*!< @if Eng radar algorithm basic parameter: detection sensitivity. default is 0.
                                 @else   雷达算法基础参数: 检测灵敏度, 默认值为0 @endif */
-    uint32_t rng_boundary; /*!< @if Eng radar algorithm parameter: detection range boundary. uint cm, default is 700.
+    uint32_t rng_boundary;  /*!< @if Eng radar algorithm basic parameter: detection range boundary. uint cm, default is 700.
                                 @else   雷达算法基础参数: 距离检测边界，单位cm，默认值700 @endif */
-    uint32_t delay_time;   /*!< @if Eng radar algorithm parameter: delay time. uint s, default is 20.
+    uint32_t delay_time;    /*!< @if Eng radar algorithm basic parameter: delay time. uint s, default is 20.
                                 @else   雷达算法基础参数: 退出时延，单位S，默认值20 @endif */
+    uint16_t static_create_range;   /*!< @if Eng radar algorithm basic parameter: static target creation range threshold. uint cm, default is 0.
+                                        @else   雷达算法基础参数: 静目标允许创建的距离门限。单位cm，默认为0。@endif */
+    uint8_t is_wire_down;   /*!< @if Eng radar algorithm basic parameter: is terminal wire heading down or up. 1 for down, 0 for up.
+                                @else   雷达算法基础参数: 端子线朝向，影响角度上报值的正负。1表示朝下，0表示朝上 @endif */
+    uint8_t angle_boundary; /*!< @if Eng radar algorithm parameter: detection angle boundary. uint degree, default is 60.
+                                @else   雷达算法基础参数: 角度检测边界，单位°，默认值60 @endif */
+    uint8_t anti_multipath_mode; /*!< @if Eng radar algorithm parameter: anti-multipath mode. default is 0. see @ref radar_anti_multipath_mode_t.
+                                    @else   雷达算法基础参数: 抗多径虚警模式。默认值0 @endif */
 } radar_alg_basic_para_t;
 
 /**
@@ -297,21 +362,36 @@ typedef struct {
  * @endif
  */
 typedef struct {
+    int32_t dynamic_offset_direction[RADAR_AI_OFFSET_PARA_NUM]; /*!< @if Eng radar ai parameter: AI offset parameters for dynamic detection.
+                                                                     ranging from -100000 to 100000, default is 0.
+                                                            @else   雷达AI参数: AI动检测补偿参数。
+                                                                    取值范围[-100000, 100000]，默认值0。 @endif */
+    int32_t static_offset_direction[RADAR_AI_OFFSET_PARA_NUM]; /*!< @if Eng radar ai parameter: AI offset parameters for static detection.
+                                                                     ranging from -100000 to 100000, default is 0.
+                                                            @else   雷达AI参数: AI静检测补偿参数。
+                                                                    取值范围[-100000, 100000]，默认值0。 @endif */
     uint16_t ai_status;       /*!< @if Eng radar ai parameter: ai anti-interference function switch.
-                                                 0 for off, 1 for on. default is 1.
-                                        @else   雷达AI参数: AI抗干扰功能开关. 0表示关闭，1表示打开。默认是1  @endif */
-    uint16_t ai_static_range; /*!< @if Eng radar ai parameter: static target creation range threshold.
-                                                 uint cm, default is 405.
-                                        @else   雷达AI参数: AI抗干扰打开时，静目标允许创建的距离门限。
-                                                单位cm，默认为405。@endif */
-    uint16_t offset_weight;   /*!< @if Eng radar ai parameter: AI offset weight.
-                                                 ranging from 0 to 10000, default is 0.
-                                        @else   雷达AI参数: AI补偿权重。取值范围[0, 10000]，默认值0。@endif */
-    int16_t offset_direction[RADAR_AI_OFFSET_PARA_NUM]; /*!< @if Eng radar ai parameter: AI offset parameters.
-                                                                     ranging from -10000 to 10000, default is 10000.
-                                                            @else   雷达AI参数: AI补偿参数。
-                                                                    取值范围[-10000, 10000]，默认值0。 @endif */
+                                    0 for off, 1 for on. default is 1.
+                                 @else   雷达AI参数: AI抗干扰功能开关. 0表示关闭，1表示打开。默认是1  @endif */
 } radar_ai_para_t;
+
+/**
+ * @if Eng
+ * @brief  radar algorithm detection sensitivity parameter.
+ * @else
+ * @brief  雷达算法检测灵敏度参数。
+ * @endif
+ */
+typedef struct {
+    uint8_t para_len;                                           /*!< @if Eng radar sensitivity parameter: sensitivity parameter array length.
+                                                                     @else   雷达检测灵敏度参数: 灵敏度参数长度 @endif */
+    uint8_t dyn_sensitivity_0[RADAR_MAX_SENSITIVITY_ARR_LEN];   /*!< @if Eng radar sensitivity parameter: dynamic detection sensitivity_0 parameters.
+                                                                     @else   雷达检测灵敏度参数: 动目标检测灵敏度参数0 @endif */
+    uint8_t dyn_sensitivity_1[RADAR_MAX_SENSITIVITY_ARR_LEN];   /*!< @if Eng radar sensitivity parameter: dynamic detection sensitivity_1 parameters.
+                                                                     @else   雷达检测灵敏度参数: 动目标检测灵敏度参数1 @endif */
+    uint8_t sta_sensitivity_0[RADAR_MAX_SENSITIVITY_ARR_LEN];   /*!< @if Eng radar sensitivity parameter: static detection sensitivity_0 parameters.
+                                                                     @else   雷达检测灵敏度参数: 静目标检测灵敏度参数0 @endif */
+} radar_sensitivity_para_t;
 
 /**
  * @if Eng
@@ -321,12 +401,14 @@ typedef struct {
  * @endif
  */
 typedef struct {
-    radar_alg_basic_para_t basic_para;        /*!< @if Eng radar algorithm parameter: basic parameter
-                                                    @else   雷达算法参数: 基础参数 @endif */
-    radar_ai_para_t ai_para;                  /*!< @if Eng radar algorithm parameter: ai parameter
-                                                    @else   雷达算法参数: AI补偿参数 @endif */
-    uint8_t reserve[RADAR_ALG_PARA_RSV_BYTE]; /*!< @if Eng radar alg parameter: reserve parameter
-                                                    @else   雷达算法参数：预留位 @endif */
+    radar_alg_basic_para_t basic_para;          /*!< @if Eng radar algorithm parameter: basic parameter
+                                                        @else   雷达算法参数: 基础参数 @endif */
+    radar_ai_para_t ai_para;                    /*!< @if Eng radar algorithm parameter: ai parameter
+                                                        @else   雷达算法参数: AI补偿参数 @endif */
+    radar_sensitivity_para_t sensitivity_para;  /*!< @if Eng radar algorithm parameter: sensitivity parameter
+                                                        @else   雷达算法参数: 灵敏度参数 @endif */
+    uint8_t reserve[RADAR_ALG_PARA_RSV_BYTE];   /*!< @if Eng radar alg parameter: reserve parameter
+                                                        @else   雷达算法参数：预留位 @endif */
 } radar_alg_para_t;
 
 /**
@@ -369,7 +451,7 @@ typedef void (*radar_set_power_status_cb_t)(uint8_t status, errcode_radar_client
  * @par Description: Callback invoked when the radar detection is complete.
 
  * @attention It cannot be blocked or wait for a long time or use a large stack space.
- * @param [in] err_code errcode_radar_t
+ * @param [in] err_code errcode_radar_client_t
  * @else
  * @brief  雷达错误码上报的回调函数。
  * @par Description: 雷达错误码上报的回调函数。
@@ -377,7 +459,7 @@ typedef void (*radar_set_power_status_cb_t)(uint8_t status, errcode_radar_client
  * @param [in] err_code 错误码
  * @endif
  */
-typedef void (*radar_report_errcode_cb_t)(errcode_radar_t err_code);
+typedef void (*radar_report_errcode_cb_t)(errcode_radar_client_t err_code);
 
 /**
  * @if Eng
@@ -415,6 +497,7 @@ errcode_radar_client_t uapi_radar_set_hardware_para(radar_hardware_para_t *para)
  * @brief  Radar set algorithm parameter.
  * @par Description: Radar set algorithm parameter.
  * @param [in] para see @ref radar_alg_para_t.
+ * @param [in] is_write_to_nv: whether write input parameters into nv or not.
  * @retval error code.
  * @else
  * @brief  设置雷达算法参数。
@@ -423,7 +506,7 @@ errcode_radar_client_t uapi_radar_set_hardware_para(radar_hardware_para_t *para)
  * @retval 执行结果错误码。
  * @endif
  */
-errcode_radar_client_t uapi_radar_set_alg_para(radar_alg_para_t *para);
+errcode_radar_client_t uapi_radar_set_alg_para(radar_alg_para_t *para, uint8_t is_write_to_nv);
 
 /**
  * @if Eng
@@ -529,6 +612,21 @@ errcode_radar_client_t uapi_radar_set_status(uint8_t status);
  * @endif
  */
 errcode_radar_client_t uapi_radar_set_power_status(uint8_t status);
+
+/**
+ * @if Eng
+ * @brief  get radar status.
+ * @par Description: get radar status.
+ * @param [in] status of radar. see @ref radar_get_status_t.
+ * @retval error code.
+ * @else
+ * @brief  获取雷达状态。
+ * @par Description: 获取雷达状态。
+ * @param [in] status 雷达状态
+ * @retval 执行结果错误码。
+ * @endif
+ */
+errcode_radar_client_t uapi_radar_get_status(uint8_t *status);
 
 #pragma pack()
 

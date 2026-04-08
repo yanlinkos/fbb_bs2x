@@ -1,5 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2025. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2026. All rights reserved.
  * Description: slp error code
  * ROM      : NO
  * STRATEGY : NO
@@ -124,6 +124,8 @@ typedef enum {
                                                                  @else   slp已经下电错误码 @endif */
     ERRCODE_SLPC_UART_BUFFER_TOO_SMALL,                     /*!< @if Eng error code of slp buffer is too small
                                                                  @else   slp uart缓冲区过小错误码 @endif */
+    ERRCODE_SLPC_UART_SEND_FAIL,                            /*!< @if Eng error code of slp send uart fail
+                                                                 @else   slp uart发送失败 @endif */
     ERRCODE_SLPC_MAX = ERRCODE_SLPC_END                     /*!< @if Eng maximum of SLP error code
                                                                  @else   SLPC 错误码最大值 @endif */
 } ErrcodeSlpClient;

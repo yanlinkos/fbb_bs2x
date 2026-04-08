@@ -1,16 +1,15 @@
 /**
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2025-2025. All rights reserved.
  *
- * Description:  w33 firmware file arrays.
+ * Description: Air Mouse RCU AT Command Header \n
  *
- * History:
- * 2025-11-28, Create file.
+ * History: \n
+ * 2025-12-20, Create file. \n
  */
+#ifndef AIR_MOUSE_DONGLE_AT_H
+#define AIR_MOUSE_DONGLE_AT_H
 
-#ifndef W33_FW_FILE_ARRAY_H
-#define W33_FW_FILE_ARRAY_H
-
-#include "tiot_fileops.h"
+#include "errcode.h"
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -18,7 +17,8 @@ extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
-const tiot_file_path *w33_fw_file_path_get(void);
+
+errcode_t air_mouse_dongle_at_register(void); // 应用层AT指令注册
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -26,4 +26,4 @@ const tiot_file_path *w33_fw_file_path_get(void);
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
-#endif
+#endif /* AIR_MOUSE_DONGLE_AT_H */

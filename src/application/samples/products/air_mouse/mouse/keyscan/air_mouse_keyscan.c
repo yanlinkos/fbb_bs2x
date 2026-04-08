@@ -31,7 +31,8 @@
 #define KEYBOARD_HID_CODE_DOWN     0x51 // 下
 #define KEYBOARD_HID_CODE_LEFT     0x50 // 左
 #define KEYBOARD_HID_CODE_RIGHT    0x4F // 右
-#define KEYBOARD_HID_CODE_SOURCE   0x57 // 信源
+// Consumer
+#define CONSUMER_HID_CODE_SOURCE   0x0C // 信源
 #define CONSUMER_HID_CODE_POWER    0x30 // 电源
 #define CONSUMER_HID_VOLUME_UP     0xE9 // 音量+
 #define CONSUMER_HID_VOLUME_DOWN   0xEA // 音量-
@@ -45,12 +46,12 @@ static const key_config_t g_menu_key_map[RCU_KEY_NUM] = {
     {RCU_KEY_S4,  CONSUMER_HID_VOLUME_UP,   HID_CONSUMER_KIND},
     {RCU_KEY_S5,  KEYBOARD_HID_CODE_LEFT,   HID_KEYBOARD_KIND},
     {RCU_KEY_S6,  KEYBOARD_HID_CODE_BACK,   HID_KEYBOARD_KIND},
-    {RCU_KEY_S7,  KEYBOARD_HID_CODE_SOURCE, HID_KEYBOARD_KIND},
+    {RCU_KEY_S7,  CONSUMER_HID_CODE_SOURCE, HID_CONSUMER_KIND},
     {RCU_KEY_S8,  KEYBOARD_HID_CODE_DOWN,   HID_KEYBOARD_KIND},
     {RCU_KEY_S9,  KEYBOARD_HID_CODE_MENU,   HID_KEYBOARD_KIND},
     {RCU_KEY_S10, KEYBOARD_HID_CODE_HOME,   HID_KEYBOARD_KIND},
     {RCU_KEY_S11, KEYBOARD_HID_CODE_UP,     HID_KEYBOARD_KIND},
-    {RCU_KEY_S12, 0,                        0                },
+    {RCU_KEY_S12, KEYBOARD_HID_CODE_ENTER,  HID_KEYBOARD_KIND},
     {RCU_KEY_S13, CONSUMER_HID_VOLUME_DOWN, HID_CONSUMER_KIND},
     {RCU_KEY_S14, 0,                        0                },
     {RCU_KEY_S15, KEYBOARD_HID_CODE_RIGHT,  HID_KEYBOARD_KIND},
@@ -63,7 +64,7 @@ static const key_config_t g_menu_key_map[RCU_KEY_NUM] = {
 #elif CONFIG_AIR_MOUSE_HX_BOARD
 static const key_config_t g_menu_key_map[RCU_KEY_NUM] = {
     {RCU_KEY_S0,  0,                        0                },
-    {RCU_KEY_S1,  KEYBOARD_HID_CODE_SOURCE, HID_KEYBOARD_KIND},
+    {RCU_KEY_S1,  CONSUMER_HID_CODE_SOURCE, HID_CONSUMER_KIND},
     {RCU_KEY_S2,  0,                        0                },
     {RCU_KEY_S3,  KEYBOARD_HID_CODE_LEFT,   HID_KEYBOARD_KIND},
     {RCU_KEY_S4,  KEYBOARD_HID_CODE_BACK,   HID_KEYBOARD_KIND},
@@ -71,7 +72,7 @@ static const key_config_t g_menu_key_map[RCU_KEY_NUM] = {
     {RCU_KEY_S6,  CONSUMER_HID_CODE_POWER,  HID_CONSUMER_KIND},
     {RCU_KEY_S7,  KEYBOARD_HID_CODE_UP,     HID_KEYBOARD_KIND},
     {RCU_KEY_S8,  0,                        0                },
-    {RCU_KEY_S9,  0,                        0                },
+    {RCU_KEY_S9,  KEYBOARD_HID_CODE_ENTER,  HID_KEYBOARD_KIND},
     {RCU_KEY_S10, KEYBOARD_HID_CODE_DOWN,   HID_KEYBOARD_KIND},
     {RCU_KEY_S11, 0,                        0                },
     {RCU_KEY_S12, 0,                        0                },

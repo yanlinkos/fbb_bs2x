@@ -35,8 +35,10 @@ sle_addr_t *get_sle_air_mouse_server_addr(void);
 
 void sle_client_slp_command_register_cbks(void);
 
-errcode_t sle_air_mouse_client_send_cmd(air_mouse_cmd_e cmd);
+errcode_t sle_air_mouse_client_send_cmd(air_mouse_cmd_e cmd, uint8_t *data, uint16_t len);
 void air_mouse_read_rssi_timer_cbk(unsigned long arg);
+void set_slp_local_att(void);
+void set_radar_is_running_flag(bool flag);
 
 void send_amic_data_uac(void);
 

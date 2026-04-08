@@ -11,6 +11,7 @@
 #include "slp.h"
 #include "usb/air_mouse_usb.h"
 #include "common_def.h"
+#include "timer/am_common_timer.h"
 
 #define SLP_IMU_TYPE_NUM (SLP_IMU_TYPE_ASM330 + 1)
 
@@ -95,10 +96,11 @@ static const uint8_t g_ant_sw_param[] = {true, 0b000001, 0b000000, 0b000001, 0x0
 #endif
 
 #elif CONFIG_AIR_MOUSE_EVB4_BOARD /* Evb4 */
-static const uint8_t g_ant_sw_param[] = {false, 0b000111, 0b000011, 0b000100, 0x0, 0b000101, 0x0, 0x0}; // RCU & Dongle
+
+static const uint8_t g_ant_sw_param[] = {false, 0b111, 0b000011, 0b000100, 0x0, 0b101, 0x0, 0b111}; // RCU & Dongle
 
 #elif CONFIG_AIR_MOUSE_RADAR_2T4R_BOARD /* Radar 2T4R */
-static const uint8_t g_ant_sw_param[] = {false, 0b000111, 0b000110, 0b000110, 0x0, 0b000101, 0x0, 0x0}; // Dongle
+static const uint8_t g_ant_sw_param[] = {false, 0b111, 0b100, 0b011, 0x0, 0b010, 0x0, 0x0}; // Dongle TX1-RX2-RX3
 
 #elif CONFIG_AIR_MOUSE_HR_BOARD /* TVRCREF */ /* HR */
 #if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE
@@ -111,13 +113,46 @@ static const uint8_t g_ant_sw_param[] = {true, 0b000001, 0b000000, 0b000001, 0x0
 
 #elif CONFIG_AIR_MOUSE_OPEN_SOURCE_BOARD /* OPEN_SOURCE */
 #if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE
-static const uint8_t g_ant_sw_param[] = {true, 0b111, 0b010, 0b101, 0, 0b000, 0, 0}; // tx0、rx0:TRX1_RXV, rx1:RXH
+static const uint8_t g_ant_sw_param[] = {true, 0b111, 0b010, 0b101, 0, 0b000, 0, 0b100}; // tx0、rx0:TRX1_RXV, rx1:RXH
 #elif CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_DONGLE
-static const uint8_t g_ant_sw_param[] = {true, 0b111, 0b010, 0b101, 0,     0, 0, 0}; // D tx0:TRX1_RXV, rx0:TRX1_RXV
+static const uint8_t g_ant_sw_param[] = {true, 0b111, 0b010, 0b101, 0, 0b000, 0, 0b100}; // D tx0:TRX1_RXV, rx0:TRX1_RXV
 #endif
 
 #else
 #endif
+
+static screen_size_t g_screen_size_arr[SCREEN_SIZE_ARR_NUM] = {
+    {1887, 1092}, // SCREEN_SIZE_16X9_85_INCH
+    {670,  340 }, // SCREEN_SIZE_16X9_32_INCH
+    {382,  215 }, // SCREEN_SIZE_16X9_17P3_INCH
+    {345,  194 }, // SCREEN_SIZE_16X9_15P6_INCH
+    {292,  164 }, // SCREEN_SIZE_16X9_13P2_INCH
+    {0,    0   }, // SCREEN_SIZE_CUSTOM
+};
+
+static screen_size_t g_screen_size;
+
+screen_size_t *get_screen_size(void)
+{
+    return &g_screen_size;
+}
+
+void set_custom_screen_size(screen_size_t *screen_size)
+{
+    g_screen_size_arr[SCREEN_SIZE_CUSTOM] = *screen_size;
+}
+
+screen_size_t *set_screen_size(screen_size_e mode)
+{
+    if (mode >= SCREEN_SIZE_ARR_NUM) {
+        osal_printk("[ERR]set screen size fail, mode:%u", mode);
+        return &g_screen_size;
+    }
+
+    g_screen_size = g_screen_size_arr[mode];
+    osal_printk("set screen size, mode:%u, size:%ux%u\r\n", mode, g_screen_size.x, g_screen_size.y);
+    return &g_screen_size;
+}
 
 SlpCursorSpeed g_slp_cursor_speed = SLP_CURSOR_SPEED_MEDIUM;  // slp光标速度
 
@@ -180,6 +215,14 @@ void print_slp_version(SlpVersionRpt *versionRpt)
     osal_printk("[slp ver] chipId: 0x%02X, imuType: 0x%02X\r\n", versionRpt->chipId, versionRpt->imuType);
 }
 
+void rpt_slp_die_id_cbk(const SlpDieId *dieId)
+{
+    // 打印SLP DIE ID信息
+    osal_printk("[slp die id] 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x\r\n",
+        dieId->data[0], dieId->data[1], dieId->data[2], dieId->data[3], dieId->data[4],  // 0:,1:,2:,3:,4:index
+        dieId->data[5], dieId->data[6], dieId->data[7], dieId->data[8], dieId->data[9]); // 5:,6:,7:,8:,9:index
+}
+
 void air_mouse_print(const char *buffer, bool both)
 {
 #if CONFIG_AIR_MOUSE_CI_REPLAY_TEST
@@ -187,7 +230,9 @@ void air_mouse_print(const char *buffer, bool both)
     osal_printk(buffer);
 #else
     if (get_usb_init_success_flag()) {
+#if CONFIG_DRIVERS_USB_SERIAL_GADGET
         usb_send_serial_data(buffer, strlen(buffer)); // usb虚拟串口输出
+#endif
         if (both) {
             osal_printk(buffer);
         }
@@ -205,4 +250,5 @@ SlpCursorSpeed get_slp_cursor_speed(void)
 void set_slp_cursor_speed(SlpCursorSpeed mode)
 {
     g_slp_cursor_speed = mode;
+    update_am_print_info_cursor_speed(mode);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2025. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2026. All rights reserved.
  * Description: slp api
  * ROM      : NO
  * STRATEGY : NO
@@ -57,6 +57,15 @@ extern "C" {
  * @endif
  */
 #define SLP_AOX_CIR_RECORD_NUM 400
+
+/**
+ * @if Eng
+ * @brief  slp die id array num
+ * @else
+ * @brief  slp die id上报数组大小
+ * @endif
+ */
+#define SLP_DIE_ID_ARR_NUM 10
 
 /**
  * @if Eng
@@ -273,6 +282,22 @@ typedef enum {
 
 /**
  * @if Eng
+ * @brief Enum of slp aox ant array
+ * @else
+ * @brief slp测角天线排列
+ * @endif
+ */
+typedef enum {
+    SLP_ANT_TWO = 0,                    /*!< @if Eng slp two_ant array
+                                        @else slp测角双天线排列 @endif */
+    SLP_ANT_THREE_L,                    /*!< @if Eng slp three_ant_L array
+                                        @else slp测角三天线L型排列 - 仅做水平和垂直测角 @endif */
+    SLP_ANT_THREE_TRIANGLE              /*!< @if Eng slp three_ant_L array
+                                        @else slp测角三天线等边三角形排列 @endif */
+} SlpAoxAntArray;
+
+/**
+ * @if Eng
  * @brief Enum of narrowband time synchronization mode
  * @else
  * @brief 窄带时间同步模式
@@ -331,6 +356,8 @@ typedef struct {
                                                  @else 参与测距的设备个数，取值：2 @endif */
     uint8_t txMode;                         /*!< @if Eng tx mode, @ref SlpTxContinuousMode
                                                  @else Tx发射模式，参考 { @ref SlpTxContinuousMode }. @endif */
+    uint8_t aoxAntArray;                    /*!< @if Eng number of antenna, @ref SlpAoxAntArray
+                                                 @else 测角天线排列，参考 { @ref SlpAoxAntArray }. @endif */
     uint32_t firstAoxAntDis;                /*!< @if Eng first aox ant dis, unit: nm
                                                  @else 第一测角帧天线间距 单位：纳米 @endif */
     uint32_t sessionId;                     /*!< @if Eng session identifier
@@ -371,6 +398,10 @@ typedef enum {
                                             @else slp光标中速移动 @endif */
     SLP_CURSOR_SPEED_HIGH,             /*!< @if Eng slp cursor high speed
                                             @else slp光标高速移动 @endif */
+    SLP_CURSOR_SPEED_MEDIUM_LOW,       /*!< @if Eng slp cursor medium low speed
+                                            @else slp光标中低速移动 @endif */
+    SLP_CURSOR_SPEED_MEDIUM_HIGH       /*!< @if Eng slp cursor medium high speed
+                                            @else slp光标中高速移动 @endif */
 } SlpCursorSpeed;
 
 #pragma pack(1)
@@ -480,14 +511,22 @@ typedef struct {
 typedef struct {
     int32_t distance;                   /*!< @if Eng distance, unit: mm
                                              @else 距离，单位：毫米 @endif */
-    uint8_t aoxAziFom;                  /*!< @if Eng azimuth figure-of-merit
-                                             @else 方位角置信度 @endif */
-    uint8_t aoxElevFom;                 /*!< @if Eng elevation figure-of-merit
-                                             @else 俯仰角置信度 @endif */
-    int16_t aoxAzi;                     /*!< @if Eng azimuth, uint: 0.01degree
-                                             @else 方位角，单位：0.01度 @endif */
-    int16_t aoxElev;                    /*!< @if Eng elevation, uint: 0.01degree
-                                             @else 俯仰角，单位：0.01度 @endif */
+    uint8_t localAoxAziFom;             /*!< @if Eng local azimuth figure-of-merit
+                                             @else 本端方位角置信度 @endif */
+    uint8_t localAoxElevFom;            /*!< @if Eng local elevation figure-of-merit
+                                             @else 本端俯仰角置信度 @endif */
+    int16_t localAoxAzi;                /*!< @if Eng local azimuth, uint: 0.01degree
+                                             @else 本端方位角，单位：0.01度 @endif */
+    int16_t localAoxElev;               /*!< @if Eng local elevation, uint: 0.01degree
+                                             @else 本端俯仰角，单位：0.01度 @endif */
+    uint8_t peerAoxAziFom;              /*!< @if Eng peer azimuth figure-of-merit
+                                             @else 对端方位角置信度 @endif */
+    uint8_t peerAoxElevFom;             /*!< @if Eng peer elevation figure-of-merit
+                                             @else 对端俯仰角置信度 @endif */
+    int16_t peerAoxAzi;                 /*!< @if Eng peer azimuth, uint: 0.01degree
+                                             @else 对端方位角，单位：0.01度 @endif */
+    int16_t peerAoxElev;                /*!< @if Eng peer elevation, uint: 0.01degree
+                                             @else 对端俯仰角，单位：0.01度 @endif */
     SlpDeviceAddr providerAddr;         /*!< @if Eng provider address
                                              @else 测量值提供方的地址 @endif */
     SlpDeviceAddr requestorAddr;        /*!< @if Eng requestor address
@@ -508,6 +547,8 @@ typedef struct {
                                              @else 次版本号 @endif */
     uint16_t patch;                     /*!< @if Eng patch version
                                              @else 修订版本号 @endif */
+    uint16_t radarPatch;               /*!< @if Eng patch version
+                                             @else 雷达修订版本号 @endif */
 } SlpVersion;
 
 /**
@@ -654,6 +695,8 @@ typedef enum {
                                              @else SMI230型号的IMU  @endif */
     SLP_IMU_TYPE_ASM330,                /*!< @if Eng ASM330 model IMU
                                              @else ASM330型号的IMU  @endif */
+    SLP_IMU_TYPE_ICM42607,              /*!< @if Eng ICM42607 model IMU
+                                             @else ICM42607型号的IMU  @endif */
     SLP_IMU_TYPE_UNKNOWN = 0xFF,        /*!< @if Eng Unknown IMU model
                                              @else 未知的IMU型号 @endif */
 } SlpImuType;
@@ -710,16 +753,49 @@ typedef struct {
  * @par Callback invoked when report version data
  * @attention 1.This function is called in SLP context, should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the slp automatically.
+ * @attention 3.When the SLP is not powered on, only the narrowband version number is valid.
  * @param  [in]  versionRpt version data of SLP.
  * @else
  * @brief  版本信息上报回调函数。
  * @par    版本信息上报回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
+ * @attention  3. SLP未上电时，仅窄带版本号有效。
  * @param  [in]  versionRpt SLP版本信息。
  * @endif
  */
 typedef void (*SlpReportVersionCallback)(SlpVersionRpt *versionRpt);
+
+/**
+ * @if Eng
+ * @brief Struct of SLP DIE ID report interface
+ * @else
+ * @brief SLP上报DIE ID接口出参结构体
+ * @endif
+ */
+typedef struct {
+    uint16_t data[SLP_DIE_ID_ARR_NUM];      /*!< @if Eng SLP DIE ID.
+                                                 @else SLP芯片DIE ID @endif */
+} SlpDieId;
+
+/**
+ * @if Eng
+ * @brief Callback invoked when report SLP DIE ID
+ * @par Callback invoked when report SLP DIE ID
+ * @attention 1.This function is called in SLP context, should not be blocked or do long time waiting.
+ * @attention 2.The memories of pointer are requested and freed by the slp automatically.
+ * @attention 3.Only available after SLP power on.
+ * @param  [in]  dieId DIE ID of SLP, see @ref SlpDieId.
+ * @else
+ * @brief  芯片DIE ID上报回调函数。
+ * @par    芯片DIE ID上报回调函数。
+ * @attention  1.该回调函数运行于SLP线程，不能阻塞或长时间等待。
+ * @attention  2.指针由SLP申请内存，也由SLP释放，回调中不应释放。
+ * @attention  3.SLP上电后可调用。
+ * @param  [in]  dieId SLP芯片DIE ID, 参考 @ref SlpDieId。
+ * @endif
+ */
+typedef void (*SlpReportDieIdCallback)(const SlpDieId *dieId);
 
 /**
  * @if Eng
@@ -775,6 +851,60 @@ typedef void (*SlpReportTsensorCallback)(int16_t tsensor);
 
 /**
  * @if Eng
+ * @brief Struct of IMU raw data
+ * @else
+ * @brief IMU原始数据
+ * @endif
+ */
+typedef struct {
+    int16_t accX;                   /*!< @if Eng accelerometer x-axis data, needs to be mapped to ±8g
+                                         @else 加速度计x轴数据，需要映射到±8g @endif */
+    int16_t accY;                   /*!< @if Eng accelerometer y-axis data, needs to be mapped to ±8g
+                                         @else 加速度计y轴数据，需要映射到±8g @endif */
+    int16_t accZ;                   /*!< @if Eng accelerometer z-axis data, needs to be mapped to ±8g
+                                         @else 加速度计z轴数据，需要映射到±8g @endif */
+    int16_t gyroX;                  /*!< @if Eng gyroscope x-axis data, needs to be mapped to ±2000 degree/second
+                                         @else 陀螺仪x轴数据，需要映射到±2000度/秒 @endif */
+    int16_t gyroY;                  /*!< @if Eng gyroscope y-axis data, needs to be mapped to ±2000 degree/second
+                                         @else 陀螺仪y轴数据，需要映射到±2000度/秒 @endif */
+    int16_t gyroZ;                  /*!< @if Eng gyroscope z-axis data, needs to be mapped to ±2000 degree/second
+                                         @else 陀螺仪z轴数据，需要映射到±2000度/秒 @endif */
+} SlpImuRawData;
+
+/**
+ * @if Eng
+ * @brief Callback invoked when report IMU raw data
+ * @par Callback invoked when report IMU raw data
+ * @attention 1.This function is called in SLP context,should not be blocked or do long time waiting.
+ * @attention 2.The memories of pointer are requested and freed by the slp automatically.
+ * @param  [in]  imuRawData The raw data of IMU. It needs to be mapped to a real physical quantity and then used.
+ * @else
+ * @brief  IMU原始数据上报的回调函数。
+ * @par    IMU原始数据上报的回调函数。
+ * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
+ * @param  [in]  imuRawData IMU原始数据，需要映射到真实物理量后使用。
+ * @endif
+ */
+typedef void (*SlpReportImuRawDataCallback)(const SlpImuRawData *imuRawData);
+
+/**
+ * @if Eng
+ * @brief Callback invoked when report switch of the air mouse mode.
+ * @attention 1.This function is called in SLP context,should not be blocked or do long time waiting.
+ * @attention 2.The memories of pointer are requested and freed by the slp automatically.
+ * @param  [in]  flag Whether to enter the air mouse mode, false: No, true: Yes.
+ * @else
+ * @brief  空鼠模式状态切换上报回调函数。
+ * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
+ * @param  [in]  flag 是否进入空鼠模式，false：否，true：是
+ * @endif
+ */
+typedef void (*SlpReportAirMouseModeCallback)(bool flag);
+
+/**
+ * @if Eng
  * @brief Callback invoked when report errcode
  * @par Callback invoked when report errcode
  * @attention 1.This function is called in SLP context,should not be blocked or do long time waiting.
@@ -785,7 +915,7 @@ typedef void (*SlpReportTsensorCallback)(int16_t tsensor);
  * @par    上报错误码的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpReportErrcodeCallback)(ErrcodeSlpClient errcode);
@@ -802,7 +932,7 @@ typedef void (*SlpReportErrcodeCallback)(ErrcodeSlpClient errcode);
  * @par    发送负载的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  info 负载信息，参考 SlpPayloadInfo。
+ * @param  [in]  info 负载信息，参考 @ref SlpPayloadInfo。
  * @endif
  */
 typedef void (*SlpSendPayloadCallback)(const SlpPayloadInfo *info);
@@ -819,7 +949,7 @@ typedef void (*SlpSendPayloadCallback)(const SlpPayloadInfo *info);
  * @par    上电命令的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpPowerOnCallback)(ErrcodeSlpClient errcode);
@@ -836,7 +966,7 @@ typedef void (*SlpPowerOnCallback)(ErrcodeSlpClient errcode);
  * @par    启动测距命令的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpStartRangingCallback)(ErrcodeSlpClient errcode);
@@ -853,7 +983,7 @@ typedef void (*SlpStartRangingCallback)(ErrcodeSlpClient errcode);
  * @par    停止测距命令的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpStopRangingCallback)(ErrcodeSlpClient errcode);
@@ -870,7 +1000,7 @@ typedef void (*SlpStopRangingCallback)(ErrcodeSlpClient errcode);
  * @par    暂停测距命令的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpPauseRangingCallback)(ErrcodeSlpClient errcode);
@@ -887,7 +1017,7 @@ typedef void (*SlpPauseRangingCallback)(ErrcodeSlpClient errcode);
  * @par    继续测距命令的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpContinueRangingCallback)(ErrcodeSlpClient errcode);
@@ -904,7 +1034,7 @@ typedef void (*SlpContinueRangingCallback)(ErrcodeSlpClient errcode);
  * @par    下电命令的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpPowerOffCallback)(ErrcodeSlpClient errcode);
@@ -921,7 +1051,7 @@ typedef void (*SlpPowerOffCallback)(ErrcodeSlpClient errcode);
  * @par    睡眠命令的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpSleepCallback)(ErrcodeSlpClient errcode);
@@ -938,7 +1068,7 @@ typedef void (*SlpSleepCallback)(ErrcodeSlpClient errcode);
  * @par    打开cir上报命令的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpEnCirReportCallback)(ErrcodeSlpClient errcode);
@@ -955,7 +1085,7 @@ typedef void (*SlpEnCirReportCallback)(ErrcodeSlpClient errcode);
  * @par    关闭cir上报命令的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpDisCirReportCallback)(ErrcodeSlpClient errcode);
@@ -972,7 +1102,7 @@ typedef void (*SlpDisCirReportCallback)(ErrcodeSlpClient errcode);
  * @par    设置本机属性命令的回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
- * @param  [in]  errcode 错误码，参考 ErrcodeSlpClient
+ * @param  [in]  errcode 错误码，参考 @ref ErrcodeSlpClient。
  * @endif
  */
 typedef void (*SlpSetLocalAttCallback)(ErrcodeSlpClient errcode);
@@ -1000,7 +1130,7 @@ void SlpTask(void* param);
 typedef enum {
     SLP_UART_BUF_LEN_BASE = 256,           /*!< @if Eng slp ranging、aox and air mouse
                                                 @else 测距、测角、指向业务 @endif */
-    SLP_UART_BUF_LEN_RADAR = 4096,         /*!< @if Eng slp radar
+    SLP_UART_BUF_LEN_RADAR = 1024,         /*!< @if Eng slp radar
                                                 @else 雷达业务 @endif */
     SLP_UART_BUF_LEN_CIR_RPT = 4096,       /*!< @if Eng slp cir report
                                                 @else cir上报功能 @endif */
@@ -1025,12 +1155,12 @@ typedef struct {
 /**
  * @if Eng
  * @brief SLP setting uart buffer parameters.
- * @par  [in] info uart buffer parameters, see @ref SlpUartBufferInfo
+ * @param  [in] info uart buffer parameters, see @ref SlpUartBufferInfo
  * @retval ERRCODE_SLPC_SUCCESS Success.
  * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
  * @else
  * @brief SLP设置uart缓冲区参数。
- * @par  [in] info uart缓冲区参数，参考 @ref SlpUartBufferInfo
+ * @param  [in] info uart缓冲区参数，参考 @ref SlpUartBufferInfo
  * @retval ERRCODE_SLPC_SUCCESS 成功。
  * @retval Other        失败。参考 @ref ErrcodeSlpClient
  * @endif
@@ -1066,6 +1196,21 @@ ErrcodeSlpClient SlpPowerOnCommand(void);
  * @endif
  */
 ErrcodeSlpClient SlpReadVersionCommand(void);
+
+/**
+ * @if Eng
+ * @brief  Read SLP DIE ID Data.
+ * @par Description: Read SLP DIE ID Data.
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient.
+ * @else
+ * @brief  SLP读取版本信息。
+ * @par Description: 读取SLP芯片DIE ID信息。
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败，参考 @ref ErrcodeSlpClient。
+ * @endif
+ */
+ErrcodeSlpClient SlpReadDieIdCommand(void);
 
 /**
  * @if Eng
@@ -1322,12 +1467,18 @@ typedef struct {
                                                              @else slp上报cir回调函数。 @endif */
     SlpReportVersionCallback rptVersionCbk;             /*!< @if Eng slp report version callback.
                                                              @else slp上报版本号回调函数。 @endif */
+    SlpReportDieIdCallback rptDieIdCbk;                 /*!< @if Eng slp report DIE ID callback.
+                                                             @else slp上报芯片DIE ID回调函数。 @endif */
     SlpReportCfoCallback rptCfoCbk;                     /*!< @if Eng slp report cfo and frame threshold callback.
                                                              @else slp上报cfo和当前帧的cfo阈值。 @endif */
     SlpReportRegValueCallback rptRegValueCbk;           /*!< @if Eng slp report slp register value callback.
                                                              @else slp上报寄存器值。 @endif */
     SlpReportTsensorCallback rptTsensorCbk;             /*!< @if Eng slp report tsensor callback.
                                                              @else slp上报芯片温度回调函数。 @endif */
+    SlpReportImuRawDataCallback rptImuRawDataCbk;       /*!< @if Eng slp report IMU raw data callback.
+                                                             @else slp上报IMU原始数据回调函数。 @endif */
+    SlpReportAirMouseModeCallback rptAirMouseModeCbk;   /*!< @if Eng slp report air mouse mode callback.
+                                                             @else slp上报空鼠模式状态切换回调函数。 @endif */
 } SlpReportCallbacks;
 
 /**
@@ -1515,6 +1666,56 @@ typedef enum {
  * @endif
  */
 ErrcodeSlpClient SlpSetLogLevel(SlpLogLevel nbLevel, SlpLogLevel wbLevel);
+
+/**
+ * @if Eng
+ * @brief  Slp set IMU reporting frequency.
+ * @par Description: Slp IMU reporting frequency.
+ * @param  [in]  freq reporting frequency，unit: Hz, range: 1,2,3,4,5,6,8,10,12,15,16,20,24,30,40,48,60,80,120
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure.
+ * @else
+ * @brief  设置IMU原始数据上报频率。
+ * @par Description: 设置IMU原始数据上报频率。
+ * @param  [in]  freq 上报频率, 单位：赫兹, 取值范围：1,2,3,4,5,6,8,10,12,15,16,20,24,30,40,48,60,80,120
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。
+ * @endif
+ */
+ErrcodeSlpClient SlpSetImuReportFreq(uint8_t freq);
+
+/**
+ * @if Eng
+ * @brief Enum of slp correct mode
+ * @else
+ * @brief slp 光标校正模式
+ * @endif
+ */
+typedef enum {
+    SLP_CURSOR_CORRECT_MODE_AUTO = 0,       /*!< @if Eng slp auto switch mode
+                                                 @else 自动切换模式 @endif */
+    SLP_CURSOR_CORRECT_MODE_POINTER,        /*!< @if Eng slp air pointer mode
+                                                 @else 指向模式 @endif */
+    SLP_CURSOR_CORRECT_MODE_MOUSE,          /*!< @if Eng slp air mouse mode
+                                                 @else 空鼠模式 @endif */
+} SlpCursorCorrectMode;
+
+/**
+ * @if Eng
+ * @brief  Slp set cursor correct mode.
+ * @par Description: Slp cursor correct mode
+ * @param  [in]  mode cursor correct mode, see @ref SlpCursorCorrectMode
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure.
+ * @else
+ * @brief  设置光标校正模式。
+ * @par Description: 设置光标校正模式。
+ * @param  [in]  mode 光标校正模式，参考 @ref SlpCursorCorrectMode
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。
+ * @endif
+ */
+ErrcodeSlpClient SlpSetCursorCorrectMode(SlpCursorCorrectMode mode);
 
 /**
  * @}

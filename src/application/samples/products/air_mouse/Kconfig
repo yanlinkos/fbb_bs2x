@@ -39,7 +39,6 @@ endchoice
 
 choice
     prompt "Select slp usage mode"
-    depends on SAMPLE_SUPPORT_AIR_MOUSE
     default SLP_USAGE_AIR_MOUSE
     config SLP_USAGE_RANGING_AOX
         bool "ranging aox."
@@ -48,6 +47,22 @@ choice
     config SLP_USAGE_AIR_MOUSE_CAR
         bool "air mouse car."
 endchoice
+
+choice
+    prompt "Select ant array mode"
+    default SLP_TWO_ANT_ARRAY
+    config SLP_TWO_ANT_ARRAY
+        bool "two ant mode"
+    config SLP_THREE_ANT_L_ARRAY
+        bool "three ant mode(L)"
+    config SLP_THREE_ANT_TRIANGLE_ARRAY
+        bool "three ant mode(triangle)"
+endchoice
+
+config AIR_MOUSE_USB
+    bool
+    default y
+    prompt "Open Air Mouse USB."
 
 config AIR_MOUSE_UAC
     bool
@@ -82,19 +97,17 @@ config SAMPLE_SUPPORT_AIR_MOUSE_DEBUG
     help
         This option means print debug log.
 
-config LOW_POWER_MODE
-    hex
-    default 0
-    prompt "SLE SLP Low_Power 0-Disable 1-Enable."
-    depends on SAMPLE_SUPPORT_AIR_MOUSE
+config AIR_MOUSE_CPU_USAGE_STATISTIC
+    bool
+    default n
+    prompt "Open CPU usage statistic"
     help
-        This option means support SLE and SLP low power mode.
+        This option means open CPU usage statistic print.
 
 config LOW_POWER_MODE
     hex
     default 0
     prompt "SLE SLP Low_Power 0-Disable 1-Enable."
-    depends on SAMPLE_SUPPORT_AIR_MOUSE_DONGLE
     help
         This option means support SLE and SLP low power mode.
 

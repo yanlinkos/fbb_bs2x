@@ -26,14 +26,16 @@ typedef enum {
 } led_color_e;  // LED编号
 
 typedef enum {
-    LED_STATUS_IDLE,
-    LED_STATUS_ONE_KEY_DOWN,       // 单个按键按下
-    LED_STATUS_PAIRING,            // 配对中
-    LED_STATUS_UNPAIRING,          // 解配对中
-    LED_STATUS_SPEED_MODE_LOW,     // speed mode low
-    LED_STATUS_SPEED_MODE_MEDIUM,  // speed mode medium
-    LED_STATUS_SPEED_MODE_HIGH,    // speed mode high
-} led_status_e;                    // LED状态
+    LED_STATUS_IDLE = 0,
+    LED_STATUS_ONE_KEY_DOWN,           // 单个按键按下
+    LED_STATUS_PAIRING,                // 配对中
+    LED_STATUS_UNPAIRING,              // 解配对中
+    LED_STATUS_SPEED_MODE_LOW,         // speed mode low
+    LED_STATUS_SPEED_MODE_MEDIUM,      // speed mode medium
+    LED_STATUS_SPEED_MODE_HIGH,        // speed mode high
+    LED_STATUS_SPEED_MODE_MEDIUM_LOW,  // speed mode medium low
+    LED_STATUS_SPEED_MODE_MEDIUM_HIGH  // speed mode medium high
+} led_status_e;                        // LED状态
 
 /**
  * @brief  开启LED.

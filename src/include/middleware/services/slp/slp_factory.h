@@ -1,5 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2025. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2026. All rights reserved.
  * Description: slp factory api
  * ROM      : NO
  * STRATEGY : NO
@@ -15,6 +15,7 @@
 #define SLP_FACTORY_H
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "slp_errcode.h"
 
 #ifdef __cplusplus
@@ -100,19 +101,83 @@ typedef struct {
 
 /**
  * @if Eng
+ * @brief Struct of TriAnt slp aox calibration result
+ * @else
+ * @brief slp三天线测角校准参数
+ * @endif
+ */
+typedef struct {
+    uint32_t para0;                  /*!< @if Eng 3ant aox cali result para 0.
+                                         @else 三天线测角校准参数0 @endif */
+    uint32_t para1;                  /*!< @if Eng 3ant aox cali result para 1.
+                                         @else 三天线测角校准参数1 @endif */
+    int32_t para2;                  /*!< @if Eng 3ant aox cali result para 2.
+                                         @else 三天线测角校准参数2 @endif */
+    int32_t para3;                  /*!< @if Eng 3ant aox cali result para 3.
+                                         @else 三天线测角校准参数3 @endif */
+    int32_t para4;                  /*!< @if Eng 3ant aox cali result para 4.
+                                         @else 三天线测角校准参数4 @endif */
+    int32_t para5;                  /*!< @if Eng 3ant aox cali result para 5.
+                                         @else 三天线测角校准参数5 @endif */
+    int32_t para6;                  /*!< @if Eng 3ant aox cali result para 6.
+                                         @else 三天线测角校准参数6 @endif */
+    int32_t para7;                  /*!< @if Eng 3ant aox cali result para 7.
+                                         @else 三天线测角校准参数7 @endif */
+    int32_t para8;                  /*!< @if Eng 3ant aox cali result para 8.
+                                         @else 三天线测角校准参数8 @endif */
+    int32_t para9;                  /*!< @if Eng 3ant aox cali result para 9.
+                                         @else 三天线测角校准参数9 @endif */
+    int32_t para10;                 /*!< @if Eng 3ant aox cali result para 10.
+                                         @else 三天线测角校准参数10 @endif */
+    int32_t para11;                 /*!< @if Eng 3ant aox cali result para 11.
+                                         @else 三天线测角校准参数11 @endif */
+    int32_t para12;                 /*!< @if Eng 3ant aox cali result para 12.
+                                         @else 三天线测角校准参数12 @endif */
+    int32_t para13;                 /*!< @if Eng 3ant aox cali result para 13.
+                                         @else 三天线测角校准参数13 @endif */
+    int32_t para14;                 /*!< @if Eng 3ant aox cali result para 14.
+                                         @else 三天线测角校准参数14 @endif */
+    int32_t para15;                 /*!< @if Eng 3ant aox cali result para 15.
+                                         @else 三天线测角校准参数15 @endif */
+    int32_t para16;                 /*!< @if Eng 3ant aox cali result para 16.
+                                         @else 三天线测角校准参数16 @endif */
+    int32_t para17;                 /*!< @if Eng 3ant aox cali result para 17.
+                                         @else 三天线测角校准参数17 @endif */
+} SlpTriAntAoxCaliPara;
+
+/**
+ * @if Eng
  * @brief Struct of gyroscope zero offset value
  * @else
  * @brief 陀螺仪零偏校准值结构体
  * @endif
  */
 typedef struct {
-    int32_t x;                      /*!< @if Eng i of calibration result d11, unit: 1e-6°/s.
-                                         @else 陀螺仪x轴零偏校准值，单位：1e-6度/秒。 @endif */
-    int32_t y;                      /*!< @if Eng q of calibration result d11, unit: 1e-6°/s.
-                                         @else 陀螺仪y轴零偏校准值，单位：1e-6度/秒。 @endif */
-    int32_t z;                      /*!< @if Eng i of calibration result d12, unit: 1e-6°/s.
-                                         @else 陀螺仪y轴零偏校准值，单位：1e-6度/秒。 @endif */
+    int32_t x;                      /*!< @if Eng i of calibration result d11, unit: 1e-8 rad/s.
+                                         @else 陀螺仪x轴零偏校准值，单位：1e-8弧度/秒。 @endif */
+    int32_t y;                      /*!< @if Eng q of calibration result d11, unit: 1e-8 rad/s.
+                                         @else 陀螺仪y轴零偏校准值，单位：1e-8弧度/秒。 @endif */
+    int32_t z;                      /*!< @if Eng i of calibration result d12, unit: 1e-8 rad/s.
+                                         @else 陀螺仪y轴零偏校准值，单位：1e-8弧度/秒。 @endif */
 } SlpGyroZeroOffset;
+
+/**
+ * @if Eng
+ * @brief Struct of slp factory aox calibration data report interface
+ * @else
+ * @brief slp三天线-L型产测测角校准数据上报结构体
+ * @endif
+ */
+typedef struct {
+    int32_t tof;                    /*!< @if Eng time of flight, unit: 1/64 ns.
+                                         @else 测距结果, 飞行时间, 单位: 1/64纳秒. @endif */
+    SlpAoxCaliData aoxElevCaliData;     /*!< @if Eng elev aox calibration data.
+                                         @else 垂直测角校准数据. @endif */
+    SlpAoxCaliData aoxAziCaliData;      /*!< @if Eng azi aox calibration data.
+                                         @else 水平测角校准数据. @endif */
+    SlpAoxRslt aoxRslt;             /*!< @if Eng angle measurement result.
+                                         @else 测角结果. @endif */
+} SlpFactoryTriAntRangingAoxDataRpt;
 
 /**
  * @if Eng
@@ -209,6 +274,40 @@ uint32_t SlpWriteAoxCaliPara(SlpAoxCaliPara *caliPara);
  * @endif
  */
 uint32_t SlpReadAoxCaliPara(SlpAoxCaliPara *caliPara);
+
+/**
+ * @if Eng
+ * @brief Write the calibration value for three_ant_L.
+ * @par Description: Write the calibration value for three_ant_L.
+ * @param  [in]  caliPara cali result, see @ref SlpTriAntAoxCaliPara
+ * @retval ERRCODE_SUCC Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @else
+ * @brief 向本端NV写入三天线校准值。
+ * @par Description: 向本端NV写入三天线校准值。
+ * @param  [in]  caliPara 校准值，参考 @ref SlpTriAntAoxCaliPara
+ * @retval ERRCODE_SUCC 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @endif
+ */
+uint32_t SlpWriteTriAntAoxCaliPara(SlpTriAntAoxCaliPara *caliPara);
+
+/**
+ * @if Eng
+ * @brief Read the calibration value for three_ant_L.
+ * @par Description: Read the calibration value for three_ant_L.
+ * @param  [in]  caliPara cali result, see @ref SlpTriAntAoxCaliPara
+ * @retval ERRCODE_SUCC Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @else
+ * @brief 读取本端NV三天线校准值。
+ * @par Description: 读取本端NV三天线校准值。
+ * @param  [in]  caliPara 校准值，参考 @ref SlpTriAntAoxCaliPara
+ * @retval ERRCODE_SUCC 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @endif
+ */
+uint32_t SlpReadTriAntAoxCaliPara(SlpTriAntAoxCaliPara *caliPara);
 
 /**
  * @if Eng
@@ -374,16 +473,33 @@ uint32_t SlpReadGyroZeroOffset(SlpGyroZeroOffset *offset);
  * @if Eng
  * @brief  SLP enable imu detection.
  * @par Description: SLP enable imu detection.
+ * @param  [in]  gyroUpdateFlag whether to update the zero bias value, true: Yes, false: No.
  * @retval ERRCODE_SLPC_SUCCESS Success.
  * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
  * @else
  * @brief  SLP开启IMU检测。
  * @par Description: SLP开启IMU检测。
+ * @param  [in]  gyroUpdateFlag 是否更新零偏值，true：是，false：否。
  * @retval ERRCODE_SLPC_SUCCESS 成功。
  * @retval Other        失败。参考 @ref ErrcodeSlpClient
  * @endif
  */
-ErrcodeSlpClient SlpEnableImuDetectionCommand(void);
+ErrcodeSlpClient SlpEnableImuDetectionCommand(bool gyroUpdateFlag);
+
+/**
+ * @if Eng
+ * @brief  SLP disable imu detection.
+ * @par Description: SLP disable imu detection.
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @else
+ * @brief  SLP关闭IMU检测。
+ * @par Description: SLP关闭IMU检测。
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @endif
+ */
+ErrcodeSlpClient SlpDisableImuDetectionCommand(void);
 
 /**
  * @if Eng
@@ -443,15 +559,17 @@ typedef void (*SlpReportFactoryTrxDelayCallback)(uint32_t *trxDelay);
  * @attention  1.This function is called in SLP context,should not be blocked or do long time waiting.
  * @attention  2.The memories of pointer are requested and freed by the slp automatically.
  * @param  [in]  offset gyroscope zero offset result, see @ref SlpGyroZeroOffset
+ * @param  [in]  updateNv has NV been updated, true: Yes, false: No
  * @else
  * @brief  陀螺仪零偏校准值结果上报回调函数。
  * @par  陀螺仪零偏校准值结果上报回调函数。
  * @attention  1. 该回调函数运行于SLP线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLP申请内存，也由SLP释放，回调中不应释放。
  * @param  [in]  offset 陀螺仪零偏校准值。参考 @ref SlpGyroZeroOffset
+ * @param  [in]  updateNv 是否更新了NV, true: 是, false: 否
  * @endif
  */
-typedef void (*SlpReportGyroZeroOffsetCallback)(SlpGyroZeroOffset *offset);
+typedef void (*SlpReportGyroZeroOffsetCallback)(SlpGyroZeroOffset *offset, bool updateNv);
 
 /**
  * @if Eng
@@ -484,6 +602,20 @@ typedef void (*SlpReportFactoryImuDataCallback)(SlpFactoryImuDataRpt *rpt);
 
 /**
  * @if Eng
+ * @brief Callback invoked when report factory test result
+ * @par Callback invoked when report factory test result
+ * @param  [in]  factoryRpt factory test aox calibration result.
+ * @else
+ * @brief  测角原始数据上报函数(三天线-L型)
+ * @par    测角原始数据上报函数(三天线-L型)
+ * @param  [in]  factoryRpt 测角校准结果。
+ * @endif
+ */
+typedef void (*SlpReportTriAntOriginDataCallback)(SlpFactoryTriAntRangingAoxDataRpt *factoryRpt);
+
+
+/**
+ * @if Eng
  * @brief Struct of slp factory result report callbacks
  * @else
  * @brief 产测结果上报回调
@@ -500,6 +632,8 @@ typedef struct {
                                                                  @else 陀螺仪零偏校准值结果上报回调函数。 @endif */
     SlpReportFactoryImuDataCallback rptImuDataCbk;          /*!< @if Eng slp report IMU factory data callback.
                                                                  @else 上报IMU产测数据回调函数。 @endif */
+    SlpReportTriAntOriginDataCallback rptTriAntOriginDataCbk;          /*!< @if Eng slp report TriAnt aox factory data callback.
+                                                                 @else 上报三天线产测数据回调函数。 @endif */
 } SlpFactoryReportCallbacks;
 
 /**

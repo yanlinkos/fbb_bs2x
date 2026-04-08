@@ -29,6 +29,7 @@ typedef struct {
     app_timer_cmd_e cmd;
     void (*start_func)(unsigned long);  // 启动处理，启动定时器等
     void (*stop_func)(void);            // 中途停止操作
+    uint8_t data[5];                    // 定时器数据, 5:数组长度
     void (*handler)(unsigned long);     // 定时器回调函数
     unsigned int interval;              // timer timing duration, unit: ms
 } timer_table_t;
@@ -49,7 +50,7 @@ static void key_hold_start_func(unsigned long combine_key)
 {
     osal_printk("[timer] start, key hold\r\n");
     osal_timer *timer = &g_timer_arr[TIME_CMD_KEY_HOLD_LONG];
-    timer->data = combine_key;
+    ((uint8_t *)(uintptr_t)timer->data)[0] = (uint8_t)combine_key;
     osal_timer_stop(timer);
     osal_timer_mod(timer, timer->interval);
 }
@@ -60,9 +61,10 @@ static void key_hold_stop_func(void)
     osal_timer_stop(&g_timer_arr[TIME_CMD_KEY_HOLD_LONG]);
 }
 
-static void key_hold_timer_callback(unsigned long combine_key)
+static void key_hold_timer_callback(unsigned long dataPtr)
 {
     osal_printk("[timer] callback, key hold\r\n");
+    combine_key_e combine_key = ((uint8_t *)(uintptr_t)dataPtr)[0];
     send_key_hold_msg(combine_key);
 }
 
@@ -73,7 +75,7 @@ static void pair_start_func(unsigned long data)
     osal_timer_start(&g_timer_arr[TIME_CMD_PAIR]);
     set_led_status(LED_STATUS_PAIRING);
     sle_remove_all_pairs();
-    set_announce_keyscan_flag();
+    set_announce_after_disc_flag(true);
     sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
 }
 
@@ -99,9 +101,10 @@ static void unpair_start_func(unsigned long data)
     set_led_status(LED_STATUS_UNPAIRING);
     osal_msleep(2000);  // 2000:解配对执行速度较快，让指示灯闪烁一段时间
     osal_timer_start(&g_timer_arr[TIME_CMD_UNPAIR]);
-    set_announce_keyscan_flag();
+    set_announce_after_disc_flag(false);
     sle_stop_announce(SLE_ADV_HANDLE_DEFAULT);
     sle_remove_all_pairs();
+    sle_disconnect_all_remote_device();
     app_timer_process_stop(TIME_CMD_UNPAIR);
 }
 
@@ -120,10 +123,10 @@ static void unpair_timer_callback(unsigned long para)
     unpair_stop_func();
 }
 
-static const timer_table_t g_timer_table[TIME_CMD_NUM] = {
-    {TIME_CMD_KEY_HOLD_LONG, key_hold_start_func, key_hold_stop_func, key_hold_timer_callback, TIME_HOLD_LONG},
-    {TIME_CMD_PAIR, pair_start_func, pair_stop_func, pair_timer_callback, TIME_PAIR},
-    {TIME_CMD_UNPAIR, unpair_start_func, unpair_stop_func, unpair_timer_callback, TIME_UNPAIR},
+static timer_table_t g_timer_table[TIME_CMD_NUM] = {
+    {TIME_CMD_KEY_HOLD_LONG, key_hold_start_func, key_hold_stop_func, {0}, key_hold_timer_callback, TIME_HOLD_LONG},
+    {TIME_CMD_PAIR,          pair_start_func,     pair_stop_func,     {0}, pair_timer_callback,     TIME_PAIR     },
+    {TIME_CMD_UNPAIR,        unpair_start_func,   unpair_stop_func,   {0}, unpair_timer_callback,   TIME_UNPAIR   },
 };
 
 void app_timer_process_start(app_timer_cmd_e cmd, unsigned long data)
@@ -142,7 +145,7 @@ void app_timer_init(void)
     osal_printk("app_timer_init!\r\n");
     for (int i = 0; i < TIME_CMD_NUM; i++) {
         g_timer_arr[i].timer = NULL;
-        g_timer_arr[i].data = 0;
+        g_timer_arr[i].data = (unsigned long)(uintptr_t)(&g_timer_table[i].data[0]);
         g_timer_arr[i].handler = g_timer_table[i].handler;
         g_timer_arr[i].interval = g_timer_table[i].interval;
         int ret = osal_timer_init(&g_timer_arr[i]);
