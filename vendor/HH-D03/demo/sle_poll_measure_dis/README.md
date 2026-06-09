@@ -1,96 +1,95 @@
-# 测距
+# Ranging
 
-## 概述
+## Overview
 
-此Sample基于SLE实现了一种一对多的测距方案。Server 端通过广播信号，Client端通过扫描建立连接，并依次与多个 Server 进行轮询测距。在测距过程中，Client端负责采集本地 IQ 数据并发送给 Server，Server端接收后计算出最终的距离。本Sample测距稳定、轮询顺畅、数据传输精准，适用于室内定位、智能家居、物联网（IoT）等场景。
+This Sample implements a one-to-many ranging scheme based on SLE. The Server broadcasts signals, the Client establishes connections through scanning, and sequentially performs polling ranging with multiple Servers. During the ranging process, the Client is responsible for collecting local IQ data and sending it to the Server, which calculates the final distance after receiving it. This Sample features stable ranging, smooth polling, and precise data transmission, making it suitable for scenarios such as indoor positioning, smart homes, and the Internet of Things (IoT).
 
-## 编译流程
+## Compilation Process
 
-- 步骤一：修改drivers\chips\bs2x\main_init\app_os_init.c中\#define TASK_COMMON_APP_DELAY_MS       20000修改为\#define TASK_COMMON_APP_DELAY_MS       7000
+- Step 1: Modify `#define TASK_COMMON_APP_DELAY_MS       20000` in `drivers\chips\bs2x\main_init\app_os_init.c` to `#define TASK_COMMON_APP_DELAY_MS       7000`
 
   ```
   #define TASK_COMMON_APP_DELAY_MS       7000
   ```
 
-- 步骤二：根据需要连接的锚点数量，在sle_measure_dis_client.h中，修改MAX_SERVERS的值，如下图所示
+- Step 2: Modify the value of `MAX_SERVERS` in `sle_measure_dis_client.h` according to the number of anchor points to be connected, as shown in the figure below.
 
 ![image-20250625165545347](../../doc/media/sle_poll_measure_dis/image-20250625165545347.png)
 
-- 步骤三：根据需要连接的锚点数量，在sle_measure_dis_client.c中的measure_dis_slem_set_param函数中，修改变量con_anchor_num的值，如下图，如下图所示 
+- Step 3: Modify the value of the variable `con_anchor_num` in the `measure_dis_slem_set_param` function in `sle_measure_dis_client.c` according to the number of anchor points to be connected, as shown in the figure below. 
 
    ![image-20250625165556018](../../doc/media/sle_poll_measure_dis/image-20250625165556018.png)
 
- Ps: 需要根据实际连接的锚点数修改变量cs_interval的值来选择不同的测距频率，目前sample中提供的三种测距频率接口：分别是2Hz、1Hz、0.5Hz。对应关系由下表所示
+ Ps: The value of the variable `cs_interval` needs to be modified based on the actual number of connected anchors to select different ranging frequencies. Currently, the sample provides three ranging frequency interfaces: 2Hz, 1Hz, and 0.5Hz. The corresponding relationship is shown in the table below.
 
-|宏|测距频率|单个Client最多连接数|
+| Macro | Ranging Frequency | Maximum Connections per Client |
 |:------|:-----:|:-----:|
-|CARKEY_SLE_SLEM_2HZ|2Hz|2个|
-|CARKEY_SLE_SLEM_1HZ|1Hz|5个|
-|CARKEY_SLE_SLEM_05HZ|0.5Hz|8个|
+| CARKEY_SLE_SLEM_2HZ | 2Hz | 2 |
+| CARKEY_SLE_SLEM_1HZ | 1Hz | 5 |
+| CARKEY_SLE_SLEM_05HZ | 0.5Hz | 8 |
 
-
-- 步骤四：在sle_measure_dis_sever.c中的g_measure_dis_server_addr中，为每个sever设置不同的地址，如下图所示
+- Step 4: In `g_measure_dis_server_addr` in `sle_measure_dis_sever.c`, set a different address for each server, as shown in the figure below.
 
    ![image-20250625170002352](../../doc/media/sle_poll_measure_dis/image-20250625170002352.png)
 
-- 步骤五：在HiSpark Studio里面点击KConfig，进入如图所示页面。
+- Step 5: Click KConfig in HiSpark Studio to enter the page as shown in the figure.
 
    ![image-20250625170018625](../../doc/media/sle_poll_measure_dis/image-20250625170018625.png)
 
--  步骤五：如果选择编译server sample，在弹出框中选择如下图所示的内容，点击Save，关闭弹窗；
+- Step 5: If you choose to compile the server sample, select the content shown in the figure below in the pop-up box, click Save, and close the pop-up window;
 
    ![image-20250625170026580](../../doc/media/sle_poll_measure_dis/image-20250625170026580.png)
 
--  步骤六：如果选择编译client sample，在弹出框中选择如下图所示的内容，点击Save，关闭弹窗。（需要准备多块开发板，选择不同的编译选项，烧录不同的镜像）
+- Step 6: If you choose to compile the client sample, select the content shown in the figure below in the pop-up window, click Save, and close the pop-up. (Multiple development boards need to be prepared, different compilation options selected, and different images burned.)
 
    ![image-20250625170038808](../../doc/media/sle_poll_measure_dis/image-20250625170038808.png)
 
    
 
-- 步骤七：KConfig配置完成后，点击“Build”即可开始编译相应sample。若编译出错，可查看日志确定寻找错误原因。
+- Step 7: After completing the KConfig configuration, click "Build" to start compiling the corresponding sample. If a compilation error occurs, check the log to identify the cause of the error.
 
-## 烧录
+## Flashing
 
-- 步骤一：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
+- Step 1: In the HiSpark Studio tool, click the "Project Configuration" button, select "Program Loading", choose "serial" as the transmission method, and select "comxxx" as the port. Check the COM port in Device Manager (if the COM port cannot be found, refer to the Windows environment setup).
 
   ![image-20250317173145978](../../doc/media/sle_poll_measure_dis/image-20250317173145978.png)
 
-- 步骤二：配置完成后，点击工具“程序加载”按钮烧录。
+- Step 2: After configuration is complete, click the tool's "Program Load" button to burn.
 
   ![image-20240801174117545](../../doc/media/sle_poll_measure_dis/image-20240801174117545.png)
 
-- 步骤三：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
+- Step 3: When the message "Connecting, please reset device..." appears, reset the development board and wait for the flashing to complete.
 
   ![image-20240801174230202](../../doc/media/sle_poll_measure_dis/image-20240801174230202.png)
 
-- 步骤四：“软件烧录成功后，按一下开发板的RESET按键复位开发板，可以通过交通灯板上的按键控制红色LED灯亮灭。
+- Step 4: "After the software is successfully burned, press the RESET button on the development board to reset it. The red LED light on the traffic light board can be controlled to turn on and off via the button."
 
-## 运行
+## Operation
 
-  此sample运行流程如下：
+The operation flow of this sample is as follows:
 
-- 步骤一：准备多块开发板，其中一块烧录Client端程序，其余烧录Server端程序。
+- Step 1: Prepare multiple development boards. Burn the Client program on one board and the Server program on the others.
 
-- 步骤二：上电后，Server端开始广播信号，Client端通过扫描连接多个Server，并逐个进行测距。
+- Step 2: After powering on, the Server starts broadcasting signals. The Client scans and connects to multiple Servers, performing distance measurement with each one in turn.
 
-- 步骤三：Client端在测距过程中采集本地IQ数据，并发送给当前测距Server。
+- Step 3: During the distance measurement process, the Client collects local IQ data and sends it to the currently connected Server.
 
-- 步骤四：Server端接收Remote IQ数据后，计算测距结果并记录数据。
+- Step 4: After receiving the Remote IQ data, the Server calculates the distance measurement result and records the data.
 
-- 步骤五：测距完成后，Client端自动切换到下一个Server，并重复测距过程，实现多个 Server的轮询测距。
+- Step 5: Once the distance measurement is complete, the Client automatically switches to the next Server and repeats the measurement process, achieving polling distance measurement with multiple Servers.
 
-- 步骤六：测距数据可通过日志输出，观察Client端与多个Server之间的测距切换情况。
+- Step 6: The distance measurement data can be output via logs to observe the switching of distance measurement between the Client and multiple Servers.
 
-  5、校准
+5. Calibration
 
-  在锚点周围 3m 范围内空旷无遮挡、无墙体、柱体、金属等遮挡物的环境下测试。按照下图所示在设备周围3个方向的1m位置，进行3次测距，3次测距值的其平均值减1为锚点 A 的校准值。
+Test in an environment within a 3m range around the anchor point that is open, unobstructed, and free of walls, pillars, metal, or other obstacles. As shown in the figure below, perform three distance measurements at 1m positions in three directions around the device. The average of the three distance measurement values minus 1 is the calibration value for anchor A.
 
    ![image-20250625170053685](../../doc/media/sle_poll_measure_dis/1754016721595.jpg)
 
-  每个锚点都要进行校准，得到校准值后，在sle_measure_dis_server_alg.c中如图所示的位置输入校准值
+  Each anchor point must be calibrated. After obtaining the calibration values, input them at the positions shown in the figure in sle_measure_dis_server_alg.c.
 
    ![image-20250625170101367](../../doc/media/sle_poll_measure_dis/image-20250625170101367.png)
 
-- 步骤七：效果如下
+- Step 7: The effect is as follows
 
   ![image-20250626092846431](../../doc/media/sle_poll_measure_dis/image-20250626092846431.png)
