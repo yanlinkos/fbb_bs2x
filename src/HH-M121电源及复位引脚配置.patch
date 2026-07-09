@@ -1,0 +1,115 @@
+
+---
+ .../menuconfig/acore/standard_bs21e_1100e.config  |  9 ++++++++-
+ drivers/chips/bs2x/main_init/main_init.c          |  5 +++++
+ .../chips/bs2x/porting/pm/pm_pmu/CMakeLists.txt   |  1 +
+ .../chips/bs2x/porting/pm/pm_pmu/pm_pmu_porting.c | 15 ++++++++++++++-
+ .../chips/bs2x/porting/pm/pm_pmu/pm_pmu_porting.h |  3 +++
+ 5 files changed, 31 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 build/config/target_config/bs21e/menuconfig/acore/standard_bs21e_1100e.config
+
+diff --git a/build/config/target_config/bs21e/menuconfig/acore/standard_bs21e_1100e.config b/build/config/target_config/bs21e/menuconfig/acore/standard_bs21e_1100e.config
+old mode 100755
+new mode 100644
+index 0b9591a..bc41e78
+--- a/build/config/target_config/bs21e/menuconfig/acore/standard_bs21e_1100e.config
++++ b/build/config/target_config/bs21e/menuconfig/acore/standard_bs21e_1100e.config
+@@ -22,7 +22,14 @@
+ # Config the application.
+ #
+ CONFIG_USER_FIRMWARE_VERSION="0.0.0.1"
+-# CONFIG_SYSTEM_CONTROL_ENABLE is not set
++CONFIG_SYSTEM_CONTROL_ENABLE=y
++CONFIG_POWER_SUPPLY_BY_LDO=y
++# CONFIG_REDUCE_PERP_LS_FREQ is not set
++# CONFIG_REDUCE_FREQ_DURING_WFI is not set
++# CONFIG_ULTRA_DEEP_SLEEP_ENABLE is not set
++# CONFIG_PM_XO_FAST_START_ENABLE is not set
++# CONFIG_XO_32K_ENABLE is not set
++# CONFIG_SUPPORT_CLOSE_ULP_WDT_DURING_SLP is not set
+ # CONFIG_SAMPLE_ENABLE is not set
+ # CONFIG_SUPPORT_SLE_PERIPHERAL is not set
+ # CONFIG_SUPPORT_SLE_CENTRAL is not set
+diff --git a/drivers/chips/bs2x/main_init/main_init.c b/drivers/chips/bs2x/main_init/main_init.c
+index ff69fb1..6627cab 100755
+--- a/drivers/chips/bs2x/main_init/main_init.c
++++ b/drivers/chips/bs2x/main_init/main_init.c
+@@ -102,6 +102,7 @@ static uint64_t g_irq_start_time = 0;
+ static uint64_t g_irq_end_time = 0;
+ #endif
+ #endif
++#include "pm_pmu_porting.h"
+ 
+ #define WDT_TIMEOUT_S 30
+ #define IMG_NUM_MAX   2
+@@ -378,6 +379,10 @@ static void chip_hw_init(void)
+ #endif
+     panic_init();
+     uapi_pin_init();
++#ifdef PIN_RESET_ENABLE
++    /* enable S_MGPIO21 reset */
++    pm_reset_pin_enable(true);
++#endif
+ #ifdef CONFIG_ULTRA_DEEP_SLEEP_ENABLE
+     if (readw(0x5702C700) == 0) {
+         hardware_config_init();
+diff --git a/drivers/chips/bs2x/porting/pm/pm_pmu/CMakeLists.txt b/drivers/chips/bs2x/porting/pm/pm_pmu/CMakeLists.txt
+index b7b86fc..b11f4b8 100755
+--- a/drivers/chips/bs2x/porting/pm/pm_pmu/CMakeLists.txt
++++ b/drivers/chips/bs2x/porting/pm/pm_pmu/CMakeLists.txt
+@@ -19,6 +19,7 @@ set(PRIVATE_DEFINES
+ )
+ 
+ set(PUBLIC_DEFINES
++    PIN_RESET_ENABLE
+ )
+ 
+ # use this when you want to add ccflags like -include xxx
+diff --git a/drivers/chips/bs2x/porting/pm/pm_pmu/pm_pmu_porting.c b/drivers/chips/bs2x/porting/pm/pm_pmu/pm_pmu_porting.c
+index 2580021..2fd73d3 100755
+--- a/drivers/chips/bs2x/porting/pm/pm_pmu/pm_pmu_porting.c
++++ b/drivers/chips/bs2x/porting/pm/pm_pmu/pm_pmu_porting.c
+@@ -24,6 +24,7 @@ static bool pmu_control_nfcldo_power(pmu_control_power_t power);
+ static uint8_t g_micldo_vset = 0;
+ #ifdef PIN_RESET_ENABLE
+ #define PIN_RESET_DELAY 5ULL
++#define PIN_RESET_GPIO S_MGPIO21
+ #endif
+ 
+ #ifdef NFC_TASK_EXIST
+@@ -188,4 +189,16 @@ void pm_efuse_ldo_power(bool on)
+         // 关闭micldo
+         uapi_pmu_control(PMU_CONTROL_MICLDO_POWER, PMU_CONTROL_POWER_OFF);
+     }
+-}
+\ No newline at end of file
++}
++
++#ifdef PIN_RESET_ENABLE
++void pm_reset_pin_enable(bool state)
++{
++    if (state) {
++        /* enable S_MGPIO21 reset */
++        uapi_pmu_control(PMU_CONTROL_PIN_RESET_ENABLE, PIN_RESET_GPIO);
++    } else {
++        uapi_pmu_control(PMU_CONTROL_PIN_RESET_DISABLE, PIN_RESET_GPIO);
++    }
++}
++#endif
+\ No newline at end of file
+diff --git a/drivers/chips/bs2x/porting/pm/pm_pmu/pm_pmu_porting.h b/drivers/chips/bs2x/porting/pm/pm_pmu/pm_pmu_porting.h
+index 954b402..8d84ffb 100755
+--- a/drivers/chips/bs2x/porting/pm/pm_pmu/pm_pmu_porting.h
++++ b/drivers/chips/bs2x/porting/pm/pm_pmu/pm_pmu_porting.h
+@@ -163,6 +163,9 @@ typedef enum pmu_power_supply {
+ void pm_pmu_power_supply_mode_init(void);
+ pmu_power_supply_t pm_get_pmu_power_supply_mode(void);
+ void pm_efuse_ldo_power(bool on);
++#ifdef PIN_RESET_ENABLE
++void pm_reset_pin_enable(bool state);
++#endif
+ 
+ /**
+  * @}
+-- 
+
