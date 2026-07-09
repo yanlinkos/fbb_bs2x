@@ -10,6 +10,8 @@
 
 - [HiSparkStudio工具下载及安装](HiSparkStudio工具下载及安装.md)
 - [HiSparkStudio编译及烧录](HiSparkStudio编译及烧录.md)
+Enable the LDO under system control (you can find this in the Kconfig config – via VSCode → HiSpark plugin → command → system config).
+Proceed to compile the code.
 
 ## WSL+Ubuntu22.04系统环境搭建
 
