@@ -1,8 +1,10 @@
 choice
     prompt "Select sle ble support"
+    default PRODUCT_SLE_MEASURE_DIS if SAMPLE_SUPPORT_SLE_MEASURE_DIS
     default SUPPORT_SLE_BLE_CENTRAL_DEFAULT
     config SUPPORT_SLE_BLE_CENTRAL_DEFAULT
         bool "Select sle ble central default."
+        depends on !SAMPLE_SUPPORT_SLE_MEASURE_DIS
     config SUPPORT_SLE_BLE_PERIPHERAL
         bool "Select sle ble peripheral."
     config SUPPORT_SLE_PERIPHERAL
