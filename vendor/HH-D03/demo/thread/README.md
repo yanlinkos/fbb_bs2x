@@ -1,128 +1,128 @@
-# thread/线程
+# thread/Thread
 
-## 1.1 介绍
+## 1.1 Introduction
 
-**功能介绍：** 本实验内容实现了创建两个任务进程task，任务1每1S打印一次“This is Thread1---”，任务二每500ms打印一次“This is Thread2---”。
+**Function Description:** This experiment implements the creation of two task processes (tasks). Task 1 prints "This is Thread1---" once every 1 second, and task 2 prints "This is Thread2---" once every 500ms.
 
-**软件概述：** 任务是竞争系统资源的最小运行单元。任务可以使用或等待CPU、使用内存空间等系统资源，并独立于其它任务运行。任务模块可以给用户提供多个任务，实现了任务之间的切换和通信，帮助用户管理业务程序流程。
+**Software Overview:** A task is the smallest running unit competing for system resources. A task can use or wait for system resources such as CPU and memory space, and runs independently of other tasks. The task module can provide users with multiple tasks, implement switching and communication between tasks, and help users manage business program flows.
 
-- 支持多任务，一个任务表示一个线程。
-- 任务是抢占式调度机制，同时支持时间片轮转调度方式。
-- 高优先级的任务可打断低优先级任务，低优先级任务必须在高优先级任务阻塞或结束后才能得到调度。
-- 有32个优先级[0, 31],最高优先级为0，最低优先级为31，建议用户使用优先级范围是[10, 30]
+- Supports multiple tasks; one task represents one thread.
+- Tasks use a preemptive scheduling mechanism and also support round-robin scheduling.
+- A high-priority task can preempt a low-priority task, and a low-priority task can only be scheduled after the high-priority task is blocked or finishes.
+- There are 32 priorities [0, 31]. The highest priority is 0 and the lowest priority is 31. It is recommended that users use the priority range [10, 30]
 
-**硬件概述：**[核心板原理图](../../doc/hardware/HH-D03_原理图_V01.pdf)。硬件搭建要求如图所示：
+**Hardware Overview:** [Core board schematic](../../doc/hardware/HH-D03_原理图_V01.pdf). The hardware setup requirements are shown in the figure:
 
 <img src="../../doc/media/tools/image-20250422184625049.png" alt="image-20240226173007100" style="zoom: 67%;" />
 
-## 1.2 约束与限制
+## 1.2 Constraints and Limitations
 
-### 1.2.1 支持应用运行的芯片和开发板
+### 1.2.1 Chips and Development Boards Supporting Application Operation
 
-  本示例支持开发板：HH-D03
+  Development board supported by this example: HH-D03
 
-### 1.2.2 支持API版本、SDK版本
+### 1.2.2 Supported API Version, SDK Version
 
-  本示例支持版本号：1.0.15以上
+  Version number supported by this example: 1.0.15 and above
 
-### 支持IDE插件版本
+### Supported IDE Plugin Version
 
-  本示例支持IDE插件版本号：1.0.1及以上；
+  IDE plugin version supported by this example: 1.0.1 and above;
 
-## 1.3 效果预览
+## 1.3 Effect Preview
 
-任务1每1S打印一次“This is Thread1----”，任务二每500ms打印一次“This is Thread2----。
+Task 1 prints "This is Thread1----" once every 1 second, and task 2 prints "This is Thread2----" once every 500ms.
 
 ![image-20240418110736915](../../doc/media/thread/image-20240418110736915.png)
 
-## 1.4 接口介绍
+## 1.4 Interface Description
 
 ### 1.4.1 osal_kthread_lock()
 
 
-| **定义：**   | void osal_kthread_lock(void);            |
+| **Definition:** | void osal_kthread_lock(void); |
 | ------------ | ---------------------------------------- |
-| **功能：**   | 禁止系统任务调度                         |
-| **参数：**   | void类型                                 |
-| **返回值：** | 无                                       |
-| **依赖：**   | kernel\osal\include\schedule\osal_task.h |
+| **Function:** | Disables system task scheduling |
+| **Parameters:** | void type |
+| **Return Value:** | none |
+| **Dependency:** | kernel\osal\include\schedule\osal_task.h |
 
 ### 1.4.2 osal_kthread_create()
 
 
-| 定义：       | osal_task *osal_kthread_create(osal_kthread_handler handler, void *data, const char *name, unsigned int stack_size); |
+| Definition: | osal_task *osal_kthread_create(osal_kthread_handler handler, void *data, const char *name, unsigned int stack_size); |
 | ------------ | -------------------------------------------------------------------------------------------------------------------- |
-| **功能：**   | 创建任务                                                                                                             |
-| **参数：**   | handler：线程要处理的函数<br/>data：函数处理程序数据<br/>name：显示的线程名称<br/>stack_size：线程堆栈空间的大小     |
-| **返回值：** | ERRCODE_SUCC：成功    Other：失败                                                                                    |
-| **依赖：**   | kernel\osal\include\schedule\osal_task.h                                                                             |
+| **Function:** | Creates a task |
+| **Parameters:** | handler: the function to be handled by the thread<br/>data: function handler data<br/>name: the displayed thread name<br/>stack_size: the size of the thread stack space |
+| **Return Value:** | ERRCODE_SUCC: success Other: failure |
+| **Dependency:** | kernel\osal\include\schedule\osal_task.h |
 
 ### 1.4.3 osal_kthread_set_priority()
 
 
-| **定义：**   | int osal_kthread_set_priority(osal_task *task, unsigned int priority); |
+| **Definition:** | int osal_kthread_set_priority(osal_task *task, unsigned int priority); |
 | ------------ | ---------------------------------------------------------------------- |
-| **功能：**   | 设置任务优先级                                                         |
-| **参数：**   | task：要排定优先级的线程<br/>priority：要设定的优先级                  |
-| **返回值：** | OSAL_SUCCESS：成功    OSAL_FAILURE：失败                               |
-| **依赖：**   | kernel\osal\include\schedule\osal_task.h                               |
+| **Function:** | Sets the task priority |
+| **Parameters:** | task: the thread whose priority is to be set<br/>priority: the priority to be set |
+| **Return Value:** | OSAL_SUCCESS: success OSAL_FAILURE: failure |
+| **Dependency:** | kernel\osal\include\schedule\osal_task.h |
 
 ### 1.4.4 osal_kthread_unlock()
 
 
-| **定义：**   | void osal_kthread_unlock(void);          |
+| **Definition:** | void osal_kthread_unlock(void); |
 | ------------ | ---------------------------------------- |
-| **功能：**   | 允许系统任务调度                         |
-| **参数：**   | void                                     |
-| **返回值：** | 无                                       |
-| **依赖：**   | kernel\osal\include\schedule\osal_task.h |
+| **Function:** | Enables system task scheduling |
+| **Parameters:** | void |
+| **Return Value:** | none |
+| **Dependency:** | kernel\osal\include\schedule\osal_task.h |
 
-## 1.5 具体实现
+## 1.5 Concrete Implementation
 
-步骤一：在xxx\src\kernel\liteos\liteos_v208.5.0\Huawei_LiteOS\.config中配置任务数，默认为20，配置LOSCFG_BASE_CORE_TSK_LIMIT系统支持最大任务数需要根据用户需求配置；
+Step 1: In xxx\src\kernel\liteos\liteos_v208.5.0\Huawei_LiteOS\.config, configure the number of tasks (default is 20). Configure LOSCFG_BASE_CORE_TSK_LIMIT, the maximum number of tasks supported by the system, according to user requirements;
 
-步骤二：锁任务osal_kthread_lock，锁住任务，防止高优先级任务调度；
+Step 2: Lock the task with osal_kthread_lock to prevent high-priority task scheduling;
 
-步骤三：创建任务osThreadNew；
+Step 3: Create the task with osThreadNew;
 
-步骤四：运行任务app_run()，代码总入口;
+Step 4: Run the task app_run(), the overall entry point of the code;
 
-步骤五：解锁任务osal_kthread_unlock，让任务按照优先级进行调度；
+Step 5: Unlock the task with osal_kthread_unlock to allow tasks to be scheduled according to priority;
 
-## 1.6 案例实现
+## 1.6 Case Implementation
 
-- 步骤一：在xxx\src\application\samples\peripheral文件夹新建一个sample文件夹，在peripheral上右键选择“新建文件夹”，创建Sample文件夹，例如名称”thread“。
+- Step 1: Create a new sample folder in the xxx\src\application\samples\peripheral folder. Right-click on peripheral, select "New Folder", and create a Sample folder, for example named "thread".
 
   ![image-70551992](../../doc/media/thread/image-20240801170551992.png)
-- 步骤二：将xxx\vendor\HH-D03\thread文件里面内容“CMakeList.txt”、“thread_example.c”拷贝到**步骤一创建的Sample文件夹中”thread“**下。
+- Step 2: Copy the "CMakeList.txt" and "thread_example.c" files from the xxx\vendor\HH-D03\thread directory into the "thread" Sample folder created in Step 1.
 
 ![image-20240229141239873](../../doc/media/thread/image-20240229141239873.png)
 
-- 步骤三：在xxx\src\application\samples\peripheral\CMakeLists.txt文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加的，可以在“set(SOURCES "${SOURCES}" PARENT_SCOPE)”上面一行添加）。
+- Step 3: Add a new compilation case in the xxx\src\application\samples\peripheral\CMakeLists.txt file, as shown in the figure below (if you do not know where to add it, you can add it on the line above the "set(SOURCES "${SOURCES}" PARENT_SCOPE)" line).
 
 ![image-20240805105204337](../../doc/media/thread/image-20240805105204337.png)
 
-- 步骤四：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加，可以在最后一行添加）。
+- Step 4: Add a new compilation case in the xxx\src\application\samples\peripheral\Kconfig file, as shown in the figure below (if you do not know where to add it, you can add it on the last line).
 
   ![image-20240805105229940](../../doc/media/thread/image-20250311161913270.png)
-- 步骤五：点击如下图标，选择KConfig，具体选择路径“Application/Enable the Sample of peripheral”，在弹出框中选择“support THREAD Sample”，点击Save，关闭弹窗。
+- Step 5: Click the following icon, select KConfig, select the path "Application/Enable the Sample of peripheral", select "support THREAD Sample" in the pop-up dialog, click Save, and close the dialog.
 
   <img src="../../doc/media/beep/image-20240801171406113.png" alt="image-20240801171406113" style="zoom: 50%;" /><img src="../../doc/media/thread/image-20240205105234692-17119401758316.png" alt="image-20240205105234692" style="zoom: 50%;" /><img src="../../doc/media/thread/image-20240229141207010.png" alt="image-20240205105234692-17119401758316" style="zoom: 50%;" />
-- 步骤六：点击“build”或者“rebuild”编译
+- Step 6: Click "build" or "rebuild" to compile
 
   ![image-20250716163653427](../../doc/media/readme/image-20250716163653427.png)
-- 步骤七：编译完成如下图所示。
+- Step 7: The compilation is complete as shown in the figure below.
 
   ![image-20240801165456569](../../doc/media/tools/image-20250307164622717.png)
-- 步骤八：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
+- Step 8: In the HiSpark Studio tool, click the "Project Configuration" button, select "Program Loading", set the transfer mode to "serial", and select the port "comxxx". The com port is viewed in the device manager (if you cannot find the com port, refer to the Windows environment setup).
 
   ![image-20250716164922699](../../doc/media/readme/image-20250716164922699.png)
-- 步骤九：配置完成后，点击工具“程序加载”按钮烧录。
+- Step 9: After configuration, click the tool's "Program Loading" button to burn/flash.
 
   ![image-20250716170835615](../../doc/media/readme/image-20250716170835615.png)
-- 步骤十：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
+- Step 10: When the message "Connecting, please reset device..." appears, reset the development board and wait for the flashing to finish.
 
   ![image-20240801174230202](../../doc/media/tools/image-20240801174230202.png)
-- 步骤十一：软件烧录成功后，按一下开发板的RESET按键复位开发板，烧录完成后，任务1每1S打印一次“This is Thread1----”，任务二每500ms打印一次“This is Thread2。串口打印信息如下。
+- Step 11: After the software is successfully flashed, press the RESET button on the development board to reset it. After the flashing is complete, task 1 prints "This is Thread1----" once every 1 second, and task 2 prints "This is Thread2" once every 500ms. The serial port prints the following information.
 
   ![image-20240418110732610](../../doc/media/thread/image-20240418110732610.png)

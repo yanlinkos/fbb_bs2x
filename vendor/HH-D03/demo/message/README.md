@@ -1,126 +1,126 @@
 ## message
 
-## 1.1 介绍
+## 1.1 Introduction
 
-**功能介绍：** 本实验内容实现了创建一个队列，两个任务，任务1调用发送接口发送消息，任务2通过接收接口接收消息。
+**Function Description:** This experiment implements the creation of a queue and two tasks. Task 1 calls the sending interface to send messages, and task 2 receives messages through the receiving interface.
 
-**软件概述：** 队列又称消息队列，是一种常用于任务间通信的数据结构，实现了接收来自任务或中断的不固定长度的消息，接收方根据消息ID读取消息。系统中使用队列数据结构实现任务异步通信工作，具有如下特性：
+**Software Overview:** A queue, also called a message queue, is a data structure commonly used for communication between tasks. It implements receiving messages of variable length from tasks or interrupts, and the receiver reads messages according to the message ID. The system uses the queue data structure to implement asynchronous communication between tasks, with the following characteristics:
 
-- 消息以先进先出方式排队，支持异步读写工作方式。
-- 读队列和写队列都支持超时机制。
-- 发送消息类型由通信双方约定，可以允许不同长度（不超过队列节点最大值）消息。
-- 一个任务能够从任意一个消息队列接收和发送消息。
-- 多个任务能够从同一个消息队列接收和发送消息。
-- 当队列使用结束后，如果是动态申请的内存，需要通过释放内存函数回收。
+- Messages are queued in a first-in-first-out manner and support asynchronous read/write operation.
+- Both read and write queues support a timeout mechanism.
+- The message types sent are agreed upon by the communicating parties, and messages of different lengths (not exceeding the maximum queue node size) are allowed.
+- One task can receive and send messages from any message queue.
+- Multiple tasks can receive and send messages from the same message queue.
+- When the queue is no longer used, if the memory was dynamically allocated, it needs to be recycled through the memory release function.
 
-**硬件概述：**[核心板原理图](../../doc/hardware/HH-D03_原理图_V01.pdf)。硬件搭建要求如图所示：
+**Hardware Overview:** [Core board schematic](../../doc/hardware/HH-D03_原理图_V01.pdf). The hardware setup requirements are shown in the figure:
 
 <img src="../../doc/media/tools/image-20250422184625049.png" alt="image-20240226173007100" style="zoom: 67%;" />
 
-## 1.2 约束与限制
+## 1.2 Constraints and Limitations
 
-### 1.2.1 支持应用运行的芯片和开发板
+### 1.2.1 Chips and Development Boards Supporting Application Operation
 
-  本示例支持开发板：HH-D03
+  Development board supported by this example: HH-D03
 
-### 1.2.2 支持API版本、SDK版本
+### 1.2.2 Supported API Version, SDK Version
 
-  本示例支持版本号：1.0.15以上
+  Version number supported by this example: 1.0.15 and above
 
-### 支持IDE插件版本
+### Supported IDE Plugin Version
 
-  本示例支持IDE插件版本号：1.0.1及以上；
+  IDE plugin version supported by this example: 1.0.1 and above;
 
-## 1.3 效果预览
+## 1.3 Effect Preview
 
 ![image-20240401174326792](../../doc/media/message/image-20240401174326792.png)
 
-## 1.4 接口说明
+## 1.4 Interface Description
 
 ### 1.4.1 osal_msg_queue_creat()
 
 
-| **定义：**   | int osal_msg_queue_create(const char *name, unsigned short queue_len, unsigned long *queue_id, unsigned int flags,unsigned short max_msgsize); |
+| **Definition:** | int osal_msg_queue_create(const char *name, unsigned short queue_len, unsigned long *queue_id, unsigned int flags,unsigned short max_msgsize); |
 | ------------ | ------------------------------------------------------------ |
-| **功能：**   | 创建消息队列                                                 |
-| **参数：**   | name：消息队列名称<br/>queue_len：队列长度。值范围为[1,0xffff]<br/>queue_id：成功创建的队列控制结构的ID<br/>flags：队列模式<br/>max_msgsize：节点大小。值范围为[1,0xffff]，注意节点不宜过大也不易过小 |
-| **返回值：** | OSAL_SUCCESS：成功    Other：OSAL_FAILURE                    |
-| **依赖：**   | kernel\osal\include\msgqueue\osal_msgqueue.h                 |
+| **Function:** | Creates a message queue |
+| **Parameters:** | name: message queue name<br/>queue_len: queue length. Value range is [1,0xffff]<br/>queue_id: the ID of the successfully created queue control structure<br/>flags: queue mode<br/>max_msgsize: node size. Value range is [1,0xffff]. Note that the node should be neither too large nor too small |
+| **Return Value:** | OSAL_SUCCESS: success Other: OSAL_FAILURE |
+| **Dependency:** | kernel\osal\include\msgqueue\osal_msgqueue.h |
 
 ### 1.4.2 osal_msg_queue_delete()
 
 
-| 定义：       | void osal_msg_queue_delete(unsigned long queue_id); |
+| Definition: | void osal_msg_queue_delete(unsigned long queue_id); |
 | ------------ | --------------------------------------------------- |
-| **功能：**   | 删除消息队列                                        |
-| **参数：**   | queue_id：成功创建的队列控制结构的ID                |
-| **返回值：** | OSAL_SUCCESS：成功    Other：OSAL_FAILURE           |
-| **依赖：**   | kernel\osal\include\msgqueue\osal_msgqueue.h        |
+| **Function:** | Deletes a message queue |
+| **Parameters:** | queue_id: the ID of the successfully created queue control structure |
+| **Return Value:** | OSAL_SUCCESS: success Other: OSAL_FAILURE |
+| **Dependency:** | kernel\osal\include\msgqueue\osal_msgqueue.h |
 
 ### 1.4.3 osal_msg_queue_write_copy()
 
 
-| **定义：**   | int osal_msg_queue_write_copy(unsigned long queue_id, void *buffer_addr, unsigned int buffer_size, unsigned int timeout);            |
+| **Definition:** | int osal_msg_queue_write_copy(unsigned long queue_id, void *buffer_addr, unsigned int buffer_size, unsigned int timeout); |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
-| **功能：**   | 发送消息到队列尾部                                                                                                                   |
-| **参数：**   | queue_id：成功创建的队列控制结构的ID<br/>buffer_addr：存储要写入的数据的起始地址<br/>buffer_size：写入数据长度<br/>timeout：超时时间 |
-| **返回值：** | OSAL_SUCCESS：成功    Other：OSAL_FAILURE                                                                                            |
-| **依赖：**   | kernel\osal\include\msgqueue\osal_msgqueue.h                                                                                         |
+| **Function:** | Sends a message to the tail of the queue |
+| **Parameters:** | queue_id: the ID of the successfully created queue control structure<br/>buffer_addr: the starting address storing the data to be written<br/>buffer_size: the length of data to write<br/>timeout: timeout period |
+| **Return Value:** | OSAL_SUCCESS: success Other: OSAL_FAILURE |
+| **Dependency:** | kernel\osal\include\msgqueue\osal_msgqueue.h |
 
 ### 1.4.4 osal_msg_queue_read_copy()
 
 
-| **定义：**   | int osal_msg_queue_read_copy(unsigned long queue_id, void *buffer_addr, unsigned int *buffer_size,unsigned int timeout);     |
+| **Definition:** | int osal_msg_queue_read_copy(unsigned long queue_id, void *buffer_addr, unsigned int *buffer_size,unsigned int timeout); |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| **功能：**   | 阻塞接收信息，单位：ms                                                                                                       |
-| **参数：**   | queue_id：成功创建的队列控制结构的ID<br/>buffer_addr：读取数据的起始地址<br/>buffer_size：读取数据长度<br/>timeout：超时时间 |
-| **返回值：** | OSAL_SUCCESS：成功    Other：OSAL_FAILURE                                                                                    |
-| **依赖：**   | kernel\osal\include\msgqueue\osal_msgqueue.h                                                                                 |
+| **Function:** | Blocking reception of messages, unit: ms |
+| **Parameters:** | queue_id: the ID of the successfully created queue control structure<br/>buffer_addr: the starting address for reading data<br/>buffer_size: the length of data to read<br/>timeout: timeout period |
+| **Return Value:** | OSAL_SUCCESS: success Other: OSAL_FAILURE |
+| **Dependency:** | kernel\osal\include\msgqueue\osal_msgqueue.h |
 
-## 1.5 具体实现
+## 1.5 Concrete Implementation
 
-步骤一：创建一个队列，两个任务，任务1调用发送接口发送消息，任务二通过接收窗口接收消息。
+Step 1: Create a queue and two tasks. Task 1 calls the sending interface to send messages, and task 2 receives messages through the receiving window.
 
-步骤二：通过osal_kthread_creat创建任务1和任务2。
+Step 2: Create task 1 and task 2 with osal_kthread_creat.
 
-步骤三：通过osal_msg_queue_creat创建一个消息队列。
+Step 3: Create a message queue with osal_msg_queue_creat.
 
-步骤四：在任务1调用osal_msg_queue_write_copy发送消息。
+Step 4: In task 1, call osal_msg_queue_write_copy to send messages.
 
-步骤五：在任务2调用osal_msg_queue_read_copy接收消息。
+Step 5: In task 2, call osal_msg_queue_read_copy to receive messages.
 
-## 1.6实验流程
+## 1.6 Experiment Flow
 
-- 步骤一：在xxx\src\application\samples\peripheral文件夹新建一个sample文件夹，在peripheral上右键选择“新建文件夹”，创建Sample文件夹，例如名称”message“。
+- Step 1: Create a new sample folder in the xxx\src\application\samples\peripheral folder. Right-click on peripheral, select "New Folder", and create a Sample folder, for example named "message".
 
   ![image-70551992](../../doc/media/message/image-20240801170551992.png)
-- 步骤二：将xxx\vendor\HH-D03\message文件里面内容拷贝到**步骤一创建的Sample文件夹中”message“**。
+- Step 2: Copy the contents of the xxx\vendor\HH-D03\message directory into the "message" Sample folder created in Step 1.
 
   ![image-20240401184805703](../../doc/media/message/image-20240401184805703.png)
-- 步骤三：在xxx\src\application\samples\peripheral\CMakeLists.txt文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加的，可以在“set(SOURCES "${SOURCES}" PARENT_SCOPE)”上面一行添加）**。
+- Step 3: Add a new compilation case in the xxx\src\application\samples\peripheral\CMakeLists.txt file, as shown in the figure below (if you do not know where to add it, you can add it on the line above the "set(SOURCES "${SOURCES}" PARENT_SCOPE)" line).
 
   ![image-20240805093251683](../../doc/media/message/image-20240805093251683.png)
-- 步骤四：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加，可以在最后一行添加）。
+- Step 4: Add a new compilation case in the xxx\src\application\samples\peripheral\Kconfig file, as shown in the figure below (if you do not know where to add it, you can add it on the last line).
 
   ![image-20240805093329786](../../doc/media/message/image-20240805093329786.png)
-- 步骤五：点击如下图标，选择KConfig，具体选择路径“Application/Enable the Sample of peripheral”，在弹出框中选择“support A6_KERNAL_MESSAGE Sample”，点击Save，关闭弹窗。
+- Step 5: Click the following icon, select KConfig, select the path "Application/Enable the Sample of peripheral", select "support A6_KERNAL_MESSAGE Sample" in the pop-up dialog, click Save, and close the dialog.
 
   <img src="../../doc/media/beep/image-20240801171406113.png" alt="image-20240801171406113" style="zoom: 50%;" /><img src="../../doc/media/message/image-20240205105234692-17119401758316.png" alt="image-20240205105234692" style="zoom: 50%;" /><img src="../../doc/media/message/image-20240401174241614.png" alt="image-20240401174241614" style="zoom:67%;" />
-- 步骤六：点击“build”或者“rebuild”编译
+- Step 6: Click "build" or "rebuild" to compile
 
   ![image-20250716163653427](../../doc/media/readme/image-20250716163653427.png)
-- 步骤七：编译完成如下图所示。
+- Step 7: The compilation is complete as shown in the figure below.
 
   ![image-20240801165456569](../../doc/media/tools/image-20250307164622717.png)
-- 步骤八：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
+- Step 8: In the HiSpark Studio tool, click the "Project Configuration" button, select "Program Loading", set the transfer mode to "serial", and select the port "comxxx". The com port is viewed in the device manager (if you cannot find the com port, refer to the Windows environment setup).
 
   ![image-20250716164922699](../../doc/media/readme/image-20250716164922699.png)
-- 步骤九：配置完成后，点击工具“程序加载”按钮烧录。
+- Step 9: After configuration, click the tool's "Program Loading" button to burn/flash.
 
   ![image-20250716170835615](../../doc/media/readme/image-20250716170835615.png)
-- 步骤十：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
+- Step 10: When the message "Connecting, please reset device..." appears, reset the development board and wait for the flashing to finish.
 
   ![image-20240801174230202](../../doc/media/tools/image-20240801174230202.png)
-- 步骤十一：软件烧录成功后，按一下开发板的RESET按键复位开发板，烧录完成后，串口打印信息如下。
+- Step 11: After the software is successfully flashed, press the RESET button on the development board to reset it. After the flashing is complete, the serial port prints the following information.
 
   ![image-20240401174326792](../../doc/media/message/image-20240401174326792.png)

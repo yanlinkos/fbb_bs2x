@@ -1,341 +1,261 @@
-# 前言<a name="ZH-CN_TOPIC_0000001790806556"></a>
+# Preface<a name="ZH-CN_TOPIC_0000001790806556"></a>
 
-**概述<a name="section4537382116410"></a>**
+**Overview<a name="section4537382116410"></a>**
 
-本文档描述了BS2X USB HID复合设备的两种实现方式。
+This document describes two implementation methods for the BS2X USB HID composite device.
 
-**读者对象<a name="section4378592816410"></a>**
+**Reader Audience<a name="section4378592816410"></a>**
 
-本文档主要适用于以下工程师：
+This document is mainly applicable to the following engineers:
 
--   产品软件开发工程师
--   技术支持工程师
+- Product software development engineers
+- Technical support engineers
 
-**符号约定<a name="section133020216410"></a>**
+**Symbol Conventions<a name="section133020216410"></a>**
 
-在本文中可能出现下列标志，它们所代表的含义如下。
+The following symbols may appear in this document, and their meanings are as follows.
 
-<a name="table2622507016410"></a>
-<table><thead align="left"><tr id="row1530720816410"><th class="cellrowborder" valign="top" width="20.580000000000002%" id="mcps1.1.3.1.1"><p id="p6450074116410"><a name="p6450074116410"></a><a name="p6450074116410"></a><strong id="b2136615816410"><a name="b2136615816410"></a><a name="b2136615816410"></a>符号</strong></p>
-</th>
-<th class="cellrowborder" valign="top" width="79.42%" id="mcps1.1.3.1.2"><p id="p5435366816410"><a name="p5435366816410"></a><a name="p5435366816410"></a><strong id="b5941558116410"><a name="b5941558116410"></a><a name="b5941558116410"></a>说明</strong></p>
-</th>
-</tr>
-</thead>
-<tbody><tr id="row1372280416410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p3734547016410"><a name="p3734547016410"></a><a name="p3734547016410"></a><a name="image2670064316410"></a><a name="image2670064316410"></a><span><img class="" id="image2670064316410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001790806776.png"></span></p>
-</td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p1757432116410"><a name="p1757432116410"></a><a name="p1757432116410"></a>表示如不避免则将会导致死亡或严重伤害的具有高等级风险的危害。</p>
-</td>
-</tr>
-<tr id="row466863216410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p1432579516410"><a name="p1432579516410"></a><a name="p1432579516410"></a><a name="image4895582316410"></a><a name="image4895582316410"></a><span><img class="" id="image4895582316410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001837645977.png"></span></p>
-</td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p959197916410"><a name="p959197916410"></a><a name="p959197916410"></a>表示如不避免则可能导致死亡或严重伤害的具有中等级风险的危害。</p>
-</td>
-</tr>
-<tr id="row123863216410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p1232579516410"><a name="p1232579516410"></a><a name="p1232579516410"></a><a name="image1235582316410"></a><a name="image1235582316410"></a><span><img class="" id="image1235582316410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001837765849.png"></span></p>
-</td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p123197916410"><a name="p123197916410"></a><a name="p123197916410"></a>表示如不避免则可能导致轻微或中度伤害的具有低等级风险的危害。</p>
-</td>
-</tr>
-<tr id="row5786682116410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p2204984716410"><a name="p2204984716410"></a><a name="p2204984716410"></a><a name="image4504446716410"></a><a name="image4504446716410"></a><span><img class="" id="image4504446716410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001790966460.png"></span></p>
-</td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4388861916410"><a name="p4388861916410"></a><a name="p4388861916410"></a>用于传递设备或环境安全警示信息。如不避免则可能会导致设备损坏、数据丢失、设备性能降低或其它不可预知的结果。</p>
-<p id="p1238861916410"><a name="p1238861916410"></a><a name="p1238861916410"></a>“须知”不涉及人身伤害。</p>
-</td>
-</tr>
-<tr id="row2856923116410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p5555360116410"><a name="p5555360116410"></a><a name="p5555360116410"></a><a name="image799324016410"></a><a name="image799324016410"></a><span><img class="" id="image799324016410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001837645837.png"></span></p>
-</td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4612588116410"><a name="p4612588116410"></a><a name="p4612588116410"></a>对正文中重点信息的补充说明。</p>
-<p id="p1232588116410"><a name="p1232588116410"></a><a name="p1232588116410"></a>“说明”不是安全警示信息，不涉及人身、设备及环境伤害信息。</p>
-</td>
-</tr>
-</tbody>
-</table>
+| Symbol | Description |
+| --- | --- |
+| [Image] | Indicates a hazard with a high level of risk that, if not avoided, will result in death or serious injury. |
+| [Image] | Indicates a hazard with a medium level of risk that, if not avoided, may result in death or serious injury. |
+| [Image] | Indicates a hazard with a low level of risk that, if not avoided, may result in minor or moderate injury. |
+| [Image] | Used to deliver device- or environment-safety warning information. If not avoided, it may cause equipment damage, data loss, degraded equipment performance, or other unpredictable results. "Cautions" do not involve personal injury. |
+| [Image] | Supplementary explanation of key information in the main text. "Notes" are not safety warning information and do not involve personal, equipment, or environmental injury information. |
 
-**修改记录<a name="section2467512116410"></a>**
+**Modification Records<a name="section2467512116410"></a>**
 
-<a name="table1557726816410"></a>
-<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="20.72%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>文档版本</strong></p>
-</th>
-<th class="cellrowborder" valign="top" width="26.119999999999997%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>发布日期</strong></p>
-</th>
-<th class="cellrowborder" valign="top" width="53.16%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>修改说明</strong></p>
-</th>
-</tr>
-</thead>
-<tbody><tr id="row10274135918428"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p1927545916421"><a name="p1927545916421"></a><a name="p1927545916421"></a>02</p>
-</td>
-<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p1027511593426"><a name="p1027511593426"></a><a name="p1027511593426"></a>2024-08-20</p>
-</td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p152751559184218"><a name="p152751559184218"></a><a name="p152751559184218"></a>更新“<a href="实现方式.md">实现方式</a>”章节内容。</p>
-</td>
-</tr>
-<tr id="row3664410125015"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p0413131712"><a name="p0413131712"></a><a name="p0413131712"></a>01</p>
-</td>
-<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p184131311111"><a name="p184131311111"></a><a name="p184131311111"></a>2024-05-15</p>
-</td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p169114261115"><a name="p169114261115"></a><a name="p169114261115"></a>第一次正式版本发布。</p>
-</td>
-</tr>
-<tr id="row5281780716410"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p1896592512216"><a name="p1896592512216"></a><a name="p1896592512216"></a>00B01</p>
-</td>
-<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p996582514218"><a name="p996582514218"></a><a name="p996582514218"></a>2024-03-08</p>
-</td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p55262052201217"><a name="p55262052201217"></a><a name="p55262052201217"></a>第一次临时版本发布。</p>
-</td>
-</tr>
-</tbody>
-</table>
+| Doc Version | Release Date | Modification Description |
+| --- | --- | --- |
+| 02 | 2024-08-20 | Updated the content of the "[Implementation Method](实现方式.md)" chapter. |
+| 01 | 2024-05-15 | First official version release. |
+| 00B01 | 2024-03-08 | First interim version release. |
 
-# 概述<a name="ZH-CN_TOPIC_0000001790966272"></a>
+# Overview<a name="ZH-CN_TOPIC_0000001790966272"></a>
 
-USB设备的功能是由接口来承载的，对应到代码即是接口描述符，一般一个接口就是一个功能，这个功能可能是鼠标、键盘、手柄等，也可能是自定义功能。HID复合设备是一类多功能设备，例如鼠标+键盘、手柄+键盘等。
+The function of a USB device is carried by interfaces, which correspond in code to interface descriptors. Generally, one interface is one function. This function may be a mouse, keyboard, gamepad, etc., or a custom function. An HID composite device is a type of multi-function device, such as mouse + keyboard, gamepad + keyboard, etc.
 
-# 实现方式<a name="ZH-CN_TOPIC_0000001837765697"></a>
+# Implementation Method<a name="ZH-CN_TOPIC_0000001837765697"></a>
 
-添加任何类型的HID设备都需要调用接口hid\_add\_report\_descriptor。“hid\_add\_report\_descriptor”定义在“f\_hid.c”，其参数及功能如下：
+Adding any type of HID device requires calling the interface hid_add_report_descriptor. "hid_add_report_descriptor" is defined in "f_hid.c", and its parameters and functions are as follows:
 
-<a name="table178mcpsimp"></a>
-<table><thead align="left"><tr id="row183mcpsimp"><th class="cellrowborder" valign="top" width="29.23%" id="mcps1.1.3.1.1"><p id="p185mcpsimp"><a name="p185mcpsimp"></a><a name="p185mcpsimp"></a>参数</p>
-</th>
-<th class="cellrowborder" valign="top" width="70.77%" id="mcps1.1.3.1.2"><p id="p187mcpsimp"><a name="p187mcpsimp"></a><a name="p187mcpsimp"></a>说明</p>
-</th>
-</tr>
-</thead>
-<tbody><tr id="row188mcpsimp"><td class="cellrowborder" valign="top" width="29.23%" headers="mcps1.1.3.1.1 "><p id="p190mcpsimp"><a name="p190mcpsimp"></a><a name="p190mcpsimp"></a>report_desc</p>
-</td>
-<td class="cellrowborder" valign="top" width="70.77%" headers="mcps1.1.3.1.2 "><p id="p192mcpsimp"><a name="p192mcpsimp"></a><a name="p192mcpsimp"></a>报告描述符的首地址。</p>
-</td>
-</tr>
-<tr id="row193mcpsimp"><td class="cellrowborder" valign="top" width="29.23%" headers="mcps1.1.3.1.1 "><p id="p195mcpsimp"><a name="p195mcpsimp"></a><a name="p195mcpsimp"></a>report_desc_len</p>
-</td>
-<td class="cellrowborder" valign="top" width="70.77%" headers="mcps1.1.3.1.2 "><p id="p197mcpsimp"><a name="p197mcpsimp"></a><a name="p197mcpsimp"></a>报告描述符的长度。</p>
-</td>
-</tr>
-<tr id="row198mcpsimp"><td class="cellrowborder" valign="top" width="29.23%" headers="mcps1.1.3.1.1 "><p id="p200mcpsimp"><a name="p200mcpsimp"></a><a name="p200mcpsimp"></a>protocol</p>
-</td>
-<td class="cellrowborder" valign="top" width="70.77%" headers="mcps1.1.3.1.2 "><p id="p202mcpsimp"><a name="p202mcpsimp"></a><a name="p202mcpsimp"></a>报告描述符的协议类型（0=none, 1=keyboard, 2=mouse），其对应接口描述符的bInterfaceProtocol字段。</p>
-</td>
-</tr>
-</tbody>
-</table>
+| Parameter | Description |
+| --- | --- |
+| report_desc | The first address of the report descriptor. |
+| report_desc_len | The length of the report descriptor. |
+| protocol | The protocol type of the report descriptor (0=none, 1=keyboard, 2=mouse), which corresponds to the bInterfaceProtocol field of the interface descriptor. |
 
-函数功能：添加报告描述符并和接口关联，会自动创建接口描述符、hid描述符和端点描述符。
+Function function: adding a report descriptor and associating it with an interface automatically creates the interface descriptor, HID descriptor, and endpoint descriptor.
 
-函数返回值：设备功能对应的id号。
+Function return value: the id number corresponding to the device function.
 
+## One Interface Implementing Multiple Functions<a name="ZH-CN_TOPIC_0000001991265549"></a>
 
+In an HID device, one interface corresponds to one report descriptor, and the report descriptor describes the function of the interface. The report descriptor can distinguish different functions of the same report descriptor through the report_id item.
 
-
-
-
-## 一个接口实现多个功能<a name="ZH-CN_TOPIC_0000001991265549"></a>
-
-HID设备一个接口对应一个报告描述符，由报告描述符来描述接口的功能，而报告描述符可通过report\_id项来区分同一个报告描述符的不同功能。
-
-报告描述符1如下：
+Report descriptor 1 is as follows:
 
 ```
-// 键盘设备
-usage_page(1),      0x01,
-usage(1),           0x06,
-collection(1),      0x01,
-report_id(1),       0x01,
-usage_page(1),      0x07,
-usage_minimum(1),   0xE0,
-usage_maximum(1),   0xE7,
+// Keyboard device
+usage_page(1),      0x01,
+usage(1),           0x06,
+collection(1),      0x01,
+report_id(1),       0x01,
+usage_page(1),      0x07,
+usage_minimum(1),   0xE0,
+usage_maximum(1),   0xE7,
 logical_minimum(1), 0x00,
 logical_maximum(1), 0x01,
-report_size(1),     0x01,
-report_count(1),    0x08,
-input(1),           0x02,
-report_count(1),    0x01,
-report_size(1),     0x08,
-input(1),           0x01,
-report_count(1),    0x05,
-report_size(1),     0x01,
-usage_page(1),      0x08,
-usage_minimum(1),   0x01,
-usage_maximum(1),   0x05,
-output(1),          0x02,
-report_count(1),    0x01,
-report_size(1),     0x03,
-output(1),          0x01,
-report_count(1),    0x06,
-report_size(1),     0x08,
+report_size(1),     0x01,
+report_count(1),    0x08,
+input(1),           0x02,
+report_count(1),    0x01,
+report_size(1),     0x08,
+input(1),           0x01,
+report_count(1),    0x05,
+report_size(1),     0x01,
+usage_page(1),      0x08,
+usage_minimum(1),   0x01,
+usage_maximum(1),   0x05,
+output(1),          0x02,
+report_count(1),    0x01,
+report_size(1),     0x03,
+output(1),          0x01,
+report_count(1),    0x06,
+report_size(1),     0x08,
 logical_minimum(1), 0x00,
 logical_maximum(1), 0x65,
-usage_page(1),      0x07,
-usage_minimum(1),   0x00,
-usage_maximum(1),   0x65,
-input(1),           0x00,
+usage_page(1),      0x07,
+usage_minimum(1),   0x00,
+usage_maximum(1),   0x65,
+input(1),           0x00,
 end_collection(0),
-// 自定义数据接收
+// Custom data reception
 usage_page(2), 0xB1, 0xFF,
-usage(1),           0x1,
-collection(1),      0x01,
-report_id(1),       0x08,
-collection(1),      0x00,
-report_count(1),    0xc,
-report_size(1),     0x8,
-usage_minimum(1),   0x0,
-usage_maximum(1),   0xFF,
-output(1),           2,
+usage(1),           0x1,
+collection(1),      0x01,
+report_id(1),       0x08,
+collection(1),      0x00,
+report_count(1),    0xc,
+report_size(1),     0x8,
+usage_minimum(1),   0x0,
+usage_maximum(1),   0xFF,
+output(1),           2,
 end_collection(0),
 end_collection(0),
-// 自定义数据收发
+// Custom data transmission/reception
 usage_page(2), 0xB2, 0xFF,
-usage(1),           0x1,
-collection(1),      0x01,
-report_id(1),       0x09,
-collection(1),      0x00,
-report_count(1),    0x3f,
-report_size(1),     0x8,
-usage_minimum(1),   0x0,
-usage_maximum(1),   0xFF,
-output(1),           2,
-usage(1),           0x2,
-report_count(1),    0x3f,
-report_size(1),     0x8,
-usage_minimum(1),   0x0,
-usage_maximum(1),   0xFF,
-input(1),           0,
+usage(1),           0x1,
+collection(1),      0x01,
+report_id(1),       0x09,
+collection(1),      0x00,
+report_count(1),    0x3f,
+report_size(1),     0x8,
+usage_minimum(1),   0x0,
+usage_maximum(1),   0xFF,
+output(1),           2,
+usage(1),           0x2,
+report_count(1),    0x3f,
+report_size(1),     0x8,
+usage_minimum(1),   0x0,
+usage_maximum(1),   0xFF,
+input(1),           0,
 end_collection(0),
 end_collection(0),
 ```
 
-上述报告描述符定义了一个键盘设备+自定义数据接收+自定义数据收发三个功能的复合设备，他们通过report\_id+数据的方式来区分功能，即只有一个功能的报告描述符，在发送数据时直接发送数据即可，拥有多个功能的报告描述符在发送数据时需要在数据的头部加上report\_id。
+The above report descriptor defines a composite device with three functions: a keyboard device + custom data reception + custom data transmission/reception. They distinguish functions through the report_id + data method. That is, for a report descriptor with only one function, the data can be sent directly when sending. For a report descriptor with multiple functions, the report_id needs to be added to the head of the data when sending.
 
-## 多个接口实现多个功能<a name="ZH-CN_TOPIC_0000001991145381"></a>
+## Multiple Interfaces Implementing Multiple Functions<a name="ZH-CN_TOPIC_0000001991145381"></a>
 
-HID设备一个接口对应一个报告描述符，由报告描述符来描述接口的功能，那么多个接口多个报告描述符也可以实现复合设备功能，BS2X芯片除了端点0之外，一共有三个IN端点，三个OUT端点，因此最多支持三个接口。
+In an HID device, one interface corresponds to one report descriptor, and the report descriptor describes the function of the interface. Therefore, multiple interfaces with multiple report descriptors can also implement a composite device function. Except for endpoint 0, the BS2X chip has a total of three IN endpoints and three OUT endpoints, so it supports up to three interfaces.
 
-多个接口多个报告描述符的示例如下。
+An example of multiple interfaces with multiple report descriptors is as follows.
 
-报告描述符1如下：
+Report descriptor 1 is as follows:
 
 ```
-usage_page(1),      0x01,
-usage(1),         0x06,
-collection(1),      0x01,
-report_id(1),       0x01,
-usage_page(1),      0x07,
-usage_minimum(1),    0xE0,
-usage_maximum(1),    0xE7,
+usage_page(1),      0x01,
+usage(1),         0x06,
+collection(1),      0x01,
+report_id(1),       0x01,
+usage_page(1),      0x07,
+usage_minimum(1),    0xE0,
+usage_maximum(1),    0xE7,
 logical_minimum(1),   0x00,
 logical_maximum(1),   0x01,
-report_size(1),     0x01,
-report_count(1),    0x08,
-input(1),         0x02,
-report_count(1),    0x01,
-report_size(1),     0x08,
-input(1),         0x01,
-report_count(1),    0x05,
-report_size(1),     0x01,
-usage_page(1),      0x08,
-usage_minimum(1),    0x01,
-usage_maximum(1),    0x05,
-output(1),        0x02,
-report_count(1),    0x01,
-report_size(1),     0x03,
-output(1),        0x01,
-report_count(1),    0x06,
-report_size(1),     0x08,
+report_size(1),     0x01,
+report_count(1),    0x08,
+input(1),         0x02,
+report_count(1),    0x01,
+report_size(1),     0x08,
+input(1),         0x01,
+report_count(1),    0x05,
+report_size(1),     0x01,
+usage_page(1),      0x08,
+usage_minimum(1),    0x01,
+usage_maximum(1),    0x05,
+output(1),        0x02,
+report_count(1),    0x01,
+report_size(1),     0x03,
+output(1),        0x01,
+report_count(1),    0x06,
+report_size(1),     0x08,
 logical_minimum(1),   0x00,
 logical_maximum(1),   0x65,
-usage_page(1),      0x07,
-usage_minimum(1),    0x00,
-usage_maximum(1),    0x65,
-input(1),         0x00,
+usage_page(1),      0x07,
+usage_minimum(1),    0x00,
+usage_maximum(1),    0x65,
+input(1),         0x00,
 end_collection(0),
-// 自定义数据接收
+// Custom data reception
 usage_page(2),       0xB1, 0xFF,
-usage(1),         0x1,
-collection(1),      0x01,
-report_id(1),       0x08,
-collection(1),     0x00,
-report_count(1),    0xc,
-report_size(1),     0x8,
-usage_minimum(1),    0x0,
-usage_maximum(1),    0xFF,
-output(1),         2,
+usage(1),         0x1,
+collection(1),      0x01,
+report_id(1),       0x08,
+collection(1),     0x00,
+report_count(1),    0xc,
+report_size(1),     0x8,
+usage_minimum(1),    0x0,
+usage_maximum(1),    0xFF,
+output(1),         2,
 end_collection(0),
 end_collection(0),
-// 自定义数据收发
+// Custom data transmission/reception
 usage_page(2),        0xB2, 0xFF,
-usage(1),          0x1,
-collection(1),      0x01,
-report_id(1),       0x09,
-collection(1),      0x00,
-report_count(1),     0x3f,
-report_size(1),      0x8,
-usage_minimum(1),     0x0,
-usage_maximum(1),     0xFF,
-output(1),          2,
-usage(1),          0x2,
-report_count(1),     0x3f,
-report_size(1),      0x8,
-usage_minimum(1),     0x0,
-usage_maximum(1),     0xFF,
-input(1),           0,
+usage(1),          0x1,
+collection(1),      0x01,
+report_id(1),       0x09,
+collection(1),      0x00,
+report_count(1),      0x3f,
+report_size(1),      0x8,
+usage_minimum(1),     0x0,
+usage_maximum(1),     0xFF,
+output(1),         2,
+usage(1),          0x2,
+report_count(1),      0x3f,
+report_size(1),      0x8,
+usage_minimum(1),      0x0,
+usage_maximum(1),     0xFF,
+input(1),           0,
 end_collection(0),
 end_collection(0),
 ```
 
-上述报告描述符定义了一个键盘设备+自定义数据接收+自定义数据收发三个功能的复合设备，他们通过report\_id+数据的方式来区分功能，即只有一个功能的报告描述符，在发送数据时直接发送数据即可，拥有多个功能的报告描述符在发送数据时需要在数据的头部加上“report\_id”。此描述符可通过“hid\_add\_report\_descriptor”函数注册到接口0。
+The above report descriptor defines a composite device with three functions: a keyboard device + custom data reception + custom data transmission/reception. They distinguish functions through the report_id + data method. That is, for a report descriptor with only one function, the data can be sent directly when sending. For a report descriptor with multiple functions, the "report_id" needs to be added to the head of the data when sending. This descriptor can be registered to interface 0 through the "hid_add_report_descriptor" function.
 
-报告描述符2如下：
+Report descriptor 2 is as follows:
 
 ```
-usage_page(1),      0x01,
-usage(1),          0x02,
-collection(1),      0x01,
-usage(1),          0x01,
-report_count(1),     0x03,
-report_size(1),      0x01,
-usage_page(1),      0x09,
-usage_minimum(1),     0x1,
-usage_maximum(1),     0x3,
+usage_page(1),      0x01,
+usage(1),          0x02,
+collection(1),      0x01,
+usage(1),          0x01,
+report_count(1),     0x03,
+report_size(1),      0x01,
+usage_page(1),      0x09,
+usage_minimum(1),     0x1,
+usage_maximum(1),     0x3,
 logical_minimum(1),    0x00,
 logical_maximum(1),    0x01,
-input(1),          0x02,
-report_count(1),     0x01,
-report_size(1),      0x05,
-input(1),          0x01,
-usage_page(1),      0x01,
-usage(1),          0x38,
-report_count(1),     0x01,
-report_size(1),      0x08,
+input(1),          0x02,
+report_count(1),     0x01,
+report_size(1),      0x05,
+input(1),          0x01,
+usage_page(1),      0x01,
+usage(1),          0x38,
+report_count(1),     0x01,
+report_size(1),      0x08,
 logical_minimum(1),    0x81,
 logical_maximum(1),    0x7f,
-input(1),          0x06,
-usage(1),          0x30,
-usage(1),          0x31,
-report_count(1),     0x02,
-report_size(1),      0x10,
+input(1),          0x06,
+usage(1),          0x30,
+usage(1),          0x31,
+report_count(1),     0x02,
+report_size(1),      0x10,
 logical_minimum(2),   0x01, 0x80,
 logical_maximum(2),   0xff, 0x7f,
-input(1),          0x06,
+input(1),          0x06,
 end_collection(0)
 ```
 
-此描述符描述了鼠标功能。通过再一次调用“hid\_add\_report\_descriptor”函数可将此描述符注册到接口1，会自动创建接口描述符、hid描述符和端点描述符，不需要改“f\_hid.c”。
+This descriptor describes the mouse function. By calling the "hid_add_report_descriptor" function again, this descriptor can be registered to interface 1, which automatically creates the interface descriptor, HID descriptor, and endpoint descriptor without needing to modify "f_hid.c".
 
-此时已实现两个接口的复合设备，其中接口0实现的是键盘设备+自定义数据接收+自定义数据收发三个功能，接口1实现的是鼠标功能。示例代码可查看“application/samples/products/usb\_mouse/mouse\_usb/usb\_init\_app.c”。
+At this point, a composite device with two interfaces has been implemented, where interface 0 implements the three functions of keyboard device + custom data reception + custom data transmission/reception, and interface 1 implements the mouse function. For the example code, see "application/samples/products/usb_mouse/mouse_usb/usb_init_app.c".
 
-如果需要更深程度的自定义，比如需要添加out端点/需要添加空的interface，需要在kconfig里开启HID Custom（如下图示）：
+If you need deeper customization, such as adding an out endpoint / adding an empty interface, you need to enable HID Custom in kconfig (as shown below):
 
 ![](figures/zh-cn_image_0000001991420680.png)
 
-开启后会编译f\_hid\_custom.c而不是f\_hid.c, 此时需要自行修改f\_hid\_custom.c里的f\_hid\_desc\_array数组来自定义config描述符\(只需要改config描述符，端点初始化之类的操作都会自动完成\)。注意: 自定义了几个interface就应该调用几次hid\_add\_report\_descriptor函数，如果是空的interface，可以调用hid\_add\_report\_descriptor并传入NULL。
+After enabling, f_hid_custom.c will be compiled instead of f_hid.c. At this time, you need to modify the f_hid_desc_array array in f_hid_custom.c yourself to customize the config descriptor (only the config descriptor needs to be changed; operations such as endpoint initialization will be completed automatically). Note: how many interfaces are customized is how many times the hid_add_report_descriptor function should be called. For an empty interface, you can call hid_add_report_descriptor and pass NULL.
 
-例：实现4个interface，第一个interface使用1个in端点，第二个interface是个空interface，后两个interface都用2个端点，1in 1out。
+For example: implement 4 interfaces. The first interface uses 1 in endpoint, the second interface is an empty interface, and the last two interfaces each use 2 endpoints, 1 in and 1 out.
 
-若要实现4个interface需要在Kconfig更改最大报告描述符数量为4，并使能custom HID 如下图示，
+To implement 4 interfaces, you need to change the maximum number of report descriptors to 4 in Kconfig and enable custom HID as shown below:
 
 ![](figures/zh-cn_image_0000002027934637.png)
 
-然后修改配置描述符如下，4个interface需要在应用层调用4次hid\_add\_report\_descriptor来将报告描述符注册到对应的interface上，第二个是空interface，故在第二次调用hid\_add\_report\_descriptor时传入NULL即可，其他三次则需要传入对应功能的报告描述符。
+Then modify the configuration descriptor as follows. For 4 interfaces, you need to call hid_add_report_descriptor 4 times at the application layer to register the report descriptors to the corresponding interfaces. The second is an empty interface, so pass NULL when calling hid_add_report_descriptor the second time; the other three times need to pass the report descriptors of the corresponding functions.
 
 ```
 static struct usb_cfgdesc_s g_fhid_config_desc =
@@ -517,46 +437,42 @@ static const uint8_t *g_fhid_desc_array[HID_DESC_ARRAY_MAX_NUM] =
 };
 ```
 
-## 实现虚拟串口功能<a name="ZH-CN_TOPIC_0000001991139601"></a>
+## Implementing the Virtual Serial Port Function<a name="ZH-CN_TOPIC_0000001991139601"></a>
 
-虚拟串口设备类型是DEV\_SERIAL，但通常情况下，我们使用的是HID+ACM的符合设备，即类型DEV\_SER\_HID。因为ACM设备并非HID设备，所以报告描述符并不需要进行修改，可以使用2.1和2.2中的报告描述符传入
+The virtual serial port device type is DEV_SERIAL, but usually we use an HID+ACM composite device, i.e., the type DEV_SER_HID. Because the ACM device is not an HID device, the report descriptor does not need to be modified. The report descriptors in sections 2.1 and 2.2 can be passed to hid_add_report_descriptor, and then call usbd_set_device_info(DEV_SER_HID, &str_manufacturer, &str_product, &str_serial_number, dev_id) and usb_init(DEVICE, DEV_SER_HID) to enumerate the HID device and the ACM serial port.
 
-hid\_add\_report\_descriptor，再调用usbd\_set\_device\_info\(DEV\_SER\_HID, &str\_manufacturer, &str\_product, &str\_serial\_number, dev\_id\)和usb\_init\(DEVICE, DEV\_SER\_HID\)即可枚举HID设备和ACM串口。
+The ACM serial port needs a new thread for data reception. If the board side writes data to be sent to the USB host, call the write interface directly. If the board side reads data sent from the USB host, after opening the serial port, first call the ioctl interface, then call the read interface. The ioctl usage is as follows:
 
-ACM串口需要新建一个线程进行数据接收，若单板端写数据发送到USB主机，则直接调用write接口；若单板端读取从USB主机发来的数据，open串口后先调用ioctl接口，然后再调用read接口，ioctl用法如下：
+usb_serial_ioctl(0, CONSOLE_CMD_RD_BLOCK_SERIAL, 1);
 
-usb\_serial\_ioctl\(0, CONSOLE\_CMD\_RD\_BLOCK\_SERIAL, 1\);
+Create a 4096-byte buffer to store the read value (the virtual serial port supports reading and writing up to 4096 bytes of data)usb_serial_read(0, g_usb_serial_recv_data, SERIAL_RECV_DATA_MAX_LEN); the return value of usb_serial_read is the length of the read data.
 
-创建一个大小4096字节的buffer来存储读取的值（虚拟串口最大支持读写4096字节数据）
+usb_serial_write(0, g_usb_serial_recv_data, recv_len);
 
-usb\_serial\_read\(0, g\_usb\_serial\_recv\_data, SERIAL\_RECV\_DATA\_MAX\_LEN\);usb\_serial\_read的返回值是读取到的数据长度。
+For the example code, see "application/samples/products/sle_dongle/sle_dongle_hid_serial.c".
 
-usb\_serial\_write\(0, g\_usb\_serial\_recv\_data, recv\_len\);
+## Implementing the Upgrade Function (DFU)<a name="ZH-CN_TOPIC_0000001968134540"></a>
 
-示例代码可查看“application/samples/products/sle\_dongle/sle\_dongle\_hid\_serial.c”。
+The DFU function relies on the BurnTool tool. It is recommended to download and use the newest possible version of BurnTool.
 
-## 实现升级功能\(DFU\)<a name="ZH-CN_TOPIC_0000001968134540"></a>
-
-DFU功能依赖于Burntool工具，建议下载和使用尽可能新版本的Burntool。
-
-Burntool工具可以对Usage Page设置为0xFFB1的设备进行DFU升级，如下文描述符：
+The BurnTool tool can perform DFU upgrades on devices whose Usage Page is set to 0xFFB1, as in the descriptor below:
 
 ```
 usage_page(2),      0xB1, 0xFF,
-usage(1),        0x1,
-collection(1),     0x01,
-report_id(1),      0x08,
-collection(1),     0x00,
-report_count(1),    0xc,
-report_size(1),    0x8,
-usage_minimum(1),   0x0,
-usage_maximum(1),   0xFF,
-output(1),        2,
+usage(1),        0x1,
+collection(1),     0x01,
+report_id(1),      0x08,
+collection(1),     0x00,
+report_count(1),    0xc,
+report_size(1),    0x8,
+usage_minimum(1),   0x0,
+usage_maximum(1),   0xFF,
+output(1),        2,
 end_collection(0),
 end_collection(0),
 ```
 
-在hid接收数据的线程中添加处理Burntool发送的升级消息的分支，当有升级包通过Burntool发送时，Burntool会下发frame\_type为0x1e的消息：
+Add a branch for processing the upgrade message sent by BurnTool in the thread that receives HID data. When an upgrade package is sent through BurnTool, BurnTool issues a message with frame_type 0x1e:
 
 ```
 if (command.frame_type == 0x1e) {
@@ -569,9 +485,8 @@ if (command.frame_type == 0x1e) {
  }
 ```
 
-middleware/utils/usb\_class/f\_dfu.c中定义了名为usb\_dfu\_download\_callback的弱函数，在开始升级时会调用该函数，需要用户自己将该函数实现以完成升级流程，具体实现可参考“application/samples/products/sle\_dongle/sle\_dongle\_hid\_serial.c”。
+In middleware/utils/usb_class/f_dfu.c, a weak function named usb_dfu_download_callback is defined, which is called when the upgrade starts. The user needs to implement this function themselves to complete the upgrade process. For the specific implementation, refer to "application/samples/products/sle_dongle/sle_dongle_hid_serial.c".
 
-## 实现音频数据接口\(UAC\)<a name="ZH-CN_TOPIC_0000001968294344"></a>
+## Implementing the Audio Data Interface (UAC)<a name="ZH-CN_TOPIC_0000001968294344"></a>
 
-音频数据接口设备类型是DEV\_UAC，初始化完成后需要调用uac\_wait\_host接口等待主机发送识别到UAC设备的信号，通常入参传入1表示WAIT\_HOST\_FOREVER，即在声音设置-\>输入中选择该设备，才能完成UAC的初始化。UAC1.0最高支持双声道192Khz 16b的音源，而LiteOS提供的UAC驱动为16Khz 16b，将想要发送的16bit音频数据填充到buffer中，使用vdt\_usb\_uac\_send\_data\(buffer, buffer\_len\)接口发送，具体实现可参考“application/samples/products/usb\_amic\_vdt/vdt\_usb/vdt\_usb.c”。
-
+The audio data interface device type is DEV_UAC. After initialization is complete, the uac_wait_host interface needs to be called to wait for the host to send the signal identifying the UAC device. Passing 1 as the input parameter generally indicates WAIT_HOST_FOREVER, i.e., selecting the device in sound settings -> input is required to complete the UAC initialization. UAC1.0 supports up to two-channel 192Khz 16b audio sources, while the UAC driver provided by LiteOS is 16Khz 16b. Fill the 16-bit audio data to be sent into the buffer and use the vdt_usb_uac_send_data(buffer, buffer_len) interface to send it. For the specific implementation, refer to "application/samples/products/usb_amic_vdt/vdt_usb/vdt_usb.c".

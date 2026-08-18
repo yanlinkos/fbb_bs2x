@@ -1,163 +1,163 @@
 # environment
 
-## 1.1 介绍
+## 1.1 Introduction
 
-**功能介绍：** 在SSD1306 OLED屏幕实时显示当前环境温湿度。
+**Function Description:** Real-time display of the current ambient temperature and humidity on an SSD1306 OLED screen.
 
-**软件概述：** I2C是一种串行通信协议，允许将多个设备连接到一条总线上。每个连接到总线上的器件都有唯一地址，任何器件既可作为主机也可以作为从机，但同一时刻只允许有一个主机。
+**Software Overview:** I2C is a serial communication protocol that allows multiple devices to be connected to a single bus. Each device connected to the bus has a unique address. Any device can act as either a master or a slave, but only one master is allowed at any given time.
 
-**硬件概述：** 由于BS21E开发板IO口功能复用（全路由，任意IO口都可以复用全部功能）。OLED数据手册参考：https://gitee.com/HiSpark/hi3861_hdu_iot_application/issues/I6WPSS?from=project-issue 里面的液晶显示器.pdf。 ;环境监测板AHT20数据手册参考https://gitee.com/HiSpark/hi3861_hdu_iot_application/issues/I6WPSS?from=project-issue 里面的AHT20.pdf，BS21E开发板IO0接底板RX，IO1接底板TX，硬件搭建要求如图所示：
+**Hardware Overview:** Because the BS21E development board IO pins support function multiplexing (full routing, any IO pin can multiplex all functions). For the OLED datasheet, refer to the liquid crystal display (LCD) PDF in https://gitee.com/HiSpark/hi3861_hdu_iot_application/issues/I6WPSS?from=project-issue. For the AHT20 environment monitoring board datasheet, refer to the AHT20 PDF in https://gitee.com/HiSpark/hi3861_hdu_iot_application/issues/I6WPSS?from=project-issue. On the BS21E development board, IO0 connects to the baseboard RX and IO1 connects to the baseboard TX. The hardware setup requirements are shown in the figure:
 
-参考[OLED板原理图](../../doc/hardware/HiSpark_WiFi_IoT_OLED_VER.A.pdf)、[环境监测原理图](../../doc/hardware/HiSpark_WiFi_IoT_EM_VER.A.pdf)、[底板原理图](../../doc/hardware/HiSpark_WiFi_IoT_EXB_VER.A.pdf)、[核心板原理图](../../doc/hardware/HH-D03_原理图_V01.pdf)
+Refer to the [OLED board schematic](../../doc/hardware/HiSpark_WiFi_IoT_OLED_VER.A.pdf), [environment monitoring schematic](../../doc/hardware/HiSpark_WiFi_IoT_EM_VER.A.pdf), [baseboard schematic](../../doc/hardware/HiSpark_WiFi_IoT_EXB_VER.A.pdf), and [core board schematic](../../doc/hardware/HH-D03_原理图_V01.pdf)
 
 ![image-20250424151214774](../../doc/media/environment/image-20250424151214774.png)
 
-## 1.2 约束与限制
+## 1.2 Constraints and Limitations
 
-### 1.2.1 支持应用运行的芯片和开发板
+### 1.2.1 Chips and Development Boards Supporting Application Operation
 
-  本示例支持开发板：HH-D03
+  Development board supported by this example: HH-D03
 
-### 1.2.2 支持API版本、SDK版本
+### 1.2.2 Supported API Version, SDK Version
 
-  本示例支持版本号：1.0.15以上
+  Version number supported by this example: 1.0.15 and above
 
-### 支持IDE插件版本
+### Supported IDE Plugin Version
 
-  本示例支持IDE插件版本号：1.0.1及以上；
+  IDE plugin version supported by this example: 1.0.1 and above;
 
-## 1.3 效果预览
+## 1.3 Effect Preview
 
-板上小屏幕实时显示环境温度和湿度。
+The small screen on the board displays the ambient temperature and humidity in real time.
 
 ![image-20250424151219537](../../doc/media/environment/image-20250424151219537.png)
 
-## 1.4 接口介绍
+## 1.4 Interface Description
 
 ### 1.4.1 uapi_i2c_master_read()
 
 
-| **定义：**   | errcode_t uapi_i2c_master_read(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data);                                                                                      |
+| **Definition:** | errcode_t uapi_i2c_master_read(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data); |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **功能：**   | 主机接收来自目标I2C从机的数据，有两种方式，一种是手动切换方式，另外一种是自动切换模式，两种方式静态配置，手动切换方式一共有以下三种传输模式，但是不能在同一bus中同时使用 |
-| **参数：**   | bus:I2C总线<br/>dev_addr：主机接收数据的目标从机地址  <br/>data:接收数据的数据指针                                                                                       |
-| **返回值：** | ERRCODE_SUCC：成功    Other：失败                                                                                                                                        |
-| **依赖：**   | include\driver\i2c.h                                                                                                                                                     |
+| **Function:** | The master receives data from the target I2C slave. There are two methods: manual switching mode and automatic switching mode. Both methods are statically configured. The manual switching mode has the following three transfer modes, but they cannot be used simultaneously on the same bus |
+| **Parameters:** | bus: I2C bus<br/>dev_addr: target slave address from which the master receives data <br/>data: data pointer for received data |
+| **Return Value:** | ERRCODE_SUCC: success Other: failure |
+| **Dependency:** | include\driver\i2c.h |
 
 ### 1.4.2 uapi_i2c_master_write()
 
 
-| 定义：       | errcode_t uapi_i2c_master_write(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data);                                                                              |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **功能：**   | 将数据从主机写入到从机，有两种方式，一种是手动切换方式，另外一种是自动切换模式，两种方式静态配置，手动切换方式一共有以下三种传输模式，但是不能在同一bus中同时使用 |
-| **参数：**   | bus:I2C总线<br/>dev_addr：主机接收数据的目标从机地址  <br/>data:发送数据的数据指针                                                                                |
-| **返回值：** | ERRCODE_SUCC：成功    Other：失败                                                                                                                                 |
-| **依赖：**   | include\driver\i2c.h                                                                                                                                              |
+| Definition: | errcode_t uapi_i2c_master_write(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data); |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Function:** | Writes data from the master to the slave. There are two methods: manual switching mode and automatic switching mode. Both methods are statically configured. The manual switching mode has the following three transfer modes, but they cannot be used simultaneously on the same bus |
+| **Parameters:** | bus: I2C bus<br/>dev_addr: target slave address to which the master sends data <br/>data: data pointer for transmitted data |
+| **Return Value:** | ERRCODE_SUCC: success Other: failure |
+| **Dependency:** | include\driver\i2c.h |
 
 ### 1.4.3 uapi_i2c_master_init()
 
 
-| **定义：**   | errcode_t uapi_i2c_master_init(i2c_bus_t bus, uint32_t baudrate, uint8_t hscode);                                                         |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| **功能：**   | 根据指定的参数初始化该i2c为主机                                                                                                           |
-| **参数：**   | bus：I2C总线<br/>baudrate：i2c波特率  <br/>hscode：i2c高速模式主机码，每个主机有自己唯一的主机码，有效取值范围0~7，仅在高速模式下需要配置 |
-| **返回值：** | ERRCODE_SUCC：成功    Other：失败                                                                                                         |
-| **依赖：**   | include\driver\i2c.h                                                                                                                      |
+| **Definition:** | errcode_t uapi_i2c_master_init(i2c_bus_t bus, uint32_t baudrate, uint8_t hscode); |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Function:** | Initializes this i2c as a master according to the specified parameters |
+| **Parameters:** | bus: I2C bus<br/>baudrate: i2c baud rate <br/>hscode: i2c high-speed mode master code. Each master has its own unique master code. The valid range is 0~7, and it only needs to be configured in high-speed mode |
+| **Return Value:** | ERRCODE_SUCC: success Other: failure |
+| **Dependency:** | include\driver\i2c.h |
 
 ### 1.4.4 uapi_pin_set_mode()
 
 
-| **定义：**   | errcode_t uapi_pin_set_mode(pin_t pin, pin_mode_t mode); |
+| **Definition:** | errcode_t uapi_pin_set_mode(pin_t pin, pin_mode_t mode); |
 | ------------ | -------------------------------------------------------- |
-| **功能：**   | 设置引脚复用模式                                         |
-| **参数：**   | pin：io<br/>mode：复用模式                               |
-| **返回值：** | ERRCODE_SUCC：成功    Other：失败                        |
-| **依赖：**   | include\driver\pinctrl.h                                 |
+| **Function:** | Sets the pin multiplexing mode |
+| **Parameters:** | pin: io<br/>mode: multiplexing mode |
+| **Return Value:** | ERRCODE_SUCC: success Other: failure |
+| **Dependency:** | include\driver\pinctrl.h |
 
 ### 1.4.5 ssd1306_SetCursor()
 
 
-| **定义：**   | void ssd1306_SetCursor(uint8_t x, uint8_t y); |
+| **Definition:** | void ssd1306_SetCursor(uint8_t x, uint8_t y); |
 | ------------ | --------------------------------------------- |
-| **功能：**   | 设置字符串显示位置                            |
-| **参数：**   | x：横坐标<br/>y：众坐标                       |
-| **返回值：** | 无返回值                                      |
-| **依赖：**   | oled\ssd1306.h                                |
+| **Function:** | Sets the string display position |
+| **Parameters:** | x: x coordinate<br/>y: y coordinate |
+| **Return Value:** | none |
+| **Dependency:** | oled\ssd1306.h |
 
 ### 1.4.6 ssd1306_DrawString()
 
 
-| **定义：**   | char ssd1306_DrawString(char *str, FontDef Font, SSD1306_COLOR color); |
+| **Definition:** | char ssd1306_DrawString(char *str, FontDef Font, SSD1306_COLOR color); |
 | ------------ | ---------------------------------------------------------------------- |
-| **功能：**   | 设置输出的字符串                                                       |
-| **参数：**   | str：要输出的字符串<br/>Font：字符串大小 <br/>color：颜色              |
-| **返回值：** | ERRCODE_SUCC：成功    Other：失败                                      |
-| **依赖：**   | oled\ssd1306.h                                                         |
+| **Function:** | Sets the string to be output |
+| **Parameters:** | str: string to be output<br/>Font: string size <br/>color: color |
+| **Return Value:** | ERRCODE_SUCC: success Other: failure |
+| **Dependency:** | oled\ssd1306.h |
 
 ### 1.4.7 ssd1306_UpdateScreen()
 
 
-| **定义：**   | void ssd1306_UpdateScreen(void); |
+| **Definition:** | void ssd1306_UpdateScreen(void); |
 | ------------ | -------------------------------- |
-| **功能：**   | 在屏幕显示字符串                 |
-| **参数：**   | 无                               |
-| **返回值：** | 无                               |
-| **依赖：**   | oled\ssd1306.h                   |
+| **Function:** | Displays the string on the screen |
+| **Parameters:** | none |
+| **Return Value:** | none |
+| **Dependency:** | oled\ssd1306.h |
 
-## 1.5 具体实现
+## 1.5 Concrete Implementation
 
-步骤一：初始化I2C设备；
+Step 1: Initialize the I2C device;
 
-步骤二：I2C通信正常后，初始化OLED；
+Step 2: After I2C communication is normal, initialize the OLED;
 
-步骤三：通过数据手册中协议要求，发送数据
+Step 3: Send data according to the protocol requirements in the datasheet
 
-## 1.6 实验流程
+## 1.6 Experiment Flow
 
-- 步骤一：在xxx\src\application\samples\peripheral文件夹新建一个sample文件夹，在peripheral上右键选择“新建文件夹”，创建Sample文件夹，例如名称”environment“。
+- Step 1: Create a new sample folder in the xxx\src\application\samples\peripheral folder. Right-click on peripheral, select "New Folder", and create a Sample folder, for example named "environment".
 
   ![image-70551992](../../doc/media/beep/image-20240801170551992.png)
   
-- 步骤二：将xxx\vendor\HiHope_NearLink_DK_WS63E_V03\environment文件里面内容拷贝到**步骤一创建的Sample文件夹中”environment“**。
+- Step 2: Copy the contents of the xxx\vendor\HiHope_NearLink_DK_WS63E_V03\environment directory into the "environment" Sample folder created in Step 1.
 
   ![image-20240417175458664](../../doc/media/environment/image-20240417175458664.png)
   
-- 步骤三：在xxx\src\application\samples\peripheral\CMakeLists.txt文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加的，可以在“set(SOURCES "${SOURCES}" PARENT_SCOPE)”上面一行添加）。
+- Step 3: Add a new compilation case in the xxx\src\application\samples\peripheral\CMakeLists.txt file, as shown in the figure below (if you do not know where to add it, you can add it on the line above the "set(SOURCES "${SOURCES}" PARENT_SCOPE)" line).
 
   ![image-20240802172456133](../../doc/media/environment/image-20240802172456133.png)
   
-- 步骤四：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加，可以在最后一行添加）。
+- Step 4: Add a new compilation case in the xxx\src\application\samples\peripheral\Kconfig file, as shown in the figure below (if you do not know where to add it, you can add it on the last line).
 
   ![image-20240802172425982](../../doc/media/environment/image-20240802172425982.png)
   
-- 步骤五：点击如下图标，选择KConfig，具体选择路径“Application/Enable the Sample of peripheral”，在弹出框中选择“support ENVIRONMENT Sample”，点击Save，关闭弹窗。
+- Step 5: Click the following icon, select KConfig, select the path "Application/Enable the Sample of peripheral", select "support ENVIRONMENT Sample" in the pop-up dialog, click Save, and close the dialog.
 
   <img src="../../doc/media/beep/image-20240801171406113.png" alt="image-20240801171406113" style="zoom: 67%;" /><img src="../../doc/media/beep/image-20240205105234692-17119401758316.png" alt="image-20240205105234692" style="zoom: 67%;" /><img src="../../doc/media/environment/image-20240417175558457.png" alt="image-20240417175558457" style="zoom:50%;" />
   
-- 步骤六:找到Drivers->Drivers->I2C->I2C Configuration，按照图片勾选
+- Step 6: Find Drivers->Drivers->I2C->I2C Configuration and check it according to the figure
 
   ![image-20250424142756195](../../doc/media/environment/image-20250424142756195.png)
   
-- 步骤七：点击“build”或者“rebuild”编译
+- Step 7: Click "build" or "rebuild" to compile
 
   ![image-20250716163653427](../../doc/media/readme/image-20250716163653427.png)
   
-- 步骤八：编译完成如下图所示。
+- Step 8: The compilation is complete as shown in the figure below.
 
   ![image-20240801165456569](../../doc/media/tools/image-20250307164622717.png)
   
-- 步骤九：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
+- Step 9: In the HiSpark Studio tool, click the "Project Configuration" button, select "Program Loading", set the transfer mode to "serial", select the port "comxxx". The com port is viewed in the device manager (if you cannot find the com port, refer to the Windows environment setup).
 
   ![image-20250716164922699](../../doc/media/readme/image-20250716164922699.png)
   
-- 步骤十：配置完成后，点击工具“程序加载”按钮烧录。
+- Step 10: After configuration, click the tool's "Program Loading" button to burn/flash.
 
   ![image-20250716170835615](../../doc/media/readme/image-20250716170835615.png)
   
-- 步骤十一：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
+- Step 11: When the message "Connecting, please reset device..." appears, reset the development board and wait for the flashing to finish.
 
   ![image-20240801174230202](../../doc/media/tools/image-20240801174230202.png)
   
-- 步骤十二：“软件烧录成功后，按一下开发板的RESET按键复位开发板，板上小屏幕实时显示环境温度和湿度。
+- Step 12: After the software is successfully flashed, press the RESET button on the development board to reset it. The small screen on the board will display the ambient temperature and humidity in real time.
 
   ![image-20250424151225853](../../doc/media/environment/image-20250424151225853.png)

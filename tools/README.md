@@ -1,25 +1,25 @@
-# 开发环境搭建
+# Development Environment Setup
 
-## Windows系统环境搭建
+## Windows System Environment Setup
 
-方式一：
+Method 1:
 
-- [HiSparkStudio插件版编译及烧录（推荐）](HiSparkStudio插件版编译及烧录.md)
+- [HiSparkStudio Plugin Compilation and Flashing (Recommended)](HiSparkStudio插件版编译及烧录.md)
 
-方式二：
+Method 2:
 
-- [HiSparkStudio工具下载及安装](HiSparkStudio工具下载及安装.md)
-- [HiSparkStudio编译及烧录](HiSparkStudio编译及烧录.md)
+- [HiSparkStudio Tool Download and Installation](HiSparkStudio工具下载及安装.md)
+- [HiSparkStudio Compilation and Flashing](HiSparkStudio编译及烧录.md)
+
 Enable the LDO under system control (you can find this in the Kconfig config – via VSCode → HiSpark plugin → command → system config).
 Proceed to compile the code.
 
-## WSL+Ubuntu22.04系统环境搭建
+## WSL+Ubuntu22.04 System Environment Setup
 
-- [WSL子系统开发环境搭建](WSL子系统开发环境搭建.md)
-- [WSL子系统编译及烧录](WSL子系统编译及烧录.md)
+- [WSL Subsystem Development Environment Setup](WSL子系统开发环境搭建.md)
+- [WSL Subsystem Compilation and Flashing](WSL子系统编译及烧录.md)
 
-## 环境搭建问题FAQ
+## Environment Setup FAQ
 
-- 如果根据文档没有编译成功，请参考https://developers.hisilicon.com/postDetail?tid=02110170392979486020
-- 如果根据文档编译成功，但是在编写其他代码后，导致编译失败，可以在论坛提问，论坛链接：https://developers.hisilicon.com/forum/0133146886267870001
-
+- If compilation fails according to the documentation, please refer to https://developers.hisilicon.com/postDetail?tid=02110170392979486020
+- If compilation succeeds according to the documentation but fails after writing other code, you can ask questions on the forum. Forum link: https://developers.hisilicon.com/forum/0133146886267870001

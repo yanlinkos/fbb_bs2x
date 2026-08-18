@@ -1,45 +1,45 @@
-# 1.0.18版本描述文件
+# Version 1.0.18 Description File
 
-## 1.对前一基础版本不足之处的改进
+## 1. Improvements Over the Previous Baseline Version
 
-| 序号  | 涉及模块    | 问题描述                                    | 备注  |
+| No. | Module | Problem Description | Remark |
 | --- | ------- | --------------------------------------- | --- |
-| 01  | PLT     | 极低概率出现芯片无法正常启动，卡死在Flashboot，提示"Flashboot Jump Failed!"   | SDK 1.0.16/17版本的Flashboot需更新 |
-| 02  | PLT     | 极少数单板出现休眠唤醒断连问题 |     |
-| 03  | SLE     |  支持广播间隔设置大于20秒  |     |
-| 04  | SLE     | 平板互联互通测试用例“客户端支持有响应写入时错误句柄的处理”不通过，HID不受影响 |     |
+| 01  | PLT | With extremely low probability, the chip fails to start normally and hangs in Flashboot, reporting "Flashboot Jump Failed!" | The Flashboot of SDK 1.0.16/17 versions needs to be updated |
+| 02  | PLT | A very small number of boards experience a sleep-wake disconnection issue | |
+| 03  | SLE | Supports setting the broadcast interval to greater than 20 seconds | |
+| 04  | SLE | The tablet interoperability test case "client supports error-type handle handling for responsive writes" fails; HID is not affected | |
 
-## 2.对前一基础版本新增、修改和删除的功能特性
+## 2. Newly Added, Modified, and Deleted Functional Features Compared to the Previous Baseline Version
 
-### 2.1 新增的功能特性
+### 2.1 New Functional Features
 
-本章节描述当前版本与上一个基础版本之间的所有新增功能特性。
+This section describes all newly added functional features between the current version and the previous baseline version.
 
-| 序号  | 简要描述                      | 详细描述                                            | 修改模块   |
+| No. | Brief Description | Detailed Description | Modified Module |
 | --- | ------------------------- | ----------------------------------------------- | ------ |
-| 01  | 支持SLE直连500Hz | 基于2821星闪直连平板等设备回报率可达到500Hz。 | SLE    |
-| 02  | Database开放 | Database随SDK开放。 | PLT/SLE    |
-| 03  | 支持跳频ChannelMAP配置 | 新增信道列表应用指导，支撑客户自定义跳频信道。 | SLE |
-| 04  | 支持载荷长度配置 | 新增载荷长度定制应用指导，支撑自定义传输数据大小。 | SLE |
-| 05  | OTA升级开放 | 提供SLE/BLE OTA参考实现。 | OTA |
-| 06  | AMIC开放 | 支持语音采集发送能力，提供Sample。 | PLT |
-| 07  | 增加BLE More Data相关维测 | BLE模式下，需新增维测信息指示一个连接间隔中，有多少个more data数据报文。 | BLE |
-| 08  | 支持配对密钥加密保存可配置 | 支持星闪及蓝牙配对密钥加密保存可配置。 | SLE/BLE |
+| 01  | Supports SLE direct connection at 500Hz | Based on the 2821, the reporting rate for devices directly connected via SparkLink (such as tablets) can reach 500Hz. | SLE |
+| 02  | Database open | The Database is opened/available with the SDK. | PLT/SLE |
+| 03  | Supports frequency-hopping ChannelMAP configuration | New channel list application guidance is added, supporting customized frequency-hopping channels by customers. | SLE |
+| 04  | Supports payload length configuration | New payload-length customization application guidance is added, supporting custom transmission data sizes. | SLE |
+| 05  | OTA upgrade open | Provides SLE/BLE OTA reference implementations. | OTA |
+| 06  | AMIC open | Supports voice collection and transmission capability, providing a Sample. | PLT |
+| 07  | Added BLE More Data related measurement | In BLE mode, new measurement information is needed to indicate how many more data packets there are in one connection interval. | BLE |
+| 08  | Supports configurable encrypted storage of pairing keys | Supports configurable encrypted storage of SparkLink and Bluetooth pairing keys. | SLE/BLE |
 
-### 2.2 增强的功能特性
+### 2.2 Enhanced Functional Features
 
-| 序号  | 简要描述     | 修改原因 | 修改影响                                      | 修改模块 |
+| No. | Brief Description | Modification Reason | Modification Impact | Modified Module |
 | --- | -------- | ---- | ----------------------------------------- | ---- |
-| 01  | 总线自动CG优化   | 性能优化 | 总线优化，提升寄存器读写性能。 | PLT  |
-| 02  | 低时延一拖二回连时间优化 | 性能优化 | 低时延一拖二回连时间与一拖一持平。 | SLE  |
-| 03  | 低时延一拖二功耗优化 | 功能优化 | 低时延一拖二功耗与一拖一持平。 | SLE  |
+| 01  | Bus automatic CG optimization | Performance optimization | Bus optimization, improving register read/write performance. | PLT |
+| 02  | Low-latency one-to-two reconnection time optimization | Performance optimization | The low-latency one-to-two reconnection time is on par with one-to-one. | SLE |
+| 03  | Low-latency one-to-two power consumption optimization | Functional optimization | The low-latency one-to-two power consumption is on par with one-to-one. | SLE |
 
-## 3.接口变更说明
+## 3. Interface Change Description
 
-### 3.1 BLE SDK接口变更说明
-| 头文件      | 修改内容              | 修改版本      |
+### 3.1 BLE SDK Interface Change Description
+| Header File | Modified Content | Modified Version |
 | ---------- | -------------------- | ----------- |
-| bts_le_gap.h | 新增接口： <br> errcode_t <br> gap_ble_set_nv_store_smp_keys_mode(uint8_t is_encrypted);<br> 接口用处：NV存储配对密钥是否加密设置。<br> 典型使用场景：配对密钥是否加密存储。<br> | BS2X 1.0.18 |
+| bts_le_gap.h | New interface: <br> errcode_t <br> gap_ble_set_nv_store_smp_keys_mode(uint8_t is_encrypted);<br> Interface usage: NV storage pairing key encryption setting.<br> Typical usage scenario: whether the pairing key is stored encrypted.<br> | BS2X 1.0.18 |
 
-### 3.2 SLE SDK接口变更说明
-不涉及
+### 3.2 SLE SDK Interface Change Description
+Not applicable

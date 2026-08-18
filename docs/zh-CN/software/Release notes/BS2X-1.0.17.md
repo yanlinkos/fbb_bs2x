@@ -1,50 +1,50 @@
-# 1.0.17版本描述文件
+# Version 1.0.17 Description File
 
-## 1.对前一基础版本不足之处的改进
+## 1. Improvements Over the Previous Baseline Version
 
-| 序号  | 涉及模块    | 问题描述                                    | 备注  |
+| No. | Module | Problem Description | Remark |
 | --- | ------- | --------------------------------------- | --- |
-| 01  | PLT     | fhid_send_data返回值判断优化                   |     |
-| 02  | SLE     | 加密算法头文件中枚举值修改                           |     |
-| 03  | SLE/BLE | 修改时钟比较逻辑，ble下直接获取时钟，防止gle时钟翻转后两者换算出错    |     |
-| 04  | SLE     | ltk_len的最高位用作对端LL Privacy标志位,返回长度时因去掉高位 |     |
-| 05  | PLT     | 多连接场景，先建立一路连接，再连接无效地址后断开连接，连接状态变更无回调问题  |     |
-| 06  | PLT     | 鼠标光标在部分Mac的登录界面只能上下移动，不能左右移动            |     |
-| 07  | PLT     | 开源软件升级                                  |     |
-| 08  | BLE     | 提高BLE的IRK生成随机性                          |     |
+| 01  | PLT | Optimization of the fhid_send_data return value judgment | |
+| 02  | SLE | Modified the enum value in the encryption algorithm header file | |
+| 03  | SLE/BLE | Modified the clock comparison logic; in BLE, the clock is obtained directly to prevent incorrect conversion between the two after the GLE clock flips | |
+| 04  | SLE | The highest bit of ltk_len is used as the peer LL Privacy flag; the returned length removes this high bit | |
+| 05  | PLT | In a multi-connection scenario, after first establishing one connection, then connecting to an invalid address and disconnecting, there is no callback for the connection state change | |
+| 06  | PLT | On the login screen of some Macs, the mouse cursor can only move up and down, not left and right | |
+| 07  | PLT | Open-source software upgrade | |
+| 08  | BLE | Improved the randomness of BLE IRK generation | |
 
-## 2.对前一基础版本新增、修改和删除的功能特性
+## 2. Newly Added, Modified, and Deleted Functional Features Compared to the Previous Baseline Version
 
-### 2.1 新增的功能特性
+### 2.1 New Functional Features
 
-本章节描述当前版本与上一个基础版本之间的所有新增功能特性。
+This section describes all newly added functional features between the current version and the previous baseline version.
 
-| 序号  | 简要描述                      | 详细描述                                            | 修改模块   |
+| No. | Brief Description | Detailed Description | Modified Module |
 | --- | ------------------------- | ----------------------------------------------- | ------ |
-| 01  | 支持低时延一拖二方案                | 办公键鼠套装支持键鼠一拖二功能。注：一拖二为新特性，仅供调试，不支持商用。           | SLE    |
-| 02  | AT命令扩展，提升导入效率             | 支持直接写入或读取MAC到NV，读取NV key_id、版本号、电源模式、温度命令的AT命令。 | PLT    |
-| 03  | 支持UART读/写超时机制，增强健壮性       | 在UART读写接口阻塞超时，返回错误码，避免无效等待。                     | PLT    |
-| 04  | 支持通过USB口抓串口和HSO日志，提升维测易用性 | 通过USB口即可抓取串口和HSO日志，避免拆机、飞线等复杂操作。                | PLT    |
-| 05  | RCU Sample功能增强            | RCU Sample支持三模遥控器配置，双SLE、双BLE、 SLE+BLE等模式。      | Sample |
-| 06  | 指向遥控Sample功能增强            | 指向遥控Sample新增语音采集、语音编解码、语音传输功能。                  | Sample |
+| 01  | Supports low-latency one-to-two solution | Office keyboard-and-mouse kit supports keyboard-and-mouse one-to-two functionality. Note: one-to-two is a new feature, provided for debugging only, and does not support commercial use. | SLE |
+| 02  | AT command extension, improving import efficiency | Supports AT commands to directly write or read the MAC to NV, and read NV key_id, version number, power mode, and temperature commands. | PLT |
+| 03  | Supports UART read/write timeout mechanism, enhancing robustness | When the UART read/write interface blocks and times out, an error code is returned to avoid invalid waiting. | PLT |
+| 04  | Supports capturing serial port and HSO logs via USB, improving testability and ease of use | Serial port and HSO logs can be captured via the USB port, avoiding complex operations such as disassembly and flying leads. | PLT |
+| 05  | RCU Sample feature enhancement | RCU Sample supports three-mode remote control configuration, including dual SLE, dual BLE, and SLE+BLE modes. | Sample |
+| 06  | Pointing remote Sample feature enhancement | The pointing remote Sample adds voice collection, voice encoding/decoding, and voice transmission functions. | Sample |
 
-### 2.2 增强的功能特性
+### 2.2 Enhanced Functional Features
 
-| 序号  | 简要描述     | 修改原因 | 修改影响                                      | 修改模块 |
+| No. | Brief Description | Modification Reason | Modification Impact | Modified Module |
 | --- | -------- | ---- | ----------------------------------------- | ---- |
-| 01  | 按键时延优化   | 性能优化 | 优化口空、按键触发中断耗时。                            | SLE  |
-| 02  | 广播接入流程优化 | 性能优化 | 优化休眠唤醒概率性出现0x1C断连问题。                      | SLE  |
-| 03  | 分区逻辑优化   | 功能优化 | APP镜像分区大小直接从分区表中获取，避免APP镜像可能与用户自定义分区重合问题。 | PLT  |
+| 01  | Key press latency optimization | Performance optimization | Optimizes air-interface and key-press-triggered interrupt time consumption. | SLE |
+| 02  | Broadcast access process optimization | Performance optimization | Optimizes the probability of 0x1C disconnection after sleep-wake. | SLE |
+| 03  | Partition logic optimization | Functional optimization | The APP mirror partition size is obtained directly from the partition table, avoiding the problem where the APP mirror might overlap with user-defined partitions. | PLT |
 
-## 3.接口变更说明
+## 3. Interface Change Description
 
-### 3.1 BLE SDK接口变更说明
+### 3.1 BLE SDK Interface Change Description
 
-不涉及
+Not applicable
 
-### 3.2 SLE SDK接口变更说明
+### 3.2 SLE SDK Interface Change Description
 
-| 头文件                      | 修改内容                                                                                                                                      | 修改版本        |
+| Header File | Modified Content | Modified Version |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| sle_connection_manager.h | 加密算法头文件中枚举值修改。                                                                                                                            | BS2X 1.0.17 |
-| extern使用                 | 新增接口 errcode_t sle_set_low_latency_data(uint16_t conn_id, uint8_t* value, uint8_t len);<br>接口用处：用于通过low latency 快速发送数据到对端，降低时延。典型使用场景：发送按键数据。 | BS2X 1.0.17 |
+| sle_connection_manager.h | Modified the enum value in the encryption algorithm header file. | BS2X 1.0.17 |
+| extern use | New interface errcode_t sle_set_low_latency_data(uint16_t conn_id, uint8_t* value, uint8_t len);<br>Interface usage: used to quickly send data to the peer via low latency, reducing latency. Typical usage scenario: sending key-press data. | BS2X 1.0.17 |

@@ -1,50 +1,50 @@
-# 1.0.16版本描述文件
+# Version 1.0.16 Description File
 
-## 1.对前一基础版本不足之处的改进
+## 1. Improvements Over the Previous Baseline Version
 
-| 序号  | 涉及模块    | 问题描述                                                | 备注  |
+| No. | Module | Problem Description | Remark |
 | --- | ------- | --------------------------------------------------- | --- |
-| 01  | BLE     | 在MacBook电脑上，蓝牙连接下，有概率出现一卡一卡现象                       |     |
-| 02  | SLE     | 多个dongle插在usbhub上出现断连问题                             |     |
-| 03  | SLE/BLE | 入standby低功耗，唤醒之后，必然出现sle无法切换回报率，或者ble无法更新连接参数       |     |
-| 04  | BTH     | ble client在对端不存在ble server情况下会不返回卡住线程               |     |
-| 05  | SLE     | 鼠标重新上电概率性出现断连又回连问题                                  |     |
-| 06  | PLT     | 红外学习功能不成功                                           |     |
-| 07  | PLT     | 概率性触发鬼键                                             |     |
-| 08  | PLT     | 语音遥控器压测有出现本地录音噪声非背景底噪                               |     |
-| 09  | BTH     | 事件和消息顺序异常                                           |     |
-| 10  | SLE     | 2.4G模式下，休眠唤醒后回连出现断链回连一直循环情况，首先是2个断链原因是0x07，后面都是0x1c |     |
-| 11  | PLT     | SLP加载固件出现异常挂死                                       |     |
-| 12  | PLT     | bs21进入低功耗唤醒之后uart接收数据变慢                             |     |
+| 01  | BLE | On MacBook computers, under Bluetooth connection, there is a probability of a stuttering/lagging phenomenon | |
+| 02  | SLE | Multiple dongles plugged into a USB hub experience disconnection issues | |
+| 03  | SLE/BLE | After entering standby low-power mode, upon waking up, SLE is inevitably unable to switch reporting rates, or BLE is unable to update connection parameters | |
+| 04  | BTH | The BLE client will hang the thread without returning when the peer BLE server does not exist | |
+| 05  | SLE | The mouse may experience a disconnect-then-reconnect issue with a certain probability after being powered back on | |
+| 06  | PLT | The IR learning function is not successful | |
+| 07  | PLT | Ghost-key triggers occur with a certain probability | |
+| 08  | PLT | During stress testing of the voice remote control, local recording noise appears that is not background ambient noise | |
+| 09  | BTH | Abnormal event and message ordering | |
+| 10  | SLE | In 2.4G mode, after sleep-wake and reconnection, a link-break/reconnect loop occurs. First, 2 link-break causes are 0x07, and the rest are all 0x1c | |
+| 11  | PLT | Abnormal hang/deadlock occurs when SLP loads firmware | |
+| 12  | PLT | After bs21 enters low power and wakes up, uart data reception becomes slower | |
 
-## 2.对前一基础版本新增、修改和删除的功能特性
+## 2. Newly Added, Modified, and Deleted Functional Features Compared to the Previous Baseline Version
 
-### 2.1 BS2X 1.0.16版本对比BS2X 1.0.15版本
+### 2.1 BS2X 1.0.16 Version Compared to BS2X 1.0.15 Version
 
-本章节描述当前版本与上一个基础版本之间的所有新增功能特性。
+This section describes all newly added functional features between the current version and the previous baseline version.
 
-| 序号  | 简要描述             | 详细描述                 | 修改模块 |
+| No. | Brief Description | Detailed Description | Modified Module |
 | --- | ---------------- | -------------------- | ---- |
-| 01  | 支持测距DLI标准        | 支持测距DLI标准，可通过互联互通认证  | SLE  |
-| 02  | 新增BLE Long Range | 支持BLE Long Range功能   | BLE  |
-| 03  | 新增标准广播支持         | 支持标准广播，兼容旧广播         | SLE  |
-| 04  | SPI总线调整          | 支持调整调整SPI CS及TSRAD延时 | PLT  |
+| 01  | Supports ranging DLI standard | Supports the ranging DLI standard, enabling interoperability certification | SLE |
+| 02  | New BLE Long Range | Supports the BLE Long Range feature | BLE |
+| 03  | New standard broadcast support | Supports standard broadcast, compatible with legacy broadcast | SLE |
+| 04  | SPI bus adjustment | Supports adjusting the SPI CS and TSRAD delay | PLT |
 
-## 3.接口变更说明
+## 3. Interface Change Description
 
-### 3.1 BLE SDK接口变更说明
+### 3.1 BLE SDK Interface Change Description
 
-| 头文件          | 修改内容                                     | 修改版本        |
+| Header File | Modified Content | Modified Version |
 | ------------ | ---------------------------------------- | ----------- |
-| bts_le_gap.h | 1、新增gap_ble_set_scan_extern_parameters接口 | BS2X 1.0.16 |
+| bts_le_gap.h | 1. New interface gap_ble_set_scan_extern_parameters | BS2X 1.0.16 |
 
-### 3.2 SLE SDK接口变更说明
+### 3.2 SLE SDK Interface Change Description
 
-| 头文件                      | 修改内容                                  | 修改版本        |
+| Header File | Modified Content | Modified Version |
 | ------------------------ | ------------------------------------- | ----------- |
-| sle_at_dd.h              | 1、增加广播过滤策略字段                          | BS2X 1.0.16 |
-| uapi_gle_dev_discovery.h | 1、新增设置广播拓展默认参数接口                      | BS2X 1.0.16 |
-| sle_device_discovery.h   | 1、增加广播过滤策略字段                          | BS2X 1.0.16 |
-| gle_hci_ev.h             | 1、新增测距状态                              | BS2X 1.0.16 |
-| bth_gle_hadm.h           | 1、新增星闪层设置cs 参数, GTTT组网模式              | BS2X 1.0.16 |
-| sle_hadm_manager.h       | 1、新增GTTT 模式下 channel sounding 参数及配置方法 | BS2X 1.0.16 |
+| sle_at_dd.h | 1. Added a broadcast filtering policy field | BS2X 1.0.16 |
+| uapi_gle_dev_discovery.h | 1. New interface for setting broadcast extension default parameters | BS2X 1.0.16 |
+| sle_device_discovery.h | 1. Added a broadcast filtering policy field | BS2X 1.0.16 |
+| gle_hci_ev.h | 1. New ranging status | BS2X 1.0.16 |
+| bth_gle_hadm.h | 1. New SparkLink layer setting cs parameters, GTTT networking mode | BS2X 1.0.16 |
+| sle_hadm_manager.h | 1. New GTTT-mode channel sounding parameters and configuration method | BS2X 1.0.16 |

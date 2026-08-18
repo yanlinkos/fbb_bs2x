@@ -1,129 +1,123 @@
-## HH-D121 星闪开发板规格说明书
+## HH-D121 SparkLink Development Board Specification
 
-### 一、 概述
+### I. Overview
 
-#### 1.开发板介绍
+#### 1. Development Board Introduction
 
-**型号：**HH-D121
+**Model:** HH-D121
 
 ![](./media/HH-D121开发板.png)
 
-HH-D121 主板是基于海思星闪 BS21E 的解决方案，集成高性能、SLE 1.0、BLE 5.4 和 RF 电路，RF 包含功率放大器 PA、低噪声放大器，天线以及电源等管理模块。星闪 SLE 支持 1M/2M/4M 3种带宽，物理层最大支持 12 Mbps 速率。模组集成高性能 32bit RISC-V 微处理器（MCU），内置大容量 SRAM 和 Flash ，并支持在 Flash 上运行程序，支持硬件安全引擎以及丰富的外设接口。支持LiteOS操作系统，可广泛适应于 PC 配件，IOT 等物联网智能终端领域。
+The HH-D121 main board is a solution based on the HiSilicon SparkLink BS21E, integrating high performance, SLE 1.0, BLE 5.4, and RF circuits. The RF section includes a power amplifier (PA), a low-noise amplifier, an antenna, and power management modules. SparkLink SLE supports three bandwidths of 1M/2M/4M, with a maximum PHY-layer rate of 12 Mbps. The module integrates a high-performance 32-bit RISC-V microprocessor (MCU), with on-board large-capacity SRAM and Flash. It supports running programs on the Flash, supports the hardware security engine, and offers a rich set of peripheral interfaces. It supports the LiteOS operating system and can be widely used in IoT smart terminal fields such as PC accessories and IoT devices.
 
-HH-D121主板具有以下特点：
+The HH-D121 main board has the following features:
 
-* **丰富的 SDK** 
+* **Rich SDK**
 
-  * SDK 支持USB，HID，Battery，HeartRate 
+  * SDK supports USB, HID, Battery, HeartRate
 
-  * 提供 Keyboard，Mouse，麦克风等多种应用 Example 
+  * Provides various application Examples such as Keyboard, Mouse, and Microphone
 
-  * 配套提供完善的手册文档、开放易用的软件SDK及工具
+  * Provides complete manuals and documentation, plus open, easy-to-use software SDKs and tools
 
-* **稳定可靠的通信能力** 
+* **Stable and reliable communication capability**
 
-  - 更小空口时隙，显著降低端到端时延
+  - Smaller air interface time slots, significantly reducing end-to-end latency
 
-  - 采用Polar码，提供>7dB覆盖增益和强抗干扰能力
+  - Uses Polar codes, providing >7dB coverage gain and strong anti-interference capability
 
-  - 支持中心调度频谱分配与高效信道扫描选择
+  - Supports centrally scheduled spectrum allocation and efficient channel scanning and selection
 
-  - 支持更大的空口频宽和更高阶调制
+  - Supports wider air interface bandwidth and higher-order modulation
 
-* **高算力、亚阈值超低功耗**
+* **High compute power, sub-threshold ultra-low power consumption**
 
-  - RISC-V 开源MCU生态，支持浮点计算
+  - RISC-V open-source MCU ecosystem, supporting floating-point computation
 
-  - 内置 1MB Flash, 无需外挂，内置160KB SRAM，满足大应用开销
+  - Built-in 1MB Flash, no external Flash needed, built-in 160KB SRAM to satisfy large application overhead
 
-  - uA 级功耗，支持 Normal/Sleep/DeepSleep 等多种工作休眠模式
+  - uA-level power consumption, supporting Normal/Sleep/DeepSleep and other working and sleep modes
 
-* **强大的安全引擎** 
+* **Powerful security engine**
 
-  - 支持 AES128/256 加解密算法 
+  - Supports AES128/256 encryption/decryption algorithms
 
-  - 支持 SM4 加解密算法 
+  - Supports the SM4 encryption/decryption algorithm
 
-  - 支持 TRNG 真随机数模块
+  - Supports the TRNG true random number module
 
-  - 内部集成 efuse 
+  - Internal integrated efuse
 
-  - 内部集成 PMP 特性，支持内存隔离特性 
+  - Internal integrated PMP feature, supporting memory isolation
 
-* **开放的操作系统**  
-  - 支持 LiteOS 操作系统 
+* **Open operating system**
+  - Supports the LiteOS operating system
 
-#### 2.主要规格
+#### 2. Main Specifications
 
-表1.1 HH-D121 星闪开发板主要规格
+Table 1.1 HH-D121 SparkLink development board main specifications
 
-| **模块**             | **规格描述**                                                 |
-| -------------------- | ------------------------------------------------------------ |
-| **BLE**              | 支持 BLE4.0/4.1/4.2/5.0/5.1/5.2/5.3/5.4   <br />支持数据速率 ：1Mbps，2Mbps，500kbps 和 125kbps |
-| **SLE**              | 星闪低功耗SLE1.0  <br />支持SLE 1MHz/2MHz/4MHz  <br />最大空口速率12Mbps  <br />支持Polar信道编码  <br />支持无线帧类型1（GFSK帧）和无线帧类型2（低时延帧）  <br />支持G帧和T帧，支持单播/组播功能  <br /> 支持高精度测距 |
-| **MCU **  **子系统** | 高性能RISC-V 32bit MCU  <br />工作频率最高可达64MHz  <br />内置160KB SRAM  <br />内置1MB Flash  <br />支持eFuse/国密SM4  <br />支持安全存储/安全启动 |
-| **外围接口**         | AFE（Analog  Front-End）  <br />支持 2 * I2C，支持 master 和 slave 模式   <br />支持 1 路 2 通道 I2S/PCM   <br />支持 2 通道 PDM   <br />支持 3 * SPI，支持 master 和 slave 模式可配  <br />支持 3 * UART，最大速率4Mbit/s；其中 2 个 4 线 UART支持流控    <br />支持 2 * PWM   <br />支持 USB 2.0 HS/FS，最大支持480Mbit/s  <br />支持 6 路 13bit ADC，最大采样 率 1.6M   <br />支持 NFC Type2 Tag 功能，支持 NFC 场唤醒功能    <br />支持 QDEC 接口  <br />支持 KeyScan 功能   <br />支持 22*GPIO（全引脚复用） |
-| **AFE**              | 支持 ADC 复用为音频 AMIC 采样  <br />传感器通路：支持 8 ch 13bit 1.6Msps SAR ADC，支持单端/差分/扫描模式，支持过采样和buf功能  <br />音频通路：支持复用 13bit SAR ADC，降采样到  16ksps/8ksps；支持 40dB 倍放大 |
-| **其他信息**         | 电源电压输入：典型值 5V  <br />工作温度：-40℃～+85℃  <br />储存温度：-40℃～+105℃ |
+| **Module** | **Specification Description** |
+| --- | --- |
+| **BLE** | Supports BLE4.0/4.1/4.2/5.0/5.1/5.2/5.3/5.4 <br />Supports data rates: 1Mbps, 2Mbps, 500kbps, and 125kbps |
+| **SLE** | SparkLink low-power SLE1.0 <br />Supports SLE 1MHz/2MHz/4MHz <br />Maximum air interface rate 12Mbps <br />Supports Polar channel coding <br />Supports radio frame type 1 (GFSK frames) and radio frame type 2 (low-latency frames) <br />Supports G frames and T frames, supports unicast/multicast functions <br />Supports high-precision ranging |
+| **MCU Subsystem** | High-performance RISC-V 32-bit MCU <br />Operating frequency up to 64MHz <br />Built-in 160KB SRAM <br />Built-in 1MB Flash <br />Supports eFuse/Chinese national standard SM4 <br />Supports secure storage/secure boot |
+| **Peripheral Interfaces** | AFE (Analog Front-End) <br />Supports 2 * I2C, supports master and slave modes <br />Supports 1 2-channel I2S/PCM <br />Supports 2-channel PDM <br />Supports 3 * SPI, master and slave modes configurable <br />Supports 3 * UART, maximum rate 4Mbit/s; 2 of them are 4-wire UARTs supporting flow control <br />Supports 2 * PWM <br />Supports USB 2.0 HS/FS, maximum 480Mbit/s <br />Supports 6 13-bit ADC channels, maximum sampling rate 1.6M <br />Supports NFC Type2 Tag function, supports NFC wake-on-field function <br />Supports the QDEC interface <br />Supports the KeyScan function <br />Supports 22*GPIO (full pin multiplexing) |
+| **AFE** | Supports ADC multiplexed for audio AMIC sampling <br />Sensor path: supports 8-channel 13-bit 1.6Msps SAR ADC, supports single-ended/differential/scan modes, supports oversampling and buffer functions <br />Audio path: supports multiplexed 13-bit SAR ADC, downsampled to 16ksps/8ksps; supports 40dB amplification |
+| **Other Information** | Power supply voltage input: typical 5V <br />Operating temperature: -40℃ ~ +85℃ <br />Storage temperature: -40℃ ~ +105℃ |
 
-### 二、 硬件说明
+### II. Hardware Description
 
-#### 1.功能布局
+#### 1. Functional Layout
 
  ![](./media/HH-D121功能布局.png)
 
-**1)**    **用户按键**
+**1)** **User Button**
 
-S1 为 USER 自定义按键，开关 S2 通过 GPIO25 引脚向 BS21E 上报“按下/释放”状态，功能由软件定制。
+S1 is the USER custom button. Switch S2 reports the "pressed/released" status to the BS21E through the GPIO25 pin; the function is customized by software.
 
-**2)**    **Type-C** **接口**
+**2)** **Type-C Interface**
 
-可对主板及整个套件进行供电，或连接至电脑进行串口调试、系统烧录。开发板的USB_DP与USB_DM引脚通过 Type-C 引出。
+Can power the main board and the entire kit, or connect to a computer for serial debugging and system flashing. The development board's USB_DP and USB_DM pins are routed out through Type-C.
 
-**3)**    **复位按键**
+**3)** **Reset Button**
 
-S2 为 RST 复位按键，可以对主板进行复位。
+S2 is the RST reset button, which can reset the main board.
 
-**4)**    **电源指示灯（绿色）**
+**4)** **Power Indicator Light (Green)**
 
-用于指示电源状态，正常上电后电源指示灯常亮。
+Used to indicate the power status. After normal power-on, the power indicator light stays on.
 
-5) **USER** **指示灯（黄色）**
+5) **USER Indicator Light (Yellow)**
 
-用于指示相关的IO口状态使用，用户通过 GPIO18 进行控制。
+Used to indicate the status of the related IO pins; the user controls it through GPIO18.
 
-**6)**    **稳压器 AMS1117**
+**6)** **Voltage Regulator AMS1117**
 
-用于串口5V供电转换为芯片的3.3V供电。
+Used to convert the serial port's 5V power supply to the chip's 3.3V power supply.
 
-**7)**    **CH340K USB** **转串口芯片**
+**7)** **CH340K USB-to-Serial Chip**
 
-使用串口功能时，需要在 PC 上安装该芯片的驱动程序。
+When using the serial port function, the driver for this chip needs to be installed on the PC.
 
-**8)**    **HH-MT121** **模组**
+**8)** **HH-MT121 Module**
 
-高度集成 BLE 和 SLE，具有高速传输、低延迟、高性能、低功耗的特点，Type-C 型 USB 接口及丰富的管脚功能。
+Highly integrated BLE and SLE, featuring high-speed transmission, low latency, high performance, and low power consumption, with a Type-C USB interface and rich pin functions.
 
-**9)**    **SLE** **板载天线**
+**9)** **SLE On-Board Antenna**
 
-用于增强SLE/BLE的信号。
+Used to enhance the SLE/BLE signal.
 
-**10)**   **SLE** **外接天线（可选）**
+**10)** **SLE External Antenna (Optional)**
 
-用于增强SLE/BLE的信号，使用1代IPEX接口，特殊场景下需要很强的信号可以使用，通过更换焊接电阻实现。
+Used to enhance the SLE/BLE signal. It uses the 1st-generation IPEX interface and can be used in special scenarios requiring a very strong signal, implemented by replacing the soldered resistor.
 
-#### 2.管脚定义
+#### 2. Pin Definitions
 
 ![](./media/HH-D121 星闪开发板接口.png)
 
 <img src="./media/HH-D121 引脚图.png" style="zoom:50%;" />
 
-#### 3.尺寸
+#### 3. Dimensions
 
 <img src="./media/HH-D121 尺寸图.png" style="zoom:25%;" />
-
- 
-
- 
-
- 

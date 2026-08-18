@@ -1,115 +1,115 @@
 # button
 
-## 1.1 介绍
+## 1.1 Introduction
 
-**功能介绍：** 主板上的按键控制LED灯亮灭。
+**Function Description:** The buttons on the main board control the LED on/off.
 
-**软件概述：** GPIO引脚可以通过软件控制，使得CPU能够读取或写入GPIO引脚的电平值。而GPIO中断控制器则可以通过监测GPIO引脚的状态来检测外部设备的信号，这些信号可以触发中断请求，从而让CPU能够快速响应外部设备的事件。
+**Software Overview:** GPIO pins can be controlled by software, enabling the CPU to read or write the level values of GPIO pins. The GPIO interrupt controller can detect signals from external devices by monitoring the GPIO pin status. These signals can trigger interrupt requests, so that the CPU can quickly respond to events from external devices.
 
-**硬件概述：** 由于BS21E开发板IO口功能复用（全路由，任意IO口都可以复用全部功能），核心板、交通灯板。通过交通灯板上丝印可以看出是Switch与底板的MOSI相连，将核心板IO 14通过杜邦线插到MOSI插孔。硬件搭建要求如图所示：
+**Hardware Overview:** Because the BS21E development board IO pins support function multiplexing (full routing, any IO pin can multiplex all functions), the core board and traffic light board are used. From the silkscreen on the traffic light board, it can be seen that Switch is connected to MOSI on the baseboard. Insert the core board IO 14 into the MOSI socket using a Dupont wire. The hardware setup requirements are shown in the figure:
 
-  参考[交通灯板原理图](../../doc/hardware/HiSpark_WiFi_IoT_SSL_VER.A.pdf)、[底板原理图](../../doc/hardware/HiSpark_WiFi_IoT_EXB_VER.A.pdf)、[核心板原理图](../../doc/hardware/HH-D03_原理图_V01.pdf)
+  Refer to the [traffic light board schematic](../../doc/hardware/HiSpark_WiFi_IoT_SSL_VER.A.pdf), [baseboard schematic](../../doc/hardware/HiSpark_WiFi_IoT_EXB_VER.A.pdf), and [core board schematic](../../doc/hardware/HH-D03_原理图_V01.pdf)
 
 <img src="../../doc/media/beep/image-20250317171949255-17454042737691.png" alt="image-20250317171949255" style="zoom:50%;" />
 
-## 1.2 约束与限制
+## 1.2 Constraints and Limitations
 
-### 1.2.1 支持应用运行的芯片和开发板
+### 1.2.1 Chips and Development Boards Supporting Application Operation
 
-  本示例支持开发板：HH-D03
+  Development board supported by this example: HH-D03
 
-### 1.2.2 支持API版本、SDK版本
+### 1.2.2 Supported API Version, SDK Version
 
-  本示例支持版本号：1.0.15以上
+  Version number supported by this example: 1.0.15 and above
 
-### 支持IDE插件版本
+### Supported IDE Plugin Version
 
-  本示例支持IDE插件版本号：1.0.1及以上；
+  IDE plugin version supported by this example: 1.0.1 and above;
 
-## 1.3 效果预览
+## 1.3 Effect Preview
 
-按一下开发板的RESET按键复位开发板，可以通过主板上的按键控制LED灯亮灭
+Press the RESET button on the development board to reset it. The buttons on the main board can control the LED on/off
 
-## 1.4 接口介绍
+## 1.4 Interface Description
 
 #### 1.4.1 uapi_gpio_set_dir()
 
 
-| **定义：**   | errcode_t uapi_gpio_set_dir(pin_t pin, gpio_direction_t dir); |
+| **Definition:** | errcode_t uapi_gpio_set_dir(pin_t pin, gpio_direction_t dir); |
 | ------------ | ------------------------------------------------------------- |
-| **功能：**   | 设置GPIO的输入输出方向函数                                    |
-| **参数：**   | pin： io引脚<br/>dir：输入输出方向                            |
-| **返回值：** | ERROCODE_SUCC：成功    Other：失败                            |
-| **依赖：**   | include\driver\gpio.h                                         |
+| **Function:** | Sets the input/output direction of the GPIO |
+| **Parameters:** | pin: io pin<br/>dir: input/output direction |
+| **Return Value:** | ERROCODE_SUCC: success Other: failure |
+| **Dependency:** | include\driver\gpio.h |
 
 #### 1.4.2 uapi_gpio_set_isr_mode()
 
 
-| 定义：       | errcode_t uapi_gpio_set_isr_mode(pin_t pin, uint32_t trigger);                                                       |
+| Definition: | errcode_t uapi_gpio_set_isr_mode(pin_t pin, uint32_t trigger); |
 | ------------ | -------------------------------------------------------------------------------------------------------------------- |
-| **功能：**   | HAL层GPIO设置中断模式                                                                                                |
-| **参数：**   | pin：io引脚<br/>tigger：GPIO中断类型：1 : 上升沿中断；2 : 下降沿中断；3 : 双边沿中断；4 : 低电平中断；8 : 高电平中断 |
-| **返回值：** | ERROCODE_SUCC：成功    Other：失败                                                                                   |
-| **依赖：**   | include\driver\gpio.h                                                                                                |
+| **Function:** | HAL-layer GPIO sets interrupt mode |
+| **Parameters:** | pin: io pin<br/>trigger: GPIO interrupt type: 1: rising edge interrupt; 2: falling edge interrupt; 3: both-edge interrupt; 4: low-level interrupt; 8: high-level interrupt |
+| **Return Value:** | ERROCODE_SUCC: success Other: failure |
+| **Dependency:** | include\driver\gpio.h |
 
 #### 1.4.3 uapi_gpio_register_isr_func()
 
 
-| **定义：**   | errcode_t uapi_gpio_register_isr_func(pin_t pin, uint32_t trigger, gpio_callback_t callback);                                                        |
+| **Definition:** | errcode_t uapi_gpio_register_isr_func(pin_t pin, uint32_t trigger, gpio_callback_t callback); |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **功能：**   | 注册GPIO的中断                                                                                                                                       |
-| **参数：**   | pin：io引脚<br/>tigger：GPIO中断类型：1 : 上升沿中断；2 : 下降沿中断；3 : 双边沿中断；4 : 低电平中断；8 : 高电平中断  <br/>callback： 指向回调的指针 |
-| **返回值：** | ERROCODE_SUCC：成功    Other：失败                                                                                                                   |
-| **依赖：**   | include\driver\gpio.h                                                                                                                                |
+| **Function:** | Registers the GPIO interrupt |
+| **Parameters:** | pin: io pin<br/>trigger: GPIO interrupt type: 1: rising edge interrupt; 2: falling edge interrupt; 3: both-edge interrupt; 4: low-level interrupt; 8: high-level interrupt <br/>callback: pointer to the callback |
+| **Return Value:** | ERROCODE_SUCC: success Other: failure |
+| **Dependency:** | include\driver\gpio.h |
 
 #### 1.4.4 uapi_gpio_enable_interrupt()
 
 
-| **定义：**   | errcode_t uapi_gpio_enable_interrupt(pin_t pin); |
+| **Definition:** | errcode_t uapi_gpio_enable_interrupt(pin_t pin); |
 | ------------ | ------------------------------------------------ |
-| **功能：**   | 使能GPIO指定端口的中断                           |
-| **参数：**   | pin：io引脚                                      |
-| **返回值：** | ERROCODE_SUCC：成功    Other：失败               |
-| **依赖：**   | include\driver\gpio.h                            |
+| **Function:** | Enables the interrupt of the specified GPIO port |
+| **Parameters:** | pin: io pin |
+| **Return Value:** | ERROCODE_SUCC: success Other: failure |
+| **Dependency:** | include\driver\gpio.h |
 
-## 1.5 具体实现
+## 1.5 Concrete Implementation
 
-步骤一：设置GPIO为输入模式；
+Step 1: Set the GPIO to input mode;
 
-步骤二：注册中断类型，中断函数等；
+Step 2: Register the interrupt type, interrupt function, etc.;
 
-步骤三：根据中断类型不同，判断IO电平是否发生变化，实现按键功能
+Step 3: Depending on the interrupt type, determine whether the IO level has changed, to implement the button function
 
-## 1.6 实验流程
+## 1.6 Experiment Flow
 
-- 步骤一：在xxx\src\application\samples\peripheral文件夹新建一个sample文件夹，在peripheral上右键选择ZeroScript-Sample，创建Sample文件夹，例如名称”buttondemo“。
+- Step 1: Create a new sample folder in the xxx\src\application\samples\peripheral folder. Right-click on peripheral, select ZeroScript-Sample, and create a Sample folder, for example named "buttondemo".
 
   ![image-20240205104416249](../../doc/media/beep/image-20240801170551992.png)
-- 步骤二：将xxx\vendor\HH-D03\buttondemo文件里面内容拷贝到**步骤一创建的Sample文件夹中”buttondemo“**。
+- Step 2: Copy the contents of the xxx\vendor\HH-D03\buttondemo directory into the "buttondemo" Sample folder created in Step 1.
 
   ![image-20240808155814777](../../doc/media/button/image-20240808155814777.png)
-- 步骤三：在xxx\src\application\samples\peripheral\CMakeLists.txt文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加的，可以在“set(SOURCES "${SOURCES}" PARENT_SCOPE)”上面一行添加）。
+- Step 3: Add a new compilation case in the xxx\src\application\samples\peripheral\CMakeLists.txt file, as shown in the figure below (if you do not know where to add it, you can add it on the line above the "set(SOURCES "${SOURCES}" PARENT_SCOPE)" line).
 
   ![image-20240808155959504](../../doc/media/button/image-20240808155959504.png)
-- 步骤四：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加，可以在最后一行添加）。
+- Step 4: Add a new compilation case in the xxx\src\application\samples\peripheral\Kconfig file, as shown in the figure below (if you do not know where to add it, you can add it on the last line).
 
   ![image-20240808155947041](../../doc/media/button/image-20240808155947041.png)
-- 步骤五：点击如下图标，选择KConfig，具体选择路径“Application/Enable the Sample of peripheral”，在弹出框中选择“support BUTTON Sample”，点击Save，关闭弹窗。
+- Step 5: Click the following icon, select KConfig, select the path "Application/Enable the Sample of peripheral", select "support BUTTON Sample" in the pop-up dialog, click Save, and close the dialog.
 
   <img src="../../doc/media/beep/image-20240801171406113.png" alt="image-20240801171406113" style="zoom: 67%;" /><img src="../../doc/media/beep/image-20240205105234692-17119401758316.png" alt="image-20240205105234692" style="zoom: 50%;" /><img src="../../doc/media/button/image-20240808160042906.png" alt="image-20240808160042906" style="zoom:67%;" />
-- 步骤六：点击“build”或者“rebuild”编译
+- Step 6: Click "build" or "rebuild" to compile
 
   ![image-20250716163653427](../../doc/media/readme/image-20250716163653427.png)
-- 步骤七：编译完成如下图所示。
+- Step 7: The compilation is complete as shown in the figure below.
 
   ![image-20250307164622717](../../doc/media/button/image-20250307164622717.png)
-- 步骤八：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
+- Step 8: In the HiSpark Studio tool, click the "Project Configuration" button, select "Program Loading", set the transfer mode to "serial", and select the port "comxxx". The com port is viewed in the device manager (if you cannot find the com port, refer to the Windows environment setup).
 
   ![image-20250716164922699](../../doc/media/readme/image-20250716164922699.png)
-- 步骤九：配置完成后，点击工具“程序加载”按钮烧录。
+- Step 9: After configuration, click the tool's "Program Loading" button to burn/flash.
 
   ![image-20250716170835615](../../doc/media/readme/image-20250716170835615.png)
-- 步骤十：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
+- Step 10: When the message "Connecting, please reset device..." appears, reset the development board and wait for the flashing to finish.
 
   ![image-20250317173240745](../../doc/media/tools/image-20240801174230202.png)
-- 步骤七“软件烧录成功后，按一下开发板的RESET按键复位开发板，可以通过主板上的按键控制LED灯亮灭。
+- Step 11: After the software is successfully flashed, press the RESET button on the development board to reset it. The buttons on the main board can control the LED on/off.
