@@ -1,6 +1,6 @@
 | Category | Document Name |
 | -------- | ----------- |
-| software | <a href="zh-CN/software/AT命令使用指南/BS2XV100 AT命令 使用指南.md">BS2XV100 AT Command Usage Guide</a> |
+| software | <a href="zh-CN/software/AT命令使用指南/AT命令 使用指南.md">BS2XV100 AT Command Usage Guide</a> |
 | software | <a href="zh-CN/software/音频编解码开发指导书/BS2XV100 音频编解码开发 指导书.md">BS2XV100 Audio Codec Development Guide</a> |
 | software | <a href=" zh-CN/software/蓝牙软件开发指导书/BS2XV100 蓝牙软件开发 指导书.md">BS2XV100 Bluetooth Software Development Guide</a> |
 | software | <a href="zh-CN/software/代码框架说明/BS2XV100 代码框架说明.md">Code Framework Description</a> |
