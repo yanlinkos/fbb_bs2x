@@ -19,7 +19,7 @@
 
 ## Release-notes
 
-[BS2X-1.0.17](docs/zh-CN/software/Release notes/BS2X-1.0.17.md)
+[BS2X-1.0.17](docs/zh-CN/software/Release%20notes/BS2X-1.0.17.md)
 
 ## Directory Description
 
