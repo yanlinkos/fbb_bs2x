@@ -16,7 +16,7 @@
 
   ![image-20250611114347214](../../doc/media/sle_measure_dis/image-20250611114347214.png)
   
-- For details, refer to the <a href="zh-CN/debug/SDK Sample使用指南/SDK Sample使用指南.md">BS2XV100 SDK Sample Usage Guide</a>.
+- For details, refer to the <a href="../../../../docs/zh-CN/debug/SDK Sample使用指南/SDK Sample使用指南.md">BS2XV100 SDK Sample Usage Guide</a>.
   
 - Effect display: The server side needs a screen to display data; the client side does not need a screen.
 
