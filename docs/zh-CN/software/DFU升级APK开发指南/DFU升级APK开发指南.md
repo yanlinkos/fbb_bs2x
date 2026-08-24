@@ -1,15 +1,15 @@
-# 前言<a name="ZH-CN_TOPIC_0000001942862112"></a>
+# Preface<a name="ZH-CN_TOPIC_0000001942862112"></a>
 
-本文档主要介绍DFU升级APK开发实现的相关内容，主要包括APK工程的系统框架、界面实现和主要功能实现的方法。
+This document introduces the development and implementation of the DFU upgrade APK, including the system framework, interface implementation, and methods for implementing the main features.
 
-**产品版本<a name="section27775771"></a>**
+**Product Version<a name="section27775771"></a>**
 
-与本文档相对应的产品版本如下。
+The product version corresponding to this document is as follows.
 
 <a name="table52250146"></a>
-<table><thead align="left"><tr id="row55967882"><th class="cellrowborder" valign="top" width="39.39%" id="mcps1.1.3.1.1"><p id="p37104584"><a name="p37104584"></a><a name="p37104584"></a><strong id="b48174912328"><a name="b48174912328"></a><a name="b48174912328"></a>产品名称</strong></p>
+<table><thead align="left"><tr id="row55967882"><th class="cellrowborder" valign="top" width="39.39%" id="mcps1.1.3.1.1"><p id="p37104584"><a name="p37104584"></a><a name="p37104584"></a><strong id="b48174912328"><a name="b48174912328"></a><a name="b48174912328"></a>Product Name</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="60.61%" id="mcps1.1.3.1.2"><p id="p52681331"><a name="p52681331"></a><a name="p52681331"></a><strong id="b682239163211"><a name="b682239163211"></a><a name="b682239163211"></a>产品版本</strong></p>
+<th class="cellrowborder" valign="top" width="60.61%" id="mcps1.1.3.1.2"><p id="p52681331"><a name="p52681331"></a><a name="p52681331"></a><strong id="b682239163211"><a name="b682239163211"></a><a name="b682239163211"></a>Product Version</strong></p>
 </th>
 </tr>
 </thead>
@@ -21,62 +21,62 @@
 </tbody>
 </table>
 
-**读者对象<a name="section4378592816410"></a>**
+**Reader Audience<a name="section4378592816410"></a>**
 
-本文档主要适用于以下工程师：
+This document is primarily intended for the following engineers:
 
--   技术支持工程师
--   软件工程师
+-   Technical support engineers
+-   Software engineers
 
-**符号约定<a name="section133020216410"></a>**
+**Symbol Conventions<a name="section133020216410"></a>**
 
-在本文中可能出现下列标志，它们所代表的含义如下。
+The following symbols may appear in this document, and their meanings are as follows.
 
 <a name="table2622507016410"></a>
-<table><thead align="left"><tr id="row1530720816410"><th class="cellrowborder" valign="top" width="20.580000000000002%" id="mcps1.1.3.1.1"><p id="p6450074116410"><a name="p6450074116410"></a><a name="p6450074116410"></a><strong id="b2136615816410"><a name="b2136615816410"></a><a name="b2136615816410"></a>符号</strong></p>
+<table><thead align="left"><tr id="row1530720816410"><th class="cellrowborder" valign="top" width="20.580000000000002%" id="mcps1.1.3.1.1"><p id="p6450074116410"><a name="p6450074116410"></a><a name="p6450074116410"></a><strong id="b2136615816410"><a name="b2136615816410"></a><a name="b2136615816410"></a>Symbol</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="79.42%" id="mcps1.1.3.1.2"><p id="p5435366816410"><a name="p5435366816410"></a><a name="p5435366816410"></a><strong id="b5941558116410"><a name="b5941558116410"></a><a name="b5941558116410"></a>说明</strong></p>
+<th class="cellrowborder" valign="top" width="79.42%" id="mcps1.1.3.1.2"><p id="p5435366816410"><a name="p5435366816410"></a><a name="p5435366816410"></a><strong id="b5941558116410"><a name="b5941558116410"></a><a name="b5941558116410"></a>Description</strong></p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row1372280416410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p3734547016410"><a name="p3734547016410"></a><a name="p3734547016410"></a><a name="image2670064316410"></a><a name="image2670064316410"></a><span><img class="" id="image2670064316410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001942702800.png"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p1757432116410"><a name="p1757432116410"></a><a name="p1757432116410"></a>表示如不避免则将会导致死亡或严重伤害的具有高等级风险的危害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p1757432116410"><a name="p1757432116410"></a><a name="p1757432116410"></a>Indicates a hazard with a high level of risk that, if not avoided, will result in death or serious injury.</p>
 </td>
 </tr>
 <tr id="row466863216410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p1432579516410"><a name="p1432579516410"></a><a name="p1432579516410"></a><a name="image4895582316410"></a><a name="image4895582316410"></a><span><img class="" id="image4895582316410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001969901281.png"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p959197916410"><a name="p959197916410"></a><a name="p959197916410"></a>表示如不避免则可能导致死亡或严重伤害的具有中等级风险的危害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p959197916410"><a name="p959197916410"></a><a name="p959197916410"></a>Indicates a hazard with a medium level of risk that, if not avoided, could result in death or serious injury.</p>
 </td>
 </tr>
 <tr id="row123863216410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p1232579516410"><a name="p1232579516410"></a><a name="p1232579516410"></a><a name="image1235582316410"></a><a name="image1235582316410"></a><span><img class="" id="image1235582316410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001970021041.png"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p123197916410"><a name="p123197916410"></a><a name="p123197916410"></a>表示如不避免则可能导致轻微或中度伤害的具有低等级风险的危害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p123197916410"><a name="p123197916410"></a><a name="p123197916410"></a>Indicates a hazard with a low level of risk that, if not avoided, could result in minor or moderate injury.</p>
 </td>
 </tr>
 <tr id="row5786682116410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p2204984716410"><a name="p2204984716410"></a><a name="p2204984716410"></a><a name="image4504446716410"></a><a name="image4504446716410"></a><span><img class="" id="image4504446716410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001942862116.png"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4388861916410"><a name="p4388861916410"></a><a name="p4388861916410"></a>用于传递设备或环境安全警示信息。如不避免则可能会导致设备损坏、数据丢失、设备性能降低或其它不可预知的结果。</p>
-<p id="p1238861916410"><a name="p1238861916410"></a><a name="p1238861916410"></a>“须知”不涉及人身伤害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4388861916410"><a name="p4388861916410"></a><a name="p4388861916410"></a>Used to convey device or environmental safety warning information. If not avoided, it may result in equipment damage, data loss, performance degradation, or other unpredictable outcomes.</p>
+<p id="p1238861916410"><a name="p1238861916410"></a><a name="p1238861916410"></a>"NOTICE" does not involve personal injury.</p>
 </td>
 </tr>
 <tr id="row2856923116410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p5555360116410"><a name="p5555360116410"></a><a name="p5555360116410"></a><a name="image799324016410"></a><a name="image799324016410"></a><span><img class="" id="image799324016410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001942702804.png"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4612588116410"><a name="p4612588116410"></a><a name="p4612588116410"></a>对正文中重点信息的补充说明。</p>
-<p id="p1232588116410"><a name="p1232588116410"></a><a name="p1232588116410"></a>“说明”不是安全警示信息，不涉及人身、设备及环境伤害信息。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4612588116410"><a name="p4612588116410"></a><a name="p4612588116410"></a>Provides supplementary information about key points in the main text.</p>
+<p id="p1232588116410"><a name="p1232588116410"></a><a name="p1232588116410"></a>"NOTE" is not a safety warning and does not involve personal, equipment, or environmental injury information.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**修改记录<a name="section2467512116410"></a>**
+**Modification Record<a name="section2467512116410"></a>**
 
 <a name="table1557726816410"></a>
-<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="19.009999999999998%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>文档版本</strong></p>
+<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="19.009999999999998%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>Document Version</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="25.629999999999995%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>发布日期</strong></p>
+<th class="cellrowborder" valign="top" width="25.629999999999995%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>Release Date</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="55.36%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>修改说明</strong></p>
+<th class="cellrowborder" valign="top" width="55.36%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>Modification Description</strong></p>
 </th>
 </tr>
 </thead>
@@ -84,31 +84,30 @@
 </td>
 <td class="cellrowborder" valign="top" width="25.629999999999995%" headers="mcps1.1.4.1.2 "><p id="p87510115512"><a name="p87510115512"></a><a name="p87510115512"></a>2025-05-30</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.36%" headers="mcps1.1.4.1.3 "><p id="p12759013557"><a name="p12759013557"></a><a name="p12759013557"></a>更新“<a href="与USB设备通信.md">与USB设备通信</a>”小节内容。</p>
+<td class="cellrowborder" valign="top" width="55.36%" headers="mcps1.1.4.1.3 "><p id="p12759013557"><a name="p12759013557"></a><a name="p12759013557"></a>Updated "<a href="与USB设备通信.md">Communicating with USB Devices</a>" subsection content.</p>
 </td>
 </tr>
 <tr id="row15142143811166"><td class="cellrowborder" valign="top" width="19.009999999999998%" headers="mcps1.1.4.1.1 "><p id="p182910614321"><a name="p182910614321"></a><a name="p182910614321"></a>01</p>
 </td>
 <td class="cellrowborder" valign="top" width="25.629999999999995%" headers="mcps1.1.4.1.2 "><p id="p52917613321"><a name="p52917613321"></a><a name="p52917613321"></a>2024-07-04</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.36%" headers="mcps1.1.4.1.3 "><p id="p1290663212"><a name="p1290663212"></a><a name="p1290663212"></a>第一次正式版本发布。</p>
+<td class="cellrowborder" valign="top" width="55.36%" headers="mcps1.1.4.1.3 "><p id="p1290663212"><a name="p1290663212"></a><a name="p1290663212"></a>First official release.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-# 功能特性<a name="ZH-CN_TOPIC_0000001956125929"></a>
+# Features<a name="ZH-CN_TOPIC_0000001956125929"></a>
 
-此APK主要功能包括：获取和展示连接的USB设备的信息，与USB设备通信，选择升级文件，USB设备初始化和DFU升级功能。
-
-
+The main functions of this APK include: obtaining and displaying information about connected USB devices, communicating with USB devices, selecting upgrade files, USB device initialization, and DFU upgrade functionality.
 
 
 
 
-## 展示连接USB设备的信息<a name="ZH-CN_TOPIC_0000001956603777"></a>
 
-界面中展示的设备信息包括：
+## Displaying Connected USB Device Information<a name="ZH-CN_TOPIC_0000001956603777"></a>
+
+The device information displayed in the interface includes:
 
 -   Device Path：The path of the device file for the device in the usbfs file system.
 -   Device Class：The device's class field.
@@ -118,18 +117,18 @@
 -   Product Name：The product name of the device.
 -   Interface ID：The interface's bInterfaceNumber field.
 
-## 与USB设备通信<a name="ZH-CN_TOPIC_0000001956443977"></a>
+## Communicating with USB Devices<a name="ZH-CN_TOPIC_0000001956443977"></a>
 
-与USB设备建立连接并通信，会有不同的状态，体现通信的成功与否，主要包括9种状态，如[表1](#table532084312568)所示。
+Establishing a connection and communicating with USB devices involves different statuses that indicate the success or failure of communication. There are 9 statuses, as shown in [Table 1](#table532084312568).
 
-**表 1**  状态码
+**Table 1**  Status Code
 
 <a name="table532084312568"></a>
-<table><thead align="left"><tr id="row132074335613"><th class="cellrowborder" valign="top" width="25.192519251925187%" id="mcps1.2.4.1.1"><p id="p113209435561"><a name="p113209435561"></a><a name="p113209435561"></a>序号</p>
+<table><thead align="left"><tr id="row132074335613"><th class="cellrowborder" valign="top" width="25.192519251925187%" id="mcps1.2.4.1.1"><p id="p113209435561"><a name="p113209435561"></a><a name="p113209435561"></a>No.</p>
 </th>
-<th class="cellrowborder" valign="top" width="30.573057305730572%" id="mcps1.2.4.1.2"><p id="p93201433566"><a name="p93201433566"></a><a name="p93201433566"></a>状态码（自定义）</p>
+<th class="cellrowborder" valign="top" width="30.573057305730572%" id="mcps1.2.4.1.2"><p id="p93201433566"><a name="p93201433566"></a><a name="p93201433566"></a>Status Code (Custom)</p>
 </th>
-<th class="cellrowborder" valign="top" width="44.23442344234424%" id="mcps1.2.4.1.3"><p id="p183201743205615"><a name="p183201743205615"></a><a name="p183201743205615"></a>描述</p>
+<th class="cellrowborder" valign="top" width="44.23442344234424%" id="mcps1.2.4.1.3"><p id="p183201743205615"><a name="p183201743205615"></a><a name="p183201743205615"></a>Description</p>
 </th>
 </tr>
 </thead>
@@ -137,134 +136,134 @@
 </td>
 <td class="cellrowborder" valign="top" width="30.573057305730572%" headers="mcps1.2.4.1.2 "><p id="p1232019434564"><a name="p1232019434564"></a><a name="p1232019434564"></a>10000</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p832064316566"><a name="p832064316566"></a><a name="p832064316566"></a>USB正常打开</p>
+<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p832064316566"><a name="p832064316566"></a><a name="p832064316566"></a>USB opened normally</p>
 </td>
 </tr>
 <tr id="row132018430567"><td class="cellrowborder" valign="top" width="25.192519251925187%" headers="mcps1.2.4.1.1 "><p id="p5320184316562"><a name="p5320184316562"></a><a name="p5320184316562"></a>2</p>
 </td>
 <td class="cellrowborder" valign="top" width="30.573057305730572%" headers="mcps1.2.4.1.2 "><p id="p14320204335617"><a name="p14320204335617"></a><a name="p14320204335617"></a>10001</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p2320114335619"><a name="p2320114335619"></a><a name="p2320114335619"></a>USB授权成功</p>
+<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p2320114335619"><a name="p2320114335619"></a><a name="p2320114335619"></a>USB authorization successful</p>
 </td>
 </tr>
 <tr id="row332004311564"><td class="cellrowborder" valign="top" width="25.192519251925187%" headers="mcps1.2.4.1.1 "><p id="p143201243115611"><a name="p143201243115611"></a><a name="p143201243115611"></a>3</p>
 </td>
 <td class="cellrowborder" valign="top" width="30.573057305730572%" headers="mcps1.2.4.1.2 "><p id="p1332064319565"><a name="p1332064319565"></a><a name="p1332064319565"></a>10002</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p03208430567"><a name="p03208430567"></a><a name="p03208430567"></a>USB授权失败</p>
+<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p03208430567"><a name="p03208430567"></a><a name="p03208430567"></a>USB authorization failed</p>
 </td>
 </tr>
 <tr id="row1732074385611"><td class="cellrowborder" valign="top" width="25.192519251925187%" headers="mcps1.2.4.1.1 "><p id="p532113434568"><a name="p532113434568"></a><a name="p532113434568"></a>4</p>
 </td>
 <td class="cellrowborder" valign="top" width="30.573057305730572%" headers="mcps1.2.4.1.2 "><p id="p183211043145612"><a name="p183211043145612"></a><a name="p183211043145612"></a>10003</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p4321184320563"><a name="p4321184320563"></a><a name="p4321184320563"></a>没有找到指定设备</p>
+<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p4321184320563"><a name="p4321184320563"></a><a name="p4321184320563"></a>Specified device not found</p>
 </td>
 </tr>
 <tr id="row832144305614"><td class="cellrowborder" valign="top" width="25.192519251925187%" headers="mcps1.2.4.1.1 "><p id="p1132114375616"><a name="p1132114375616"></a><a name="p1132114375616"></a>5</p>
 </td>
 <td class="cellrowborder" valign="top" width="30.573057305730572%" headers="mcps1.2.4.1.2 "><p id="p63211143135616"><a name="p63211143135616"></a><a name="p63211143135616"></a>10004</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p93211743175615"><a name="p93211743175615"></a><a name="p93211743175615"></a>没有找到任何设备</p>
+<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p93211743175615"><a name="p93211743175615"></a><a name="p93211743175615"></a>No device found</p>
 </td>
 </tr>
 <tr id="row73217434563"><td class="cellrowborder" valign="top" width="25.192519251925187%" headers="mcps1.2.4.1.1 "><p id="p17321104320563"><a name="p17321104320563"></a><a name="p17321104320563"></a>6</p>
 </td>
 <td class="cellrowborder" valign="top" width="30.573057305730572%" headers="mcps1.2.4.1.2 "><p id="p83216436564"><a name="p83216436564"></a><a name="p83216436564"></a>10005</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p173212434569"><a name="p173212434569"></a><a name="p173212434569"></a>USB设备打开失败</p>
+<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p173212434569"><a name="p173212434569"></a><a name="p173212434569"></a>USB device open failed</p>
 </td>
 </tr>
 <tr id="row1321164325615"><td class="cellrowborder" valign="top" width="25.192519251925187%" headers="mcps1.2.4.1.1 "><p id="p6321134320563"><a name="p6321134320563"></a><a name="p6321134320563"></a>7</p>
 </td>
 <td class="cellrowborder" valign="top" width="30.573057305730572%" headers="mcps1.2.4.1.2 "><p id="p23211543175612"><a name="p23211543175612"></a><a name="p23211543175612"></a>10006</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p632115431567"><a name="p632115431567"></a><a name="p632115431567"></a>USB通道打开失败</p>
+<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p632115431567"><a name="p632115431567"></a><a name="p632115431567"></a>USB channel open failed</p>
 </td>
 </tr>
 <tr id="row63211843185612"><td class="cellrowborder" valign="top" width="25.192519251925187%" headers="mcps1.2.4.1.1 "><p id="p10321194315566"><a name="p10321194315566"></a><a name="p10321194315566"></a>8</p>
 </td>
 <td class="cellrowborder" valign="top" width="30.573057305730572%" headers="mcps1.2.4.1.2 "><p id="p23219431562"><a name="p23219431562"></a><a name="p23219431562"></a>10007</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p113219439567"><a name="p113219439567"></a><a name="p113219439567"></a>USB发送数据成功</p>
+<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p113219439567"><a name="p113219439567"></a><a name="p113219439567"></a>USB data sent successfully</p>
 </td>
 </tr>
 <tr id="row854153255919"><td class="cellrowborder" valign="top" width="25.192519251925187%" headers="mcps1.2.4.1.1 "><p id="p125415325593"><a name="p125415325593"></a><a name="p125415325593"></a>9</p>
 </td>
 <td class="cellrowborder" valign="top" width="30.573057305730572%" headers="mcps1.2.4.1.2 "><p id="p554133210598"><a name="p554133210598"></a><a name="p554133210598"></a>10008</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p655103205920"><a name="p655103205920"></a><a name="p655103205920"></a>USB发送数据失败</p>
+<td class="cellrowborder" valign="top" width="44.23442344234424%" headers="mcps1.2.4.1.3 "><p id="p655103205920"><a name="p655103205920"></a><a name="p655103205920"></a>USB data send failed</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-## 选择升级文件<a name="ZH-CN_TOPIC_0000001929285140"></a>
+## Selecting Upgrade File<a name="ZH-CN_TOPIC_0000001929285140"></a>
 
-选择升级文件功能主要包括以下功能：
+The upgrade file selection function mainly includes the following features:
 
--   支持选择存放在sdcard下的升级文件。
--   支持选择sdcard下任一文件夹下的升级文件。
--   选择升级文件后，可以获取到文件在android设备中存放的绝对路径。
--   选择升级文件后，可以获取到文件中升级版本的信息。
--   选择升级文件后，可以正确读取升级文件。
+-   Supports selecting upgrade files stored in the sdcard directory.
+-   Supports selecting upgrade files from any subfolder under the sdcard directory.
+-   After selecting an upgrade file, the absolute path of the file stored on the Android device can be obtained.
+-   After selecting an upgrade file, the upgrade version information in the file can be obtained.
+-   After selecting an upgrade file, the upgrade file can be correctly read.
 
-## USB设备初始化<a name="ZH-CN_TOPIC_0000001929444524"></a>
+## USB Device Initialization<a name="ZH-CN_TOPIC_0000001929444524"></a>
 
-USB设备初始化操作包括：
+USB device initialization operations include:
 
-1.  打开USB设备。
-2.  打开USB设备通道。
+1.  Opening the USB device.
+2.  Opening the USB device channel.
 
-## DFU升级<a name="ZH-CN_TOPIC_0000001956603789"></a>
+## DFU Upgrade<a name="ZH-CN_TOPIC_0000001956603789"></a>
 
-DFU升级主要包括以下几个步骤：
+The DFU upgrade mainly includes the following steps:
 
-1.  向USB设备发送指令，使HID设备进入DFU状态。
-2.  切换状态后，重新获取和更新设备信息。
-3.  向设备发送升级前info包。
-4.  加载升级文件，进行DFU升级操作。
+1.  Sending commands to the USB device to put the HID device into DFU mode.
+2.  After switching the state, re-obtaining and updating device information.
+3.  Sending the pre-upgrade info packet to the device.
+4.  Loading the upgrade file and performing the DFU upgrade operation.
 
-# 系统框架<a name="ZH-CN_TOPIC_0000001928927258"></a>
+# System Framework<a name="ZH-CN_TOPIC_0000001928927258"></a>
 
-DFU升级APK的系统框架如[图1](#fig7593026111616)所示，主要分为View层、主程序和多个library。
+The system framework of the DFU upgrade APK is shown in [Figure 1](#fig7593026111616). It is mainly divided into the View layer, the main program, and multiple libraries.
 
-**图 1**  系统框架<a name="fig7593026111616"></a>  
+**Figure 1**  System Framework<a name="fig7593026111616"></a>  
 ![](figures/系统框架.png "系统框架")
 
--   View层：负责界面展示，其中layout文件夹存放页面布局文件，menu存放菜单文件，values存放字符串、颜色等配置文件，drawable存放图片和运行图标。
--   主程序：主要由activity和fragment组件组成，负责响应View层的用户操作，以及在View层显示从数据访问层传递过来的数据。
--   Library：包括线程间通信的eventBus\_activity\_scope，界面控制的fragmentation、fragmentation\_swipeback、fragmentation\_core，支撑选择文件功能的materialfile。
+-   View layer: Responsible for interface display, where the layout folder stores page layout files, menu stores menu files, values stores configuration files such as strings and colors, and drawable stores images and runtime icons.
+-   Main program: Consists primarily of activity and fragment components, responsible for responding to user operations on the View layer and displaying data passed from the data access layer to the View layer.
+-   Library: Includes eventBus\_activity\_scope for inter-thread communication, fragmentation, fragmentation\_swipeback, fragmentation\_core for interface control, and materialfile for supporting the file selection function.
 
-# 工程文件部署<a name="ZH-CN_TOPIC_0000001928927262"></a>
+# Project File Deployment<a name="ZH-CN_TOPIC_0000001928927262"></a>
 
-DFU升级APK工程文件部署如[图1](#fig106032417492)所示。
+The project file deployment of the DFU upgrade APK is shown in [Figure 1](#fig106032417492).
 
-**图 1**  文件部署<a name="fig106032417492"></a>  
+**Figure 1**  File Deployment<a name="fig106032417492"></a>  
 ![](figures/文件部署.png "文件部署")
 
-# 界面实现<a name="ZH-CN_TOPIC_0000001956125937"></a>
+# Interface Implementation<a name="ZH-CN_TOPIC_0000001956125937"></a>
 
-Application是Android系统框架中的一个系统组件，当Android应用程序启动时，系统会创建一个Application类的对象且只创建一个，用来存储系统的一些信息，即Application是单例。
+Application is a system component in the Android system framework. When an Android application starts, the system creates an Application class object and only creates one, which is used to store some system information. That is, Application is a singleton.
 
-Application中通常会在应用程序启动时做一些全局的初始化工作，当应用程序启动时，Application同步创建并启动，系统会创建一个PID，即进程ID，所有的Activity都会在此进程上运行。DFU Update Demo中创建Application的文件为App.java，该类继承自Application类。
-
-
+Application is typically used to perform some global initialization tasks when the application starts. When the application starts, Application is synchronously created and launched. The system creates a PID, i.e., process ID, and all Activities will run on this process. In the DFU Update Demo, the file for creating Application is App.java, which inherits from the Application class.
 
 
-## Application实现<a name="ZH-CN_TOPIC_0000001934832786"></a>
 
-onCreate\(\)是Application的生命周期方法，在Application创建时自动调用。
 
-调用setDefaultFontPath方法，统一整个Application的字体。
+## Application Implementation<a name="ZH-CN_TOPIC_0000001934832786"></a>
 
-示例：
+onCreate\(\) is a lifecycle method of Application and is automatically called when Application is created.
+
+The setDefaultFontPath method is called to unify the font across the entire Application.
+
+Example:
 
 ```
 @Override
 public void onCreate() {
     super.onCreate();
-    // 统一字体
+    // Unified font
     ViewPump.init(ViewPump.builder()
     .addInterceptor(new CalligraphyInterceptor(
     new CalligraphyConfig.Builder()
@@ -275,16 +274,16 @@ public void onCreate() {
 }
 ```
 
-## Activity实现<a name="ZH-CN_TOPIC_0000001929111452"></a>
+## Activity Implementation<a name="ZH-CN_TOPIC_0000001929111452"></a>
 
-**开发指引<a name="section133020216410"></a>**
+**Development Guide<a name="section133020216410"></a>**
 
-1.  在AndroidManifest.xml中增加<intent-filter\>，启动activity。
-2.  在MainActivity.java实现和调用verifyStoragePermission方法，申请和确认读写sdcard卡的权限。
-3.  在R.layout.dfu\_update\_activity\_main.xml中实现MainActivity的布局。
-4.  在MainActivity.java中的onCreate方法中加载MainFragment。
+1.  Add <intent-filter\> in AndroidManifest.xml to launch the activity.
+2.  Implement and call the verifyStoragePermission method in MainActivity.java to request and confirm read/write permissions for the sdcard.
+3.  Implement the layout of MainActivity in R.layout.dfu\_update\_activity\_main.xml.
+4.  Load MainFragment in the onCreate method of MainActivity.java.
 
-示例：
+Example:
 
 ```
 <activity
@@ -325,25 +324,25 @@ android:layout_height="match_parent"/>
 protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.dfu_update_activity_main);
-    verifyStoragePermission(this); //确认是否有SD卡权限
+    verifyStoragePermission(this); // Confirm whether the SD card permission is available
 
     if (findFragment(MainFragment.class) == null) {
-        loadRootFragment(R.id.fl_container, MainFragment.newInstance()); //加载MainFragment
+        loadRootFragment(R.id.fl_container, MainFragment.newInstance()); // Load MainFragment
     }
 }
 ```
 
-## MainFragment实现<a name="ZH-CN_TOPIC_0000001956150921"></a>
+## MainFragment Implementation<a name="ZH-CN_TOPIC_0000001956150921"></a>
 
-**开发指引<a name="section133020216410"></a>**
+**Development Guide<a name="section133020216410"></a>**
 
-1.  实现MainFragment newInstance\(\)方法，创建MainFragment实例。
-2.  在R.layout.dfu\_update\_fragment\_main.xml中实现MainFragment的布局。
-3.  实现initView\(view\)方法，实现界面视图的初始化。
-4.  在MainFragment中的onCreateView中调用initView方法。
-5.  在onActivityCreated方法中实现获取多个Fragment对象。
+1.  Implement the MainFragment newInstance\(\) method to create a MainFragment instance.
+2.  Implement the layout of MainFragment in R.layout.dfu\_update\_fragment\_main.xml.
+3.  Implement the initView\(view\) method to initialize the interface view.
+4.  Call the initView method in the onCreateView of MainFragment.
+5.  Implement obtaining multiple Fragment objects in the onActivityCreated method.
 
-示例：
+Example:
 
 ```
 public static MainFragment newInstance() {
@@ -354,7 +353,7 @@ public static MainFragment newInstance() {
 }
 ```
 
-示例：
+Example:
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -428,27 +427,27 @@ private void initView(View view) {
 }
 ```
 
-# 升级界面Fragment实现<a name="ZH-CN_TOPIC_0000001956006133"></a>
+# Upgrade Interface Fragment Implementation<a name="ZH-CN_TOPIC_0000001956006133"></a>
 
-此APK的主要界面，也是选项卡的首页。
-
-
+This is the main interface of this APK and the homepage of the tab.
 
 
 
 
 
 
-## 界面部署实现<a name="ZH-CN_TOPIC_0000001956270733"></a>
 
-**开发指引<a name="section133020216410"></a>**
 
-1.  在DFUUpdateFirstTabFragment.java中的onCreate方法中实现广播的多个变量的初始化和注册广播。
-2.  在R.layout.dfu\_update\_fragment\_tab\_first.xml中实现Fragment的布局。
-3.  实现initView方法，视图的初始化。
-4.  实现onClick方法，监听按钮的点击事件，包括R.id.btn\_select\_file文件选择，R.id.btn\_open\_hid HID设备初始化，R.id.btn\_update 进行DFU update。
+## Interface Layout Implementation<a name="ZH-CN_TOPIC_0000001956270733"></a>
 
-示例：
+**Development Guide<a name="section133020216410"></a>**
+
+1.  In the onCreate method of DFUUpdateFirstTabFragment.java, implement the initialization of multiple broadcast variables and register the broadcast.
+2.  Implement the layout of the Fragment in R.layout.dfu\_update\_fragment\_tab\_first.xml.
+3.  Implement the initView method for view initialization.
+4.  Implement the onClick method to listen for button click events, including R.id.btn\_select\_file for file selection, R.id.btn\_open\_hid for HID device initialization, and R.id.btn\_update for DFU update.
+
+Example:
 
 ```
 @Override
@@ -521,7 +520,7 @@ public void onClick(View v) {
         break;
         case R.id.btn_open_hid:
         int status = initHID();
-        addProgressLog("连接状态：" + status);
+        addProgressLog("Connection status: " + status);
         NativeLib nativeLibDFU = new NativeLib();
         nativeLibDFU.PrintUsbDevices(mConn.getFileDescriptor());
         break;
@@ -532,16 +531,16 @@ public void onClick(View v) {
 }
 ```
 
-## 获取和展示USB信息功能的实现<a name="ZH-CN_TOPIC_0000001928952080"></a>
+## Implementation of USB Information Retrieval and Display<a name="ZH-CN_TOPIC_0000001928952080"></a>
 
-**开发指引<a name="section133020216410"></a>**
+**Development Guide<a name="section133020216410"></a>**
 
-1.  实现refreshUsbDeviceList\(\)，获取最新的USB列表，得出mUSBList。
-2.  实现setSpinnerAdapter\(\)，遍历mUSBList，把USB设备按照productName + "\(vid:" + vendorId + ", pid:" + productId + ", interface id: " + mUSBList.get\(i\).getInterface\(j\).getId\(\) + "\)"的格式存放于mUSBSpinner控件条目中。
-3.  实现下拉列表点选事件OnItemSelected，获取点选的设备。
-4.  实现initUsbData\(\)，展示点选的设备信息。
+1.  Implement refreshUsbDeviceList\(\) to obtain the latest USB list and derive mUSBList.
+2.  Implement setSpinnerAdapter\(\) to iterate through mUSBList and store USB devices in the mUSBSpinner control items in the format of productName + "\(vid:" + vendorId + ", pid:" + productId + ", interface id: " + mUSBList.get\(i\).getInterface\(j\).getId\(\) + "\)".
+3.  Implement the dropdown list selection event OnItemSelected to get the selected device.
+4.  Implement initUsbData\(\) to display the information of the selected device.
 
-示例：
+Example:
 
 ```
 private void refreshUsbDeviceList() {
@@ -550,7 +549,7 @@ private void refreshUsbDeviceList() {
 
     Map<String, UsbDevice> mDeviceMap = usbManager.getDeviceList();
     Iterator<UsbDevice> deviceIterator = mDeviceMap.values().iterator();
-    if (mDeviceMap.size() == 0) {  //usb设备列表为空时
+    if (mDeviceMap.size() == 0) {  // When the USB device list is empty
         mUSBSpinner.setAdapter(null);
         viewHolder.getVid().setText("");
         viewHolder.getPid().setText("");
@@ -561,7 +560,7 @@ private void refreshUsbDeviceList() {
         viewHolder.getReportedProduct().setText("");
         viewHolder.getTvInterfaceID().setText("");
         statue = USBStatus.usb_find_all_fail;
-        addProgressLog("设备状态：" + statue);
+        addProgressLog("Device status: " + statue);
         return;
     }
 
@@ -616,7 +615,7 @@ public void onItemSelected(AdapterView<?> parent, View view, int position, long 
     mPid = mUSBInfoList.get(position).getProductId();
     mUsbInterface = device.getInterface(mUSBInfoList.get(position).getInterfaceId());
     initUsbData();
-    addProgressLog("设备状态：" + statue);
+    addProgressLog("Device status: " + statue);
 }
 
 private void initUsbData() {
@@ -629,7 +628,7 @@ private void initUsbData() {
     if (device.getDeviceName() != null) {
         viewHolder.getDevicePath().setText(device.getDeviceName());
     } else {
-        viewHolder.getReportedProduct().setText("");
+        viewHolder.getDevicePath().setText("");
     }
     viewHolder.getDeviceClass().setText(deviceClass);
 
@@ -641,23 +640,23 @@ private void initUsbData() {
     }
     viewHolder.getTvInterfaceID().setText(String.valueOf(mUsbInterface.getId()));
 
-    // 请求权限
+    // Request permission
     usbManager.requestPermission(device, permissionIntent);
 }
 ```
 
-## 选择升级文件功能的实现<a name="ZH-CN_TOPIC_0000001929111456"></a>
+## Implementation of Upgrade File Selection<a name="ZH-CN_TOPIC_0000001929111456"></a>
 
-**开发指引<a name="section133020216410"></a>**
+**Development Guide<a name="section133020216410"></a>**
 
-1.  调用materialfile库中的MaterialFilePicker方法，创建选择文件的界面，以及配置列出的文件。
-2.  创建ActivityResultLauncher的对象，来获取选择文件的绝对路径。
+1.  Call the MaterialFilePicker method from the materialfile library to create the file selection interface and configure the listed files.
+2.  Create an ActivityResultLauncher object to obtain the absolute path of the selected file.
 
-示例：
+Example:
 
 ```
 private void openFilePicker() {
-    File externalStorage = FileUtils.getFile(_mActivity, null);  //获取sdcard下的文件
+    File externalStorage = FileUtils.getFile(_mActivity, null);  // Get the file under sdcard
     Log.i(TAG, "externalStorage.getAbsolutePath():" + externalStorage.getAbsolutePath());
 
     new MaterialFilePicker()
@@ -674,7 +673,7 @@ private void openFilePicker() {
     .withFilter(Pattern.compile(".*\\.[a-z0-9]*"))
     // Don't apply filter to directories names
     .withFilterDirectories(false)
-    .withTitle("请选择文件")
+    .withTitle("Please select a file")
     .withActivityResultApi(startForResultFiles)
     .start();
 }
@@ -684,15 +683,15 @@ new ActivityResultContracts.StartActivityForResult(),
 new ActivityResultCallback<ActivityResult>() {
     @Override
     public void onActivityResult(ActivityResult result) {
-        //判断是否传入正确的result
+        // Check whether the correct result is passed in
         if (result.getResultCode() == RESULT_OK) {
-            Intent intent = result.getData();   //获取上一个活动返回的Intent
-            //判断上一个活动的Intent是否存在，存在则在日志中输入
+            Intent intent = result.getData();   // Obtain the Intent returned by the previous activity
+            // Check whether the Intent of the previous activity exists. If yes, print it in the log
             if (intent != null) {
                 mUpdateBinPath = intent.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
                 Log.d(TAG, "mUpdateBinPath: " + mUpdateBinPath);
                 setButtonState(true);
-                // 获取要升级文件的版本号信息
+                // Obtain the version information of the file to be upgraded
                 String version = CommonHelper.readFotaFwpkgVersion(mUpdateBinPath);
                 Log.d(TAG, "Bin Version:" + version);
 
@@ -702,19 +701,19 @@ new ActivityResultCallback<ActivityResult>() {
 });
 ```
 
-## USB设备初始化功能的实现<a name="ZH-CN_TOPIC_0000001956150925"></a>
+## Implementation of USB Device Initialization<a name="ZH-CN_TOPIC_0000001956150925"></a>
 
-**开发指引<a name="section133020216410"></a>**
+**Development Guide<a name="section133020216410"></a>**
 
-1.  实现initHID\(\)方法，打开设备和设备通道。
-2.  调用libusb\_init等方法初始化USB设备，并调用print\_device方法，可以正确打印设备信息，说明初始化成功。
+1.  Implement the initHID\(\) method to open the device and device channel.
+2.  Call methods such as libusb\_init to initialize the USB device and call the print\_device method. If the device information can be correctly printed, the initialization is successful.
 
-示例：
+Example:
 
 ```
 private int initHID() {
     if (device == null) {
-        Log.e(TAG, "未找到目标设备");
+        Log.e(TAG, "Target device not found");
         return statue;
     }
     int endpointCount = 0;
@@ -722,13 +721,13 @@ private int initHID() {
     for (int i = 0; i < endpointCount; i++) {
         UsbEndpoint ep = mUsbInterface.getEndpoint(i);
         switch (ep.getType()) {
-            case UsbConstants.USB_ENDPOINT_XFER_BULK://USB端口传输
-            if (UsbConstants.USB_DIR_OUT == ep.getDirection()) {//输出
+            case UsbConstants.USB_ENDPOINT_XFER_BULK:// USB endpoint transfer
+            if (UsbConstants.USB_DIR_OUT == ep.getDirection()) {// Output
                 epBulkOut = ep;
-                Log.e(TAG, "获取发送数据的端点");
+                Log.e(TAG, "Obtain the endpoint for sending data");
             } else {
                 epBulkIn = ep;
-                Log.e(TAG, "获取接受数据的端点");
+                Log.e(TAG, "Obtain the endpoint for receiving data");
             }
             break;
             default:
@@ -738,22 +737,22 @@ private int initHID() {
     if (usbManager.hasPermission((device))) {
         mConn = usbManager.openDevice(device);
     } else {
-        Log.e(TAG, "没有权限");
+        Log.e(TAG, "No permission");
         statue = USBStatus.usb_permission_fail;
     }
     if (null == mConn) {
-        Log.e(TAG, "不能连接设备");
+        Log.e(TAG, "Failed to connect to the device");
         statue = USBStatus.usb_open_fail;
         return statue;
     }
     if (mConn.claimInterface(mUsbInterface, true)) {
-        if (mConn != null)// 到此你的android设备已经连上zigbee设备
-        Log.i(TAG, "open设备成功！");
+        if (mConn != null)// At this point, your Android device has connected to the Zigbee device
+        Log.i(TAG, "Device opened successfully!");
         final String mySerial = mConn.getSerial();
-        Log.i(TAG, "设备serial number：" + mySerial);
+        Log.i(TAG, "Device serial number: " + mySerial);
         statue = USBStatus.usb_ok;
     } else {
-        Log.i(TAG, "无法打开连接通道。");
+        Log.i(TAG, "Failed to open the connection channel.");
         statue = USBStatus.usb_passway_fail;
         mConn.close();
     }
@@ -767,7 +766,7 @@ void PrintUsbDevices(JNIEnv *env, jclass thiz, jint descript)
     unrooted_usb_description(descript);
 }
 
-libusbwrapper库中src/main/cpp/libusbwrapper.cpp中实现unrooted_usb_description方法
+The unrooted_usb_description method is implemented in libusbwrapper.cpp in the src/main/cpp directory of the libusbwrapper library.
 int unrooted_usb_description(int fileDescriptor)
 {
     libusb_context *ctx = NULL;
@@ -797,31 +796,31 @@ int unrooted_usb_description(int fileDescriptor)
 }
 ```
 
-## DFU升级功能的实现<a name="ZH-CN_TOPIC_0000001956270737"></a>
+## Implementation of DFU Upgrade Functionality<a name="ZH-CN_TOPIC_0000001956270737"></a>
 
-**开发指引<a name="section133020216410"></a>**
+**Development Guide<a name="section133020216410"></a>**
 
-1.  初始化成功后，调用sendData方法，使USB设备从HID状态进入DFU准备状态。
-2.  使用延迟执行的方法，更新界面中的设备信息，对设备进行重新授权。
-3.  创建BroadcastReceiver 授权允许的广播对象，重新打开设备和通道。
-4.  调用DfuUpdate方法进行DFU升级。
-5.  调用dfuload\_do\_dnload方法执行升级，其中包括发送升级前的info包和发送升级数据。
+1.  After successful initialization, call the sendData method to transition the USB device from HID mode to DFU ready mode.
+2.  Use a delayed execution method to update the device information in the interface and re-authorize the device.
+3.  Create a BroadcastReceiver authorization-allowed broadcast object to re-open the device and channel.
+4.  Call the DfuUpdate method to perform the DFU upgrade.
+5.  Call the dfuload\_do\_dnload method to execute the upgrade, which includes sending the pre-upgrade info packet and sending the upgrade data.
 
-示例：
+Example:
 
 ```
 byte[] data = new byte[]{0x08, (byte) 0xc8, (byte) 0xd7, (byte) 0xe6, (byte) 0xf5, 0x0c, 0x00, 0x1e, (byte) 0xe1, 0x00, 0x00, 0x00, 0x00};
 int sendStatus = sendData(data, data.length);
-addProgressLog("发送状态：" + sendStatus);
+addProgressLog("Send status: " + sendStatus);
 mConn.close();
 private int sendData(byte[] buffer, int byteLength) {
     if (mConn == null || epBulkOut == null) statue = USBStatus.usb_open_fail;
     if (mConn.controlTransfer(0x21, 0x09, 0x0200, mUsbInterface.getId(), buffer, byteLength, 100) >= 0) {
-        //0 或者正数表示成功
-        Log.i(TAG, "发送成功");
+        // 0 or a positive number indicates success
+        Log.i(TAG, "Sent successfully");
         statue = USBStatus.usb_send_data_ok;
     } else {
-        Log.i(TAG, "发送失败的");
+        Log.i(TAG, "Failed to send");
         statue = USBStatus.usb_send_data_fail;
     }
     return statue;
@@ -862,7 +861,7 @@ private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
                 Log.i("dfuupdatetest", "mConn.getProductId():" + device.getProductId());
                 Log.i(TAG, "usbManager.hasPermission((device)):" + usbManager.hasPermission((device)));
                 int status = initHID();
-                addProgressLog("连接状态：" + status);
+                addProgressLog("Connection status: " + status);
 
                 if (mConn != null) {
                     Thread thread = new Thread(new Runnable() {
@@ -904,7 +903,7 @@ int DfuUpdate(JNIEnv *env, jclass thiz, jstring path, jint descript)
     return ret;
 }
 
-dfu_update方法的具体实现在libusbwrapper库中src/main/cpp/dfu-util-0.11/main.c中，大部分沿用了源码中的实现。
+The dfu_update method is implemented in main.c in the src/main/cpp/dfu-util-0.11 directory of the libusbwrapper library, and most of the implementation follows the source code.
 
 typedef struct {
     unsigned int startFlag;
@@ -921,7 +920,7 @@ typedef struct {
 int dfuload_do_dnload(struct dfu_if *dif, int xfer_size, struct dfu_file *file)
 {
     ……
-    // 发送info包
+    // Send the info packet
     SEBOOT_DOWNLOAD_FLASHIMAGE data;
     data.fileAddr = 0;
     data.fileLen = expected_size;
@@ -962,7 +961,7 @@ int dfuload_do_dnload(struct dfu_if *dif, int xfer_size, struct dfu_file *file)
 
     } while (1);
     ……
-    // 发送升级数据，进行升级
+    // Send the upgrade data to perform the upgrade
     while (bytes_sent < expected_size) {
         __android_log_print(ANDROID_LOG_DEBUG, "DFUupdateTest","bytes_sent < expected_size:%d",(bytes_sent < expected_size));
         off_t bytes_left;
@@ -1031,17 +1030,17 @@ int dfuload_do_dnload(struct dfu_if *dif, int xfer_size, struct dfu_file *file)
 }
 ```
 
-## 调用dfu-util的JNI实现方法<a name="ZH-CN_TOPIC_0000001928952084"></a>
+## JNI Implementation Method for Calling dfu-util<a name="ZH-CN_TOPIC_0000001928952084"></a>
 
-在DFU升级功能实现中，会调用dfu-util中的方法，而dfu-util是用C实现的，这就牵涉到JNI机制。JNI是Android提供的用于在跨平台系统中，与系统本地代码进行交互的一层应用程序接口。通过Android提供的NDK工具，可以快速整合到Android项目中。
+In the implementation of the DFU upgrade functionality, methods from dfu-util are called, and dfu-util is implemented in C, which involves the JNI mechanism. JNI is an application programming interface provided by Android for interacting with native system code in cross-platform systems. Using the NDK tool provided by Android, it can be quickly integrated into Android projects.
 
-**开发指引<a name="section133020216410"></a>**
+**Development Guide<a name="section133020216410"></a>**
 
-1.  在libusbwrapper库中src/main/cpp/libusbwrapper.cpp中实现PrintUsbDevices方法。
-2.  并在JNI\_OnLoad方法中注册。
-3.  在NativeLib类中声明native方法，供Java层调用。
+1.  Implement the PrintUsbDevices method in src/main/cpp/libusbwrapper.cpp in the libusbwrapper library.
+2.  Register it in the JNI\_OnLoad method.
+3.  Declare the native method in the NativeLib class for the Java layer to call.
 
-示例：
+Example:
 
 ```
 JNIEnv *env = NULL;
@@ -1052,27 +1051,27 @@ int DfuUpdate(JNIEnv *env, jclass thiz, jstring path, jint descript);
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
-    // 打印日志，说明已经进来了
+    // Print the log to indicate that JNI_OnLoad has been entered
     __android_log_print(ANDROID_LOG_DEBUG, "JNITag", "enter jni_onload");
     jint result = -1;
     jvm = vm;
-    // 判断是否正确
+    // Check whether the environment is correct
     if (vm->GetEnv((void **)&env, JNI_VERSION_1_6)) {
         return result;
     }
 
-    // 注册方法，注意签名
+    // Register methods. Pay attention to the signatures.
     const JNINativeMethod method[] = {
         {"PrintUsbDevices", "(I)V", (void *)PrintUsbDevices},
         {"DfuUpdate", "(Ljava/lang/String;I)I", (void *)DfuUpdate}
     };
-    // 找到对应的JNITools类
+    // Find the corresponding JNITools class
     jclass jClassName = env->FindClass("com/example/libusbwrapper/NativeLib");
-    // 开始注册
+    // Start registration
     int method_len = sizeof(method) / sizeof(method[0]);
     __android_log_print(ANDROID_LOG_DEBUG, "JNITag", "method_len：%d", method_len);
     jint ret = env->RegisterNatives(jClassName, method, method_len);  // 4:NELEM(method)
-    // 如果注册失败，打印日志
+    // If registration fails, print the log
     if (ret != JNI_OK) {
         __android_log_print(ANDROID_LOG_DEBUG, "JNITag", "jni_register Error");
         return -1;
@@ -1097,26 +1096,26 @@ public class NativeLib {
 }
 ```
 
-当有需要时，创建一个NativeLib的对象，就可以访问PrintUsbDevices等方法，如下：
+When needed, creating a NativeLib object allows access to methods such as PrintUsbDevices, as follows:
 
 ```
 NativeLib nativeLibDFU = new NativeLib();
 nativeLibDFU.PrintUsbDevices(mConn.getFileDescriptor());
 ```
 
-## 日志输出打印功能的实现<a name="ZH-CN_TOPIC_0000001929111460"></a>
+## Implementation of Log Output Printing<a name="ZH-CN_TOPIC_0000001929111460"></a>
 
-在升级功能实现中，需要把升级的过程日志打印出来，涉及到到JNI中C调用Java的机制。
+In the implementation of the upgrade functionality, the upgrade process logs need to be printed, which involves the JNI C-to-Java calling mechanism.
 
-**开发指引<a name="section133020216410"></a>**
+**Development Guide<a name="section133020216410"></a>**
 
-1.  声明一个interface，用来监听日志的打印reportProgress方法。
-2.  在NativeLib类中实现printDFUProgress方法调用reportProgress方法。
-3.  在libusbwrapper库中src/main/cpp/libusbwrapper.cpp中实现print\_progress\_info，此方法调用NativeLib类中打印日志的printDFUProgress方法。
-4.  在升级过程调用的dfu\_progress\_bar方法中，加上print\_progress\_info。
-5.  在界面中添加DFUupdateListener中reportProgress方法的实现，就可以把升级日志打印在界面中。
+1.  Declare an interface to listen for log printing via the reportProgress method.
+2.  Implement the printDFUProgress method in the NativeLib class to call the reportProgress method.
+3.  Implement print\_progress\_info in src/main/cpp/libusbwrapper.cpp in the libusbwrapper library. This method calls the printDFUProgress method in the NativeLib class for printing logs.
+4.  Add print\_progress\_info to the dfu\_progress\_bar method called during the upgrade process.
+5.  Implement the reportProgress method in DFUupdateListener in the interface to print the upgrade logs to the interface.
 
-示例：
+Example:
 
 ```
 public interface DFUupdateListener {
@@ -1141,7 +1140,7 @@ jboolean print_progress_info(char *info)
     jvm->AttachCurrentThread(&helperEnv, NULL);
     jclass jClassName = helperEnv->FindClass("com/example/libusbwrapper/NativeLib");
     jmethodID jmidprintDFUProgress = helperEnv->GetMethodID(jClassName, "printDFUProgress", "(Ljava/lang/String;)V");
-    // char转jstring
+    // Convert char to jstring
     jmethodID constructMethod = helperEnv->GetMethodID(jClassName, "<init>", "()V");
     jobject objCallBack = helperEnv->NewObject(jClassName, constructMethod);
     jstring info_str = helperEnv->NewStringUTF(info);
@@ -1203,7 +1202,7 @@ unsigned long long max)
     }
 }
 
-其中print_buffer，是对打印信息的格式化
+Here, print_buffer is used to format the printing information.
 char print_buffer[1024] = {0};
 
 int vspfunc(char *format, ...)
@@ -1225,17 +1224,17 @@ private DFUupdateListener mdfuUpdateListener = new DFUupdateListener() {
 NativeLib.setmDFUupdateListener(mdfuUpdateListener);
 ```
 
-# 关于界面Fragment实现<a name="ZH-CN_TOPIC_0000001929086630"></a>
+# About Interface Fragment Implementation<a name="ZH-CN_TOPIC_0000001929086630"></a>
 
-在APK中添加了关于界面，这个界面在于介绍这个APK，主要包括APK的名称和版本，以及这个APK的主要功能。点击版本显示栏，会弹出版本构建时间。
+An About interface is added to the APK. This interface introduces the APK, mainly including the APK name and version, as well as the main functions of the APK. Tapping the version display area will pop up the version build time.
 
-**开发指引<a name="section133020216410"></a>**
+**Development Guide<a name="section133020216410"></a>**
 
-1.  在res/layout/dfu\_update\_fragment\_tab\_second.xml中实现界面的布局。
-2.  实现initView方法，实现组件的初始化。
-3.  在onCreateView中调用initView方法。
+1.  Implement the interface layout in res/layout/dfu\_update\_fragment\_tab\_second.xml.
+2.  Implement the initView method for component initialization.
+3.  Call the initView method in onCreateView.
 
-示例：
+Example:
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -1309,11 +1308,11 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 }
 ```
 
-# 应用清单AndroidManifest<a name="ZH-CN_TOPIC_0000001956006145"></a>
+# Application Manifest AndroidManifest<a name="ZH-CN_TOPIC_0000001956006145"></a>
 
-Android项目的配置文件，在程序中定义的所有四大组件都需要在这个文件里注册。另外还可以在这个文件中给应用程序添加权限声明。
+This is the configuration file of the Android project. All four major components defined in the program must be registered in this file. Additionally, permission declarations can be added to the application in this file.
 
-示例：
+Example:
 
 ```
 demo/src/main/AndroidManifest.xml
@@ -1358,4 +1357,3 @@ android:label="@string/app_name">
 
 </manifest>
 ```
-

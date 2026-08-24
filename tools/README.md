@@ -4,20 +4,20 @@
 
 Method 1:
 
-- [HiSparkStudio Plugin Compilation and Flashing (Recommended)](HiSparkStudio插件版编译及烧录.md)
+- [HiSparkStudio Plugin Compilation and Flashing (Recommended)](HiSparkStudio_pluginCompile_burning.md)
 
 Method 2:
 
-- [HiSparkStudio Tool Download and Installation](HiSparkStudio工具下载及安装.md)
-- [HiSparkStudio Compilation and Flashing](HiSparkStudio编译及烧录.md)
+- [HiSparkStudio Tool Download and Installation](HiSparkStudio_download_install.md)
+- [HiSparkStudio Compilation and Flashing](HiSparkStudio_pluginCompile_burning.md)
 
 Enable the LDO under system control (you can find this in the Kconfig config – via VSCode → HiSpark plugin → command → system config).
 Proceed to compile the code.
 
 ## WSL+Ubuntu22.04 System Environment Setup
 
-- [WSL Subsystem Development Environment Setup](WSL子系统开发环境搭建.md)
-- [WSL Subsystem Compilation and Flashing](WSL子系统编译及烧录.md)
+- [WSL Subsystem Development Environment Setup](WSL_subOS_devEnv_build.md)
+- [WSL Subsystem Compilation and Flashing](WSLsubOS_compile_burning.md)
 
 ## Environment Setup FAQ
 

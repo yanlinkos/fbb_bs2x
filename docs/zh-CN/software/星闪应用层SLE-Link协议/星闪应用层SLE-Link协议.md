@@ -1,64 +1,64 @@
-# 前言<a name="ZH-CN_TOPIC_0000001876336573"></a>
+# Preface<a name="ZH-CN_TOPIC_0000001876336573"></a>
 
-**概述<a name="section4537382116410"></a>**
+**Overview<a name="section4537382116410"></a>**
 
-本文档介绍应用层相关协议，用于指导客户开发。
+This document describes the application-layer protocol and is used to guide customer development.
 
-**读者对象<a name="section4378592816410"></a>**
+**Reader Audience<a name="section4378592816410"></a>**
 
-本文档主要适用于以下工程师：
+This document mainly applies to the following engineers:
 
--   软件开发工程师
+-   Software development engineers
 
-**符号约定<a name="section133020216410"></a>**
+**Symbol Conventions<a name="section133020216410"></a>**
 
-在本文中可能出现下列标志，它们所代表的含义如下。
+The following symbols may appear in this document. Their meanings are described below.
 
 <a name="table2622507016410"></a>
-<table><thead align="left"><tr id="row1530720816410"><th class="cellrowborder" valign="top" width="20.580000000000002%" id="mcps1.1.3.1.1"><p id="p6450074116410"><a name="p6450074116410"></a><a name="p6450074116410"></a><strong id="b2136615816410"><a name="b2136615816410"></a><a name="b2136615816410"></a>符号</strong></p>
+<table><thead align="left"><tr id="row1530720816410"><th class="cellrowborder" valign="top" width="20.580000000000002%" id="mcps1.1.3.1.1"><p id="p6450074116410"><a name="p6450074116410"></a><a name="p6450074116410"></a><strong id="b2136615816410"><a name="b2136615816410"></a><a name="b2136615816410"></a>Symbol</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="79.42%" id="mcps1.1.3.1.2"><p id="p5435366816410"><a name="p5435366816410"></a><a name="p5435366816410"></a><strong id="b5941558116410"><a name="b5941558116410"></a><a name="b5941558116410"></a>说明</strong></p>
+<th class="cellrowborder" valign="top" width="79.42%" id="mcps1.1.3.1.2"><p id="p5435366816410"><a name="p5435366816410"></a><a name="p5435366816410"></a><strong id="b5941558116410"><a name="b5941558116410"></a><a name="b5941558116410"></a>Description</strong></p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row1372280416410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p3734547016410"><a name="p3734547016410"></a><a name="p3734547016410"></a><a name="image2670064316410"></a><a name="image2670064316410"></a><span><img class="" id="image2670064316410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001876296353.png"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p1757432116410"><a name="p1757432116410"></a><a name="p1757432116410"></a>表示如不避免则将会导致死亡或严重伤害的具有高等级风险的危害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p1757432116410"><a name="p1757432116410"></a><a name="p1757432116410"></a>Indicates a high-level risk that, if not avoided, will result in death or serious injury.</p>
 </td>
 </tr>
 <tr id="row466863216410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p1432579516410"><a name="p1432579516410"></a><a name="p1432579516410"></a><a name="image4895582316410"></a><a name="image4895582316410"></a><span><img class="" id="image4895582316410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001829616886.png"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p959197916410"><a name="p959197916410"></a><a name="p959197916410"></a>表示如不避免则可能导致死亡或严重伤害的具有中等级风险的危害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p959197916410"><a name="p959197916410"></a><a name="p959197916410"></a>Indicates a medium-level risk that, if not avoided, may result in death or serious injury.</p>
 </td>
 </tr>
 <tr id="row123863216410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p1232579516410"><a name="p1232579516410"></a><a name="p1232579516410"></a><a name="image1235582316410"></a><a name="image1235582316410"></a><span><img class="" id="image1235582316410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001829457154.png"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p123197916410"><a name="p123197916410"></a><a name="p123197916410"></a>表示如不避免则可能导致轻微或中度伤害的具有低等级风险的危害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p123197916410"><a name="p123197916410"></a><a name="p123197916410"></a>Indicates a low-level risk that, if not avoided, may result in minor or moderate injury.</p>
 </td>
 </tr>
 <tr id="row5786682116410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p2204984716410"><a name="p2204984716410"></a><a name="p2204984716410"></a><a name="image4504446716410"></a><a name="image4504446716410"></a><span><img class="" id="image4504446716410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001876336577.png"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4388861916410"><a name="p4388861916410"></a><a name="p4388861916410"></a>用于传递设备或环境安全警示信息。如不避免则可能会导致设备损坏、数据丢失、设备性能降低或其它不可预知的结果。</p>
-<p id="p1238861916410"><a name="p1238861916410"></a><a name="p1238861916410"></a>“须知”不涉及人身伤害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4388861916410"><a name="p4388861916410"></a><a name="p4388861916410"></a>Used to convey device or environment safety warning information. If not avoided, it may result in device damage, data loss, degraded device performance, or other unpredictable consequences.</p>
+<p id="p1238861916410"><a name="p1238861916410"></a><a name="p1238861916410"></a>"Note" does not involve personal injury.</p>
 </td>
 </tr>
 <tr id="row2856923116410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p5555360116410"><a name="p5555360116410"></a><a name="p5555360116410"></a><a name="image799324016410"></a><a name="image799324016410"></a><span><img class="" id="image799324016410" height="25.270000000000003" width="67.83" src="figures/zh-cn_image_0000001876296357.png"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4612588116410"><a name="p4612588116410"></a><a name="p4612588116410"></a>对正文中重点信息的补充说明。</p>
-<p id="p1232588116410"><a name="p1232588116410"></a><a name="p1232588116410"></a>“说明”不是安全警示信息，不涉及人身、设备及环境伤害信息。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4612588116410"><a name="p4612588116410"></a><a name="p4612588116410"></a>Supplementary description of key information in the main text.</p>
+<p id="p1232588116410"><a name="p1232588116410"></a><a name="p1232588116410"></a>"Description" is not safety warning information and does not involve personal, device, or environmental injury information.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**修改记录<a name="section2467512116410"></a>**
+**Modification Record<a name="section2467512116410"></a>**
 
 <a name="table1557726816410"></a>
-<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="20.72%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>文档版本</strong></p>
+<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="20.72%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>Document Version</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="26.119999999999997%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>发布日期</strong></p>
+<th class="cellrowborder" valign="top" width="26.119999999999997%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>Release Date</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="53.16%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>修改说明</strong></p>
+<th class="cellrowborder" valign="top" width="53.16%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>Modification Description</strong></p>
 </th>
 </tr>
 </thead>
@@ -66,41 +66,40 @@
 </td>
 <td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p184131311111"><a name="p184131311111"></a><a name="p184131311111"></a>2024-07-04</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p169114261115"><a name="p169114261115"></a><a name="p169114261115"></a>第一次正式版本发布。</p>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p169114261115"><a name="p169114261115"></a><a name="p169114261115"></a>First official version release.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-# 概述<a name="ZH-CN_TOPIC_0000001829430328"></a>
+# Overview<a name="ZH-CN_TOPIC_0000001829430328"></a>
 
 
 
-## 背景<a name="ZH-CN_TOPIC_0000001829590088"></a>
+## Background<a name="ZH-CN_TOPIC_0000001829590088"></a>
 
-星闪协议要求从机与主机侧交互时，从机和主机侧都搭配星闪芯片。多数场景下，主机侧的星闪芯片只作为桥片使用星闪的controller功能，星闪host部署在主SOC上。但在某些应用场景下，主机侧的星闪芯片需要使用芯片自带的星闪Host，不再作为桥片。为了实现主机SOC应用层与星闪芯片内host之间的交互，需要有对应的协议传输指令和数据。
+The NearLink protocol requires that both the slave and the host are equipped with NearLink chips for interaction. In most scenarios, the NearLink chip on the host side is only used as a bridge, using the controller function of NearLink, and the NearLink host is deployed on the main SoC. However, in some application scenarios, the NearLink chip on the host side needs to use the built-in NearLink Host of the chip instead of acting as a bridge. To enable interaction between the application layer of the main SoC and the host in the NearLink chip, a corresponding protocol is required to transmit instructions and data.
 
-## 需求<a name="ZH-CN_TOPIC_0000001876189753"></a>
+## Requirements<a name="ZH-CN_TOPIC_0000001876189753"></a>
 
-为支撑星闪芯片内host与主机SOC应用层之间进行消息交互，需要在应用层定义新的协议，简称SLE-Link协议。
+To support message interaction between the host in the NearLink chip and the application layer of the main SoC, a new protocol needs to be defined at the application layer, referred to as the SLE-Link protocol.
 
-# SLE Frame格式定义<a name="ZH-CN_TOPIC_0000001876269533"></a>
+# SLE Frame Format Definition<a name="ZH-CN_TOPIC_0000001876269533"></a>
 
-SLE-Link协议定义了新的SLE Frame格式，格式如下：
+The SLE-Link protocol defines a new SLE Frame format, as follows:
 
-
-## SLE Frame格式定义<a name="ZH-CN_TOPIC_0000001829430332"></a>
+## SLE Frame Format Definition<a name="ZH-CN_TOPIC_0000001829430332"></a>
 
 ![](figures/zh-cn_image_0000001829430412.png)
 
-**注意： Service ID和Command ID使用0作为非法值**
+**Note: Service ID and Command ID use 0 as the invalid value.**
 
 <a name="table4479mcpsimp"></a>
-<table><thead align="left"><tr id="row4485mcpsimp"><th class="cellrowborder" valign="top" width="16%" id="mcps1.1.4.1.1"><p id="p4487mcpsimp"><a name="p4487mcpsimp"></a><a name="p4487mcpsimp"></a>字段</p>
+<table><thead align="left"><tr id="row4485mcpsimp"><th class="cellrowborder" valign="top" width="16%" id="mcps1.1.4.1.1"><p id="p4487mcpsimp"><a name="p4487mcpsimp"></a><a name="p4487mcpsimp"></a>Field</p>
 </th>
-<th class="cellrowborder" valign="top" width="16%" id="mcps1.1.4.1.2"><p id="p4490mcpsimp"><a name="p4490mcpsimp"></a><a name="p4490mcpsimp"></a>长度</p>
+<th class="cellrowborder" valign="top" width="16%" id="mcps1.1.4.1.2"><p id="p4490mcpsimp"><a name="p4490mcpsimp"></a><a name="p4490mcpsimp"></a>Length</p>
 </th>
-<th class="cellrowborder" valign="top" width="68%" id="mcps1.1.4.1.3"><p id="p4493mcpsimp"><a name="p4493mcpsimp"></a><a name="p4493mcpsimp"></a>含义</p>
+<th class="cellrowborder" valign="top" width="68%" id="mcps1.1.4.1.3"><p id="p4493mcpsimp"><a name="p4493mcpsimp"></a><a name="p4493mcpsimp"></a>Meaning</p>
 </th>
 </tr>
 </thead>
@@ -108,70 +107,70 @@ SLE-Link协议定义了新的SLE Frame格式，格式如下：
 </td>
 <td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.2 "><p id="p4499mcpsimp"><a name="p4499mcpsimp"></a><a name="p4499mcpsimp"></a>1Byte</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4501mcpsimp"><a name="p4501mcpsimp"></a><a name="p4501mcpsimp"></a>Flag为固定值，作为星闪消息数据域的识别符，1字节。</p>
+<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4501mcpsimp"><a name="p4501mcpsimp"></a><a name="p4501mcpsimp"></a>Flag is a fixed value, used as the identifier of the NearLink message data field, 1 byte.</p>
 </td>
 </tr>
 <tr id="row4502mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4504mcpsimp"><a name="p4504mcpsimp"></a><a name="p4504mcpsimp"></a>Version</p>
 </td>
 <td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.2 "><p id="p4506mcpsimp"><a name="p4506mcpsimp"></a><a name="p4506mcpsimp"></a>1Byte</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4508mcpsimp"><a name="p4508mcpsimp"></a><a name="p4508mcpsimp"></a>Version表示对应的软件版本信息，根据需要添加，1字节。</p>
+<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4508mcpsimp"><a name="p4508mcpsimp"></a><a name="p4508mcpsimp"></a>Version indicates the corresponding software version information, added as needed, 1 byte.</p>
 </td>
 </tr>
 <tr id="row4509mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4511mcpsimp"><a name="p4511mcpsimp"></a><a name="p4511mcpsimp"></a>Total Frame</p>
 </td>
 <td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.2 "><p id="p4513mcpsimp"><a name="p4513mcpsimp"></a><a name="p4513mcpsimp"></a>1Byte</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4515mcpsimp"><a name="p4515mcpsimp"></a><a name="p4515mcpsimp"></a>表示总包数。</p>
+<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4515mcpsimp"><a name="p4515mcpsimp"></a><a name="p4515mcpsimp"></a>Indicates the total number of frames.</p>
 </td>
 </tr>
 <tr id="row4516mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4518mcpsimp"><a name="p4518mcpsimp"></a><a name="p4518mcpsimp"></a>Frame Seq</p>
 </td>
 <td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.2 "><p id="p4520mcpsimp"><a name="p4520mcpsimp"></a><a name="p4520mcpsimp"></a>1Byte</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4522mcpsimp"><a name="p4522mcpsimp"></a><a name="p4522mcpsimp"></a>表示包序号。</p>
+<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4522mcpsimp"><a name="p4522mcpsimp"></a><a name="p4522mcpsimp"></a>Indicates the frame sequence number.</p>
 </td>
 </tr>
 <tr id="row4523mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4525mcpsimp"><a name="p4525mcpsimp"></a><a name="p4525mcpsimp"></a>Rsv</p>
 </td>
 <td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.2 "><p id="p4527mcpsimp"><a name="p4527mcpsimp"></a><a name="p4527mcpsimp"></a>1Byte</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4529mcpsimp"><a name="p4529mcpsimp"></a><a name="p4529mcpsimp"></a>保留字段，便于拓展。</p>
+<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4529mcpsimp"><a name="p4529mcpsimp"></a><a name="p4529mcpsimp"></a>Reserved field, for future extension.</p>
 </td>
 </tr>
 <tr id="row4530mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4532mcpsimp"><a name="p4532mcpsimp"></a><a name="p4532mcpsimp"></a>Service ID</p>
 </td>
 <td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.2 "><p id="p4534mcpsimp"><a name="p4534mcpsimp"></a><a name="p4534mcpsimp"></a>1Byte</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4536mcpsimp"><a name="p4536mcpsimp"></a><a name="p4536mcpsimp"></a>每个报文所属的业务类型，比如：设备发现，连接管理，OTA服务等。</p>
+<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4536mcpsimp"><a name="p4536mcpsimp"></a><a name="p4536mcpsimp"></a>The service type to which each message belongs, for example: device discovery, connection management, OTA service, etc.</p>
 </td>
 </tr>
 <tr id="row4537mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4539mcpsimp"><a name="p4539mcpsimp"></a><a name="p4539mcpsimp"></a>CommandID</p>
 </td>
 <td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.2 "><p id="p4541mcpsimp"><a name="p4541mcpsimp"></a><a name="p4541mcpsimp"></a>1Byte</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4543mcpsimp"><a name="p4543mcpsimp"></a><a name="p4543mcpsimp"></a>每个业务类型下的具体操作，比如：建立连接，断开连接、参数更新。</p>
+<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4543mcpsimp"><a name="p4543mcpsimp"></a><a name="p4543mcpsimp"></a>The specific operation under each service type, for example: establish connection, disconnect, parameter update.</p>
 </td>
 </tr>
 <tr id="row4544mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4546mcpsimp"><a name="p4546mcpsimp"></a><a name="p4546mcpsimp"></a>BodyLen</p>
 </td>
 <td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.2 "><p id="p4548mcpsimp"><a name="p4548mcpsimp"></a><a name="p4548mcpsimp"></a>2Byte</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4550mcpsimp"><a name="p4550mcpsimp"></a><a name="p4550mcpsimp"></a>指示后续body部分的数据长度。</p>
+<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4550mcpsimp"><a name="p4550mcpsimp"></a><a name="p4550mcpsimp"></a>Indicates the data length of the following body part.</p>
 </td>
 </tr>
 <tr id="row4551mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4553mcpsimp"><a name="p4553mcpsimp"></a><a name="p4553mcpsimp"></a>Body</p>
 </td>
 <td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.2 "><p id="p4555mcpsimp"><a name="p4555mcpsimp"></a><a name="p4555mcpsimp"></a>Variable Byte</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4557mcpsimp"><a name="p4557mcpsimp"></a><a name="p4557mcpsimp"></a>实际数据，以TLV格式，可以存放多个TLV。</p>
+<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4557mcpsimp"><a name="p4557mcpsimp"></a><a name="p4557mcpsimp"></a>Actual data, in TLV format, which can contain multiple TLVs.</p>
 </td>
 </tr>
 <tr id="row4558mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4560mcpsimp"><a name="p4560mcpsimp"></a><a name="p4560mcpsimp"></a>MIC</p>
 </td>
 <td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.2 "><p id="p4562mcpsimp"><a name="p4562mcpsimp"></a><a name="p4562mcpsimp"></a>2Byte</p>
 </td>
-<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4564mcpsimp"><a name="p4564mcpsimp"></a><a name="p4564mcpsimp"></a>Message Integrity Check，消息完整性校验，采用CRC算法。对前面所有数据生成校验结果。</p>
+<td class="cellrowborder" valign="top" width="68%" headers="mcps1.1.4.1.3 "><p id="p4564mcpsimp"><a name="p4564mcpsimp"></a><a name="p4564mcpsimp"></a>Message Integrity Check, which verifies message integrity using the CRC algorithm. It generates a verification result for all preceding data.</p>
 </td>
 </tr>
 </tbody>
@@ -186,21 +185,21 @@ SLE-Link协议定义了新的SLE Frame格式，格式如下：
 
 ### Header<a name="ZH-CN_TOPIC_0000001829590092"></a>
 
-Flag固定值：取值为0x1F。
+Flag fixed value: 0x1F.
 
-Version：表示对应的软件版本信息。
+Version: indicates the corresponding software version information.
 
-Total Frame：表示总包数，不分包，该字段为1；如果分包，则该字段≥2。
+Total Frame: indicates the total number of frames. If the message is not fragmented, this field is 1; if fragmented, this field is greater than or equal to 2.
 
-Frame Seq：如果不分包则置为0，如果需要分包则该字段为帧序号，从1开始依次添加。
+Frame Seq: set to 0 if the message is not fragmented; if fragmentation is required, this field is the frame sequence number, starting from 1 and incremented sequentially.
 
 ### Service ID<a name="ZH-CN_TOPIC_0000001876189757"></a>
 
-Service ID：占1字节，用于标识服务类型。取值0\~255，每个Service ID固定从1开始编号。
+Service ID: occupies 1 byte, used to identify the service type. The value ranges from 0 to 255, and each Service ID is numbered starting from 1.
 
-Service ID定义如下表。
+The Service IDs are defined in the following table.
 
-为了避免各个领域和产品型态的Service ID冲突，将Service ID进行统一划分：
+To avoid conflicts between Service IDs across different domains and product forms, the Service IDs are uniformly divided as follows:
 
 <a name="table4574mcpsimp"></a>
 <table><thead align="left"><tr id="row4580mcpsimp"><th class="cellrowborder" valign="top" width="16%" id="mcps1.1.4.1.1"><p id="p4582mcpsimp"><a name="p4582mcpsimp"></a><a name="p4582mcpsimp"></a>Service ID</p>
@@ -215,42 +214,42 @@ Service ID定义如下表。
 </td>
 <td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4591mcpsimp"><a name="p4591mcpsimp"></a><a name="p4591mcpsimp"></a><a href="Device-Discovery-Service.md">Device Discovery Service</a></p>
 </td>
-<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4594mcpsimp"><a name="p4594mcpsimp"></a><a name="p4594mcpsimp"></a>设备发现。</p>
+<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4594mcpsimp"><a name="p4594mcpsimp"></a><a name="p4594mcpsimp"></a>Device discovery.</p>
 </td>
 </tr>
 <tr id="row4595mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4597mcpsimp"><a name="p4597mcpsimp"></a><a name="p4597mcpsimp"></a>0x02</p>
 </td>
 <td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p175964513713"><a name="p175964513713"></a><a name="p175964513713"></a><a href="Connection-Management-Service.md">Connection Management Service</a></p>
 </td>
-<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4602mcpsimp"><a name="p4602mcpsimp"></a><a name="p4602mcpsimp"></a>连接管理。</p>
+<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4602mcpsimp"><a name="p4602mcpsimp"></a><a name="p4602mcpsimp"></a>Connection management.</p>
 </td>
 </tr>
 <tr id="row4603mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4605mcpsimp"><a name="p4605mcpsimp"></a><a name="p4605mcpsimp"></a>0x03</p>
 </td>
 <td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4607mcpsimp"><a name="p4607mcpsimp"></a><a name="p4607mcpsimp"></a><a href="SSAP-Client-Service.md">SSAP Client Service</a></p>
 </td>
-<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4609mcpsimp"><a name="p4609mcpsimp"></a><a name="p4609mcpsimp"></a>SSAP Client服务。</p>
+<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4609mcpsimp"><a name="p4609mcpsimp"></a><a name="p4609mcpsimp"></a>SSAP Client service.</p>
 </td>
 </tr>
 <tr id="row4610mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4612mcpsimp"><a name="p4612mcpsimp"></a><a name="p4612mcpsimp"></a>0x04</p>
 </td>
 <td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4614mcpsimp"><a name="p4614mcpsimp"></a><a name="p4614mcpsimp"></a><a href="SSAP-Server-Service.md">SSAP Server Service</a></p>
 </td>
-<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4616mcpsimp"><a name="p4616mcpsimp"></a><a name="p4616mcpsimp"></a>SSAP Server服务。</p>
+<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4616mcpsimp"><a name="p4616mcpsimp"></a><a name="p4616mcpsimp"></a>SSAP Server service.</p>
 </td>
 </tr>
 <tr id="row4617mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4619mcpsimp"><a name="p4619mcpsimp"></a><a name="p4619mcpsimp"></a>0x05</p>
 </td>
 <td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4621mcpsimp"><a name="p4621mcpsimp"></a><a name="p4621mcpsimp"></a><a href="Factory-Test-Service.md">Factory Test Service</a></p>
 </td>
-<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4623mcpsimp"><a name="p4623mcpsimp"></a><a name="p4623mcpsimp"></a>产测模式。</p>
+<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4623mcpsimp"><a name="p4623mcpsimp"></a><a name="p4623mcpsimp"></a>Production test mode.</p>
 </td>
 </tr>
 <tr id="row4624mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4626mcpsimp"><a name="p4626mcpsimp"></a><a name="p4626mcpsimp"></a>0x06</p>
 </td>
 <td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4628mcpsimp"><a name="p4628mcpsimp"></a><a name="p4628mcpsimp"></a><a href="Low-Latency-Service.md">Low Latency Service</a></p>
 </td>
-<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4630mcpsimp"><a name="p4630mcpsimp"></a><a name="p4630mcpsimp"></a>低延时模式。</p>
+<td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4630mcpsimp"><a name="p4630mcpsimp"></a><a name="p4630mcpsimp"></a>Low latency mode.</p>
 </td>
 </tr>
 </tbody>
@@ -258,106 +257,106 @@ Service ID定义如下表。
 
 ### Command ID<a name="ZH-CN_TOPIC_0000001876269537"></a>
 
-Command ID：占1字节，用于标识具体命令类型，每个Service ID对应的Command ID都从1开始，表明真实的逻辑行为，具体的Command ID说明在后续的服务接口定义中详细介绍。
+Command ID: occupies 1 byte, used to identify the specific command type. The Command IDs corresponding to each Service ID all start from 1, indicating the actual logical behavior. The specific Command ID descriptions are detailed in the service interface definitions later.
 
-### TLV格式<a name="ZH-CN_TOPIC_0000001829430336"></a>
+### TLV Format<a name="ZH-CN_TOPIC_0000001829430336"></a>
 
-TLVs封装消息中的具体信息。一个Payload的body下可以对应多个TLV。
+TLVs encapsulate the specific information in a message. Multiple TLVs can be included under the body of one Payload.
 
 ![](figures/zh-cn_image_0000001829590172.png)
 
--   Type：占用1个字节，表示消息类型，取值0\~255。其中0x00，0xFF不使用，0x7F固定用作错误码。
--   Length：占用2个字节，表示后面value的长度，取值范围0\~65535。当Length为0时，表明Value不存在。
--   Value：为具体的数据。
+-   Type: occupies 1 byte, indicating the message type, with values ranging from 0 to 255. Among them, 0x00 and 0xFF are not used, and 0x7F is fixedly used as the error code.
+-   Length: occupies 2 bytes, indicating the length of the following value, with a range of 0 to 65535. When Length is 0, it indicates that Value does not exist.
+-   Value: the specific data.
 
-**注：简化处理，不支持Type下再挂子节点。**
+**Note: For simplicity, child nodes are not supported under Type.**
 
-### 通用错误码<a name="ZH-CN_TOPIC_0000001829590096"></a>
+### Common Error Codes<a name="ZH-CN_TOPIC_0000001829590096"></a>
 
-通用错误码Type值为127，固定为1个字节。格式如下。
+The common error code Type value is 127, fixed as 1 byte. The format is as follows.
 
 ![](figures/zh-cn_image_0000001876189837.png)
 
 <a name="table4646mcpsimp"></a>
 <table><thead align="left"><tr id="row4652mcpsimp"><th class="cellrowborder" valign="top" width="16%" id="mcps1.1.4.1.1"><p id="p4654mcpsimp"><a name="p4654mcpsimp"></a><a name="p4654mcpsimp"></a><strong id="b4655mcpsimp"><a name="b4655mcpsimp"></a><a name="b4655mcpsimp"></a>Error</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="12%" id="mcps1.1.4.1.2"><p id="p4657mcpsimp"><a name="p4657mcpsimp"></a><a name="p4657mcpsimp"></a><strong id="b4658mcpsimp"><a name="b4658mcpsimp"></a><a name="b4658mcpsimp"></a>类别</strong></p>
+<th class="cellrowborder" valign="top" width="12%" id="mcps1.1.4.1.2"><p id="p4657mcpsimp"><a name="p4657mcpsimp"></a><a name="p4657mcpsimp"></a><strong id="b4658mcpsimp"><a name="b4658mcpsimp"></a><a name="b4658mcpsimp"></a>Category</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="72%" id="mcps1.1.4.1.3"><p id="p4660mcpsimp"><a name="p4660mcpsimp"></a><a name="p4660mcpsimp"></a><strong id="b4661mcpsimp"><a name="b4661mcpsimp"></a><a name="b4661mcpsimp"></a>描述</strong></p>
+<th class="cellrowborder" valign="top" width="72%" id="mcps1.1.4.1.3"><p id="p4660mcpsimp"><a name="p4660mcpsimp"></a><a name="p4660mcpsimp"></a><strong id="b4661mcpsimp"><a name="b4661mcpsimp"></a><a name="b4661mcpsimp"></a>Description</strong></p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row4662mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4664mcpsimp"><a name="p4664mcpsimp"></a><a name="p4664mcpsimp"></a>0x00</p>
 </td>
-<td class="cellrowborder" rowspan="9" valign="top" width="12%" headers="mcps1.1.4.1.2 "><p id="p4666mcpsimp"><a name="p4666mcpsimp"></a><a name="p4666mcpsimp"></a>通用错误</p>
+<td class="cellrowborder" rowspan="9" valign="top" width="12%" headers="mcps1.1.4.1.2 "><p id="p4666mcpsimp"><a name="p4666mcpsimp"></a><a name="p4666mcpsimp"></a>Common error</p>
 </td>
-<td class="cellrowborder" valign="top" width="72%" headers="mcps1.1.4.1.3 "><p id="p4668mcpsimp"><a name="p4668mcpsimp"></a><a name="p4668mcpsimp"></a>成功。</p>
+<td class="cellrowborder" valign="top" width="72%" headers="mcps1.1.4.1.3 "><p id="p4668mcpsimp"><a name="p4668mcpsimp"></a><a name="p4668mcpsimp"></a>Success.</p>
 </td>
 </tr>
 <tr id="row4669mcpsimp"><td class="cellrowborder" valign="top" headers="mcps1.1.4.1.1 "><p id="p4671mcpsimp"><a name="p4671mcpsimp"></a><a name="p4671mcpsimp"></a>0x01</p>
 </td>
-<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4673mcpsimp"><a name="p4673mcpsimp"></a><a name="p4673mcpsimp"></a>未知error类型。</p>
+<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4673mcpsimp"><a name="p4673mcpsimp"></a><a name="p4673mcpsimp"></a>Unknown error type.</p>
 </td>
 </tr>
 <tr id="row4674mcpsimp"><td class="cellrowborder" valign="top" headers="mcps1.1.4.1.1 "><p id="p4676mcpsimp"><a name="p4676mcpsimp"></a><a name="p4676mcpsimp"></a>0x02</p>
 </td>
-<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4678mcpsimp"><a name="p4678mcpsimp"></a><a name="p4678mcpsimp"></a>不支持该请求。</p>
+<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4678mcpsimp"><a name="p4678mcpsimp"></a><a name="p4678mcpsimp"></a>The request is not supported.</p>
 </td>
 </tr>
 <tr id="row4679mcpsimp"><td class="cellrowborder" valign="top" headers="mcps1.1.4.1.1 "><p id="p4681mcpsimp"><a name="p4681mcpsimp"></a><a name="p4681mcpsimp"></a>0x03</p>
 </td>
-<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4683mcpsimp"><a name="p4683mcpsimp"></a><a name="p4683mcpsimp"></a>无权限。</p>
+<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4683mcpsimp"><a name="p4683mcpsimp"></a><a name="p4683mcpsimp"></a>No permission.</p>
 </td>
 </tr>
 <tr id="row4684mcpsimp"><td class="cellrowborder" valign="top" headers="mcps1.1.4.1.1 "><p id="p4686mcpsimp"><a name="p4686mcpsimp"></a><a name="p4686mcpsimp"></a>0x04</p>
 </td>
-<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4688mcpsimp"><a name="p4688mcpsimp"></a><a name="p4688mcpsimp"></a>系统忙。</p>
+<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4688mcpsimp"><a name="p4688mcpsimp"></a><a name="p4688mcpsimp"></a>System busy.</p>
 </td>
 </tr>
 <tr id="row4689mcpsimp"><td class="cellrowborder" valign="top" headers="mcps1.1.4.1.1 "><p id="p4691mcpsimp"><a name="p4691mcpsimp"></a><a name="p4691mcpsimp"></a>0x05</p>
 </td>
-<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4693mcpsimp"><a name="p4693mcpsimp"></a><a name="p4693mcpsimp"></a>请求格式错误。</p>
+<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4693mcpsimp"><a name="p4693mcpsimp"></a><a name="p4693mcpsimp"></a>Incorrect request format.</p>
 </td>
 </tr>
 <tr id="row4694mcpsimp"><td class="cellrowborder" valign="top" headers="mcps1.1.4.1.1 "><p id="p4696mcpsimp"><a name="p4696mcpsimp"></a><a name="p4696mcpsimp"></a>0x06</p>
 </td>
-<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4698mcpsimp"><a name="p4698mcpsimp"></a><a name="p4698mcpsimp"></a>参数错误。</p>
+<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4698mcpsimp"><a name="p4698mcpsimp"></a><a name="p4698mcpsimp"></a>Parameter error.</p>
 </td>
 </tr>
 <tr id="row4699mcpsimp"><td class="cellrowborder" valign="top" headers="mcps1.1.4.1.1 "><p id="p4701mcpsimp"><a name="p4701mcpsimp"></a><a name="p4701mcpsimp"></a>0x07</p>
 </td>
-<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4703mcpsimp"><a name="p4703mcpsimp"></a><a name="p4703mcpsimp"></a>申请内存失败。</p>
+<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4703mcpsimp"><a name="p4703mcpsimp"></a><a name="p4703mcpsimp"></a>Memory allocation failure.</p>
 </td>
 </tr>
 <tr id="row4704mcpsimp"><td class="cellrowborder" valign="top" headers="mcps1.1.4.1.1 "><p id="p4706mcpsimp"><a name="p4706mcpsimp"></a><a name="p4706mcpsimp"></a>0x08</p>
 </td>
-<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4708mcpsimp"><a name="p4708mcpsimp"></a><a name="p4708mcpsimp"></a>响应超时。</p>
+<td class="cellrowborder" valign="top" headers="mcps1.1.4.1.2 "><p id="p4708mcpsimp"><a name="p4708mcpsimp"></a><a name="p4708mcpsimp"></a>Response timeout.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-### MIC校验<a name="ZH-CN_TOPIC_0000001876189761"></a>
+### MIC Verification<a name="ZH-CN_TOPIC_0000001876189761"></a>
 
-发送端和接收端，都采用相同的算法进行校验证，接收到当检测到计算出来的MIC与发送端携带的MIC不同时，认为数据不合法，直接丢弃。
+Both the sending end and the receiving end use the same algorithm for verification. When the receiving end detects that the calculated MIC is different from the MIC carried by the sending end, it considers the data invalid and discards it directly.
 
-MIC采用CRC-16，算法名称：CRC-16/XMODEM，多项式poly：0x1021
+MIC uses CRC-16, algorithm name: CRC-16/XMODEM, polynomial poly: 0x1021
 
 ![](figures/zh-cn_image_0000001876269617.png)
 
-### Frame合法性原则<a name="ZH-CN_TOPIC_0000001876269541"></a>
+### Frame Validity Principles<a name="ZH-CN_TOPIC_0000001876269541"></a>
 
 
 
-#### 接收Frame Request<a name="ZH-CN_TOPIC_0000001829430340"></a>
+#### Receiving a Frame Request<a name="ZH-CN_TOPIC_0000001829430340"></a>
 
-Device侧检查DATA内容，Header是0x1F，且对MIC前的所有字段做校验，得到的结果与MIC的2个字节相同，则认为是合法的SLE Frame消息。
+The Device side checks the DATA content. If the Header is 0x1F and the verification of all fields before the MIC produces the same result as the 2 bytes of the MIC, the message is considered a valid SLE Frame message.
 
-#### 接收Frame Response<a name="ZH-CN_TOPIC_0000001829590100"></a>
+#### Receiving a Frame Response<a name="ZH-CN_TOPIC_0000001829590100"></a>
 
-Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，得到的结果与MIC的2个字节相同，则认为是合法的SLE Frame消息。
+The Host side checks the DATA content. If the Header is 0x1F and the verification of all fields before the MIC produces the same result as the 2 bytes of the MIC, the message is considered a valid SLE Frame message.
 
-# 服务接口定义<a name="ZH-CN_TOPIC_0000001876189765"></a>
+# Service Interface Definition<a name="ZH-CN_TOPIC_0000001876189765"></a>
 
 
 
@@ -381,7 +380,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 
 
-### 使能SLE<a name="ZH-CN_TOPIC_0000001829430344"></a>
+### Enable SLE<a name="ZH-CN_TOPIC_0000001829430344"></a>
 
 <a name="table4723mcpsimp"></a>
 <table><thead align="left"><tr id="row4729mcpsimp"><th class="cellrowborder" valign="top" width="21.45%" id="mcps1.1.4.1.1"><p id="p4731mcpsimp"><a name="p4731mcpsimp"></a><a name="p4731mcpsimp"></a>Service ID</p>
@@ -396,17 +395,17 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="22.06%" headers="mcps1.1.4.1.2 "><p id="p4740mcpsimp"><a name="p4740mcpsimp"></a><a name="p4740mcpsimp"></a>0x01</p>
 </td>
-<td class="cellrowborder" valign="top" width="56.489999999999995%" headers="mcps1.1.4.1.3 "><p id="p4742mcpsimp"><a name="p4742mcpsimp"></a><a name="p4742mcpsimp"></a>使能SLE协议栈</p>
+<td class="cellrowborder" valign="top" width="56.489999999999995%" headers="mcps1.1.4.1.3 "><p id="p4742mcpsimp"><a name="p4742mcpsimp"></a><a name="p4742mcpsimp"></a>Enable the SLE protocol stack</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV参数：**
+**TLV Parameters:**
 
-无
+None
 
-### 去使能SLE<a name="ZH-CN_TOPIC_0000001829590104"></a>
+### Disable SLE<a name="ZH-CN_TOPIC_0000001829590104"></a>
 
 <a name="table4747mcpsimp"></a>
 <table><thead align="left"><tr id="row4753mcpsimp"><th class="cellrowborder" valign="top" width="21.33%" id="mcps1.1.4.1.1"><p id="p4755mcpsimp"><a name="p4755mcpsimp"></a><a name="p4755mcpsimp"></a>Service ID</p>
@@ -421,17 +420,17 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="22.42%" headers="mcps1.1.4.1.2 "><p id="p4764mcpsimp"><a name="p4764mcpsimp"></a><a name="p4764mcpsimp"></a>0x02</p>
 </td>
-<td class="cellrowborder" valign="top" width="56.25%" headers="mcps1.1.4.1.3 "><p id="p4766mcpsimp"><a name="p4766mcpsimp"></a><a name="p4766mcpsimp"></a>去使能SLE协议栈</p>
+<td class="cellrowborder" valign="top" width="56.25%" headers="mcps1.1.4.1.3 "><p id="p4766mcpsimp"><a name="p4766mcpsimp"></a><a name="p4766mcpsimp"></a>Disable the SLE protocol stack</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV参数：**
+**TLV Parameters:**
 
-无
+None
 
-### 设置本地设备地址<a name="ZH-CN_TOPIC_0000001876189769"></a>
+### Set Local Device Address<a name="ZH-CN_TOPIC_0000001876189769"></a>
 
 <a name="table4771mcpsimp"></a>
 <table><thead align="left"><tr id="row4777mcpsimp"><th class="cellrowborder" valign="top" width="21.26%" id="mcps1.1.4.1.1"><p id="p4779mcpsimp"><a name="p4779mcpsimp"></a><a name="p4779mcpsimp"></a>Service ID</p>
@@ -446,16 +445,16 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="22.689999999999998%" headers="mcps1.1.4.1.2 "><p id="p4788mcpsimp"><a name="p4788mcpsimp"></a><a name="p4788mcpsimp"></a>0x03</p>
 </td>
-<td class="cellrowborder" valign="top" width="56.05%" headers="mcps1.1.4.1.3 "><p id="p4790mcpsimp"><a name="p4790mcpsimp"></a><a name="p4790mcpsimp"></a>去使能SLE协议栈</p>
+<td class="cellrowborder" valign="top" width="56.05%" headers="mcps1.1.4.1.3 "><p id="p4790mcpsimp"><a name="p4790mcpsimp"></a><a name="p4790mcpsimp"></a>Disable the SLE protocol stack</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table4793mcpsimp"></a>
-<table><thead align="left"><tr id="row4800mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4802mcpsimp"><a name="p4802mcpsimp"></a><a name="p4802mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row4800mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4802mcpsimp"><a name="p4802mcpsimp"></a><a name="p4802mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p4804mcpsimp"><a name="p4804mcpsimp"></a><a name="p4804mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
@@ -463,7 +462,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 <p id="p4807mcpsimp"><a name="p4807mcpsimp"></a><a name="p4807mcpsimp"></a>Size(Oct)</p>
 </th>
 <th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4809mcpsimp"><a name="p4809mcpsimp"></a><a name="p4809mcpsimp"></a>Value</p>
-<p id="p4810mcpsimp"><a name="p4810mcpsimp"></a><a name="p4810mcpsimp"></a>数据类型</p>
+<p id="p4810mcpsimp"><a name="p4810mcpsimp"></a><a name="p4810mcpsimp"></a>Data Type</p>
 </th>
 </tr>
 </thead>
@@ -488,7 +487,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 获取本地设备地址<a name="ZH-CN_TOPIC_0000001876269549"></a>
+### Get Local Device Address<a name="ZH-CN_TOPIC_0000001876269549"></a>
 
 <a name="table4830mcpsimp"></a>
 <table><thead align="left"><tr id="row4836mcpsimp"><th class="cellrowborder" valign="top" width="21.3%" id="mcps1.1.4.1.1"><p id="p4838mcpsimp"><a name="p4838mcpsimp"></a><a name="p4838mcpsimp"></a>Service ID</p>
@@ -503,22 +502,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="22.88%" headers="mcps1.1.4.1.2 "><p id="p4847mcpsimp"><a name="p4847mcpsimp"></a><a name="p4847mcpsimp"></a>0x04</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.82%" headers="mcps1.1.4.1.3 "><p id="p4849mcpsimp"><a name="p4849mcpsimp"></a><a name="p4849mcpsimp"></a>获取本地设备地址</p>
+<td class="cellrowborder" valign="top" width="55.82%" headers="mcps1.1.4.1.3 "><p id="p4849mcpsimp"><a name="p4849mcpsimp"></a><a name="p4849mcpsimp"></a>Get Local Device Address</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table4852mcpsimp"></a>
-<table><thead align="left"><tr id="row4859mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4861mcpsimp"><a name="p4861mcpsimp"></a><a name="p4861mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row4859mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4861mcpsimp"><a name="p4861mcpsimp"></a><a name="p4861mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.98%" id="mcps1.1.5.1.2"><p id="p4863mcpsimp"><a name="p4863mcpsimp"></a><a name="p4863mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18.02%" id="mcps1.1.5.1.3"><p id="p4865mcpsimp"><a name="p4865mcpsimp"></a><a name="p4865mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4868mcpsimp"><a name="p4868mcpsimp"></a><a name="p4868mcpsimp"></a>Value 数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4868mcpsimp"><a name="p4868mcpsimp"></a><a name="p4868mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -543,7 +542,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 设置本地设备名称<a name="ZH-CN_TOPIC_0000001829430348"></a>
+### Set Local Device Name<a name="ZH-CN_TOPIC_0000001829430348"></a>
 
 <a name="table4889mcpsimp"></a>
 <table><thead align="left"><tr id="row4895mcpsimp"><th class="cellrowborder" valign="top" width="21.12%" id="mcps1.1.4.1.1"><p id="p4897mcpsimp"><a name="p4897mcpsimp"></a><a name="p4897mcpsimp"></a>Service ID</p>
@@ -558,22 +557,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.13%" headers="mcps1.1.4.1.2 "><p id="p4906mcpsimp"><a name="p4906mcpsimp"></a><a name="p4906mcpsimp"></a>0x05</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.75%" headers="mcps1.1.4.1.3 "><p id="p4908mcpsimp"><a name="p4908mcpsimp"></a><a name="p4908mcpsimp"></a>设置本地设备名称</p>
+<td class="cellrowborder" valign="top" width="55.75%" headers="mcps1.1.4.1.3 "><p id="p4908mcpsimp"><a name="p4908mcpsimp"></a><a name="p4908mcpsimp"></a>Set Local Device Name</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table4911mcpsimp"></a>
-<table><thead align="left"><tr id="row4918mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4920mcpsimp"><a name="p4920mcpsimp"></a><a name="p4920mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row4918mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4920mcpsimp"><a name="p4920mcpsimp"></a><a name="p4920mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p4922mcpsimp"><a name="p4922mcpsimp"></a><a name="p4922mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p4924mcpsimp"><a name="p4924mcpsimp"></a><a name="p4924mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4927mcpsimp"><a name="p4927mcpsimp"></a><a name="p4927mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4927mcpsimp"><a name="p4927mcpsimp"></a><a name="p4927mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -598,7 +597,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 获取本地设备名称<a name="ZH-CN_TOPIC_0000001829590108"></a>
+### Get Local Device Name<a name="ZH-CN_TOPIC_0000001829590108"></a>
 
 <a name="table102mcpsimp"></a>
 <table><thead align="left"><tr id="row108mcpsimp"><th class="cellrowborder" valign="top" width="20.94%" id="mcps1.1.4.1.1"><p id="p110mcpsimp"><a name="p110mcpsimp"></a><a name="p110mcpsimp"></a>Service ID</p>
@@ -613,22 +612,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.49%" headers="mcps1.1.4.1.2 "><p id="p119mcpsimp"><a name="p119mcpsimp"></a><a name="p119mcpsimp"></a>0x06</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.57%" headers="mcps1.1.4.1.3 "><p id="p121mcpsimp"><a name="p121mcpsimp"></a><a name="p121mcpsimp"></a>获取本地设备名称</p>
+<td class="cellrowborder" valign="top" width="55.57%" headers="mcps1.1.4.1.3 "><p id="p121mcpsimp"><a name="p121mcpsimp"></a><a name="p121mcpsimp"></a>Get Local Device Name</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table124mcpsimp"></a>
-<table><thead align="left"><tr id="row131mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p133mcpsimp"><a name="p133mcpsimp"></a><a name="p133mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row131mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p133mcpsimp"><a name="p133mcpsimp"></a><a name="p133mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p135mcpsimp"><a name="p135mcpsimp"></a><a name="p135mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p137mcpsimp"><a name="p137mcpsimp"></a><a name="p137mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p140mcpsimp"><a name="p140mcpsimp"></a><a name="p140mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p140mcpsimp"><a name="p140mcpsimp"></a><a name="p140mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -653,7 +652,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 设置设备公开数据<a name="ZH-CN_TOPIC_0000001876189773"></a>
+### Set Device Public Data<a name="ZH-CN_TOPIC_0000001876189773"></a>
 
 <a name="table161mcpsimp"></a>
 <table><thead align="left"><tr id="row167mcpsimp"><th class="cellrowborder" valign="top" width="20.94%" id="mcps1.1.4.1.1"><p id="p169mcpsimp"><a name="p169mcpsimp"></a><a name="p169mcpsimp"></a>Service ID</p>
@@ -668,22 +667,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.62%" headers="mcps1.1.4.1.2 "><p id="p178mcpsimp"><a name="p178mcpsimp"></a><a name="p178mcpsimp"></a>0x07</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.44%" headers="mcps1.1.4.1.3 "><p id="p180mcpsimp"><a name="p180mcpsimp"></a><a name="p180mcpsimp"></a>设置设备公开数据</p>
+<td class="cellrowborder" valign="top" width="55.44%" headers="mcps1.1.4.1.3 "><p id="p180mcpsimp"><a name="p180mcpsimp"></a><a name="p180mcpsimp"></a>Set Device Public Data</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table183mcpsimp"></a>
-<table><thead align="left"><tr id="row190mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p192mcpsimp"><a name="p192mcpsimp"></a><a name="p192mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row190mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p192mcpsimp"><a name="p192mcpsimp"></a><a name="p192mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p194mcpsimp"><a name="p194mcpsimp"></a><a name="p194mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="20.990000000000002%" id="mcps1.1.5.1.3"><p id="p196mcpsimp"><a name="p196mcpsimp"></a><a name="p196mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="30.009999999999998%" id="mcps1.1.5.1.4"><p id="p199mcpsimp"><a name="p199mcpsimp"></a><a name="p199mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="30.009999999999998%" id="mcps1.1.5.1.4"><p id="p199mcpsimp"><a name="p199mcpsimp"></a><a name="p199mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -735,7 +734,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 设置设备公开参数<a name="ZH-CN_TOPIC_0000001876269553"></a>
+### Set Device Public Parameters<a name="ZH-CN_TOPIC_0000001876269553"></a>
 
 <a name="table247mcpsimp"></a>
 <table><thead align="left"><tr id="row253mcpsimp"><th class="cellrowborder" valign="top" width="21%" id="mcps1.1.4.1.1"><p id="p255mcpsimp"><a name="p255mcpsimp"></a><a name="p255mcpsimp"></a>Service ID</p>
@@ -750,22 +749,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.799999999999997%" headers="mcps1.1.4.1.2 "><p id="p264mcpsimp"><a name="p264mcpsimp"></a><a name="p264mcpsimp"></a>0x08</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.2%" headers="mcps1.1.4.1.3 "><p id="p266mcpsimp"><a name="p266mcpsimp"></a><a name="p266mcpsimp"></a>设置设备公开参数</p>
+<td class="cellrowborder" valign="top" width="55.2%" headers="mcps1.1.4.1.3 "><p id="p266mcpsimp"><a name="p266mcpsimp"></a><a name="p266mcpsimp"></a>Set Device Public Parameters</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table269mcpsimp"></a>
-<table><thead align="left"><tr id="row276mcpsimp"><th class="cellrowborder" valign="top" width="34.65346534653465%" id="mcps1.1.5.1.1"><p id="p278mcpsimp"><a name="p278mcpsimp"></a><a name="p278mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row276mcpsimp"><th class="cellrowborder" valign="top" width="34.65346534653465%" id="mcps1.1.5.1.1"><p id="p278mcpsimp"><a name="p278mcpsimp"></a><a name="p278mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="17.82178217821782%" id="mcps1.1.5.1.2"><p id="p280mcpsimp"><a name="p280mcpsimp"></a><a name="p280mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="17.82178217821782%" id="mcps1.1.5.1.3"><p id="p282mcpsimp"><a name="p282mcpsimp"></a><a name="p282mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p285mcpsimp"><a name="p285mcpsimp"></a><a name="p285mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p285mcpsimp"><a name="p285mcpsimp"></a><a name="p285mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -925,7 +924,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 开始设备公开<a name="ZH-CN_TOPIC_0000001829430352"></a>
+### Start Device Publicity<a name="ZH-CN_TOPIC_0000001829430352"></a>
 
 <a name="table441mcpsimp"></a>
 <table><thead align="left"><tr id="row447mcpsimp"><th class="cellrowborder" valign="top" width="20.43%" id="mcps1.1.4.1.1"><p id="p449mcpsimp"><a name="p449mcpsimp"></a><a name="p449mcpsimp"></a>Service ID</p>
@@ -940,22 +939,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.51%" headers="mcps1.1.4.1.2 "><p id="p458mcpsimp"><a name="p458mcpsimp"></a><a name="p458mcpsimp"></a>0x09</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.059999999999995%" headers="mcps1.1.4.1.3 "><p id="p460mcpsimp"><a name="p460mcpsimp"></a><a name="p460mcpsimp"></a>开始设备公开</p>
+<td class="cellrowborder" valign="top" width="55.059999999999995%" headers="mcps1.1.4.1.3 "><p id="p460mcpsimp"><a name="p460mcpsimp"></a><a name="p460mcpsimp"></a>Start Device Publicity</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table463mcpsimp"></a>
-<table><thead align="left"><tr id="row470mcpsimp"><th class="cellrowborder" valign="top" width="28.712871287128717%" id="mcps1.1.5.1.1"><p id="p472mcpsimp"><a name="p472mcpsimp"></a><a name="p472mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row470mcpsimp"><th class="cellrowborder" valign="top" width="28.712871287128717%" id="mcps1.1.5.1.1"><p id="p472mcpsimp"><a name="p472mcpsimp"></a><a name="p472mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="23.762376237623766%" id="mcps1.1.5.1.2"><p id="p474mcpsimp"><a name="p474mcpsimp"></a><a name="p474mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="17.82178217821782%" id="mcps1.1.5.1.3"><p id="p476mcpsimp"><a name="p476mcpsimp"></a><a name="p476mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p479mcpsimp"><a name="p479mcpsimp"></a><a name="p479mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p479mcpsimp"><a name="p479mcpsimp"></a><a name="p479mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -971,7 +970,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 结束设备公开<a name="ZH-CN_TOPIC_0000001829590112"></a>
+### Stop Device Publicity<a name="ZH-CN_TOPIC_0000001829590112"></a>
 
 <a name="table491mcpsimp"></a>
 <table><thead align="left"><tr id="row497mcpsimp"><th class="cellrowborder" valign="top" width="20.669999999999998%" id="mcps1.1.4.1.1"><p id="p499mcpsimp"><a name="p499mcpsimp"></a><a name="p499mcpsimp"></a>Service ID</p>
@@ -986,22 +985,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.58%" headers="mcps1.1.4.1.2 "><p id="p508mcpsimp"><a name="p508mcpsimp"></a><a name="p508mcpsimp"></a>0x0A</p>
 </td>
-<td class="cellrowborder" valign="top" width="54.75%" headers="mcps1.1.4.1.3 "><p id="p510mcpsimp"><a name="p510mcpsimp"></a><a name="p510mcpsimp"></a>结束设备公开</p>
+<td class="cellrowborder" valign="top" width="54.75%" headers="mcps1.1.4.1.3 "><p id="p510mcpsimp"><a name="p510mcpsimp"></a><a name="p510mcpsimp"></a>Stop Device Publicity</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table513mcpsimp"></a>
-<table><thead align="left"><tr id="row520mcpsimp"><th class="cellrowborder" valign="top" width="28.712871287128717%" id="mcps1.1.5.1.1"><p id="p522mcpsimp"><a name="p522mcpsimp"></a><a name="p522mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row520mcpsimp"><th class="cellrowborder" valign="top" width="28.712871287128717%" id="mcps1.1.5.1.1"><p id="p522mcpsimp"><a name="p522mcpsimp"></a><a name="p522mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="23.762376237623766%" id="mcps1.1.5.1.2"><p id="p524mcpsimp"><a name="p524mcpsimp"></a><a name="p524mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="17.82178217821782%" id="mcps1.1.5.1.3"><p id="p526mcpsimp"><a name="p526mcpsimp"></a><a name="p526mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p529mcpsimp"><a name="p529mcpsimp"></a><a name="p529mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p529mcpsimp"><a name="p529mcpsimp"></a><a name="p529mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1017,7 +1016,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 设置设备扫描参数<a name="ZH-CN_TOPIC_0000001876189777"></a>
+### Set Device Scan Parameters<a name="ZH-CN_TOPIC_0000001876189777"></a>
 
 <a name="table541mcpsimp"></a>
 <table><thead align="left"><tr id="row547mcpsimp"><th class="cellrowborder" valign="top" width="20.61%" id="mcps1.1.4.1.1"><p id="p549mcpsimp"><a name="p549mcpsimp"></a><a name="p549mcpsimp"></a>Service ID</p>
@@ -1032,22 +1031,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.63%" headers="mcps1.1.4.1.2 "><p id="p558mcpsimp"><a name="p558mcpsimp"></a><a name="p558mcpsimp"></a>0x0B</p>
 </td>
-<td class="cellrowborder" valign="top" width="54.76%" headers="mcps1.1.4.1.3 "><p id="p560mcpsimp"><a name="p560mcpsimp"></a><a name="p560mcpsimp"></a>设置设备扫描参数</p>
+<td class="cellrowborder" valign="top" width="54.76%" headers="mcps1.1.4.1.3 "><p id="p560mcpsimp"><a name="p560mcpsimp"></a><a name="p560mcpsimp"></a>Set Device Scan Parameters</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table563mcpsimp"></a>
-<table><thead align="left"><tr id="row570mcpsimp"><th class="cellrowborder" valign="top" width="32.67326732673268%" id="mcps1.1.5.1.1"><p id="p572mcpsimp"><a name="p572mcpsimp"></a><a name="p572mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row570mcpsimp"><th class="cellrowborder" valign="top" width="32.67326732673268%" id="mcps1.1.5.1.1"><p id="p572mcpsimp"><a name="p572mcpsimp"></a><a name="p572mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.782178217821784%" id="mcps1.1.5.1.2"><p id="p574mcpsimp"><a name="p574mcpsimp"></a><a name="p574mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="15.841584158415841%" id="mcps1.1.5.1.3"><p id="p576mcpsimp"><a name="p576mcpsimp"></a><a name="p576mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p579mcpsimp"><a name="p579mcpsimp"></a><a name="p579mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p579mcpsimp"><a name="p579mcpsimp"></a><a name="p579mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1117,7 +1116,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 上报设备扫描结果<a name="ZH-CN_TOPIC_0000001876269557"></a>
+### Report Device Scan Results<a name="ZH-CN_TOPIC_0000001876269557"></a>
 
 <a name="table645mcpsimp"></a>
 <table><thead align="left"><tr id="row651mcpsimp"><th class="cellrowborder" valign="top" width="21.060000000000002%" id="mcps1.1.4.1.1"><p id="p653mcpsimp"><a name="p653mcpsimp"></a><a name="p653mcpsimp"></a>Service ID</p>
@@ -1132,22 +1131,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.81%" headers="mcps1.1.4.1.2 "><p id="p662mcpsimp"><a name="p662mcpsimp"></a><a name="p662mcpsimp"></a>0x0C</p>
 </td>
-<td class="cellrowborder" valign="top" width="54.13%" headers="mcps1.1.4.1.3 "><p id="p664mcpsimp"><a name="p664mcpsimp"></a><a name="p664mcpsimp"></a>上报设备扫描结果</p>
+<td class="cellrowborder" valign="top" width="54.13%" headers="mcps1.1.4.1.3 "><p id="p664mcpsimp"><a name="p664mcpsimp"></a><a name="p664mcpsimp"></a>Report Device Scan Results</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table667mcpsimp"></a>
-<table><thead align="left"><tr id="row674mcpsimp"><th class="cellrowborder" valign="top" width="32.67326732673268%" id="mcps1.1.5.1.1"><p id="p676mcpsimp"><a name="p676mcpsimp"></a><a name="p676mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row674mcpsimp"><th class="cellrowborder" valign="top" width="32.67326732673268%" id="mcps1.1.5.1.1"><p id="p676mcpsimp"><a name="p676mcpsimp"></a><a name="p676mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.782178217821784%" id="mcps1.1.5.1.2"><p id="p678mcpsimp"><a name="p678mcpsimp"></a><a name="p678mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="15.841584158415841%" id="mcps1.1.5.1.3"><p id="p680mcpsimp"><a name="p680mcpsimp"></a><a name="p680mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p683mcpsimp"><a name="p683mcpsimp"></a><a name="p683mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p683mcpsimp"><a name="p683mcpsimp"></a><a name="p683mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1235,7 +1234,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 开始设备扫描<a name="ZH-CN_TOPIC_0000001829430356"></a>
+### Start Device Scan<a name="ZH-CN_TOPIC_0000001829430356"></a>
 
 <a name="table767mcpsimp"></a>
 <table><thead align="left"><tr id="row773mcpsimp"><th class="cellrowborder" valign="top" width="21.75%" id="mcps1.1.4.1.1"><p id="p775mcpsimp"><a name="p775mcpsimp"></a><a name="p775mcpsimp"></a>Service ID</p>
@@ -1250,17 +1249,17 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.8%" headers="mcps1.1.4.1.2 "><p id="p784mcpsimp"><a name="p784mcpsimp"></a><a name="p784mcpsimp"></a>0x0D</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.449999999999996%" headers="mcps1.1.4.1.3 "><p id="p786mcpsimp"><a name="p786mcpsimp"></a><a name="p786mcpsimp"></a>开始设备扫描</p>
+<td class="cellrowborder" valign="top" width="53.449999999999996%" headers="mcps1.1.4.1.3 "><p id="p786mcpsimp"><a name="p786mcpsimp"></a><a name="p786mcpsimp"></a>Start Device Scan</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
-无
+None
 
-### 停止设备扫描<a name="ZH-CN_TOPIC_0000001829590116"></a>
+### Stop Device Scan<a name="ZH-CN_TOPIC_0000001829590116"></a>
 
 <a name="table791mcpsimp"></a>
 <table><thead align="left"><tr id="row797mcpsimp"><th class="cellrowborder" valign="top" width="21.73%" id="mcps1.1.4.1.1"><p id="p799mcpsimp"><a name="p799mcpsimp"></a><a name="p799mcpsimp"></a>Service ID</p>
@@ -1275,15 +1274,15 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.8%" headers="mcps1.1.4.1.2 "><p id="p808mcpsimp"><a name="p808mcpsimp"></a><a name="p808mcpsimp"></a>0x0E</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.47%" headers="mcps1.1.4.1.3 "><p id="p810mcpsimp"><a name="p810mcpsimp"></a><a name="p810mcpsimp"></a>停止设备扫描</p>
+<td class="cellrowborder" valign="top" width="53.47%" headers="mcps1.1.4.1.3 "><p id="p810mcpsimp"><a name="p810mcpsimp"></a><a name="p810mcpsimp"></a>Stop Device Scan</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
-无
+None
 
 ## Connection Management Service<a name="ZH-CN_TOPIC_0000001876189781"></a>
 
@@ -1306,7 +1305,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 
 
-### 发送链接请求<a name="ZH-CN_TOPIC_0000001876269561"></a>
+### Send Link Request<a name="ZH-CN_TOPIC_0000001876269561"></a>
 
 <a name="table4306mcpsimp"></a>
 <table><thead align="left"><tr id="row4312mcpsimp"><th class="cellrowborder" valign="top" width="22.06%" id="mcps1.1.4.1.1"><p id="p4314mcpsimp"><a name="p4314mcpsimp"></a><a name="p4314mcpsimp"></a>Service ID</p>
@@ -1321,22 +1320,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.560000000000002%" headers="mcps1.1.4.1.2 "><p id="p4323mcpsimp"><a name="p4323mcpsimp"></a><a name="p4323mcpsimp"></a>0x01</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.38%" headers="mcps1.1.4.1.3 "><p id="p4325mcpsimp"><a name="p4325mcpsimp"></a><a name="p4325mcpsimp"></a>发送链接请求</p>
+<td class="cellrowborder" valign="top" width="53.38%" headers="mcps1.1.4.1.3 "><p id="p4325mcpsimp"><a name="p4325mcpsimp"></a><a name="p4325mcpsimp"></a>Send Link Request</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table4328mcpsimp"></a>
-<table><thead align="left"><tr id="row4335mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4337mcpsimp"><a name="p4337mcpsimp"></a><a name="p4337mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row4335mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4337mcpsimp"><a name="p4337mcpsimp"></a><a name="p4337mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p4339mcpsimp"><a name="p4339mcpsimp"></a><a name="p4339mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p4341mcpsimp"><a name="p4341mcpsimp"></a><a name="p4341mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4344mcpsimp"><a name="p4344mcpsimp"></a><a name="p4344mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4344mcpsimp"><a name="p4344mcpsimp"></a><a name="p4344mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1361,7 +1360,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 断开链接请求<a name="ZH-CN_TOPIC_0000001829430360"></a>
+### Disconnect Link Request<a name="ZH-CN_TOPIC_0000001829430360"></a>
 
 <a name="table818mcpsimp"></a>
 <table><thead align="left"><tr id="row824mcpsimp"><th class="cellrowborder" valign="top" width="22.439999999999998%" id="mcps1.1.4.1.1"><p id="p826mcpsimp"><a name="p826mcpsimp"></a><a name="p826mcpsimp"></a>Service ID</p>
@@ -1376,22 +1375,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.14%" headers="mcps1.1.4.1.2 "><p id="p835mcpsimp"><a name="p835mcpsimp"></a><a name="p835mcpsimp"></a>0x02</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.42%" headers="mcps1.1.4.1.3 "><p id="p837mcpsimp"><a name="p837mcpsimp"></a><a name="p837mcpsimp"></a>断开链接请求</p>
+<td class="cellrowborder" valign="top" width="53.42%" headers="mcps1.1.4.1.3 "><p id="p837mcpsimp"><a name="p837mcpsimp"></a><a name="p837mcpsimp"></a>Disconnect Link Request</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table840mcpsimp"></a>
-<table><thead align="left"><tr id="row847mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p849mcpsimp"><a name="p849mcpsimp"></a><a name="p849mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row847mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p849mcpsimp"><a name="p849mcpsimp"></a><a name="p849mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p851mcpsimp"><a name="p851mcpsimp"></a><a name="p851mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p853mcpsimp"><a name="p853mcpsimp"></a><a name="p853mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p856mcpsimp"><a name="p856mcpsimp"></a><a name="p856mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p856mcpsimp"><a name="p856mcpsimp"></a><a name="p856mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1416,7 +1415,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 更新链接参数请求<a name="ZH-CN_TOPIC_0000001829590120"></a>
+### Update Link Parameters Request<a name="ZH-CN_TOPIC_0000001829590120"></a>
 
 <a name="table877mcpsimp"></a>
 <table><thead align="left"><tr id="row883mcpsimp"><th class="cellrowborder" valign="top" width="22.81%" id="mcps1.1.4.1.1"><p id="p885mcpsimp"><a name="p885mcpsimp"></a><a name="p885mcpsimp"></a>Service ID</p>
@@ -1431,22 +1430,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.919999999999998%" headers="mcps1.1.4.1.2 "><p id="p894mcpsimp"><a name="p894mcpsimp"></a><a name="p894mcpsimp"></a>0x03</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.269999999999996%" headers="mcps1.1.4.1.3 "><p id="p896mcpsimp"><a name="p896mcpsimp"></a><a name="p896mcpsimp"></a>更新链接参数请求</p>
+<td class="cellrowborder" valign="top" width="53.269999999999996%" headers="mcps1.1.4.1.3 "><p id="p896mcpsimp"><a name="p896mcpsimp"></a><a name="p896mcpsimp"></a>Update Link Parameters Request</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table899mcpsimp"></a>
-<table><thead align="left"><tr id="row906mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p908mcpsimp"><a name="p908mcpsimp"></a><a name="p908mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row906mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p908mcpsimp"><a name="p908mcpsimp"></a><a name="p908mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p910mcpsimp"><a name="p910mcpsimp"></a><a name="p910mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p912mcpsimp"><a name="p912mcpsimp"></a><a name="p912mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p915mcpsimp"><a name="p915mcpsimp"></a><a name="p915mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p915mcpsimp"><a name="p915mcpsimp"></a><a name="p915mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1498,7 +1497,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 发送配对请求<a name="ZH-CN_TOPIC_0000001876189785"></a>
+### Send Pairing Request<a name="ZH-CN_TOPIC_0000001876189785"></a>
 
 <a name="table963mcpsimp"></a>
 <table><thead align="left"><tr id="row969mcpsimp"><th class="cellrowborder" valign="top" width="22.98%" id="mcps1.1.4.1.1"><p id="p971mcpsimp"><a name="p971mcpsimp"></a><a name="p971mcpsimp"></a>Service ID</p>
@@ -1513,22 +1512,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.87%" headers="mcps1.1.4.1.2 "><p id="p980mcpsimp"><a name="p980mcpsimp"></a><a name="p980mcpsimp"></a>0x04</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.15%" headers="mcps1.1.4.1.3 "><p id="p982mcpsimp"><a name="p982mcpsimp"></a><a name="p982mcpsimp"></a>发送配对请求</p>
+<td class="cellrowborder" valign="top" width="53.15%" headers="mcps1.1.4.1.3 "><p id="p982mcpsimp"><a name="p982mcpsimp"></a><a name="p982mcpsimp"></a>Send Pairing Request</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table985mcpsimp"></a>
-<table><thead align="left"><tr id="row992mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p994mcpsimp"><a name="p994mcpsimp"></a><a name="p994mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row992mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p994mcpsimp"><a name="p994mcpsimp"></a><a name="p994mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.98%" id="mcps1.1.5.1.2"><p id="p996mcpsimp"><a name="p996mcpsimp"></a><a name="p996mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18.02%" id="mcps1.1.5.1.3"><p id="p998mcpsimp"><a name="p998mcpsimp"></a><a name="p998mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1001mcpsimp"><a name="p1001mcpsimp"></a><a name="p1001mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1001mcpsimp"><a name="p1001mcpsimp"></a><a name="p1001mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1553,7 +1552,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 删除配对<a name="ZH-CN_TOPIC_0000001876269565"></a>
+### Delete Pairing<a name="ZH-CN_TOPIC_0000001876269565"></a>
 
 <a name="table1022mcpsimp"></a>
 <table><thead align="left"><tr id="row1028mcpsimp"><th class="cellrowborder" valign="top" width="22.439999999999998%" id="mcps1.1.4.1.1"><p id="p1030mcpsimp"><a name="p1030mcpsimp"></a><a name="p1030mcpsimp"></a>Service ID</p>
@@ -1568,22 +1567,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.54%" headers="mcps1.1.4.1.2 "><p id="p1039mcpsimp"><a name="p1039mcpsimp"></a><a name="p1039mcpsimp"></a>0x05</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.02%" headers="mcps1.1.4.1.3 "><p id="p1041mcpsimp"><a name="p1041mcpsimp"></a><a name="p1041mcpsimp"></a>删除配对</p>
+<td class="cellrowborder" valign="top" width="53.02%" headers="mcps1.1.4.1.3 "><p id="p1041mcpsimp"><a name="p1041mcpsimp"></a><a name="p1041mcpsimp"></a>Delete Pairing</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1044mcpsimp"></a>
-<table><thead align="left"><tr id="row1051mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1053mcpsimp"><a name="p1053mcpsimp"></a><a name="p1053mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1051mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1053mcpsimp"><a name="p1053mcpsimp"></a><a name="p1053mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1055mcpsimp"><a name="p1055mcpsimp"></a><a name="p1055mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p1057mcpsimp"><a name="p1057mcpsimp"></a><a name="p1057mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1060mcpsimp"><a name="p1060mcpsimp"></a><a name="p1060mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1060mcpsimp"><a name="p1060mcpsimp"></a><a name="p1060mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1608,7 +1607,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 删除所有配对<a name="ZH-CN_TOPIC_0000001829430364"></a>
+### Delete All Pairings<a name="ZH-CN_TOPIC_0000001829430364"></a>
 
 <a name="table1081mcpsimp"></a>
 <table><thead align="left"><tr id="row1087mcpsimp"><th class="cellrowborder" valign="top" width="22.75%" id="mcps1.1.4.1.1"><p id="p1089mcpsimp"><a name="p1089mcpsimp"></a><a name="p1089mcpsimp"></a>Service ID</p>
@@ -1623,17 +1622,17 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.37%" headers="mcps1.1.4.1.2 "><p id="p1098mcpsimp"><a name="p1098mcpsimp"></a><a name="p1098mcpsimp"></a>0x06</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.88%" headers="mcps1.1.4.1.3 "><p id="p1100mcpsimp"><a name="p1100mcpsimp"></a><a name="p1100mcpsimp"></a>删除所有配对</p>
+<td class="cellrowborder" valign="top" width="52.88%" headers="mcps1.1.4.1.3 "><p id="p1100mcpsimp"><a name="p1100mcpsimp"></a><a name="p1100mcpsimp"></a>Delete All Pairings</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
-无
+None
 
-### 获取配对设备数量<a name="ZH-CN_TOPIC_0000001829590124"></a>
+### Get Paired Device Count<a name="ZH-CN_TOPIC_0000001829590124"></a>
 
 <a name="table1105mcpsimp"></a>
 <table><thead align="left"><tr id="row1111mcpsimp"><th class="cellrowborder" valign="top" width="22.75%" id="mcps1.1.4.1.1"><p id="p1113mcpsimp"><a name="p1113mcpsimp"></a><a name="p1113mcpsimp"></a>Service ID</p>
@@ -1648,22 +1647,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.16%" headers="mcps1.1.4.1.2 "><p id="p1122mcpsimp"><a name="p1122mcpsimp"></a><a name="p1122mcpsimp"></a>0x07</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.09%" headers="mcps1.1.4.1.3 "><p id="p1124mcpsimp"><a name="p1124mcpsimp"></a><a name="p1124mcpsimp"></a>获取配对设备数量</p>
+<td class="cellrowborder" valign="top" width="53.09%" headers="mcps1.1.4.1.3 "><p id="p1124mcpsimp"><a name="p1124mcpsimp"></a><a name="p1124mcpsimp"></a>Get Paired Device Count</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1127mcpsimp"></a>
-<table><thead align="left"><tr id="row1134mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1136mcpsimp"><a name="p1136mcpsimp"></a><a name="p1136mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1134mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1136mcpsimp"><a name="p1136mcpsimp"></a><a name="p1136mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1138mcpsimp"><a name="p1138mcpsimp"></a><a name="p1138mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p1140mcpsimp"><a name="p1140mcpsimp"></a><a name="p1140mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1143mcpsimp"><a name="p1143mcpsimp"></a><a name="p1143mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1143mcpsimp"><a name="p1143mcpsimp"></a><a name="p1143mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1679,7 +1678,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 获取配对设备<a name="ZH-CN_TOPIC_0000001876189789"></a>
+### Get Paired Devices<a name="ZH-CN_TOPIC_0000001876189789"></a>
 
 <a name="table1155mcpsimp"></a>
 <table><thead align="left"><tr id="row1161mcpsimp"><th class="cellrowborder" valign="top" width="23.189999999999998%" id="mcps1.1.4.1.1"><p id="p1163mcpsimp"><a name="p1163mcpsimp"></a><a name="p1163mcpsimp"></a>Service ID</p>
@@ -1694,22 +1693,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.73%" headers="mcps1.1.4.1.2 "><p id="p1172mcpsimp"><a name="p1172mcpsimp"></a><a name="p1172mcpsimp"></a>0x08</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.080000000000005%" headers="mcps1.1.4.1.3 "><p id="p1174mcpsimp"><a name="p1174mcpsimp"></a><a name="p1174mcpsimp"></a>获取配对设备</p>
+<td class="cellrowborder" valign="top" width="53.080000000000005%" headers="mcps1.1.4.1.3 "><p id="p1174mcpsimp"><a name="p1174mcpsimp"></a><a name="p1174mcpsimp"></a>Get Paired Devices</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1177mcpsimp"></a>
-<table><thead align="left"><tr id="row1184mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1186mcpsimp"><a name="p1186mcpsimp"></a><a name="p1186mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1184mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1186mcpsimp"><a name="p1186mcpsimp"></a><a name="p1186mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1188mcpsimp"><a name="p1188mcpsimp"></a><a name="p1188mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p1190mcpsimp"><a name="p1190mcpsimp"></a><a name="p1190mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1193mcpsimp"><a name="p1193mcpsimp"></a><a name="p1193mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1193mcpsimp"><a name="p1193mcpsimp"></a><a name="p1193mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1743,7 +1742,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 获取配对状态<a name="ZH-CN_TOPIC_0000001876269569"></a>
+### Get Pairing Status<a name="ZH-CN_TOPIC_0000001876269569"></a>
 
 <a name="table1223mcpsimp"></a>
 <table><thead align="left"><tr id="row1229mcpsimp"><th class="cellrowborder" valign="top" width="23.13%" id="mcps1.1.4.1.1"><p id="p1231mcpsimp"><a name="p1231mcpsimp"></a><a name="p1231mcpsimp"></a>Service ID</p>
@@ -1758,22 +1757,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.65%" headers="mcps1.1.4.1.2 "><p id="p1240mcpsimp"><a name="p1240mcpsimp"></a><a name="p1240mcpsimp"></a>0x09</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.22%" headers="mcps1.1.4.1.3 "><p id="p1242mcpsimp"><a name="p1242mcpsimp"></a><a name="p1242mcpsimp"></a>获取配对状态</p>
+<td class="cellrowborder" valign="top" width="53.22%" headers="mcps1.1.4.1.3 "><p id="p1242mcpsimp"><a name="p1242mcpsimp"></a><a name="p1242mcpsimp"></a>Get Pairing Status</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1245mcpsimp"></a>
-<table><thead align="left"><tr id="row1252mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1254mcpsimp"><a name="p1254mcpsimp"></a><a name="p1254mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1252mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1254mcpsimp"><a name="p1254mcpsimp"></a><a name="p1254mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1256mcpsimp"><a name="p1256mcpsimp"></a><a name="p1256mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p1258mcpsimp"><a name="p1258mcpsimp"></a><a name="p1258mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1261mcpsimp"><a name="p1261mcpsimp"></a><a name="p1261mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1261mcpsimp"><a name="p1261mcpsimp"></a><a name="p1261mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1807,7 +1806,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 读取对端设备RSSI值<a name="ZH-CN_TOPIC_0000001829430368"></a>
+### Read Peer Device RSSI Value<a name="ZH-CN_TOPIC_0000001829430368"></a>
 
 <a name="table1291mcpsimp"></a>
 <table><thead align="left"><tr id="row1297mcpsimp"><th class="cellrowborder" valign="top" width="23.189999999999998%" id="mcps1.1.4.1.1"><p id="p1299mcpsimp"><a name="p1299mcpsimp"></a><a name="p1299mcpsimp"></a>Service ID</p>
@@ -1822,22 +1821,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.79%" headers="mcps1.1.4.1.2 "><p id="p1308mcpsimp"><a name="p1308mcpsimp"></a><a name="p1308mcpsimp"></a>0x0A</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.02%" headers="mcps1.1.4.1.3 "><p id="p1310mcpsimp"><a name="p1310mcpsimp"></a><a name="p1310mcpsimp"></a>读取对端设备RSSI值</p>
+<td class="cellrowborder" valign="top" width="53.02%" headers="mcps1.1.4.1.3 "><p id="p1310mcpsimp"><a name="p1310mcpsimp"></a><a name="p1310mcpsimp"></a>Read Peer Device RSSI Value</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1313mcpsimp"></a>
-<table><thead align="left"><tr id="row1320mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1322mcpsimp"><a name="p1322mcpsimp"></a><a name="p1322mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1320mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1322mcpsimp"><a name="p1322mcpsimp"></a><a name="p1322mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1324mcpsimp"><a name="p1324mcpsimp"></a><a name="p1324mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p1326mcpsimp"><a name="p1326mcpsimp"></a><a name="p1326mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1329mcpsimp"><a name="p1329mcpsimp"></a><a name="p1329mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1329mcpsimp"><a name="p1329mcpsimp"></a><a name="p1329mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1853,7 +1852,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 设置ACB链路参数<a name="ZH-CN_TOPIC_0000001829590128"></a>
+### Set ACB Link Parameters<a name="ZH-CN_TOPIC_0000001829590128"></a>
 
 <a name="table1341mcpsimp"></a>
 <table><thead align="left"><tr id="row1347mcpsimp"><th class="cellrowborder" valign="top" width="22.939999999999998%" id="mcps1.1.4.1.1"><p id="p1349mcpsimp"><a name="p1349mcpsimp"></a><a name="p1349mcpsimp"></a>Service ID</p>
@@ -1868,22 +1867,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.91%" headers="mcps1.1.4.1.2 "><p id="p1358mcpsimp"><a name="p1358mcpsimp"></a><a name="p1358mcpsimp"></a>0x0B</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.15%" headers="mcps1.1.4.1.3 "><p id="p1360mcpsimp"><a name="p1360mcpsimp"></a><a name="p1360mcpsimp"></a>设置ACB链路参数</p>
+<td class="cellrowborder" valign="top" width="53.15%" headers="mcps1.1.4.1.3 "><p id="p1360mcpsimp"><a name="p1360mcpsimp"></a><a name="p1360mcpsimp"></a>Set ACB Link Parameters</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1363mcpsimp"></a>
-<table><thead align="left"><tr id="row1370mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1372mcpsimp"><a name="p1372mcpsimp"></a><a name="p1372mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1370mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1372mcpsimp"><a name="p1372mcpsimp"></a><a name="p1372mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1374mcpsimp"><a name="p1374mcpsimp"></a><a name="p1374mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p1376mcpsimp"><a name="p1376mcpsimp"></a><a name="p1376mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1379mcpsimp"><a name="p1379mcpsimp"></a><a name="p1379mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1379mcpsimp"><a name="p1379mcpsimp"></a><a name="p1379mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -1917,7 +1916,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 设置PHY参数<a name="ZH-CN_TOPIC_0000001876189793"></a>
+### Set PHY Parameters<a name="ZH-CN_TOPIC_0000001876189793"></a>
 
 <a name="table1409mcpsimp"></a>
 <table><thead align="left"><tr id="row1415mcpsimp"><th class="cellrowborder" valign="top" width="22.939999999999998%" id="mcps1.1.4.1.1"><p id="p1417mcpsimp"><a name="p1417mcpsimp"></a><a name="p1417mcpsimp"></a>Service ID</p>
@@ -1932,22 +1931,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.79%" headers="mcps1.1.4.1.2 "><p id="p1426mcpsimp"><a name="p1426mcpsimp"></a><a name="p1426mcpsimp"></a>0x0C</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.269999999999996%" headers="mcps1.1.4.1.3 "><p id="p1428mcpsimp"><a name="p1428mcpsimp"></a><a name="p1428mcpsimp"></a>设置PHY参数</p>
+<td class="cellrowborder" valign="top" width="53.269999999999996%" headers="mcps1.1.4.1.3 "><p id="p1428mcpsimp"><a name="p1428mcpsimp"></a><a name="p1428mcpsimp"></a>Set PHY Parameters</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1431mcpsimp"></a>
-<table><thead align="left"><tr id="row1438mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1440mcpsimp"><a name="p1440mcpsimp"></a><a name="p1440mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1438mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1440mcpsimp"><a name="p1440mcpsimp"></a><a name="p1440mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1442mcpsimp"><a name="p1442mcpsimp"></a><a name="p1442mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p1444mcpsimp"><a name="p1444mcpsimp"></a><a name="p1444mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1447mcpsimp"><a name="p1447mcpsimp"></a><a name="p1447mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1447mcpsimp"><a name="p1447mcpsimp"></a><a name="p1447mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2035,7 +2034,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 设置最大功率<a name="ZH-CN_TOPIC_0000001876269573"></a>
+### Set Maximum Power<a name="ZH-CN_TOPIC_0000001876269573"></a>
 
 <a name="table1531mcpsimp"></a>
 <table><thead align="left"><tr id="row1537mcpsimp"><th class="cellrowborder" valign="top" width="23.04%" id="mcps1.1.4.1.1"><p id="p1539mcpsimp"><a name="p1539mcpsimp"></a><a name="p1539mcpsimp"></a>Service ID</p>
@@ -2050,22 +2049,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.799999999999997%" headers="mcps1.1.4.1.2 "><p id="p1548mcpsimp"><a name="p1548mcpsimp"></a><a name="p1548mcpsimp"></a>0x0D</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p1550mcpsimp"><a name="p1550mcpsimp"></a><a name="p1550mcpsimp"></a>设置最大功率</p>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p1550mcpsimp"><a name="p1550mcpsimp"></a><a name="p1550mcpsimp"></a>Set Maximum Power</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1553mcpsimp"></a>
-<table><thead align="left"><tr id="row1560mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1562mcpsimp"><a name="p1562mcpsimp"></a><a name="p1562mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1560mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1562mcpsimp"><a name="p1562mcpsimp"></a><a name="p1562mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1564mcpsimp"><a name="p1564mcpsimp"></a><a name="p1564mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p1566mcpsimp"><a name="p1566mcpsimp"></a><a name="p1566mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1569mcpsimp"><a name="p1569mcpsimp"></a><a name="p1569mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1569mcpsimp"><a name="p1569mcpsimp"></a><a name="p1569mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2090,7 +2089,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 发送链接管理能力查询请求<a name="ZH-CN_TOPIC_0000001829430372"></a>
+### Send Link Management Capability Query Request<a name="ZH-CN_TOPIC_0000001829430372"></a>
 
 <a name="table1590mcpsimp"></a>
 <table><thead align="left"><tr id="row1596mcpsimp"><th class="cellrowborder" valign="top" width="23.06%" id="mcps1.1.4.1.1"><p id="p1598mcpsimp"><a name="p1598mcpsimp"></a><a name="p1598mcpsimp"></a>Service ID</p>
@@ -2105,22 +2104,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.799999999999997%" headers="mcps1.1.4.1.2 "><p id="p1607mcpsimp"><a name="p1607mcpsimp"></a><a name="p1607mcpsimp"></a>0x0E</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.14%" headers="mcps1.1.4.1.3 "><p id="p1609mcpsimp"><a name="p1609mcpsimp"></a><a name="p1609mcpsimp"></a>发送链接管理能力查询请求</p>
+<td class="cellrowborder" valign="top" width="53.14%" headers="mcps1.1.4.1.3 "><p id="p1609mcpsimp"><a name="p1609mcpsimp"></a><a name="p1609mcpsimp"></a>Send Link Management Capability Query Request</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1612mcpsimp"></a>
-<table><thead align="left"><tr id="row1619mcpsimp"><th class="cellrowborder" valign="top" width="32.67326732673268%" id="mcps1.1.5.1.1"><p id="p1621mcpsimp"><a name="p1621mcpsimp"></a><a name="p1621mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1619mcpsimp"><th class="cellrowborder" valign="top" width="32.67326732673268%" id="mcps1.1.5.1.1"><p id="p1621mcpsimp"><a name="p1621mcpsimp"></a><a name="p1621mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.782178217821784%" id="mcps1.1.5.1.2"><p id="p1623mcpsimp"><a name="p1623mcpsimp"></a><a name="p1623mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="15.841584158415841%" id="mcps1.1.5.1.3"><p id="p1625mcpsimp"><a name="p1625mcpsimp"></a><a name="p1625mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p1628mcpsimp"><a name="p1628mcpsimp"></a><a name="p1628mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="29.7029702970297%" id="mcps1.1.5.1.4"><p id="p1628mcpsimp"><a name="p1628mcpsimp"></a><a name="p1628mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2208,7 +2207,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 断开所有链接<a name="ZH-CN_TOPIC_0000001829590132"></a>
+### Disconnect All Links<a name="ZH-CN_TOPIC_0000001829590132"></a>
 
 <a name="table1712mcpsimp"></a>
 <table><thead align="left"><tr id="row1718mcpsimp"><th class="cellrowborder" valign="top" width="22.939999999999998%" id="mcps1.1.4.1.1"><p id="p1720mcpsimp"><a name="p1720mcpsimp"></a><a name="p1720mcpsimp"></a>Service ID</p>
@@ -2223,17 +2222,17 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.15%" headers="mcps1.1.4.1.2 "><p id="p1729mcpsimp"><a name="p1729mcpsimp"></a><a name="p1729mcpsimp"></a>0x0F</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.910000000000004%" headers="mcps1.1.4.1.3 "><p id="p1731mcpsimp"><a name="p1731mcpsimp"></a><a name="p1731mcpsimp"></a>断开所有链接</p>
+<td class="cellrowborder" valign="top" width="52.910000000000004%" headers="mcps1.1.4.1.3 "><p id="p1731mcpsimp"><a name="p1731mcpsimp"></a><a name="p1731mcpsimp"></a>Disconnect All Links</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
-空
+None
 
-### 获取绑定设备<a name="ZH-CN_TOPIC_0000001876189797"></a>
+### Get Bound Devices<a name="ZH-CN_TOPIC_0000001876189797"></a>
 
 <a name="table1736mcpsimp"></a>
 <table><thead align="left"><tr id="row1742mcpsimp"><th class="cellrowborder" valign="top" width="23%" id="mcps1.1.4.1.1"><p id="p1744mcpsimp"><a name="p1744mcpsimp"></a><a name="p1744mcpsimp"></a>Service ID</p>
@@ -2248,22 +2247,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.22%" headers="mcps1.1.4.1.2 "><p id="p1753mcpsimp"><a name="p1753mcpsimp"></a><a name="p1753mcpsimp"></a>0x010</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.78%" headers="mcps1.1.4.1.3 "><p id="p1755mcpsimp"><a name="p1755mcpsimp"></a><a name="p1755mcpsimp"></a>获取绑定设备</p>
+<td class="cellrowborder" valign="top" width="52.78%" headers="mcps1.1.4.1.3 "><p id="p1755mcpsimp"><a name="p1755mcpsimp"></a><a name="p1755mcpsimp"></a>Get Bound Devices</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1758mcpsimp"></a>
-<table><thead align="left"><tr id="row1765mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1767mcpsimp"><a name="p1767mcpsimp"></a><a name="p1767mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1765mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1767mcpsimp"><a name="p1767mcpsimp"></a><a name="p1767mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1769mcpsimp"><a name="p1769mcpsimp"></a><a name="p1769mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p1771mcpsimp"><a name="p1771mcpsimp"></a><a name="p1771mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1774mcpsimp"><a name="p1774mcpsimp"></a><a name="p1774mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1774mcpsimp"><a name="p1774mcpsimp"></a><a name="p1774mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2297,7 +2296,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 设置调制与编码策略<a name="ZH-CN_TOPIC_0000001876269577"></a>
+### Set Modulation and Coding Strategy<a name="ZH-CN_TOPIC_0000001876269577"></a>
 
 <a name="table1804mcpsimp"></a>
 <table><thead align="left"><tr id="row1810mcpsimp"><th class="cellrowborder" valign="top" width="23.189999999999998%" id="mcps1.1.4.1.1"><p id="p1812mcpsimp"><a name="p1812mcpsimp"></a><a name="p1812mcpsimp"></a>Service ID</p>
@@ -2312,22 +2311,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.23%" headers="mcps1.1.4.1.2 "><p id="p1821mcpsimp"><a name="p1821mcpsimp"></a><a name="p1821mcpsimp"></a>0x11</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.580000000000005%" headers="mcps1.1.4.1.3 "><p id="p1823mcpsimp"><a name="p1823mcpsimp"></a><a name="p1823mcpsimp"></a>设置MCS</p>
+<td class="cellrowborder" valign="top" width="52.580000000000005%" headers="mcps1.1.4.1.3 "><p id="p1823mcpsimp"><a name="p1823mcpsimp"></a><a name="p1823mcpsimp"></a>Set MCS</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1826mcpsimp"></a>
-<table><thead align="left"><tr id="row1833mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1835mcpsimp"><a name="p1835mcpsimp"></a><a name="p1835mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1833mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1835mcpsimp"><a name="p1835mcpsimp"></a><a name="p1835mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.98%" id="mcps1.1.5.1.2"><p id="p1837mcpsimp"><a name="p1837mcpsimp"></a><a name="p1837mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18.02%" id="mcps1.1.5.1.3"><p id="p1839mcpsimp"><a name="p1839mcpsimp"></a><a name="p1839mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1842mcpsimp"><a name="p1842mcpsimp"></a><a name="p1842mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1842mcpsimp"><a name="p1842mcpsimp"></a><a name="p1842mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2352,7 +2351,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 设置最大payload字节数<a name="ZH-CN_TOPIC_0000001829430376"></a>
+### Set Maximum Payload Bytes<a name="ZH-CN_TOPIC_0000001829430376"></a>
 
 <a name="table1863mcpsimp"></a>
 <table><thead align="left"><tr id="row1869mcpsimp"><th class="cellrowborder" valign="top" width="23.380000000000003%" id="mcps1.1.4.1.1"><p id="p1871mcpsimp"><a name="p1871mcpsimp"></a><a name="p1871mcpsimp"></a>Service ID</p>
@@ -2367,22 +2366,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.97%" headers="mcps1.1.4.1.2 "><p id="p1880mcpsimp"><a name="p1880mcpsimp"></a><a name="p1880mcpsimp"></a>0x12</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.65%" headers="mcps1.1.4.1.3 "><p id="p1882mcpsimp"><a name="p1882mcpsimp"></a><a name="p1882mcpsimp"></a>设置最大payload</p>
+<td class="cellrowborder" valign="top" width="52.65%" headers="mcps1.1.4.1.3 "><p id="p1882mcpsimp"><a name="p1882mcpsimp"></a><a name="p1882mcpsimp"></a>Set Maximum Payload</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1885mcpsimp"></a>
-<table><thead align="left"><tr id="row1892mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1894mcpsimp"><a name="p1894mcpsimp"></a><a name="p1894mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1892mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1894mcpsimp"><a name="p1894mcpsimp"></a><a name="p1894mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1896mcpsimp"><a name="p1896mcpsimp"></a><a name="p1896mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p1898mcpsimp"><a name="p1898mcpsimp"></a><a name="p1898mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1901mcpsimp"><a name="p1901mcpsimp"></a><a name="p1901mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p1901mcpsimp"><a name="p1901mcpsimp"></a><a name="p1901mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2407,7 +2406,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 发送连接状态查询请求<a name="ZH-CN_TOPIC_0000001954647133"></a>
+### Send Connection Status Query Request<a name="ZH-CN_TOPIC_0000001954647133"></a>
 
 <a name="table147191843154717"></a>
 <table><thead align="left"><tr id="row15833124364716"><th class="cellrowborder" valign="top" width="23.517648235176484%" id="mcps1.1.4.1.1"><p id="p5833343174712"><a name="p5833343174712"></a><a name="p5833343174712"></a>Service ID</p>
@@ -2422,16 +2421,16 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.877612238776123%" headers="mcps1.1.4.1.2 "><p id="p2083304344716"><a name="p2083304344716"></a><a name="p2083304344716"></a>0x13</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.604739526047396%" headers="mcps1.1.4.1.3 "><p id="p16834243124713"><a name="p16834243124713"></a><a name="p16834243124713"></a>发送连接状态查询请求</p>
+<td class="cellrowborder" valign="top" width="52.604739526047396%" headers="mcps1.1.4.1.3 "><p id="p16834243124713"><a name="p16834243124713"></a><a name="p16834243124713"></a>Send Connection Status Query Request</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1672594324712"></a>
-<table><thead align="left"><tr id="row1983418435477"><th class="cellrowborder" valign="top" width="27.08%" id="mcps1.1.5.1.1"><p id="p7834154319479"><a name="p7834154319479"></a><a name="p7834154319479"></a>字段名称</p>
+<table><thead align="left"><tr id="row1983418435477"><th class="cellrowborder" valign="top" width="27.08%" id="mcps1.1.5.1.1"><p id="p7834154319479"><a name="p7834154319479"></a><a name="p7834154319479"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.67%" id="mcps1.1.5.1.2"><p id="p8834184317476"><a name="p8834184317476"></a><a name="p8834184317476"></a>Type(bit0~bit6)</p>
 </th>
@@ -2439,7 +2438,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 <p id="p1483416431475"><a name="p1483416431475"></a><a name="p1483416431475"></a>Size(Oct)</p>
 </th>
 <th class="cellrowborder" valign="top" width="33.54%" id="mcps1.1.5.1.4"><p id="p8834124334719"><a name="p8834124334719"></a><a name="p8834124334719"></a>Value</p>
-<p id="p983420435474"><a name="p983420435474"></a><a name="p983420435474"></a>数据类型</p>
+<p id="p983420435474"><a name="p983420435474"></a><a name="p983420435474"></a>Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2465,7 +2464,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 
 
-### 注册SSAP客户端<a name="ZH-CN_TOPIC_0000001876189801"></a>
+### Register SSAP Client<a name="ZH-CN_TOPIC_0000001876189801"></a>
 
 <a name="table1923mcpsimp"></a>
 <table><thead align="left"><tr id="row1929mcpsimp"><th class="cellrowborder" valign="top" width="23%" id="mcps1.1.4.1.1"><p id="p1931mcpsimp"><a name="p1931mcpsimp"></a><a name="p1931mcpsimp"></a>Service ID</p>
@@ -2480,22 +2479,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.529999999999998%" headers="mcps1.1.4.1.2 "><p id="p1940mcpsimp"><a name="p1940mcpsimp"></a><a name="p1940mcpsimp"></a>0x01</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.470000000000006%" headers="mcps1.1.4.1.3 "><p id="p1942mcpsimp"><a name="p1942mcpsimp"></a><a name="p1942mcpsimp"></a>注册SSAP客户端</p>
+<td class="cellrowborder" valign="top" width="52.470000000000006%" headers="mcps1.1.4.1.3 "><p id="p1942mcpsimp"><a name="p1942mcpsimp"></a><a name="p1942mcpsimp"></a>Register SSAP Client</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table1945mcpsimp"></a>
-<table><thead align="left"><tr id="row1952mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1954mcpsimp"><a name="p1954mcpsimp"></a><a name="p1954mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row1952mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p1954mcpsimp"><a name="p1954mcpsimp"></a><a name="p1954mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p1956mcpsimp"><a name="p1956mcpsimp"></a><a name="p1956mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="17.98%" id="mcps1.1.5.1.3"><p id="p1958mcpsimp"><a name="p1958mcpsimp"></a><a name="p1958mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33.019999999999996%" id="mcps1.1.5.1.4"><p id="p1961mcpsimp"><a name="p1961mcpsimp"></a><a name="p1961mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33.019999999999996%" id="mcps1.1.5.1.4"><p id="p1961mcpsimp"><a name="p1961mcpsimp"></a><a name="p1961mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2529,7 +2528,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 注销SSAP客户端<a name="ZH-CN_TOPIC_0000001876269581"></a>
+### Unregister SSAP Client<a name="ZH-CN_TOPIC_0000001876269581"></a>
 
 <a name="table1991mcpsimp"></a>
 <table><thead align="left"><tr id="row1997mcpsimp"><th class="cellrowborder" valign="top" width="23.25%" id="mcps1.1.4.1.1"><p id="p1999mcpsimp"><a name="p1999mcpsimp"></a><a name="p1999mcpsimp"></a>Service ID</p>
@@ -2544,22 +2543,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.15%" headers="mcps1.1.4.1.2 "><p id="p2008mcpsimp"><a name="p2008mcpsimp"></a><a name="p2008mcpsimp"></a>0x02</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.6%" headers="mcps1.1.4.1.3 "><p id="p2010mcpsimp"><a name="p2010mcpsimp"></a><a name="p2010mcpsimp"></a>注销SSAP客户端</p>
+<td class="cellrowborder" valign="top" width="52.6%" headers="mcps1.1.4.1.3 "><p id="p2010mcpsimp"><a name="p2010mcpsimp"></a><a name="p2010mcpsimp"></a>Unregister SSAP Client</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2013mcpsimp"></a>
-<table><thead align="left"><tr id="row2020mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2022mcpsimp"><a name="p2022mcpsimp"></a><a name="p2022mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2020mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2022mcpsimp"><a name="p2022mcpsimp"></a><a name="p2022mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2024mcpsimp"><a name="p2024mcpsimp"></a><a name="p2024mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p2026mcpsimp"><a name="p2026mcpsimp"></a><a name="p2026mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2029mcpsimp"><a name="p2029mcpsimp"></a><a name="p2029mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2029mcpsimp"><a name="p2029mcpsimp"></a><a name="p2029mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2575,7 +2574,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 查找服务、特征、描述符<a name="ZH-CN_TOPIC_0000001829430380"></a>
+### Discover Services, Characteristics, and Descriptors<a name="ZH-CN_TOPIC_0000001829430380"></a>
 
 <a name="table2041mcpsimp"></a>
 <table><thead align="left"><tr id="row2047mcpsimp"><th class="cellrowborder" valign="top" width="23.189999999999998%" id="mcps1.1.4.1.1"><p id="p2049mcpsimp"><a name="p2049mcpsimp"></a><a name="p2049mcpsimp"></a>Service ID</p>
@@ -2590,22 +2589,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.14%" headers="mcps1.1.4.1.2 "><p id="p2058mcpsimp"><a name="p2058mcpsimp"></a><a name="p2058mcpsimp"></a>0x03</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.669999999999995%" headers="mcps1.1.4.1.3 "><p id="p2060mcpsimp"><a name="p2060mcpsimp"></a><a name="p2060mcpsimp"></a>查找服务、特征、描述符</p>
+<td class="cellrowborder" valign="top" width="52.669999999999995%" headers="mcps1.1.4.1.3 "><p id="p2060mcpsimp"><a name="p2060mcpsimp"></a><a name="p2060mcpsimp"></a>Discover Services, Characteristics, and Descriptors</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2063mcpsimp"></a>
-<table><thead align="left"><tr id="row2070mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2072mcpsimp"><a name="p2072mcpsimp"></a><a name="p2072mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2070mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2072mcpsimp"><a name="p2072mcpsimp"></a><a name="p2072mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2074mcpsimp"><a name="p2074mcpsimp"></a><a name="p2074mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p2076mcpsimp"><a name="p2076mcpsimp"></a><a name="p2076mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2079mcpsimp"><a name="p2079mcpsimp"></a><a name="p2079mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2079mcpsimp"><a name="p2079mcpsimp"></a><a name="p2079mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2684,7 +2683,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 发起按照UUID读取请求<a name="ZH-CN_TOPIC_0000001829590140"></a>
+### Initiate Read Request by UUID<a name="ZH-CN_TOPIC_0000001829590140"></a>
 
 <a name="table2154mcpsimp"></a>
 <table><thead align="left"><tr id="row2160mcpsimp"><th class="cellrowborder" valign="top" width="23.47%" id="mcps1.1.4.1.1"><p id="p2162mcpsimp"><a name="p2162mcpsimp"></a><a name="p2162mcpsimp"></a>Service ID</p>
@@ -2699,22 +2698,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.169999999999998%" headers="mcps1.1.4.1.2 "><p id="p2171mcpsimp"><a name="p2171mcpsimp"></a><a name="p2171mcpsimp"></a>0x04</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.35999999999999%" headers="mcps1.1.4.1.3 "><p id="p2173mcpsimp"><a name="p2173mcpsimp"></a><a name="p2173mcpsimp"></a>发起按照UUID读取请求</p>
+<td class="cellrowborder" valign="top" width="52.35999999999999%" headers="mcps1.1.4.1.3 "><p id="p2173mcpsimp"><a name="p2173mcpsimp"></a><a name="p2173mcpsimp"></a>Initiate Read Request by UUID</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2176mcpsimp"></a>
-<table><thead align="left"><tr id="row2183mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2185mcpsimp"><a name="p2185mcpsimp"></a><a name="p2185mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2183mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2185mcpsimp"><a name="p2185mcpsimp"></a><a name="p2185mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2187mcpsimp"><a name="p2187mcpsimp"></a><a name="p2187mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p2189mcpsimp"><a name="p2189mcpsimp"></a><a name="p2189mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2192mcpsimp"><a name="p2192mcpsimp"></a><a name="p2192mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2192mcpsimp"><a name="p2192mcpsimp"></a><a name="p2192mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2784,7 +2783,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 发起按照句柄读取请求<a name="ZH-CN_TOPIC_0000001876189805"></a>
+### Initiate Read Request by Handle<a name="ZH-CN_TOPIC_0000001876189805"></a>
 
 <a name="table2258mcpsimp"></a>
 <table><thead align="left"><tr id="row2264mcpsimp"><th class="cellrowborder" valign="top" width="23.880000000000003%" id="mcps1.1.4.1.1"><p id="p2266mcpsimp"><a name="p2266mcpsimp"></a><a name="p2266mcpsimp"></a>Service ID</p>
@@ -2799,22 +2798,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.84%" headers="mcps1.1.4.1.2 "><p id="p2275mcpsimp"><a name="p2275mcpsimp"></a><a name="p2275mcpsimp"></a>0x05</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.28%" headers="mcps1.1.4.1.3 "><p id="p2277mcpsimp"><a name="p2277mcpsimp"></a><a name="p2277mcpsimp"></a>发起按照句柄读取请求</p>
+<td class="cellrowborder" valign="top" width="52.28%" headers="mcps1.1.4.1.3 "><p id="p2277mcpsimp"><a name="p2277mcpsimp"></a><a name="p2277mcpsimp"></a>Initiate Read Request by Handle</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2280mcpsimp"></a>
-<table><thead align="left"><tr id="row2287mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2289mcpsimp"><a name="p2289mcpsimp"></a><a name="p2289mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2287mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2289mcpsimp"><a name="p2289mcpsimp"></a><a name="p2289mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2291mcpsimp"><a name="p2291mcpsimp"></a><a name="p2291mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p2293mcpsimp"><a name="p2293mcpsimp"></a><a name="p2293mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2296mcpsimp"><a name="p2296mcpsimp"></a><a name="p2296mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2296mcpsimp"><a name="p2296mcpsimp"></a><a name="p2296mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2857,7 +2856,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 发起写请求<a name="ZH-CN_TOPIC_0000001876269585"></a>
+### Initiate Write Request<a name="ZH-CN_TOPIC_0000001876269585"></a>
 
 <a name="table2335mcpsimp"></a>
 <table><thead align="left"><tr id="row2341mcpsimp"><th class="cellrowborder" valign="top" width="23.82%" id="mcps1.1.4.1.1"><p id="p2343mcpsimp"><a name="p2343mcpsimp"></a><a name="p2343mcpsimp"></a>Service ID</p>
@@ -2872,22 +2871,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.76%" headers="mcps1.1.4.1.2 "><p id="p2352mcpsimp"><a name="p2352mcpsimp"></a><a name="p2352mcpsimp"></a>0x06</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.42%" headers="mcps1.1.4.1.3 "><p id="p2354mcpsimp"><a name="p2354mcpsimp"></a><a name="p2354mcpsimp"></a>发起写请求</p>
+<td class="cellrowborder" valign="top" width="52.42%" headers="mcps1.1.4.1.3 "><p id="p2354mcpsimp"><a name="p2354mcpsimp"></a><a name="p2354mcpsimp"></a>Initiate Write Request</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2357mcpsimp"></a>
-<table><thead align="left"><tr id="row2364mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2366mcpsimp"><a name="p2366mcpsimp"></a><a name="p2366mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2364mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2366mcpsimp"><a name="p2366mcpsimp"></a><a name="p2366mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2368mcpsimp"><a name="p2368mcpsimp"></a><a name="p2368mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p2370mcpsimp"><a name="p2370mcpsimp"></a><a name="p2370mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2373mcpsimp"><a name="p2373mcpsimp"></a><a name="p2373mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2373mcpsimp"><a name="p2373mcpsimp"></a><a name="p2373mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -2948,7 +2947,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 发起写命令<a name="ZH-CN_TOPIC_0000001829430384"></a>
+### Initiate Write Command<a name="ZH-CN_TOPIC_0000001829430384"></a>
 
 <a name="table2430mcpsimp"></a>
 <table><thead align="left"><tr id="row2436mcpsimp"><th class="cellrowborder" valign="top" width="23.94%" id="mcps1.1.4.1.1"><p id="p2438mcpsimp"><a name="p2438mcpsimp"></a><a name="p2438mcpsimp"></a>Service ID</p>
@@ -2963,22 +2962,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.630000000000003%" headers="mcps1.1.4.1.2 "><p id="p2447mcpsimp"><a name="p2447mcpsimp"></a><a name="p2447mcpsimp"></a>0x07</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.43%" headers="mcps1.1.4.1.3 "><p id="p2449mcpsimp"><a name="p2449mcpsimp"></a><a name="p2449mcpsimp"></a>发起写命令</p>
+<td class="cellrowborder" valign="top" width="52.43%" headers="mcps1.1.4.1.3 "><p id="p2449mcpsimp"><a name="p2449mcpsimp"></a><a name="p2449mcpsimp"></a>Initiate Write Command</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2452mcpsimp"></a>
-<table><thead align="left"><tr id="row2459mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2461mcpsimp"><a name="p2461mcpsimp"></a><a name="p2461mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2459mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2461mcpsimp"><a name="p2461mcpsimp"></a><a name="p2461mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2463mcpsimp"><a name="p2463mcpsimp"></a><a name="p2463mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p2465mcpsimp"><a name="p2465mcpsimp"></a><a name="p2465mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2468mcpsimp"><a name="p2468mcpsimp"></a><a name="p2468mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2468mcpsimp"><a name="p2468mcpsimp"></a><a name="p2468mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3039,7 +3038,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 发送交换info请求<a name="ZH-CN_TOPIC_0000001829590144"></a>
+### Send Exchange Info Request<a name="ZH-CN_TOPIC_0000001829590144"></a>
 
 <a name="table2525mcpsimp"></a>
 <table><thead align="left"><tr id="row2531mcpsimp"><th class="cellrowborder" valign="top" width="24.11%" id="mcps1.1.4.1.1"><p id="p2533mcpsimp"><a name="p2533mcpsimp"></a><a name="p2533mcpsimp"></a>Service ID</p>
@@ -3054,22 +3053,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.46%" headers="mcps1.1.4.1.2 "><p id="p2542mcpsimp"><a name="p2542mcpsimp"></a><a name="p2542mcpsimp"></a>0x08</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.43%" headers="mcps1.1.4.1.3 "><p id="p2544mcpsimp"><a name="p2544mcpsimp"></a><a name="p2544mcpsimp"></a>发送交换info请求</p>
+<td class="cellrowborder" valign="top" width="52.43%" headers="mcps1.1.4.1.3 "><p id="p2544mcpsimp"><a name="p2544mcpsimp"></a><a name="p2544mcpsimp"></a>Send Exchange Info Request</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2547mcpsimp"></a>
-<table><thead align="left"><tr id="row2554mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2556mcpsimp"><a name="p2556mcpsimp"></a><a name="p2556mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2554mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2556mcpsimp"><a name="p2556mcpsimp"></a><a name="p2556mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2558mcpsimp"><a name="p2558mcpsimp"></a><a name="p2558mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p2560mcpsimp"><a name="p2560mcpsimp"></a><a name="p2560mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2563mcpsimp"><a name="p2563mcpsimp"></a><a name="p2563mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2563mcpsimp"><a name="p2563mcpsimp"></a><a name="p2563mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3128,7 +3127,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 
 
-### 注册SSAP服务端<a name="ZH-CN_TOPIC_0000001876269589"></a>
+### Register SSAP Server<a name="ZH-CN_TOPIC_0000001876269589"></a>
 
 <a name="table2603mcpsimp"></a>
 <table><thead align="left"><tr id="row2609mcpsimp"><th class="cellrowborder" valign="top" width="23.990000000000002%" id="mcps1.1.4.1.1"><p id="p2611mcpsimp"><a name="p2611mcpsimp"></a><a name="p2611mcpsimp"></a>Service ID</p>
@@ -3143,22 +3142,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.11%" headers="mcps1.1.4.1.2 "><p id="p2620mcpsimp"><a name="p2620mcpsimp"></a><a name="p2620mcpsimp"></a>0x01</p>
 </td>
-<td class="cellrowborder" valign="top" width="51.9%" headers="mcps1.1.4.1.3 "><p id="p2622mcpsimp"><a name="p2622mcpsimp"></a><a name="p2622mcpsimp"></a>注册SSAP服务端</p>
+<td class="cellrowborder" valign="top" width="51.9%" headers="mcps1.1.4.1.3 "><p id="p2622mcpsimp"><a name="p2622mcpsimp"></a><a name="p2622mcpsimp"></a>Register SSAP Server</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2625mcpsimp"></a>
-<table><thead align="left"><tr id="row2632mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2634mcpsimp"><a name="p2634mcpsimp"></a><a name="p2634mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2632mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2634mcpsimp"><a name="p2634mcpsimp"></a><a name="p2634mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2636mcpsimp"><a name="p2636mcpsimp"></a><a name="p2636mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p2638mcpsimp"><a name="p2638mcpsimp"></a><a name="p2638mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2641mcpsimp"><a name="p2641mcpsimp"></a><a name="p2641mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2641mcpsimp"><a name="p2641mcpsimp"></a><a name="p2641mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3192,7 +3191,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 注销SSAP服务端<a name="ZH-CN_TOPIC_0000001829430388"></a>
+### Unregister SSAP Server<a name="ZH-CN_TOPIC_0000001829430388"></a>
 
 <a name="table2671mcpsimp"></a>
 <table><thead align="left"><tr id="row2677mcpsimp"><th class="cellrowborder" valign="top" width="24.12%" id="mcps1.1.4.1.1"><p id="p2679mcpsimp"><a name="p2679mcpsimp"></a><a name="p2679mcpsimp"></a>Service ID</p>
@@ -3207,22 +3206,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="23.79%" headers="mcps1.1.4.1.2 "><p id="p2688mcpsimp"><a name="p2688mcpsimp"></a><a name="p2688mcpsimp"></a>0x02</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.09%" headers="mcps1.1.4.1.3 "><p id="p2690mcpsimp"><a name="p2690mcpsimp"></a><a name="p2690mcpsimp"></a>注销SSAP服务端</p>
+<td class="cellrowborder" valign="top" width="52.09%" headers="mcps1.1.4.1.3 "><p id="p2690mcpsimp"><a name="p2690mcpsimp"></a><a name="p2690mcpsimp"></a>Unregister SSAP Server</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2693mcpsimp"></a>
-<table><thead align="left"><tr id="row2700mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2702mcpsimp"><a name="p2702mcpsimp"></a><a name="p2702mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2700mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2702mcpsimp"><a name="p2702mcpsimp"></a><a name="p2702mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2704mcpsimp"><a name="p2704mcpsimp"></a><a name="p2704mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="17.98%" id="mcps1.1.5.1.3"><p id="p2706mcpsimp"><a name="p2706mcpsimp"></a><a name="p2706mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33.019999999999996%" id="mcps1.1.5.1.4"><p id="p2709mcpsimp"><a name="p2709mcpsimp"></a><a name="p2709mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33.019999999999996%" id="mcps1.1.5.1.4"><p id="p2709mcpsimp"><a name="p2709mcpsimp"></a><a name="p2709mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3238,7 +3237,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 异步添加SSAP服务<a name="ZH-CN_TOPIC_0000001829590148"></a>
+### Asynchronously Add SSAP Service<a name="ZH-CN_TOPIC_0000001829590148"></a>
 
 <a name="table2721mcpsimp"></a>
 <table><thead align="left"><tr id="row2727mcpsimp"><th class="cellrowborder" valign="top" width="24.07%" id="mcps1.1.4.1.1"><p id="p2729mcpsimp"><a name="p2729mcpsimp"></a><a name="p2729mcpsimp"></a>Service ID</p>
@@ -3253,22 +3252,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.04%" headers="mcps1.1.4.1.2 "><p id="p2738mcpsimp"><a name="p2738mcpsimp"></a><a name="p2738mcpsimp"></a>0x03</p>
 </td>
-<td class="cellrowborder" valign="top" width="51.89%" headers="mcps1.1.4.1.3 "><p id="p2740mcpsimp"><a name="p2740mcpsimp"></a><a name="p2740mcpsimp"></a>异步添加SSAP服务</p>
+<td class="cellrowborder" valign="top" width="51.89%" headers="mcps1.1.4.1.3 "><p id="p2740mcpsimp"><a name="p2740mcpsimp"></a><a name="p2740mcpsimp"></a>Asynchronously Add SSAP Service</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2743mcpsimp"></a>
-<table><thead align="left"><tr id="row2750mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2752mcpsimp"><a name="p2752mcpsimp"></a><a name="p2752mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2750mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2752mcpsimp"><a name="p2752mcpsimp"></a><a name="p2752mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.98%" id="mcps1.1.5.1.2"><p id="p2754mcpsimp"><a name="p2754mcpsimp"></a><a name="p2754mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18.02%" id="mcps1.1.5.1.3"><p id="p2756mcpsimp"><a name="p2756mcpsimp"></a><a name="p2756mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2759mcpsimp"><a name="p2759mcpsimp"></a><a name="p2759mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2759mcpsimp"><a name="p2759mcpsimp"></a><a name="p2759mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3311,7 +3310,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 异步添加SSAP属性<a name="ZH-CN_TOPIC_0000001876189813"></a>
+### Asynchronously Add SSAP Property<a name="ZH-CN_TOPIC_0000001876189813"></a>
 
 <a name="table2798mcpsimp"></a>
 <table><thead align="left"><tr id="row2804mcpsimp"><th class="cellrowborder" valign="top" width="23.630000000000003%" id="mcps1.1.4.1.1"><p id="p2806mcpsimp"><a name="p2806mcpsimp"></a><a name="p2806mcpsimp"></a>Service ID</p>
@@ -3326,22 +3325,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.14%" headers="mcps1.1.4.1.2 "><p id="p2815mcpsimp"><a name="p2815mcpsimp"></a><a name="p2815mcpsimp"></a>0x04</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.23%" headers="mcps1.1.4.1.3 "><p id="p2817mcpsimp"><a name="p2817mcpsimp"></a><a name="p2817mcpsimp"></a>异步添加SSAP属性</p>
+<td class="cellrowborder" valign="top" width="52.23%" headers="mcps1.1.4.1.3 "><p id="p2817mcpsimp"><a name="p2817mcpsimp"></a><a name="p2817mcpsimp"></a>Asynchronously Add SSAP Property</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2820mcpsimp"></a>
-<table><thead align="left"><tr id="row2827mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2829mcpsimp"><a name="p2829mcpsimp"></a><a name="p2829mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2827mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2829mcpsimp"><a name="p2829mcpsimp"></a><a name="p2829mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2831mcpsimp"><a name="p2831mcpsimp"></a><a name="p2831mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p2833mcpsimp"><a name="p2833mcpsimp"></a><a name="p2833mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2836mcpsimp"><a name="p2836mcpsimp"></a><a name="p2836mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2836mcpsimp"><a name="p2836mcpsimp"></a><a name="p2836mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3420,7 +3419,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 异步添加SSAP描述<a name="ZH-CN_TOPIC_0000001876269593"></a>
+### Asynchronously Add SSAP Descriptor<a name="ZH-CN_TOPIC_0000001876269593"></a>
 
 <a name="table2911mcpsimp"></a>
 <table><thead align="left"><tr id="row2917mcpsimp"><th class="cellrowborder" valign="top" width="23.200000000000003%" id="mcps1.1.4.1.1"><p id="p2919mcpsimp"><a name="p2919mcpsimp"></a><a name="p2919mcpsimp"></a>Service ID</p>
@@ -3435,22 +3434,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.52%" headers="mcps1.1.4.1.2 "><p id="p2928mcpsimp"><a name="p2928mcpsimp"></a><a name="p2928mcpsimp"></a>0x05</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.28%" headers="mcps1.1.4.1.3 "><p id="p2930mcpsimp"><a name="p2930mcpsimp"></a><a name="p2930mcpsimp"></a>异步添加SSAP描述</p>
+<td class="cellrowborder" valign="top" width="52.28%" headers="mcps1.1.4.1.3 "><p id="p2930mcpsimp"><a name="p2930mcpsimp"></a><a name="p2930mcpsimp"></a>Asynchronously Add SSAP Descriptor</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table2933mcpsimp"></a>
-<table><thead align="left"><tr id="row2940mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2942mcpsimp"><a name="p2942mcpsimp"></a><a name="p2942mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row2940mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p2942mcpsimp"><a name="p2942mcpsimp"></a><a name="p2942mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p2944mcpsimp"><a name="p2944mcpsimp"></a><a name="p2944mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p2946mcpsimp"><a name="p2946mcpsimp"></a><a name="p2946mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2949mcpsimp"><a name="p2949mcpsimp"></a><a name="p2949mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p2949mcpsimp"><a name="p2949mcpsimp"></a><a name="p2949mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3547,7 +3546,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 同步添加SSAP服务<a name="ZH-CN_TOPIC_0000001829430392"></a>
+### Synchronously Add SSAP Service<a name="ZH-CN_TOPIC_0000001829430392"></a>
 
 <a name="table3042mcpsimp"></a>
 <table><thead align="left"><tr id="row3048mcpsimp"><th class="cellrowborder" valign="top" width="23.31%" id="mcps1.1.4.1.1"><p id="p3050mcpsimp"><a name="p3050mcpsimp"></a><a name="p3050mcpsimp"></a>Service ID</p>
@@ -3562,22 +3561,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.34%" headers="mcps1.1.4.1.2 "><p id="p3059mcpsimp"><a name="p3059mcpsimp"></a><a name="p3059mcpsimp"></a>0x06</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.349999999999994%" headers="mcps1.1.4.1.3 "><p id="p3061mcpsimp"><a name="p3061mcpsimp"></a><a name="p3061mcpsimp"></a>同步添加SSAP服务</p>
+<td class="cellrowborder" valign="top" width="52.349999999999994%" headers="mcps1.1.4.1.3 "><p id="p3061mcpsimp"><a name="p3061mcpsimp"></a><a name="p3061mcpsimp"></a>Synchronously Add SSAP Service</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table3064mcpsimp"></a>
-<table><thead align="left"><tr id="row3071mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3073mcpsimp"><a name="p3073mcpsimp"></a><a name="p3073mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row3071mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3073mcpsimp"><a name="p3073mcpsimp"></a><a name="p3073mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p3075mcpsimp"><a name="p3075mcpsimp"></a><a name="p3075mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p3077mcpsimp"><a name="p3077mcpsimp"></a><a name="p3077mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3080mcpsimp"><a name="p3080mcpsimp"></a><a name="p3080mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3080mcpsimp"><a name="p3080mcpsimp"></a><a name="p3080mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3629,7 +3628,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 同步添加SSAP属性<a name="ZH-CN_TOPIC_0000001829590152"></a>
+### Synchronously Add SSAP Property<a name="ZH-CN_TOPIC_0000001829590152"></a>
 
 <a name="table3128mcpsimp"></a>
 <table><thead align="left"><tr id="row3134mcpsimp"><th class="cellrowborder" valign="top" width="23.169999999999998%" id="mcps1.1.4.1.1"><p id="p3136mcpsimp"><a name="p3136mcpsimp"></a><a name="p3136mcpsimp"></a>Service ID</p>
@@ -3644,22 +3643,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.18%" headers="mcps1.1.4.1.2 "><p id="p3145mcpsimp"><a name="p3145mcpsimp"></a><a name="p3145mcpsimp"></a>0x07</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.65%" headers="mcps1.1.4.1.3 "><p id="p3147mcpsimp"><a name="p3147mcpsimp"></a><a name="p3147mcpsimp"></a>同步添加SSAP属性</p>
+<td class="cellrowborder" valign="top" width="52.65%" headers="mcps1.1.4.1.3 "><p id="p3147mcpsimp"><a name="p3147mcpsimp"></a><a name="p3147mcpsimp"></a>Synchronously Add SSAP Property</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table3150mcpsimp"></a>
-<table><thead align="left"><tr id="row3157mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3159mcpsimp"><a name="p3159mcpsimp"></a><a name="p3159mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row3157mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3159mcpsimp"><a name="p3159mcpsimp"></a><a name="p3159mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p3161mcpsimp"><a name="p3161mcpsimp"></a><a name="p3161mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p3163mcpsimp"><a name="p3163mcpsimp"></a><a name="p3163mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3166mcpsimp"><a name="p3166mcpsimp"></a><a name="p3166mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3166mcpsimp"><a name="p3166mcpsimp"></a><a name="p3166mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3747,7 +3746,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 同步添加SSAP描述<a name="ZH-CN_TOPIC_0000001876189817"></a>
+### Synchronously Add SSAP Descriptor<a name="ZH-CN_TOPIC_0000001876189817"></a>
 
 <a name="table3250mcpsimp"></a>
 <table><thead align="left"><tr id="row3256mcpsimp"><th class="cellrowborder" valign="top" width="22.81%" id="mcps1.1.4.1.1"><p id="p3258mcpsimp"><a name="p3258mcpsimp"></a><a name="p3258mcpsimp"></a>Service ID</p>
@@ -3762,22 +3761,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.36%" headers="mcps1.1.4.1.2 "><p id="p3267mcpsimp"><a name="p3267mcpsimp"></a><a name="p3267mcpsimp"></a>0x08</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.83%" headers="mcps1.1.4.1.3 "><p id="p3269mcpsimp"><a name="p3269mcpsimp"></a><a name="p3269mcpsimp"></a>同步添加SSAP描述</p>
+<td class="cellrowborder" valign="top" width="52.83%" headers="mcps1.1.4.1.3 "><p id="p3269mcpsimp"><a name="p3269mcpsimp"></a><a name="p3269mcpsimp"></a>Synchronously Add SSAP Descriptor</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table3272mcpsimp"></a>
-<table><thead align="left"><tr id="row3279mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3281mcpsimp"><a name="p3281mcpsimp"></a><a name="p3281mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row3279mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3281mcpsimp"><a name="p3281mcpsimp"></a><a name="p3281mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p3283mcpsimp"><a name="p3283mcpsimp"></a><a name="p3283mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p3285mcpsimp"><a name="p3285mcpsimp"></a><a name="p3285mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3288mcpsimp"><a name="p3288mcpsimp"></a><a name="p3288mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3288mcpsimp"><a name="p3288mcpsimp"></a><a name="p3288mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3874,7 +3873,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 开始SSAP服务<a name="ZH-CN_TOPIC_0000001876269597"></a>
+### Start SSAP Service<a name="ZH-CN_TOPIC_0000001876269597"></a>
 
 <a name="table3381mcpsimp"></a>
 <table><thead align="left"><tr id="row3387mcpsimp"><th class="cellrowborder" valign="top" width="22.82%" id="mcps1.1.4.1.1"><p id="p3389mcpsimp"><a name="p3389mcpsimp"></a><a name="p3389mcpsimp"></a>Service ID</p>
@@ -3889,22 +3888,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.6%" headers="mcps1.1.4.1.2 "><p id="p3398mcpsimp"><a name="p3398mcpsimp"></a><a name="p3398mcpsimp"></a>0x09</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.580000000000005%" headers="mcps1.1.4.1.3 "><p id="p3400mcpsimp"><a name="p3400mcpsimp"></a><a name="p3400mcpsimp"></a>开始SSAP服务</p>
+<td class="cellrowborder" valign="top" width="52.580000000000005%" headers="mcps1.1.4.1.3 "><p id="p3400mcpsimp"><a name="p3400mcpsimp"></a><a name="p3400mcpsimp"></a>Start SSAP Service</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table3403mcpsimp"></a>
-<table><thead align="left"><tr id="row3410mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3412mcpsimp"><a name="p3412mcpsimp"></a><a name="p3412mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row3410mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3412mcpsimp"><a name="p3412mcpsimp"></a><a name="p3412mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.98%" id="mcps1.1.5.1.2"><p id="p3414mcpsimp"><a name="p3414mcpsimp"></a><a name="p3414mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18.02%" id="mcps1.1.5.1.3"><p id="p3416mcpsimp"><a name="p3416mcpsimp"></a><a name="p3416mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3419mcpsimp"><a name="p3419mcpsimp"></a><a name="p3419mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3419mcpsimp"><a name="p3419mcpsimp"></a><a name="p3419mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3929,7 +3928,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 删除所有SSAP服务<a name="ZH-CN_TOPIC_0000001829430396"></a>
+### Delete All SSAP Services<a name="ZH-CN_TOPIC_0000001829430396"></a>
 
 <a name="table3440mcpsimp"></a>
 <table><thead align="left"><tr id="row3446mcpsimp"><th class="cellrowborder" valign="top" width="22.81%" id="mcps1.1.4.1.1"><p id="p3448mcpsimp"><a name="p3448mcpsimp"></a><a name="p3448mcpsimp"></a>Service ID</p>
@@ -3944,22 +3943,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.67%" headers="mcps1.1.4.1.2 "><p id="p3457mcpsimp"><a name="p3457mcpsimp"></a><a name="p3457mcpsimp"></a>0x0A</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.52%" headers="mcps1.1.4.1.3 "><p id="p3459mcpsimp"><a name="p3459mcpsimp"></a><a name="p3459mcpsimp"></a>删除所有SSAP服务</p>
+<td class="cellrowborder" valign="top" width="52.52%" headers="mcps1.1.4.1.3 "><p id="p3459mcpsimp"><a name="p3459mcpsimp"></a><a name="p3459mcpsimp"></a>Delete All SSAP Services</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table3462mcpsimp"></a>
-<table><thead align="left"><tr id="row3469mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3471mcpsimp"><a name="p3471mcpsimp"></a><a name="p3471mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row3469mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3471mcpsimp"><a name="p3471mcpsimp"></a><a name="p3471mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.98%" id="mcps1.1.5.1.2"><p id="p3473mcpsimp"><a name="p3473mcpsimp"></a><a name="p3473mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18.02%" id="mcps1.1.5.1.3"><p id="p3475mcpsimp"><a name="p3475mcpsimp"></a><a name="p3475mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3478mcpsimp"><a name="p3478mcpsimp"></a><a name="p3478mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3478mcpsimp"><a name="p3478mcpsimp"></a><a name="p3478mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -3975,7 +3974,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 发送SSAP响应<a name="ZH-CN_TOPIC_0000001829590156"></a>
+### Send SSAP Response<a name="ZH-CN_TOPIC_0000001829590156"></a>
 
 <a name="table3490mcpsimp"></a>
 <table><thead align="left"><tr id="row3496mcpsimp"><th class="cellrowborder" valign="top" width="22.91%" id="mcps1.1.4.1.1"><p id="p3498mcpsimp"><a name="p3498mcpsimp"></a><a name="p3498mcpsimp"></a>Service ID</p>
@@ -3990,22 +3989,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.41%" headers="mcps1.1.4.1.2 "><p id="p3507mcpsimp"><a name="p3507mcpsimp"></a><a name="p3507mcpsimp"></a>0x0B</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.68000000000001%" headers="mcps1.1.4.1.3 "><p id="p3509mcpsimp"><a name="p3509mcpsimp"></a><a name="p3509mcpsimp"></a>发送SSAP响应</p>
+<td class="cellrowborder" valign="top" width="52.68000000000001%" headers="mcps1.1.4.1.3 "><p id="p3509mcpsimp"><a name="p3509mcpsimp"></a><a name="p3509mcpsimp"></a>Send SSAP Response</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table3512mcpsimp"></a>
-<table><thead align="left"><tr id="row3519mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3521mcpsimp"><a name="p3521mcpsimp"></a><a name="p3521mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row3519mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3521mcpsimp"><a name="p3521mcpsimp"></a><a name="p3521mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.98%" id="mcps1.1.5.1.2"><p id="p3523mcpsimp"><a name="p3523mcpsimp"></a><a name="p3523mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18.02%" id="mcps1.1.5.1.3"><p id="p3525mcpsimp"><a name="p3525mcpsimp"></a><a name="p3525mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3528mcpsimp"><a name="p3528mcpsimp"></a><a name="p3528mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3528mcpsimp"><a name="p3528mcpsimp"></a><a name="p3528mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -4066,7 +4065,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 发送通知或指示<a name="ZH-CN_TOPIC_0000001876189821"></a>
+### Send Notification or Indication<a name="ZH-CN_TOPIC_0000001876189821"></a>
 
 <a name="table3585mcpsimp"></a>
 <table><thead align="left"><tr id="row3591mcpsimp"><th class="cellrowborder" valign="top" width="22.900000000000002%" id="mcps1.1.4.1.1"><p id="p3593mcpsimp"><a name="p3593mcpsimp"></a><a name="p3593mcpsimp"></a>Service ID</p>
@@ -4081,22 +4080,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.6%" headers="mcps1.1.4.1.2 "><p id="p3602mcpsimp"><a name="p3602mcpsimp"></a><a name="p3602mcpsimp"></a>0x0C</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.5%" headers="mcps1.1.4.1.3 "><p id="p3604mcpsimp"><a name="p3604mcpsimp"></a><a name="p3604mcpsimp"></a>发送通知或指示</p>
+<td class="cellrowborder" valign="top" width="52.5%" headers="mcps1.1.4.1.3 "><p id="p3604mcpsimp"><a name="p3604mcpsimp"></a><a name="p3604mcpsimp"></a>Send Notification or Indication</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table3607mcpsimp"></a>
-<table><thead align="left"><tr id="row3614mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3616mcpsimp"><a name="p3616mcpsimp"></a><a name="p3616mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row3614mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3616mcpsimp"><a name="p3616mcpsimp"></a><a name="p3616mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="21.98%" id="mcps1.1.5.1.2"><p id="p3618mcpsimp"><a name="p3618mcpsimp"></a><a name="p3618mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18.02%" id="mcps1.1.5.1.3"><p id="p3620mcpsimp"><a name="p3620mcpsimp"></a><a name="p3620mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3623mcpsimp"><a name="p3623mcpsimp"></a><a name="p3623mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3623mcpsimp"><a name="p3623mcpsimp"></a><a name="p3623mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -4157,7 +4156,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 通过UUID发送通知或指示<a name="ZH-CN_TOPIC_0000001876269601"></a>
+### Send Notification or Indication by UUID<a name="ZH-CN_TOPIC_0000001876269601"></a>
 
 <a name="table3680mcpsimp"></a>
 <table><thead align="left"><tr id="row3686mcpsimp"><th class="cellrowborder" valign="top" width="22.55%" id="mcps1.1.4.1.1"><p id="p3688mcpsimp"><a name="p3688mcpsimp"></a><a name="p3688mcpsimp"></a>Service ID</p>
@@ -4172,22 +4171,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="24.88%" headers="mcps1.1.4.1.2 "><p id="p3697mcpsimp"><a name="p3697mcpsimp"></a><a name="p3697mcpsimp"></a>0x0D</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.56999999999999%" headers="mcps1.1.4.1.3 "><p id="p3699mcpsimp"><a name="p3699mcpsimp"></a><a name="p3699mcpsimp"></a>通过UUID发送通知或指示</p>
+<td class="cellrowborder" valign="top" width="52.56999999999999%" headers="mcps1.1.4.1.3 "><p id="p3699mcpsimp"><a name="p3699mcpsimp"></a><a name="p3699mcpsimp"></a>Send Notification or Indication by UUID</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table3702mcpsimp"></a>
-<table><thead align="left"><tr id="row3709mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3711mcpsimp"><a name="p3711mcpsimp"></a><a name="p3711mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row3709mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3711mcpsimp"><a name="p3711mcpsimp"></a><a name="p3711mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p3713mcpsimp"><a name="p3713mcpsimp"></a><a name="p3713mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p3715mcpsimp"><a name="p3715mcpsimp"></a><a name="p3715mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3718mcpsimp"><a name="p3718mcpsimp"></a><a name="p3718mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3718mcpsimp"><a name="p3718mcpsimp"></a><a name="p3718mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -4275,7 +4274,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 设置服务端info<a name="ZH-CN_TOPIC_0000001829430400"></a>
+### Set Server Info<a name="ZH-CN_TOPIC_0000001829430400"></a>
 
 <a name="table3802mcpsimp"></a>
 <table><thead align="left"><tr id="row3808mcpsimp"><th class="cellrowborder" valign="top" width="22.38%" id="mcps1.1.4.1.1"><p id="p3810mcpsimp"><a name="p3810mcpsimp"></a><a name="p3810mcpsimp"></a>Service ID</p>
@@ -4290,22 +4289,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="25.169999999999998%" headers="mcps1.1.4.1.2 "><p id="p3819mcpsimp"><a name="p3819mcpsimp"></a><a name="p3819mcpsimp"></a>0x0E</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.449999999999996%" headers="mcps1.1.4.1.3 "><p id="p3821mcpsimp"><a name="p3821mcpsimp"></a><a name="p3821mcpsimp"></a>设置服务端info</p>
+<td class="cellrowborder" valign="top" width="52.449999999999996%" headers="mcps1.1.4.1.3 "><p id="p3821mcpsimp"><a name="p3821mcpsimp"></a><a name="p3821mcpsimp"></a>Set Server Info</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table3824mcpsimp"></a>
-<table><thead align="left"><tr id="row3831mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3833mcpsimp"><a name="p3833mcpsimp"></a><a name="p3833mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row3831mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3833mcpsimp"><a name="p3833mcpsimp"></a><a name="p3833mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p3835mcpsimp"><a name="p3835mcpsimp"></a><a name="p3835mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p3837mcpsimp"><a name="p3837mcpsimp"></a><a name="p3837mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3840mcpsimp"><a name="p3840mcpsimp"></a><a name="p3840mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3840mcpsimp"><a name="p3840mcpsimp"></a><a name="p3840mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -4346,7 +4345,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 
 
-### 打开射频发送<a name="ZH-CN_TOPIC_0000001876189825"></a>
+### Enable RF Transmission<a name="ZH-CN_TOPIC_0000001876189825"></a>
 
 <a name="table3871mcpsimp"></a>
 <table><thead align="left"><tr id="row3877mcpsimp"><th class="cellrowborder" valign="top" width="22.38%" id="mcps1.1.4.1.1"><p id="p3879mcpsimp"><a name="p3879mcpsimp"></a><a name="p3879mcpsimp"></a>Service ID</p>
@@ -4361,22 +4360,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="25.16%" headers="mcps1.1.4.1.2 "><p id="p3888mcpsimp"><a name="p3888mcpsimp"></a><a name="p3888mcpsimp"></a>0x01</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.459999999999994%" headers="mcps1.1.4.1.3 "><p id="p3890mcpsimp"><a name="p3890mcpsimp"></a><a name="p3890mcpsimp"></a>打开射频发送</p>
+<td class="cellrowborder" valign="top" width="52.459999999999994%" headers="mcps1.1.4.1.3 "><p id="p3890mcpsimp"><a name="p3890mcpsimp"></a><a name="p3890mcpsimp"></a>Enable RF Transmission</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table3893mcpsimp"></a>
-<table><thead align="left"><tr id="row3900mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3902mcpsimp"><a name="p3902mcpsimp"></a><a name="p3902mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row3900mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p3902mcpsimp"><a name="p3902mcpsimp"></a><a name="p3902mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p3904mcpsimp"><a name="p3904mcpsimp"></a><a name="p3904mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p3906mcpsimp"><a name="p3906mcpsimp"></a><a name="p3906mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3909mcpsimp"><a name="p3909mcpsimp"></a><a name="p3909mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p3909mcpsimp"><a name="p3909mcpsimp"></a><a name="p3909mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -4473,7 +4472,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 打开射频接收<a name="ZH-CN_TOPIC_0000001876269605"></a>
+### Enable RF Reception<a name="ZH-CN_TOPIC_0000001876269605"></a>
 
 <a name="table4002mcpsimp"></a>
 <table><thead align="left"><tr id="row4008mcpsimp"><th class="cellrowborder" valign="top" width="21.61%" id="mcps1.1.4.1.1"><p id="p4010mcpsimp"><a name="p4010mcpsimp"></a><a name="p4010mcpsimp"></a>Service ID</p>
@@ -4488,22 +4487,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="25.89%" headers="mcps1.1.4.1.2 "><p id="p4019mcpsimp"><a name="p4019mcpsimp"></a><a name="p4019mcpsimp"></a>0x02</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.5%" headers="mcps1.1.4.1.3 "><p id="p4021mcpsimp"><a name="p4021mcpsimp"></a><a name="p4021mcpsimp"></a>打开射频接收</p>
+<td class="cellrowborder" valign="top" width="52.5%" headers="mcps1.1.4.1.3 "><p id="p4021mcpsimp"><a name="p4021mcpsimp"></a><a name="p4021mcpsimp"></a>Enable RF Reception</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table4024mcpsimp"></a>
-<table><thead align="left"><tr id="row4031mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4033mcpsimp"><a name="p4033mcpsimp"></a><a name="p4033mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row4031mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4033mcpsimp"><a name="p4033mcpsimp"></a><a name="p4033mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p4035mcpsimp"><a name="p4035mcpsimp"></a><a name="p4035mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p4037mcpsimp"><a name="p4037mcpsimp"></a><a name="p4037mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4040mcpsimp"><a name="p4040mcpsimp"></a><a name="p4040mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4040mcpsimp"><a name="p4040mcpsimp"></a><a name="p4040mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -4555,7 +4554,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-### 关闭射频收发<a name="ZH-CN_TOPIC_0000001829430404"></a>
+### Disable RF Transmit/Receive<a name="ZH-CN_TOPIC_0000001829430404"></a>
 
 <a name="table4088mcpsimp"></a>
 <table><thead align="left"><tr id="row4094mcpsimp"><th class="cellrowborder" valign="top" width="21.38%" id="mcps1.1.4.1.1"><p id="p4096mcpsimp"><a name="p4096mcpsimp"></a><a name="p4096mcpsimp"></a>Service ID</p>
@@ -4570,17 +4569,17 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="26.200000000000003%" headers="mcps1.1.4.1.2 "><p id="p4105mcpsimp"><a name="p4105mcpsimp"></a><a name="p4105mcpsimp"></a>0x03</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.42%" headers="mcps1.1.4.1.3 "><p id="p4107mcpsimp"><a name="p4107mcpsimp"></a><a name="p4107mcpsimp"></a>关闭射频收发</p>
+<td class="cellrowborder" valign="top" width="52.42%" headers="mcps1.1.4.1.3 "><p id="p4107mcpsimp"><a name="p4107mcpsimp"></a><a name="p4107mcpsimp"></a>Disable RF Transmit/Receive</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
-无
+None
 
-### 重置射频收发<a name="ZH-CN_TOPIC_0000001829590164"></a>
+### Reset RF Transmit/Receive<a name="ZH-CN_TOPIC_0000001829590164"></a>
 
 <a name="table4112mcpsimp"></a>
 <table><thead align="left"><tr id="row4118mcpsimp"><th class="cellrowborder" valign="top" width="21.44%" id="mcps1.1.4.1.1"><p id="p4120mcpsimp"><a name="p4120mcpsimp"></a><a name="p4120mcpsimp"></a>Service ID</p>
@@ -4595,17 +4594,17 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="26.52%" headers="mcps1.1.4.1.2 "><p id="p4129mcpsimp"><a name="p4129mcpsimp"></a><a name="p4129mcpsimp"></a>0x04</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.04%" headers="mcps1.1.4.1.3 "><p id="p4131mcpsimp"><a name="p4131mcpsimp"></a><a name="p4131mcpsimp"></a>重置射频收发</p>
+<td class="cellrowborder" valign="top" width="52.04%" headers="mcps1.1.4.1.3 "><p id="p4131mcpsimp"><a name="p4131mcpsimp"></a><a name="p4131mcpsimp"></a>Reset RF Transmit/Receive</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
-无
+None
 
-### 设置RSSI阈值<a name="ZH-CN_TOPIC_0000001876189829"></a>
+### Set RSSI Threshold<a name="ZH-CN_TOPIC_0000001876189829"></a>
 
 <a name="table4136mcpsimp"></a>
 <table><thead align="left"><tr id="row4142mcpsimp"><th class="cellrowborder" valign="top" width="21.37%" id="mcps1.1.4.1.1"><p id="p4144mcpsimp"><a name="p4144mcpsimp"></a><a name="p4144mcpsimp"></a>Service ID</p>
@@ -4620,22 +4619,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="26.56%" headers="mcps1.1.4.1.2 "><p id="p4153mcpsimp"><a name="p4153mcpsimp"></a><a name="p4153mcpsimp"></a>0x05</p>
 </td>
-<td class="cellrowborder" valign="top" width="52.07000000000001%" headers="mcps1.1.4.1.3 "><p id="p4155mcpsimp"><a name="p4155mcpsimp"></a><a name="p4155mcpsimp"></a>设置RSSI阈值</p>
+<td class="cellrowborder" valign="top" width="52.07000000000001%" headers="mcps1.1.4.1.3 "><p id="p4155mcpsimp"><a name="p4155mcpsimp"></a><a name="p4155mcpsimp"></a>Set RSSI Threshold</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table4158mcpsimp"></a>
-<table><thead align="left"><tr id="row4165mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4167mcpsimp"><a name="p4167mcpsimp"></a><a name="p4167mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row4165mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4167mcpsimp"><a name="p4167mcpsimp"></a><a name="p4167mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p4169mcpsimp"><a name="p4169mcpsimp"></a><a name="p4169mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p4171mcpsimp"><a name="p4171mcpsimp"></a><a name="p4171mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4174mcpsimp"><a name="p4174mcpsimp"></a><a name="p4174mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4174mcpsimp"><a name="p4174mcpsimp"></a><a name="p4174mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -4656,7 +4655,7 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 
 
-### 低延时鼠标侧使能<a name="ZH-CN_TOPIC_0000001829430408"></a>
+### Enable Low Latency on the Mouse Side<a name="ZH-CN_TOPIC_0000001829430408"></a>
 
 <a name="table4187mcpsimp"></a>
 <table><thead align="left"><tr id="row4193mcpsimp"><th class="cellrowborder" valign="top" width="21.15%" id="mcps1.1.4.1.1"><p id="p4195mcpsimp"><a name="p4195mcpsimp"></a><a name="p4195mcpsimp"></a>Service ID</p>
@@ -4671,17 +4670,17 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="27.250000000000004%" headers="mcps1.1.4.1.2 "><p id="p4204mcpsimp"><a name="p4204mcpsimp"></a><a name="p4204mcpsimp"></a>0x01</p>
 </td>
-<td class="cellrowborder" valign="top" width="51.6%" headers="mcps1.1.4.1.3 "><p id="p4206mcpsimp"><a name="p4206mcpsimp"></a><a name="p4206mcpsimp"></a>低延时鼠标侧使能</p>
+<td class="cellrowborder" valign="top" width="51.6%" headers="mcps1.1.4.1.3 "><p id="p4206mcpsimp"><a name="p4206mcpsimp"></a><a name="p4206mcpsimp"></a>Enable Low Latency on the Mouse Side</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
-无
+None
 
-### 低延时Dongle侧使能<a name="ZH-CN_TOPIC_0000001829590168"></a>
+### Enable Low Latency on the Dongle Side<a name="ZH-CN_TOPIC_0000001829590168"></a>
 
 <a name="table4211mcpsimp"></a>
 <table><thead align="left"><tr id="row4217mcpsimp"><th class="cellrowborder" valign="top" width="20.94%" id="mcps1.1.4.1.1"><p id="p4219mcpsimp"><a name="p4219mcpsimp"></a><a name="p4219mcpsimp"></a>Service ID</p>
@@ -4696,17 +4695,17 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="27.37%" headers="mcps1.1.4.1.2 "><p id="p4228mcpsimp"><a name="p4228mcpsimp"></a><a name="p4228mcpsimp"></a>0x02</p>
 </td>
-<td class="cellrowborder" valign="top" width="51.690000000000005%" headers="mcps1.1.4.1.3 "><p id="p4230mcpsimp"><a name="p4230mcpsimp"></a><a name="p4230mcpsimp"></a>低延时Dongle侧使能</p>
+<td class="cellrowborder" valign="top" width="51.690000000000005%" headers="mcps1.1.4.1.3 "><p id="p4230mcpsimp"><a name="p4230mcpsimp"></a><a name="p4230mcpsimp"></a>Enable Low Latency on the Dongle Side</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
-无
+None
 
-### 低延时参数设置<a name="ZH-CN_TOPIC_0000001876189833"></a>
+### Low Latency Parameter Settings<a name="ZH-CN_TOPIC_0000001876189833"></a>
 
 <a name="table4235mcpsimp"></a>
 <table><thead align="left"><tr id="row4241mcpsimp"><th class="cellrowborder" valign="top" width="20.87%" id="mcps1.1.4.1.1"><p id="p4243mcpsimp"><a name="p4243mcpsimp"></a><a name="p4243mcpsimp"></a>Service ID</p>
@@ -4721,22 +4720,22 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </td>
 <td class="cellrowborder" valign="top" width="27.46%" headers="mcps1.1.4.1.2 "><p id="p4252mcpsimp"><a name="p4252mcpsimp"></a><a name="p4252mcpsimp"></a>0x03</p>
 </td>
-<td class="cellrowborder" valign="top" width="51.67%" headers="mcps1.1.4.1.3 "><p id="p4254mcpsimp"><a name="p4254mcpsimp"></a><a name="p4254mcpsimp"></a>低延时参数设置</p>
+<td class="cellrowborder" valign="top" width="51.67%" headers="mcps1.1.4.1.3 "><p id="p4254mcpsimp"><a name="p4254mcpsimp"></a><a name="p4254mcpsimp"></a>Low Latency Parameter Settings</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**TLV 参数：**
+**TLV Parameters:**
 
 <a name="table4257mcpsimp"></a>
-<table><thead align="left"><tr id="row4264mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4266mcpsimp"><a name="p4266mcpsimp"></a><a name="p4266mcpsimp"></a>字段名称</p>
+<table><thead align="left"><tr id="row4264mcpsimp"><th class="cellrowborder" valign="top" width="27%" id="mcps1.1.5.1.1"><p id="p4266mcpsimp"><a name="p4266mcpsimp"></a><a name="p4266mcpsimp"></a>Field Name</p>
 </th>
 <th class="cellrowborder" valign="top" width="22%" id="mcps1.1.5.1.2"><p id="p4268mcpsimp"><a name="p4268mcpsimp"></a><a name="p4268mcpsimp"></a>Type(bit0~bit6)</p>
 </th>
 <th class="cellrowborder" valign="top" width="18%" id="mcps1.1.5.1.3"><p id="p4270mcpsimp"><a name="p4270mcpsimp"></a><a name="p4270mcpsimp"></a>Length Size(Oct)</p>
 </th>
-<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4273mcpsimp"><a name="p4273mcpsimp"></a><a name="p4273mcpsimp"></a>Value数据类型</p>
+<th class="cellrowborder" valign="top" width="33%" id="mcps1.1.5.1.4"><p id="p4273mcpsimp"><a name="p4273mcpsimp"></a><a name="p4273mcpsimp"></a>Value Data Type</p>
 </th>
 </tr>
 </thead>
@@ -4770,10 +4769,10 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 </tbody>
 </table>
 
-# 交互流程示例<a name="ZH-CN_TOPIC_0000001876269613"></a>
+# Interaction Flow Example<a name="ZH-CN_TOPIC_0000001876269613"></a>
 
-以SSAP交互流程为例，流程图如[图1](#fig0769195551910)所示。
+Taking the SSAP interaction flow as an example, the flow diagram is shown in [Figure 1](#fig0769195551910).
 
-**图 1**  交互流程图<a name="fig0769195551910"></a>  
-![](figures/交互流程图.png "交互流程图")
+**Figure 1**  Interaction Flow Diagram<a name="fig0769195551910"></a>  
+![](figures/交互流程图.png "Interaction Flow Diagram")
 

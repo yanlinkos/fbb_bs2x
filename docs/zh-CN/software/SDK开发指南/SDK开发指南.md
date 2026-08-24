@@ -1,19 +1,19 @@
-# 前言<a name="ZH-CN_TOPIC_0000001665142194"></a>
+# Preface<a name="ZH-CN_TOPIC_0000001665142194"></a>
 
-**概述<a name="section4537382116410"></a>**
+**Overview<a name="section4537382116410"></a>**
 
-本文档主要介绍BS2X的SDK开发相关内容，包括SDK架构、接口实现机制与使用说明（包括工作原理、按场景描述接口使用方法和注意事项）。
+This document mainly describes the SDK development of BS2X, including the SDK architecture, interface implementation mechanism, and usage instructions (including working principles, interface usage methods and precautions described by scenario).
 
-注：本文档以BS21为例，不再单独说明。
+Note: This document uses BS21 as an example and will not elaborate separately.
 
-**产品版本<a name="section12266191774710"></a>**
+**Product Version<a name="section12266191774710"></a>**
 
-与本文档相对应的产品版本如下。
+The product versions corresponding to this document are as follows.
 
 <a name="table2270181717471"></a>
-<table><thead align="left"><tr id="row15364171712479"><th class="cellrowborder" valign="top" width="31.759999999999998%" id="mcps1.1.3.1.1"><p id="p123646174478"><a name="p123646174478"></a><a name="p123646174478"></a><strong id="b26989121817"><a name="b26989121817"></a><a name="b26989121817"></a>产品名称</strong></p>
+<table><thead align="left"><tr id="row15364171712479"><th class="cellrowborder" valign="top" width="31.759999999999998%" id="mcps1.1.3.1.1"><p id="p123646174478"><a name="p123646174478"></a><a name="p123646174478"></a><strong id="b26989121817"><a name="b26989121817"></a><a name="b26989121817"></a>Product Name</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="68.24%" id="mcps1.1.3.1.2"><p id="p1936401717470"><a name="p1936401717470"></a><a name="p1936401717470"></a><strong id="b271120129810"><a name="b271120129810"></a><a name="b271120129810"></a>产品版本</strong></p>
+<th class="cellrowborder" valign="top" width="68.24%" id="mcps1.1.3.1.2"><p id="p1936401717470"><a name="p1936401717470"></a><a name="p1936401717470"></a><strong id="b271120129810"><a name="b271120129810"></a><a name="b271120129810"></a>Product Version</strong></p>
 </th>
 </tr>
 </thead>
@@ -25,62 +25,62 @@
 </tbody>
 </table>
 
-**读者对象<a name="section4378592816410"></a>**
+**Reader Audience<a name="section4378592816410"></a>**
 
-本文档主要适用于以下工程师：
+This document is mainly applicable to the following engineers:
 
--   技术支持工程师
--   软件开发工程师
+-   Technical Support Engineer
+-   Software Development Engineer
 
-**符号约定<a name="section133020216410"></a>**
+**Symbol Conventions<a name="section133020216410"></a>**
 
-在本文中可能出现下列标志，它们所代表的含义如下。
+The following signs may appear in this document, and their meanings are as follows.
 
 <a name="table2622507016410"></a>
-<table><thead align="left"><tr id="row1530720816410"><th class="cellrowborder" valign="top" width="20.580000000000002%" id="mcps1.1.3.1.1"><p id="p6450074116410"><a name="p6450074116410"></a><a name="p6450074116410"></a><strong id="b2136615816410"><a name="b2136615816410"></a><a name="b2136615816410"></a>符号</strong></p>
+<table><thead align="left"><tr id="row1530720816410"><th class="cellrowborder" valign="top" width="20.580000000000002%" id="mcps1.1.3.1.1"><p id="p6450074116410"><a name="p6450074116410"></a><a name="p6450074116410"></a><strong id="b2136615816410"><a name="b2136615816410"></a><a name="b2136615816410"></a>Symbol</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="79.42%" id="mcps1.1.3.1.2"><p id="p5435366816410"><a name="p5435366816410"></a><a name="p5435366816410"></a><strong id="b5941558116410"><a name="b5941558116410"></a><a name="b5941558116410"></a>说明</strong></p>
+<th class="cellrowborder" valign="top" width="79.42%" id="mcps1.1.3.1.2"><p id="p5435366816410"><a name="p5435366816410"></a><a name="p5435366816410"></a><strong id="b5941558116410"><a name="b5941558116410"></a><a name="b5941558116410"></a>Description</strong></p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row1372280416410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p3734547016410"><a name="p3734547016410"></a><a name="p3734547016410"></a><a name="image2670064316410"></a><a name="image2670064316410"></a><span><img class="" id="image2670064316410" src="figures/zh-cn_image_0000001664982526.png" width="55.9265" height="25.270000000000003"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p1757432116410"><a name="p1757432116410"></a><a name="p1757432116410"></a>表示如不避免则将会导致死亡或严重伤害的具有高等级风险的危害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p1757432116410"><a name="p1757432116410"></a><a name="p1757432116410"></a>Indicates a high-level risk hazard that will result in death or serious injury if not avoided.</p>
 </td>
 </tr>
 <tr id="row466863216410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p1432579516410"><a name="p1432579516410"></a><a name="p1432579516410"></a><a name="image4895582316410"></a><a name="image4895582316410"></a><span><img class="" id="image4895582316410" src="figures/zh-cn_image_0000001713022053.png" width="55.9265" height="25.270000000000003"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p959197916410"><a name="p959197916410"></a><a name="p959197916410"></a>表示如不避免则可能导致死亡或严重伤害的具有中等级风险的危害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p959197916410"><a name="p959197916410"></a><a name="p959197916410"></a>Indicates a medium-level risk hazard that may result in death or serious injury if not avoided.</p>
 </td>
 </tr>
 <tr id="row123863216410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p1232579516410"><a name="p1232579516410"></a><a name="p1232579516410"></a><a name="image1235582316410"></a><a name="image1235582316410"></a><span><img class="" id="image1235582316410" src="figures/zh-cn_image_0000001665142238.png" width="55.9265" height="25.270000000000003"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p123197916410"><a name="p123197916410"></a><a name="p123197916410"></a>表示如不避免则可能导致轻微或中度伤害的具有低等级风险的危害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p123197916410"><a name="p123197916410"></a><a name="p123197916410"></a>Indicates a low-level risk hazard that may result in minor or moderate injury if not avoided.</p>
 </td>
 </tr>
 <tr id="row5786682116410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p2204984716410"><a name="p2204984716410"></a><a name="p2204984716410"></a><a name="image4504446716410"></a><a name="image4504446716410"></a><span><img class="" id="image4504446716410" src="figures/zh-cn_image_0000001713102065.png" width="55.9265" height="25.270000000000003"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4388861916410"><a name="p4388861916410"></a><a name="p4388861916410"></a>用于传递设备或环境安全警示信息。如不避免则可能会导致设备损坏、数据丢失、设备性能降低或其它不可预知的结果。</p>
-<p id="p1238861916410"><a name="p1238861916410"></a><a name="p1238861916410"></a>“须知”不涉及人身伤害。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4388861916410"><a name="p4388861916410"></a><a name="p4388861916410"></a>Used to convey equipment or environment safety warning information. If not avoided, it may result in equipment damage, data loss, degraded equipment performance, or other unpredictable results.</p>
+<p id="p1238861916410"><a name="p1238861916410"></a><a name="p1238861916410"></a>"Note" does not involve personal injury.</p>
 </td>
 </tr>
 <tr id="row2856923116410"><td class="cellrowborder" valign="top" width="20.580000000000002%" headers="mcps1.1.3.1.1 "><p id="p5555360116410"><a name="p5555360116410"></a><a name="p5555360116410"></a><a name="image799324016410"></a><a name="image799324016410"></a><span><img class="" id="image799324016410" src="figures/zh-cn_image_0000001665142242.png" width="47.88" height="15.96"></span></p>
 </td>
-<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4612588116410"><a name="p4612588116410"></a><a name="p4612588116410"></a>对正文中重点信息的补充说明。</p>
-<p id="p1232588116410"><a name="p1232588116410"></a><a name="p1232588116410"></a>“说明”不是安全警示信息，不涉及人身、设备及环境伤害信息。</p>
+<td class="cellrowborder" valign="top" width="79.42%" headers="mcps1.1.3.1.2 "><p id="p4612588116410"><a name="p4612588116410"></a><a name="p4612588116410"></a>Supplementary explanation of key information in the main text.</p>
+<p id="p1232588116410"><a name="p1232588116410"></a><a name="p1232588116410"></a>"Note" is not a safety warning and does not involve personal, equipment, or environmental injury information.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**修改记录<a name="section2467512116410"></a>**
+**Modification Record<a name="section2467512116410"></a>**
 
 <a name="table1557726816410"></a>
-<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="16.1%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>文档版本</strong></p>
+<table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="16.1%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>Document Version</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="21.29%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>发布日期</strong></p>
+<th class="cellrowborder" valign="top" width="21.29%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>Release Date</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="62.61%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>修改说明</strong></p>
+<th class="cellrowborder" valign="top" width="62.61%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>Modification Description</strong></p>
 </th>
 </tr>
 </thead>
@@ -88,83 +88,79 @@
 </td>
 <td class="cellrowborder" valign="top" width="21.29%" headers="mcps1.1.4.1.2 "><p id="p5986118204118"><a name="p5986118204118"></a><a name="p5986118204118"></a>2025-01-24</p>
 </td>
-<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p06691169419"><a name="p06691169419"></a><a name="p06691169419"></a>更新<span id="ph12218150245"><a name="ph12218150245"></a><a name="ph12218150245"></a>“<a href="中断机制.md">中断机制</a>”的</span>“<a href="注意事项-8.md">注意事项</a>”小节内容。</p>
+<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p06691169419"><a name="p06691169419"></a><a name="p06691169419"></a>Updated the content of the "<a href="注意事项-8.md">Precautions</a>" section of <span id="ph12218150245"><a name="ph12218150245"></a><a name="ph12218150245"></a>"<a href="中断机制.md">Interrupt Mechanism</a>"</span>.</p>
 </td>
 </tr>
 <tr id="row133411721194217"><td class="cellrowborder" valign="top" width="16.1%" headers="mcps1.1.4.1.1 "><p id="p13341172174219"><a name="p13341172174219"></a><a name="p13341172174219"></a>02</p>
 </td>
 <td class="cellrowborder" valign="top" width="21.29%" headers="mcps1.1.4.1.2 "><p id="p1734192119425"><a name="p1734192119425"></a><a name="p1734192119425"></a>2024-07-04</p>
 </td>
-<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p16598129194216"><a name="p16598129194216"></a><a name="p16598129194216"></a>更新“<a href="使用约束.md">使用约束</a>”小节内容。</p>
+<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p16598129194216"><a name="p16598129194216"></a><a name="p16598129194216"></a>Updated the content of the "<a href="使用约束.md">Usage Constraints</a>" section.</p>
 </td>
 </tr>
 <tr id="row1695234912313"><td class="cellrowborder" valign="top" width="16.1%" headers="mcps1.1.4.1.1 "><p id="p182910614321"><a name="p182910614321"></a><a name="p182910614321"></a>01</p>
 </td>
 <td class="cellrowborder" valign="top" width="21.29%" headers="mcps1.1.4.1.2 "><p id="p52917613321"><a name="p52917613321"></a><a name="p52917613321"></a>2024-05-15</p>
 </td>
-<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p1290663212"><a name="p1290663212"></a><a name="p1290663212"></a>第一次正式版本发布。</p>
+<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p1290663212"><a name="p1290663212"></a><a name="p1290663212"></a>First official version released.</p>
 </td>
 </tr>
 <tr id="row12907103279"><td class="cellrowborder" valign="top" width="16.1%" headers="mcps1.1.4.1.1 "><p id="p7911910172719"><a name="p7911910172719"></a><a name="p7911910172719"></a>00B03</p>
 </td>
 <td class="cellrowborder" valign="top" width="21.29%" headers="mcps1.1.4.1.2 "><p id="p139161062713"><a name="p139161062713"></a><a name="p139161062713"></a>2024-02-29</p>
 </td>
-<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p179161022718"><a name="p179161022718"></a><a name="p179161022718"></a>更新“<a href="使用约束.md">使用约束</a>”小节内容。</p>
+<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p179161022718"><a name="p179161022718"></a><a name="p179161022718"></a>Updated the content of the "<a href="使用约束.md">Usage Constraints</a>" section.</p>
 </td>
 </tr>
 <tr id="row324613324336"><td class="cellrowborder" valign="top" width="16.1%" headers="mcps1.1.4.1.1 "><p id="p4246532113318"><a name="p4246532113318"></a><a name="p4246532113318"></a>00B02</p>
 </td>
 <td class="cellrowborder" valign="top" width="21.29%" headers="mcps1.1.4.1.2 "><p id="p12246153217339"><a name="p12246153217339"></a><a name="p12246153217339"></a>2023-10-27</p>
 </td>
-<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p109124293312"><a name="p109124293312"></a><a name="p109124293312"></a>第二次临时版本发布。</p>
+<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p109124293312"><a name="p109124293312"></a><a name="p109124293312"></a>Second temporary version released.</p>
 </td>
 </tr>
 <tr id="row5947359616410"><td class="cellrowborder" valign="top" width="16.1%" headers="mcps1.1.4.1.1 "><p id="p2149706016410"><a name="p2149706016410"></a><a name="p2149706016410"></a>00B01</p>
 </td>
 <td class="cellrowborder" valign="top" width="21.29%" headers="mcps1.1.4.1.2 "><p id="p648803616410"><a name="p648803616410"></a><a name="p648803616410"></a>2023-09-27</p>
 </td>
-<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p1946537916410"><a name="p1946537916410"></a><a name="p1946537916410"></a>第一次临时版本发布。</p>
+<td class="cellrowborder" valign="top" width="62.61%" headers="mcps1.1.4.1.3 "><p id="p1946537916410"><a name="p1946537916410"></a><a name="p1946537916410"></a>First temporary version released.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-# 概述<a name="ZH-CN_TOPIC_0000001664982518"></a>
+# Overview<a name="ZH-CN_TOPIC_0000001664982518"></a>
 
 
 
-## 背景介绍<a name="ZH-CN_TOPIC_0000001713022045"></a>
+## Background Introduction<a name="ZH-CN_TOPIC_0000001713022045"></a>
 
-BS2X系列的平台软件对应用层实现了底层屏蔽，并对应用软件直接提供API（Application Programming Interface）接口完成相应功能。典型的系统应用架构如[图1](#fig16620102217403)所示。
+The platform software of the BS2X series shields the underlying layer from the application layer and directly provides API (Application Programming Interface) interfaces to application software to implement corresponding functions. A typical system application architecture is shown in [Figure 1](#fig16620102217403).
 
-**图 1**  系统应用框架图<a name="fig16620102217403"></a>  
-![](figures/系统应用框架图.png "系统应用框架图")
+**Figure 1**  System application architecture diagram<a name="fig16620102217403"></a>  
+![](figures/系统应用框架图.png "System application architecture diagram")
 
-该框架可以分为以下几个层次：
+The framework can be divided into the following layers:
 
--   APP层：即应用层。
--   API层：提供基于SDK开发的通用接口。
--   Platform平台层：提供SOC系统板级支持包，包括如下功能。
-    -   芯片和外围器件驱动。
-    -   操作系统。
-    -   系统管理。
+-   APP layer: the application layer.
+-   API layer: provides common interfaces for SDK-based development.
+-   Platform layer: provides the SOC board-level support package, including the following functions.
+    -   Chip and peripheral device drivers.
+    -   Operating system.
+    -   System management.
 
--   Service服务层：提供包含BT等应用协议栈。用于上层应用软件进行数据收发等操作。
--   第三方库：提供给Service服务层或提供给应用层使用的第三方软件库。
+-   Service layer: provides application protocol stacks including BT. Used by upper-layer application software for operations such as data transmission and reception.
+-   Third-party libraries: third-party software libraries provided to the Service layer or the application layer.
 
-## 使用约束<a name="ZH-CN_TOPIC_0000001665142230"></a>
+## Usage Constraints<a name="ZH-CN_TOPIC_0000001665142230"></a>
 
--   系统在启动过程中已完成UART、Flash、WDT、NV等驱动的初始化。用户在开发过程中，请勿重复初始化这些模块，否则会引起系统错误。
--   系统启动运行后，会占用一些系统资源：中断、内存、任务、消息队列、事件、信号量、定时器、互斥锁等。用户在应用层开发中释放资源时，仅可释放用户申请的资源，请勿释放系统资源。
--   Liteos系统资源配置位于“sdk/kernel/liteos/liteos\_v208.6.0\_b017/Huawei\_LiteOS/tools/build/config/bs2x.config”\(bs2x.config默认和芯片对应；特殊版本的，和build/config/target\_config/bs20\(bs21/bs21a/bs22/bs26\)/config.py中的liteos\_kconfig选项对应。）以bs21为例，默认使用sdk/kernel/liteos/liteos\_v208.6.0\_b017/Huawei\_LiteOS/tools/build/config/bs21.config；
+-   During the system startup process, the initialization of drivers such as UART, Flash, WDT, and NV has been completed. During development, do not re-initialize these modules; otherwise, system errors may occur.
+-   After the system starts running, it occupies some system resources: interrupts, memory, tasks, message queues, events, semaphores, timers, mutexes, etc. When releasing resources during application-layer development, users can only release resources applied for by the user; do not release system resources.
+-   The LiteOS system resource configuration is located in "sdk/kernel/liteos/liteos\_v208.6.0\_b017/Huawei\_LiteOS/tools/build/config/bs2x.config" (bs2x.config corresponds to the chip by default; for special versions, it corresponds to the liteos\_kconfig option in build/config/target\_config/bs20(bs21/bs21a/bs22/bs26)/config.py.) Taking bs21 as an example, sdk/kernel/liteos/liteos\_v208.6.0\_b017/Huawei\_LiteOS/tools/build/config/bs21.config is used by default;
 
-    config.py中的bs21-rcu配置了liteos\_kconfig': 'bs21\_rcu’，则使用“sdk/kernel/liteos/liteos\_v208.6.0\_b017/Huawei\_LiteOS/tools/build/config/bs21\_rcu.config”文件，用户调整资源使用时，需要修改此文档。
+    If liteos\_kconfig': 'bs21\_rcu' is configured for bs21-rcu in config.py, the "sdk/kernel/liteos/liteos\_v208.6.0\_b017/Huawei\_LiteOS/tools/build/config/bs21\_rcu.config" file is used. When users adjust resource usage, this file needs to be modified.
 
-# 系统接口<a name="ZH-CN_TOPIC_0000001713102053"></a>
-
-
-
-
+# System Interface<a name="ZH-CN_TOPIC_0000001713102053"></a>
 
 
 
@@ -172,264 +168,268 @@ BS2X系列的平台软件对应用层实现了底层屏蔽，并对应用软件�
 
 
 
-## 概述<a name="ZH-CN_TOPIC_0000001713102061"></a>
 
-系统接口是包括对任务、事件等系统资源进行所需操作的接口。
 
-SDK支持用户客制化系统资源，以BS21为例，资源配置需编辑“sdk\\kernel\\liteos\\liteos\_v208.5.0\\Huawei\_LiteOS\\tools\\build\\config\\bs21.config”文件，按需合理地配置资源项将有效降低系统资源浪费，提高运行效率，又可避免资源不足。常用配置项如[表1](#table1130973994118)所示。
 
-**表 1**  bs21.config中的常用资源配置项
+
+## Overview<a name="ZH-CN_TOPIC_0000001713102061"></a>
+
+System interfaces are interfaces for performing required operations on system resources such as tasks and events.
+
+SDK supports user customization of system resources. Taking BS21 as an example, resource configuration requires editing the "sdk\\kernel\\liteos\\liteos\_v208.5.0\\Huawei\_LiteOS\\tools\\build\\config\\bs21.config" file. Reasonable configuration of resource items as needed can effectively reduce system resource waste, improve operating efficiency, and avoid resource shortage. Common configuration items are shown in [Table 1](#table1130973994118).
+
+**Table 1**  Common resource configuration items in bs21.config
 
 <a name="table1130973994118"></a>
-<table><thead align="left"><tr id="row1730913924111"><th class="cellrowborder" valign="top" width="44.1%" id="mcps1.2.3.1.1"><p id="p1030911396414"><a name="p1030911396414"></a><a name="p1030911396414"></a>配置项</p>
+<table><thead align="left"><tr id="row1730913924111"><th class="cellrowborder" valign="top" width="44.1%" id="mcps1.2.3.1.1"><p id="p1030911396414"><a name="p1030911396414"></a><a name="p1030911396414"></a>Configuration Item</p>
 </th>
-<th class="cellrowborder" valign="top" width="55.900000000000006%" id="mcps1.2.3.1.2"><p id="p163101039184114"><a name="p163101039184114"></a><a name="p163101039184114"></a>描述</p>
+<th class="cellrowborder" valign="top" width="55.900000000000006%" id="mcps1.2.3.1.2"><p id="p163101039184114"><a name="p163101039184114"></a><a name="p163101039184114"></a>Description</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row7310103920418"><td class="cellrowborder" valign="top" width="44.1%" headers="mcps1.2.3.1.1 "><p id="p0310939194115"><a name="p0310939194115"></a><a name="p0310939194115"></a>LOSCFG_BASE_CORE_TSK_LIMIT</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p17310173918418"><a name="p17310173918418"></a><a name="p17310173918418"></a>系统任务数上限。创建任务时，ID超过此数值将创建失败。</p>
+<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p17310173918418"><a name="p17310173918418"></a><a name="p17310173918418"></a>Upper limit of the number of system tasks. If the ID exceeds this value when creating a task, the creation fails.</p>
 </td>
 </tr>
 <tr id="row6310193984115"><td class="cellrowborder" valign="top" width="44.1%" headers="mcps1.2.3.1.1 "><p id="p193216106472"><a name="p193216106472"></a><a name="p193216106472"></a>LOSCFG_BASE_IPC_SEM_LIMIT</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p15310439124111"><a name="p15310439124111"></a><a name="p15310439124111"></a>系统信号量个数上限。资源不足时，引起创建信号量失败。</p>
+<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p15310439124111"><a name="p15310439124111"></a><a name="p15310439124111"></a>Upper limit of the number of system semaphores. Insufficient resources cause semaphore creation failures.</p>
 </td>
 </tr>
 <tr id="row531015392416"><td class="cellrowborder" valign="top" width="44.1%" headers="mcps1.2.3.1.1 "><p id="p531033904111"><a name="p531033904111"></a><a name="p531033904111"></a>LOSCFG_BASE_IPC_MUX_LIMIT</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p113107392415"><a name="p113107392415"></a><a name="p113107392415"></a>系统互斥锁个数上限。资源不足时，引起创建互斥锁失败。</p>
+<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p113107392415"><a name="p113107392415"></a><a name="p113107392415"></a>Upper limit of the number of system mutexes. Insufficient resources cause mutex creation failures.</p>
 </td>
 </tr>
 <tr id="row18310173974113"><td class="cellrowborder" valign="top" width="44.1%" headers="mcps1.2.3.1.1 "><p id="p318655018472"><a name="p318655018472"></a><a name="p318655018472"></a>LOSCFG_BASE_IPC_QUEUE_LIMIT</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p8310173917417"><a name="p8310173917417"></a><a name="p8310173917417"></a>消息队列个数上限。资源不足时，创建消息队列将失败。</p>
+<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p8310173917417"><a name="p8310173917417"></a><a name="p8310173917417"></a>Upper limit of the number of message queues. Insufficient resources cause message queue creation failures.</p>
 </td>
 </tr>
 <tr id="row4488132611506"><td class="cellrowborder" valign="top" width="44.1%" headers="mcps1.2.3.1.1 "><p id="p154898266503"><a name="p154898266503"></a><a name="p154898266503"></a>LOSCFG_BASE_CORE_SWTMR_LIMIT</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p154891526185012"><a name="p154891526185012"></a><a name="p154891526185012"></a>软件定时器个数上限。资源不足时，创建软件定时器将失败。</p>
+<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p154891526185012"><a name="p154891526185012"></a><a name="p154891526185012"></a>Upper limit of the number of software timers. Insufficient resources cause software timer creation failures.</p>
 </td>
 </tr>
 <tr id="row434413401517"><td class="cellrowborder" valign="top" width="44.1%" headers="mcps1.2.3.1.1 "><p id="p73451640155113"><a name="p73451640155113"></a><a name="p73451640155113"></a>LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p1034520401512"><a name="p1034520401512"></a><a name="p1034520401512"></a>IDLE任务的栈大小。</p>
+<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p1034520401512"><a name="p1034520401512"></a><a name="p1034520401512"></a>Stack size of the IDLE task.</p>
 </td>
 </tr>
 <tr id="row37134175535"><td class="cellrowborder" valign="top" width="44.1%" headers="mcps1.2.3.1.1 "><p id="p11712162924811"><a name="p11712162924811"></a><a name="p11712162924811"></a>LOSCFG_BASE_CORE_TSK_SWTMR_STACK_SIZE</p>
 </td>
-<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p57131317195314"><a name="p57131317195314"></a><a name="p57131317195314"></a>软件定时器任务的栈大小。</p>
+<td class="cellrowborder" valign="top" width="55.900000000000006%" headers="mcps1.2.3.1.2 "><p id="p57131317195314"><a name="p57131317195314"></a><a name="p57131317195314"></a>Stack size of the software timer task.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-## 任务<a name="ZH-CN_TOPIC_0000001664982514"></a>
+## Task<a name="ZH-CN_TOPIC_0000001664982514"></a>
 
 
 
 
 
-### 概述<a name="ZH-CN_TOPIC_0000001713102057"></a>
+### Overview<a name="ZH-CN_TOPIC_0000001713102057"></a>
 
-任务是竞争系统资源的最小运行单元。任务可以使用或等待CPU、使用内存空间等系统资源，并独立于其它任务运行。任务模块可以给用户提供多个任务，实现了任务之间的切换和通信，帮助用户管理业务程序流程。任务模块具有如下特性：
+A task is the smallest running unit that competes for system resources. A task can use or wait for system resources such as the CPU and memory space, and runs independently of other tasks. The task module provides multiple tasks to users, implements switching and communication between tasks, and helps users manage business process flows. The task module has the following characteristics:
 
--   支持多任务，一个任务表示一个线程。
--   任务是抢占式调度机制，同时支持时间片轮转调度方式。
--   高优先级的任务可打断低优先级任务，低优先级任务必须在高优先级任务阻塞或结束后才能得到调度。
--   有32个优先级\[0，31\]，最高优先级为0，最低优先级为31。由于系统自身任务需要及时调度，建议用户使用任务优先级范围是\[10,30\]。应用级任务建议使用低于系统级任务的优先级。
+-   Supports multiple tasks; one task represents one thread.
+-   Tasks use the preemptive scheduling mechanism and also support the round-robin scheduling mode.
+-   High-priority tasks can preempt low-priority tasks. Low-priority tasks can be scheduled only after high-priority tasks are blocked or terminated.
+-   There are 32 priorities [0, 31], with the highest priority being 0 and the lowest being 31. Because system tasks need to be scheduled in time, it is recommended that users use tasks in the priority range [10, 30]. Application-level tasks are recommended to use priorities lower than those of system-level tasks.
 
-**重要概念<a name="section068413489911"></a>**
+**Key Concepts<a name="section068413489911"></a>**
 
--   任务状态
+-   Task State
 
-    系统中的每一个任务都有多种运行状态。系统初始化完成后，创建的任务就可以在系统中竞争一定的资源，由内核进行调度。
+    Each task in the system has multiple running states. After system initialization is completed, created tasks can compete for certain resources in the system and are scheduled by the kernel.
 
-    任务状态通常分为以下4种：
+    Task states are usually divided into the following 4 types:
 
-    -   就绪态（Ready）：该任务在就绪列表中，只等待CPU。
-    -   运行态（Running）：该任务正在执行。
-    -   阻塞态（Blocked）：该任务不在就绪列表中。包含任务被挂起、任务被延时、任务正在等待信号量、读写队列或者等待读事件等。
-    -   退出态（Dead）：该任务运行结束，等待系统回收资源。
+    -   Ready state (Ready): The task is in the ready list and only waits for the CPU.
+    -   Running state (Running): The task is being executed.
+    -   Blocked state (Blocked): The task is not in the ready list. This includes the task being suspended, the task being delayed, the task waiting for a semaphore, reading/writing a queue, or waiting to read an event, etc.
+    -   Dead state (Dead): The task has finished running and waits for the system to reclaim resources.
 
-    **图 1**  任务状态示意图<a name="fig109201259173111"></a>  
+    **Figure 1**  Task state diagram<a name="fig109201259173111"></a>  
     
     ![](figures/zh-cn_image_0000001664982530.png)
 
-    任务状态迁移说明：
+    Task state transition description:
 
-    -   就绪态→运行态：
+    -   Ready state→Running state:
 
-        任务创建后进入就绪态，发生任务切换时，就绪列表中最高优先级的任务被执行，从而进入运行态，但此刻该任务依旧在就绪列表中。
+        After a task is created, it enters the ready state. When task switching occurs, the highest-priority task in the ready list is executed and enters the running state, but the task remains in the ready list at this moment.
 
-    -   运行态→阻塞态：
+    -   Running state→Blocked state:
 
-        正在运行的任务发生阻塞（挂起、延时、读信号量等）时，该任务会从就绪列表中删除，任务状态由运行态变成阻塞态，然后发生任务切换，运行就绪列表中剩余最高优先级任务。
+        When a running task becomes blocked (suspended, delayed, reading a semaphore, etc.), the task is removed from the ready list, and its state changes from running state to blocked state. Then task switching occurs, and the remaining highest-priority task in the ready list runs.
 
-    -   阻塞态→就绪态（阻塞态→运行态）：
+    -   Blocked state→Ready state (Blocked state→Running state):
 
-        阻塞的任务被恢复后（任务恢复、延时时间超时、读信号量超时或读到信号量等），此时被恢复的任务会被加入就绪列表，从而由阻塞态变成就绪态；此时如果被恢复任务的优先级高于正在运行任务的优先级，则会发生任务切换，将该任务由就绪态变成运行态。
+        After a blocked task is resumed (task resume, delay timeout, semaphore read timeout or semaphore read, etc.), the resumed task is added to the ready list, changing from blocked state to ready state. If the priority of the resumed task is higher than that of the running task, task switching occurs, changing the task from ready state to running state.
 
-    -   就绪态→阻塞态：
+    -   Ready state→Blocked state:
 
-        任务也有可能在就绪态时被阻塞（挂起），此时任务状态会有就绪态转变为阻塞态，该任务从就绪列表中删除，不会参与任务调度，直到该任务被恢复。
+        A task may also be blocked (suspended) while in the ready state. In this case, the task state changes from ready state to blocked state. The task is removed from the ready list and does not participate in task scheduling until the task is resumed.
 
-    -   运行态→就绪态：
+    -   Running state→Ready state:
 
-        有更高优先级任务创建或者恢复后，会发生任务调度，此刻就绪列表中最高优先级任务变为运行态，那么原先运行的任务由运行态变为就绪态，依然在就绪列表中。
+        After a higher-priority task is created or resumed, task scheduling occurs. At this moment, the highest-priority task in the ready list changes to running state, and the originally running task changes from running state to ready state, still remaining in the ready list.
 
-    -   运行态→退出态
+    -   Running state→Dead state
 
-        运行中的任务运行结束，任务状态由运行态变为退出态。退出态包含任务运行结束的正常退出以及Invalid状态。例如，未设置分离属性（LOS\_TASK\_STATUS\_DETACHED）的任务，运行结束后对外呈现的是Invalid状态，即退出态。
+        When a running task finishes running, its state changes from running state to dead state. The dead state includes the normal exit after the task finishes running and the Invalid state. For example, a task without the detach attribute (LOS\_TASK\_STATUS\_DETACHED) presents the Invalid state after finishing running, which is the dead state.
 
-    -   阻塞态→退出态
+    -   Blocked state→Dead state
 
-        阻塞的任务调用删除接口，任务状态由阻塞态变为退出态。
+        When a blocked task calls the delete interface, its state changes from blocked state to dead state.
 
--   任务ID
+-   Task ID
 
-    任务ID，在任务创建时通过参数返回给用户，作为任务的一个非常重要的标识。用户可以通过任务ID对指定任务进行任务挂起、任务恢复、查询任务名等操作。
+    The task ID is returned to the user as a parameter when the task is created and serves as a very important identifier of the task. Users can use the task ID to suspend a specified task, resume a task, query the task name, etc.
 
--   任务优先级
+-   Task Priority
 
-    优先级表示任务执行的优先顺序。任务的优先级决定了在发生任务切换时即将要执行的任务。在就绪列表中的最高优先级的任务将得到执行。
+    The priority indicates the execution order of tasks. The task priority determines which task will be executed next when task switching occurs. The highest-priority task in the ready list will be executed.
 
--   任务入口函数
+-   Task Entry Function
 
-    每个新任务得到调度后将执行的函数。该函数由用户实现，在任务创建时，通过任务创建结构体指定。
+    The function that each new task will execute after being scheduled. This function is implemented by the user and specified through the task creation structure when the task is created.
 
--   任务控制块TCB
+-   Task Control Block (TCB)
 
-    每一个任务都含有一个任务控制块（TCB）。TCB包含了任务上下文栈指针（stack pointer）、任务状态、任务优先级、任务ID、任务名、任务栈大小等信息。TCB可以反映出每个任务运行情况。
+    Each task contains a task control block (TCB). The TCB contains information such as the task context stack pointer, task state, task priority, task ID, task name, and task stack size. The TCB reflects the running status of each task.
 
--   任务栈
+-   Task Stack
 
-    每一个任务都拥有一个独立的栈空间，我们称为任务栈。栈空间里保存的信息包含局部变量、寄存器、函数参数、函数返回地址等。任务在任务切换时会将切出任务的上下文信息保存在自身的任务栈空间里面，以便任务恢复时还原现场，从而在任务恢复后在切出点继续开始执行。
+    Each task has an independent stack space, which is called the task stack. The information saved in the stack space includes local variables, registers, function parameters, function return addresses, etc. During task switching, the context information of the switched-out task is saved in its own task stack space so that the scene can be restored when the task resumes, allowing execution to continue from the switch-out point after the task is resumed.
 
--   任务上下文
+-   Task Context
 
-    任务在运行过程中使用到的一些资源，如寄存器等，我们称为任务上下文。当这个任务挂起时，其他任务继续执行，在任务恢复后，如果没有把任务上下文保存下来，有可能任务切换会修改寄存器中的值，从而导致未知错误。因此，在任务挂起的时候会将本任务的任务上下文信息，保存在自己的任务栈里面，以便任务恢复后，从栈空间中恢复挂起时的上下文信息，从而继续执行被挂起时被打断的代码。
+    Some resources used by a task during running, such as registers, are called the task context. When a task is suspended, other tasks continue to execute. If the task context is not saved after the task is resumed, task switching may modify the values in the registers, causing unknown errors. Therefore, when a task is suspended, the task context information of the task is saved in its own task stack so that after the task is resumed, the context information at the time of suspension can be restored from the stack space, allowing execution of the interrupted code to continue.
 
--   任务切换
+-   Task Switching
 
-    任务切换包含获取就绪列表中最高优先级任务、切出任务上下文保存、切入任务上下文恢复等动作。
+    Task switching includes actions such as obtaining the highest-priority task in the ready list, saving the context of the switched-out task, and restoring the context of the switched-in task.
 
-**运行机制<a name="section1860719353913"></a>**
+**Operating Mechanism<a name="section1860719353913"></a>**
 
-系统任务管理模块提供如下功能：
+The system task management module provides the following functions:
 
--   任务创建。
--   任务延时。
--   任务挂起和任务恢复。
--   锁任务调度和解锁任务调度。
--   根据ID查询任务控制块信息。
+-   Task creation.
+-   Task delay.
+-   Task suspension and task resume.
+-   Locking task scheduling and unlocking task scheduling.
+-   Query task control block information by ID.
 
-用户创建任务时，系统会将任务栈进行初始化，预置上下文。此外，系统还会将“任务入口函数”地址放在系统任务控制相关数据结构内。这样在任务第一次启动进入运行态时，将会执行“任务入口函数”。
+When a user creates a task, the system initializes the task stack and presets the context. In addition, the system places the address of the "task entry function" in the data structure related to system task control. In this way, when the task is started for the first time and enters the running state, the "task entry function" will be executed.
 
-### 开发流程<a name="ZH-CN_TOPIC_0000001664982522"></a>
+### Development Process<a name="ZH-CN_TOPIC_0000001664982522"></a>
 
-**使用场景<a name="section6187155810234"></a>**
+**Usage Scenario<a name="section6187155810234"></a>**
 
-任务创建后，内核可以执行锁任务调度，解锁任务调度，挂起，恢复，延时等操作，同时也可以设置任务优先级，获取任务优先级。任务结束的时候，如果任务的状态是自删除状态（LOS\_TASK\_STATUS\_DETACHED），则进行当前任务自删除操作。
+After a task is created, the kernel can perform operations such as locking task scheduling, unlocking task scheduling, suspending, resuming, and delaying, and can also set the task priority and obtain the task priority. When a task ends, if the task state is the self-delete state (LOS\_TASK\_STATUS\_DETACHED), the current task performs self-deletion.
 
-用户的代码需实现app\_main接口。系统初始化阶段会调用app\_main接口，用户的初始化操作可在app\_main中完成。如果用户需要多个任务，可在app\_main中创建新任务。建议用户使用任务优先级范围是10～30。应用级任务建议使用低于系统级任务的优先级。
+User code needs to implement the app\_main interface. During the system initialization phase, the app\_main interface is called, and user initialization operations can be completed in app\_main. If users need multiple tasks, they can create new tasks in app\_main. It is recommended that users use tasks in the priority range of 10 to 30. Application-level tasks are recommended to use priorities lower than those of system-level tasks.
 
-**功能说明<a name="section17138981244"></a>**
+**Function Description<a name="section17138981244"></a>**
 
-系统中的任务管理模块为用户提供的功能如[表1](#table1899129194418)所示。
+The functions provided by the task management module to users are shown in [Table 1](#table1899129194418).
 
-**表 1**  系统任务管理模块接口说明
+**Table 1**  Interface description of the system task management module
 
 <a name="table1899129194418"></a>
-<table><thead align="left"><tr id="row49915915447"><th class="cellrowborder" valign="top" width="27.99%" id="mcps1.2.3.1.1"><p id="p179911497446"><a name="p179911497446"></a><a name="p179911497446"></a>接口名称</p>
+<table><thead align="left"><tr id="row49915915447"><th class="cellrowborder" valign="top" width="27.99%" id="mcps1.2.3.1.1"><p id="p179911497446"><a name="p179911497446"></a><a name="p179911497446"></a>Interface Name</p>
 </th>
-<th class="cellrowborder" valign="top" width="72.00999999999999%" id="mcps1.2.3.1.2"><p id="p1799129184416"><a name="p1799129184416"></a><a name="p1799129184416"></a>说明</p>
+<th class="cellrowborder" valign="top" width="72.00999999999999%" id="mcps1.2.3.1.2"><p id="p1799129184416"><a name="p1799129184416"></a><a name="p1799129184416"></a>Description</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row1999215994416"><td class="cellrowborder" valign="top" width="27.99%" headers="mcps1.2.3.1.1 "><p id="p31364121914"><a name="p31364121914"></a><a name="p31364121914"></a>osal_kthread_create</p>
 </td>
-<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p188819218451"><a name="p188819218451"></a><a name="p188819218451"></a>创建任务。</p>
+<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p188819218451"><a name="p188819218451"></a><a name="p188819218451"></a>Creates a task.</p>
 </td>
 </tr>
 <tr id="row1899220920447"><td class="cellrowborder" valign="top" width="27.99%" headers="mcps1.2.3.1.1 "><p id="p137209575913"><a name="p137209575913"></a><a name="p137209575913"></a>osal_kthread_destroy</p>
 </td>
-<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p1799210994414"><a name="p1799210994414"></a><a name="p1799210994414"></a>删除指定的任务</p>
+<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p1799210994414"><a name="p1799210994414"></a><a name="p1799210994414"></a>Deletes the specified task</p>
 </td>
 </tr>
 <tr id="row19921199447"><td class="cellrowborder" valign="top" width="27.99%" headers="mcps1.2.3.1.1 "><p id="p178692012192617"><a name="p178692012192617"></a><a name="p178692012192617"></a>osal_kthread_suspend</p>
 </td>
-<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p189921997446"><a name="p189921997446"></a><a name="p189921997446"></a>挂起指定任务。</p>
+<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p189921997446"><a name="p189921997446"></a><a name="p189921997446"></a>Suspends the specified task.</p>
 </td>
 </tr>
 <tr id="row799211964413"><td class="cellrowborder" valign="top" width="27.99%" headers="mcps1.2.3.1.1 "><p id="p127061418172611"><a name="p127061418172611"></a><a name="p127061418172611"></a>osal_kthread_resume</p>
 </td>
-<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p139921195446"><a name="p139921195446"></a><a name="p139921195446"></a>恢复挂起指定任务。</p>
+<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p139921195446"><a name="p139921195446"></a><a name="p139921195446"></a>Resumes the specified suspended task.</p>
 </td>
 </tr>
 <tr id="row49921397448"><td class="cellrowborder" valign="top" width="27.99%" headers="mcps1.2.3.1.1 "><p id="p193561321113517"><a name="p193561321113517"></a><a name="p193561321113517"></a>osal_kthread_set_priority</p>
 </td>
-<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p799209154420"><a name="p799209154420"></a><a name="p799209154420"></a>设置任务优先级。</p>
+<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p799209154420"><a name="p799209154420"></a><a name="p799209154420"></a>Sets the task priority.</p>
 </td>
 </tr>
 <tr id="row1141917445544"><td class="cellrowborder" valign="top" width="27.99%" headers="mcps1.2.3.1.1 "><p id="p348754514238"><a name="p348754514238"></a><a name="p348754514238"></a>osal_get_current_tid</p>
 </td>
-<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p5419134485412"><a name="p5419134485412"></a><a name="p5419134485412"></a>获取当前任务ID。</p>
+<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p5419134485412"><a name="p5419134485412"></a><a name="p5419134485412"></a>Obtains the current task ID.</p>
 </td>
 </tr>
 <tr id="row436565435417"><td class="cellrowborder" valign="top" width="27.99%" headers="mcps1.2.3.1.1 "><p id="p197162276912"><a name="p197162276912"></a><a name="p197162276912"></a>osal_kthread_lock</p>
 </td>
-<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p193661154145417"><a name="p193661154145417"></a><a name="p193661154145417"></a>禁止系统任务调度。</p>
+<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p193661154145417"><a name="p193661154145417"></a><a name="p193661154145417"></a>Disables system task scheduling.</p>
 </td>
 </tr>
 <tr id="row1929216285520"><td class="cellrowborder" valign="top" width="27.99%" headers="mcps1.2.3.1.1 "><p id="p18593113217916"><a name="p18593113217916"></a><a name="p18593113217916"></a>osal_kthread_unlock</p>
 </td>
-<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p62921255519"><a name="p62921255519"></a><a name="p62921255519"></a>允许系统任务调度。</p>
+<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p62921255519"><a name="p62921255519"></a><a name="p62921255519"></a>Enables system task scheduling.</p>
 </td>
 </tr>
 <tr id="row132351610145513"><td class="cellrowborder" valign="top" width="27.99%" headers="mcps1.2.3.1.1 "><p id="p17687173611255"><a name="p17687173611255"></a><a name="p17687173611255"></a>osal_msleep</p>
 </td>
-<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p16236210175515"><a name="p16236210175515"></a><a name="p16236210175515"></a>任务睡眠，单位ms。</p>
+<td class="cellrowborder" valign="top" width="72.00999999999999%" headers="mcps1.2.3.1.2 "><p id="p16236210175515"><a name="p16236210175515"></a><a name="p16236210175515"></a>Puts the task to sleep, in ms.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**开发流程<a name="section8617161982617"></a>**
+**Development Process<a name="section8617161982617"></a>**
 
-以bs21创建任务为例，创建任务的开发流程：
+Taking task creation on bs21 as an example, the development process of creating a task:
 
-1.  在bs21.config中配置任务数。
+1.  Configure the number of tasks in bs21.config.
 
-    配置LOSCFG\_BASE\_CORE\_TSK\_LIMIT系统支持最大任务数需要根据用户需求配置。
+    Configure the maximum number of tasks supported by the system through LOSCFG\_BASE\_CORE\_TSK\_LIMIT based on user requirements.
 
-2.  调用锁任务接口：osal\_kthread\_lock，锁住任务，防止高优先级任务调度。
-3.  调用创建任务接口：osal\_kthread\_create。
-4.  调用解锁任务接口：osal\_kthread\_unlock，让任务按照优先级进行调度。
-5.  调用挂起指定的任务接口：osal\_kthread\_suspend，任务挂起等待恢复操作。
-6.  调用恢复挂起的任务接口：osal\_kthread\_resume。
+2.  Call the task lock interface: osal\_kthread\_lock, to lock the task and prevent scheduling of high-priority tasks.
+3.  Call the task creation interface: osal\_kthread\_create.
+4.  Call the task unlock interface: osal\_kthread\_unlock, to allow tasks to be scheduled according to priority.
+5.  Call the interface to suspend the specified task: osal\_kthread\_suspend, to suspend the task and wait for a resume operation.
+6.  Call the interface to resume the suspended task: osal\_kthread\_resume.
 
-**错误码<a name="section713711582716"></a>**
+**Error Code<a name="section713711582716"></a>**
 
-osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal接口运行过程中出现异常结果会打印异常信息。
+The osal interface supports the diagnostic print switch. After disabling the OSALLOG\_DISABLE macro definition, abnormal results during the execution of osal interfaces will print abnormal information.
 
-异常错误码请参考“sdk\\kernel\\liteos\\liteos\_v208.5.0\\Huawei\_LiteOS\\kernel\\include\\los\_task.h”中错误说明。
+For abnormal error codes, refer to the error description in "sdk\\kernel\\liteos\\liteos\_v208.5.0\\Huawei\_LiteOS\\kernel\\include\\los\_task.h".
 
-任务错误码如[表2](#table17697228719)所示。
+Task error codes are shown in [Table 2](#table17697228719).
 
-**表 2**  任务错误码说明
+**Table 2**  Task error code description
 
 <a name="table17697228719"></a>
-<table><thead align="left"><tr id="row569762976"><th class="cellrowborder" valign="top" width="6.3100000000000005%" id="mcps1.2.6.1.1"><p id="p1927051110717"><a name="p1927051110717"></a><a name="p1927051110717"></a>序号</p>
+<table><thead align="left"><tr id="row569762976"><th class="cellrowborder" valign="top" width="6.3100000000000005%" id="mcps1.2.6.1.1"><p id="p1927051110717"><a name="p1927051110717"></a><a name="p1927051110717"></a>No.</p>
 </th>
-<th class="cellrowborder" valign="top" width="26.38%" id="mcps1.2.6.1.2"><p id="p62701111274"><a name="p62701111274"></a><a name="p62701111274"></a>定义</p>
+<th class="cellrowborder" valign="top" width="26.38%" id="mcps1.2.6.1.2"><p id="p62701111274"><a name="p62701111274"></a><a name="p62701111274"></a>Definition</p>
 </th>
-<th class="cellrowborder" valign="top" width="12.34%" id="mcps1.2.6.1.3"><p id="p62707111778"><a name="p62707111778"></a><a name="p62707111778"></a>实际数值</p>
+<th class="cellrowborder" valign="top" width="12.34%" id="mcps1.2.6.1.3"><p id="p62707111778"><a name="p62707111778"></a><a name="p62707111778"></a>Actual Value</p>
 </th>
-<th class="cellrowborder" valign="top" width="26.58%" id="mcps1.2.6.1.4"><p id="p18270811475"><a name="p18270811475"></a><a name="p18270811475"></a>说明</p>
+<th class="cellrowborder" valign="top" width="26.58%" id="mcps1.2.6.1.4"><p id="p18270811475"><a name="p18270811475"></a><a name="p18270811475"></a>Description</p>
 </th>
-<th class="cellrowborder" valign="top" width="28.389999999999997%" id="mcps1.2.6.1.5"><p id="p62704117715"><a name="p62704117715"></a><a name="p62704117715"></a>参考解决方案</p>
+<th class="cellrowborder" valign="top" width="28.389999999999997%" id="mcps1.2.6.1.5"><p id="p62704117715"><a name="p62704117715"></a><a name="p62704117715"></a>Reference Solution</p>
 </th>
 </tr>
 </thead>
@@ -439,11 +439,11 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p1927010111274"><a name="p1927010111274"></a><a name="p1927010111274"></a>0x03000200</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p82708110720"><a name="p82708110720"></a><a name="p82708110720"></a>内存空间不足。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p82708110720"><a name="p82708110720"></a><a name="p82708110720"></a>Insufficient memory space.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p927014117713"><a name="p927014117713"></a><a name="p927014117713"></a>增大动态内存空间，有两种方式可以实现：</p>
-<a name="ul1627010111371"></a><a name="ul1627010111371"></a><ul id="ul1627010111371"><li>设置更大的系统动态内存池</li><li>释放一部分动态内存。</li></ul>
-<p id="p17270171120715"><a name="p17270171120715"></a><a name="p17270171120715"></a>如果错误发生在LiteOS启动过程中的任务初始化，还可以通过减少系统支持的最大任务数来解决；如果错误发生在任务创建过程中，也可以减小任务栈大小来解决。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p927014117713"><a name="p927014117713"></a><a name="p927014117713"></a>Increase the dynamic memory space. This can be done in two ways:</p>
+<a name="ul1627010111371"></a><a name="ul1627010111371"></a><ul id="ul1627010111371"><li>Set a larger system dynamic memory pool.</li><li>Release part of the dynamic memory.</li></ul>
+<p id="p17270171120715"><a name="p17270171120715"></a><a name="p17270171120715"></a>If the error occurs during task initialization in the LiteOS startup process, it can also be solved by reducing the maximum number of tasks supported by the system. If the error occurs during task creation, it can also be solved by reducing the task stack size.</p>
 </td>
 </tr>
 <tr id="row1669752574"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p627012111272"><a name="p627012111272"></a><a name="p627012111272"></a>2</p>
@@ -452,9 +452,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p3270201113714"><a name="p3270201113714"></a><a name="p3270201113714"></a>0x02000201</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p172702117715"><a name="p172702117715"></a><a name="p172702117715"></a>传递给任务创建接口的任务参数为空指针，或者传递给任务信息获取的接口的参数为空指针。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p172702117715"><a name="p172702117715"></a><a name="p172702117715"></a>The task parameter passed to the task creation interface is a null pointer, or the parameter passed to the task information acquisition interface is a null pointer.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p132709111478"><a name="p132709111478"></a><a name="p132709111478"></a>确保传入的参数不为空指针。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p132709111478"><a name="p132709111478"></a><a name="p132709111478"></a>Ensure that the passed parameter is not a null pointer.</p>
 </td>
 </tr>
 <tr id="row196975219719"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p132701011977"><a name="p132701011977"></a><a name="p132701011977"></a>3</p>
@@ -463,9 +463,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p427020111871"><a name="p427020111871"></a><a name="p427020111871"></a>0x02000203</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p1727012111371"><a name="p1727012111371"></a><a name="p1727012111371"></a>创建任务或者设置任务优先级时，传入的优先级参数不正确。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p1727012111371"><a name="p1727012111371"></a><a name="p1727012111371"></a>When creating a task or setting the task priority, the priority parameter passed in is incorrect.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p16270141114715"><a name="p16270141114715"></a><a name="p16270141114715"></a>检查任务优先级，必须在0～31的范围内。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p16270141114715"><a name="p16270141114715"></a><a name="p16270141114715"></a>Check the task priority; it must be in the range of 0 to 31.</p>
 </td>
 </tr>
 <tr id="row19697121719"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p0270111118714"><a name="p0270111118714"></a><a name="p0270111118714"></a>4</p>
@@ -474,9 +474,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p1727013111273"><a name="p1727013111273"></a><a name="p1727013111273"></a>0x02000204</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p5270101111714"><a name="p5270101111714"></a><a name="p5270101111714"></a>创建任务时传入的任务入口函数为空指针。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p5270101111714"><a name="p5270101111714"></a><a name="p5270101111714"></a>The task entry function passed in when creating a task is a null pointer.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p1327041119718"><a name="p1327041119718"></a><a name="p1327041119718"></a>定义任务入口函数。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p1327041119718"><a name="p1327041119718"></a><a name="p1327041119718"></a>Define the task entry function.</p>
 </td>
 </tr>
 <tr id="row26972021173"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p152707111172"><a name="p152707111172"></a><a name="p152707111172"></a>5</p>
@@ -485,9 +485,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p1627010111974"><a name="p1627010111974"></a><a name="p1627010111974"></a>0x02000205</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p527010111071"><a name="p527010111071"></a><a name="p527010111071"></a>创建任务时传入的任务名为空指针。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p527010111071"><a name="p527010111071"></a><a name="p527010111071"></a>The task name passed in when creating a task is a null pointer.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p10270101117720"><a name="p10270101117720"></a><a name="p10270101117720"></a>设置任务名。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p10270101117720"><a name="p10270101117720"></a><a name="p10270101117720"></a>Set the task name.</p>
 </td>
 </tr>
 <tr id="row26981021173"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p12270131117712"><a name="p12270131117712"></a><a name="p12270131117712"></a>6</p>
@@ -496,9 +496,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p12709111072"><a name="p12709111072"></a><a name="p12709111072"></a>0x02000206</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p327116111875"><a name="p327116111875"></a><a name="p327116111875"></a>创建任务时传入的任务栈太小。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p327116111875"><a name="p327116111875"></a><a name="p327116111875"></a>The task stack passed in when creating a task is too small.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p182714111272"><a name="p182714111272"></a><a name="p182714111272"></a>增大任务的任务栈大小使之不小于系统设置最小任务栈大小。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p182714111272"><a name="p182714111272"></a><a name="p182714111272"></a>Increase the task stack size so that it is not smaller than the minimum task stack size set by the system.</p>
 </td>
 </tr>
 <tr id="row36981221179"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p192701311875"><a name="p192701311875"></a><a name="p192701311875"></a>7</p>
@@ -507,9 +507,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p227181110719"><a name="p227181110719"></a><a name="p227181110719"></a>0x02000207</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p52711117710"><a name="p52711117710"></a><a name="p52711117710"></a>超出OS支持范围内的无效的任务ID。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p52711117710"><a name="p52711117710"></a><a name="p52711117710"></a>An invalid task ID beyond the range supported by the OS.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p127113116717"><a name="p127113116717"></a><a name="p127113116717"></a>检查任务ID。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p127113116717"><a name="p127113116717"></a><a name="p127113116717"></a>Check the task ID.</p>
 </td>
 </tr>
 <tr id="row146981027712"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p1827116112711"><a name="p1827116112711"></a><a name="p1827116112711"></a>8</p>
@@ -518,9 +518,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p1727111112716"><a name="p1727111112716"></a><a name="p1727111112716"></a>0x02000208</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p927119111279"><a name="p927119111279"></a><a name="p927119111279"></a>挂起任务时，发现任务已经被挂起。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p927119111279"><a name="p927119111279"></a><a name="p927119111279"></a>When suspending a task, it is found that the task has already been suspended.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p3271611978"><a name="p3271611978"></a><a name="p3271611978"></a>等待这个任务被恢复后，再去尝试挂起这个任务。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p3271611978"><a name="p3271611978"></a><a name="p3271611978"></a>Wait until the task is resumed, then try to suspend the task again.</p>
 </td>
 </tr>
 <tr id="row206982021874"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p1227121112712"><a name="p1227121112712"></a><a name="p1227121112712"></a>9</p>
@@ -529,9 +529,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p927141115713"><a name="p927141115713"></a><a name="p927141115713"></a>0x02000209</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p1027112111675"><a name="p1027112111675"></a><a name="p1027112111675"></a>恢复任务时，发现任务未被挂起。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p1027112111675"><a name="p1027112111675"></a><a name="p1027112111675"></a>When resuming a task, it is found that the task has not been suspended.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p102711211975"><a name="p102711211975"></a><a name="p102711211975"></a>挂起这个任务后，再去尝试恢复这个任务。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p102711211975"><a name="p102711211975"></a><a name="p102711211975"></a>After suspending the task, try to resume it again.</p>
 </td>
 </tr>
 <tr id="row2069820218720"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p14271411979"><a name="p14271411979"></a><a name="p14271411979"></a>10</p>
@@ -540,10 +540,10 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p16220450181"><a name="p16220450181"></a><a name="p16220450181"></a>0x0200020a</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p192204501281"><a name="p192204501281"></a><a name="p192204501281"></a>未创建任务。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p192204501281"><a name="p192204501281"></a><a name="p192204501281"></a>The task has not been created.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p16220115020818"><a name="p16220115020818"></a><a name="p16220115020818"></a>创建这个任务，这个错误可能会发生在以下操作中：</p>
-<a name="ul1622016501084"></a><a name="ul1622016501084"></a><ul id="ul1622016501084"><li>删除任务。</li><li>恢复/挂起任务。</li><li>设置指定任务的优先级。</li><li>获取指定任务的信息。</li><li>设置指定任务的运行CPU集合。</li></ul>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p16220115020818"><a name="p16220115020818"></a><a name="p16220115020818"></a>Create the task. This error may occur in the following operations:</p>
+<a name="ul1622016501084"></a><a name="ul1622016501084"></a><ul id="ul1622016501084"><li>Deleting a task.</li><li>Resuming/suspending a task.</li><li>Setting the priority of the specified task.</li><li>Obtaining the information of the specified task.</li><li>Setting the running CPU set of the specified task.</li></ul>
 </td>
 </tr>
 <tr id="row136981125710"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p162201750885"><a name="p162201750885"></a><a name="p162201750885"></a>11</p>
@@ -552,9 +552,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p132217501583"><a name="p132217501583"></a><a name="p132217501583"></a>0x0300020b</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p82216504811"><a name="p82216504811"></a><a name="p82216504811"></a>删除任务时，任务处于锁定状态。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p82216504811"><a name="p82216504811"></a><a name="p82216504811"></a>When deleting a task, the task is in the locked state.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p9221550785"><a name="p9221550785"></a><a name="p9221550785"></a>解锁任务之后再删除任务。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p9221550785"><a name="p9221550785"></a><a name="p9221550785"></a>Unlock the task before deleting it.</p>
 </td>
 </tr>
 <tr id="row14698162679"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p42218501812"><a name="p42218501812"></a><a name="p42218501812"></a>12</p>
@@ -563,9 +563,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p1922117508813"><a name="p1922117508813"></a><a name="p1922117508813"></a>0x0300020d</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p112211850282"><a name="p112211850282"></a><a name="p112211850282"></a>中断期间，进行任务延时。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p112211850282"><a name="p112211850282"></a><a name="p112211850282"></a>Performing task delay during an interrupt.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p52211750785"><a name="p52211750785"></a><a name="p52211750785"></a>等待退出中断后再进行延时操作。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p52211750785"><a name="p52211750785"></a><a name="p52211750785"></a>Wait until the interrupt exits before performing the delay operation.</p>
 </td>
 </tr>
 <tr id="row10698221573"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p16221450489"><a name="p16221450489"></a><a name="p16221450489"></a>13</p>
@@ -574,9 +574,9 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p72217501984"><a name="p72217501984"></a><a name="p72217501984"></a>0x0200020e</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p1422115020810"><a name="p1422115020810"></a><a name="p1422115020810"></a>在任务锁定状态下，延时该任务。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p1422115020810"><a name="p1422115020810"></a><a name="p1422115020810"></a>Delaying the task while the task scheduling is locked.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p922115501883"><a name="p922115501883"></a><a name="p922115501883"></a>解锁任务之后再延时任务。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p922115501883"><a name="p922115501883"></a><a name="p922115501883"></a>Unlock the task before delaying it.</p>
 </td>
 </tr>
 <tr id="row869982773"><td class="cellrowborder" valign="top" width="6.3100000000000005%" headers="mcps1.2.6.1.1 "><p id="p1822115501985"><a name="p1822115501985"></a><a name="p1822115501985"></a>14</p>
@@ -585,41 +585,41 @@ osal接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，osal�
 </td>
 <td class="cellrowborder" valign="top" width="12.34%" headers="mcps1.2.6.1.3 "><p id="p10568723199"><a name="p10568723199"></a><a name="p10568723199"></a>0x03000215</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p8568192315913"><a name="p8568192315913"></a><a name="p8568192315913"></a>不允许将处于锁定状态的任务挂起。</p>
+<td class="cellrowborder" valign="top" width="26.58%" headers="mcps1.2.6.1.4 "><p id="p8568192315913"><a name="p8568192315913"></a><a name="p8568192315913"></a>A task in the locked state cannot be suspended.</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p17568723794"><a name="p17568723794"></a><a name="p17568723794"></a>任务解锁后，再尝试挂起任务。</p>
+<td class="cellrowborder" valign="top" width="28.389999999999997%" headers="mcps1.2.6.1.5 "><p id="p17568723794"><a name="p17568723794"></a><a name="p17568723794"></a>After the task is unlocked, try to suspend the task again.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-### 注意事项<a name="ZH-CN_TOPIC_0000001665142234"></a>
+### Precautions<a name="ZH-CN_TOPIC_0000001665142234"></a>
 
--   创建新任务时，会对之前已删除任务的任务控制块和任务栈进行回收。
--   任务名指针没有分配空间，在设置任务名时，禁止将局部变量的地址赋值给任务名指针。
--   若指定的任务栈大小为0，则使用配置默认的任务栈大小。
--   任务栈的大小按16字节大小对齐。确定任务栈大小的原则为够用即可：多则浪费，少则任务栈溢出。
--   当前任务和已锁定的任务，不能被挂起。
--   Idle任务及软件定时器任务不能被挂起或删除。
--   锁任务调度，并不关中断，因此任务仍可被中断打断。
--   锁任务调度必须和解锁任务调度配合使用。
--   设置任务优先级时可能会发生任务调度。
--   系统可配置的任务资源个数是指整个系统的任务资源总个数，而非用户能使用的任务资源个数。例如：系统软件定时器多占用一个任务资源数，则系统可配置的任务资源就会减少一个。
--   不建议使用osal\_kthread\_set\_priority接口来修改软件定时器任务的优先级，否则可能会导致系统出现问题。
--   osal\_kthread\_set\_priority接口不能在中断中使用。
--   在删除任务时要保证任务申请的资源（如互斥锁、信号量等）已被释放。
--   尽量少创建task，可采用内存池方案避免内存碎片化。
+-   When creating a new task, the task control block and task stack of previously deleted tasks will be reclaimed.
+-   The task name pointer has no allocated space. When setting the task name, do not assign the address of a local variable to the task name pointer.
+-   If the specified task stack size is 0, the default task stack size in the configuration is used.
+-   The task stack size is aligned to 16 bytes. The principle for determining the task stack size is that it should be sufficient: too large wastes memory, too small causes task stack overflow.
+-   The current task and locked tasks cannot be suspended.
+-   The Idle task and software timer task cannot be suspended or deleted.
+-   Locking task scheduling does not disable interrupts, so tasks can still be preempted by interrupts.
+-   Locking task scheduling must be used together with unlocking task scheduling.
+-   Task scheduling may occur when setting the task priority.
+-   The number of configurable task resources in the system refers to the total number of task resources in the entire system, not the number of task resources available to users. For example, if the system software timer occupies one more task resource, the configurable task resources of the system will decrease by one.
+-   It is not recommended to use the osal\_kthread\_set\_priority interface to modify the priority of the software timer task; otherwise, system problems may occur.
+-   The osal\_kthread\_set\_priority interface cannot be used in an interrupt.
+-   When deleting a task, ensure that the resources applied for by the task (such as mutexes and semaphores) have been released.
+-   Create as few tasks as possible. A memory pool scheme can be used to avoid memory fragmentation.
 
-### 编程实例<a name="ZH-CN_TOPIC_0000001713022049"></a>
+### Programming Example<a name="ZH-CN_TOPIC_0000001713022049"></a>
 
-下面的示例介绍任务的基本操作方法：
+The following example describes the basic operation methods of tasks:
 
-代码示例：
+Code example:
 
 ```
 #include "common_def.h"
 #include "soc_osal.h"
-#define TASK_PRI            25      /* 任务优先级范围，从高到低:  0～31 */
+#define TASK_PRI            25      /* Task priority range, from high to low: 0~31 */
 #define TASK_STACK_SIZE     0x1000
 static void example_task_entry(void* arg)
 {
@@ -630,117 +630,117 @@ void example_task_init(void)
 {
     uint32_t ret;
     osal_task *example_task_info;
-    /* 创建任务期间锁住任务调度 */
+    /* Lock task scheduling during task creation */
     osal_kthread_lock();
-    /* 创建线程 */
+    /* Create a thread */
     example_task_info = osal_kthread_create((osal_kthread_handler)example_task_entry, NULL, "example_task", TASK_STACK_SIZE);
-    /* 设置线程优先级 */
+    /* Set the thread priority */
     ret = osal_kthread_set_priority(example_task_info->task, TASK_PRI);
     if (ret != OSAL_SUCCESS) {
         osal_printk("Example_task create failed!\n");
     }
-    /* 任务创建完成解锁任务调度 */
+    /* Unlock task scheduling after task creation */
     osal_kthread_unlock();
-    /* 任务开始调度 */
+    /* The task starts scheduling */
 }
 ```
 
-结果验证：
+Result verification:
 
 ```
 Example task is running!
 ```
 
-## 内存管理<a name="ZH-CN_TOPIC_0000001713022005"></a>
+## Memory Management<a name="ZH-CN_TOPIC_0000001713022005"></a>
 
 
 
 
 
-### 概述<a name="ZH-CN_TOPIC_0000001664982498"></a>
+### Overview<a name="ZH-CN_TOPIC_0000001664982498"></a>
 
-内存管理模块管理系统的内存资源，通过对内存的申请/释放操作来管理用户和OS对内存的使用，使内存的利用率和效率最优，最大限度地解决系统的内存碎片问题。其中，OS的内存管理为动态内存管理，提供内存初始化、分配、释放等功能。
+The memory management module manages the system memory resources. Through memory allocation/free operations, it manages the use of memory by users and the OS, optimizing memory utilization and efficiency and minimizing the system memory fragmentation problem. The OS memory management is dynamic memory management, providing functions such as memory initialization, allocation, and release.
 
-动态内存是指在动态内存池中分配用户指定大小的内存块。
+Dynamic memory refers to memory blocks of a user-specified size allocated from the dynamic memory pool.
 
--   优点：按需分配。
--   缺点：内存池中可能出现碎片。
+-   Advantages: allocate on demand.
+-   Disadvantages: fragmentation may occur in the memory pool.
 
-### 开发流程<a name="ZH-CN_TOPIC_0000001665142218"></a>
+### Development Process<a name="ZH-CN_TOPIC_0000001665142218"></a>
 
-**使用场景<a name="section103708451342"></a>**
+**Usage Scenario<a name="section103708451342"></a>**
 
-内存管理的主要工作是动态的划分并管理用户分配好的内存区间。动态内存管理主要是在用户需要使用大小不等的内存块的场景中使用。当用户需要分配内存时，可以通过操作系统的动态内存申请函数索取指定大小内存块，一旦使用完毕，通过动态内存释放函数归还所占用内存，使之可以重复使用。
+The main task of memory management is to dynamically divide and manage the memory areas allocated by users. Dynamic memory management is mainly used in scenarios where users need memory blocks of different sizes. When users need to allocate memory, they can use the dynamic memory allocation function of the OS to obtain a memory block of a specified size. Once the usage is completed, the occupied memory is returned through the dynamic memory free function so that it can be reused.
 
->![](public_sys-resources/icon-note.gif) **说明：** 
->针对默认不使用OS内存池，单独划分出内存区间进行使用的场景，需要用户修改boot和kernel链接脚本，详细步骤参考“[编程实例](编程实例-5.md)”。
+>![](public_sys-resources/icon-note.gif) **Note:** 
+>For scenarios where the OS memory pool is not used by default and memory areas are separately divided for use, users need to modify the boot and kernel link scripts. For detailed steps, refer to "[Programming Example](编程实例-5.md)".
 
-**功能说明<a name="section197367536413"></a>**
+**Function Description<a name="section197367536413"></a>**
 
-动态内存管理模块提供的接口如[表1](#table16057272231)所示。
+The interfaces provided by the dynamic memory management module are shown in [Table 1](#table16057272231).
 
-**表 1**  动态内存管理接口说明
+**Table 1**  Dynamic memory management interface description
 
 <a name="table16057272231"></a>
-<table><thead align="left"><tr id="row15605427142315"><th class="cellrowborder" valign="top" width="20.630000000000003%" id="mcps1.2.3.1.1"><p id="p8567041112312"><a name="p8567041112312"></a><a name="p8567041112312"></a>接口名称</p>
+<table><thead align="left"><tr id="row15605427142315"><th class="cellrowborder" valign="top" width="20.630000000000003%" id="mcps1.2.3.1.1"><p id="p8567041112312"><a name="p8567041112312"></a><a name="p8567041112312"></a>Interface Name</p>
 </th>
-<th class="cellrowborder" valign="top" width="79.36999999999999%" id="mcps1.2.3.1.2"><p id="p13567114118235"><a name="p13567114118235"></a><a name="p13567114118235"></a>说明</p>
+<th class="cellrowborder" valign="top" width="79.36999999999999%" id="mcps1.2.3.1.2"><p id="p13567114118235"><a name="p13567114118235"></a><a name="p13567114118235"></a>Description</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row20605162752314"><td class="cellrowborder" valign="top" width="20.630000000000003%" headers="mcps1.2.3.1.1 "><p id="p133013210420"><a name="p133013210420"></a><a name="p133013210420"></a>osal_kmalloc</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p13567134162313"><a name="p13567134162313"></a><a name="p13567134162313"></a>从系统动态内存池中申请一块内存。</p>
+<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p13567134162313"><a name="p13567134162313"></a><a name="p13567134162313"></a>Allocates a memory block from the system dynamic memory pool.</p>
 </td>
 </tr>
 <tr id="row11605192713236"><td class="cellrowborder" valign="top" width="20.630000000000003%" headers="mcps1.2.3.1.1 "><p id="p935084617428"><a name="p935084617428"></a><a name="p935084617428"></a>osal_kfree</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p4567104118231"><a name="p4567104118231"></a><a name="p4567104118231"></a>释放系统内存池已申请的内存块。</p>
+<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p4567104118231"><a name="p4567104118231"></a><a name="p4567104118231"></a>Frees an allocated memory block from the system memory pool.</p>
 </td>
 </tr>
 <tr id="row35272508452"><td class="cellrowborder" valign="top" width="20.630000000000003%" headers="mcps1.2.3.1.1 "><p id="p13611865462"><a name="p13611865462"></a><a name="p13611865462"></a>osal_kmalloc_align</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p1047417541458"><a name="p1047417541458"></a><a name="p1047417541458"></a>从系统内存池申请一块地址对齐的内存。</p>
+<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p1047417541458"><a name="p1047417541458"></a><a name="p1047417541458"></a>Allocates an address-aligned memory block from the system memory pool.</p>
 </td>
 </tr>
 <tr id="row7439553124516"><td class="cellrowborder" valign="top" width="20.630000000000003%" headers="mcps1.2.3.1.1 "><p id="p10990125214616"><a name="p10990125214616"></a><a name="p10990125214616"></a>osal_pool_mem_init</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p134744548450"><a name="p134744548450"></a><a name="p134744548450"></a>初始化一个内存池。</p>
+<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p134744548450"><a name="p134744548450"></a><a name="p134744548450"></a>Initializes a memory pool.</p>
 </td>
 </tr>
 <tr id="row1564344713465"><td class="cellrowborder" valign="top" width="20.630000000000003%" headers="mcps1.2.3.1.1 "><p id="p174511164715"><a name="p174511164715"></a><a name="p174511164715"></a>osal_pool_mem_alloc</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p46431147164612"><a name="p46431147164612"></a><a name="p46431147164612"></a>从指定的内存池申请一块内存。</p>
+<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p46431147164612"><a name="p46431147164612"></a><a name="p46431147164612"></a>Allocates a memory block from the specified memory pool.</p>
 </td>
 </tr>
 <tr id="row1914199124714"><td class="cellrowborder" valign="top" width="20.630000000000003%" headers="mcps1.2.3.1.1 "><p id="p4445826124720"><a name="p4445826124720"></a><a name="p4445826124720"></a>osal_pool_mem_alloc_align</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p9141209194716"><a name="p9141209194716"></a><a name="p9141209194716"></a>从指定的内存池申请一块地址对齐的内存。</p>
+<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p9141209194716"><a name="p9141209194716"></a><a name="p9141209194716"></a>Allocates an address-aligned memory block from the specified memory pool.</p>
 </td>
 </tr>
 <tr id="row16940161324711"><td class="cellrowborder" valign="top" width="20.630000000000003%" headers="mcps1.2.3.1.1 "><p id="p1315211315477"><a name="p1315211315477"></a><a name="p1315211315477"></a>osal_pool_mem_free</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p994011314713"><a name="p994011314713"></a><a name="p994011314713"></a>释放指定内存池已申请的内存块。</p>
+<td class="cellrowborder" valign="top" width="79.36999999999999%" headers="mcps1.2.3.1.2 "><p id="p994011314713"><a name="p994011314713"></a><a name="p994011314713"></a>Frees an allocated memory block from the specified memory pool.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**错误码<a name="section19288114756"></a>**
+**Error Code<a name="section19288114756"></a>**
 
-内存申请成功会返回申请的内存地址，如果申请失败则会返回NULL。
+A successful memory allocation returns the address of the allocated memory; if the allocation fails, NULL is returned.
 
-### 注意事项<a name="ZH-CN_TOPIC_0000001713022009"></a>
+### Precautions<a name="ZH-CN_TOPIC_0000001713022009"></a>
 
--   系统中osal\_kmalloc\_xxx和osal\_pool\_mem\_alloc\_xxx函数如果分配成功，返回分配的内存指针。如果分配失败，则返回NULL。
--   系统中多次调用osal的free接口时，第一次会返回成功，但对同一块内存进行多次重复释放会导致非法指针操作，结果不可预知。
--   对于存储到用户指定内存区间的全局变量，系统启动时不会进行初始化或清零，需要用户自行进行管理。
+-   In the system, if the osal\_kmalloc\_xxx and osal\_pool\_mem\_alloc\_xxx functions are allocated successfully, the pointer to the allocated memory is returned. If the allocation fails, NULL is returned.
+-   When the osal free interface is called multiple times in the system, the first call returns success, but repeatedly freeing the same memory block multiple times causes illegal pointer operations, and the result is unpredictable.
+-   For global variables stored in user-specified memory areas, the system does not initialize or clear them at startup; users need to manage them by themselves.
 
-### 编程实例<a name="ZH-CN_TOPIC_0000001713102033"></a>
+### Programming Example<a name="ZH-CN_TOPIC_0000001713102033"></a>
 
-实例一：演示APP层内存申请以及释放操作。
+Example 1: Demonstrates the memory allocation and free operations at the APP layer.
 
-代码示例：
+Code example:
 
 ```
 #include "common_def.h"
@@ -748,137 +748,137 @@ Example task is running!
 #define EXAMPLE_MEM_SIZE 100
 void example_mem(void)
 {
-    /* 申请内存 */
+    /* Allocate memory */
     void* mem = osal_kmalloc(EXAMPLE_MEM_SIZE,  NULL);
     if (mem == NULL) {
         osal_printk("Malloc failed!\n");
     }
     osal_printk("Using memory as expected!\n");
-    /* 释放内存 */
+    /* Free memory */
     osal_kfree(mem);
 }
 ```
 
-结果验证
+Result verification
 
 ```
 Using memory as expected!
 ```
 
-## 中断机制<a name="ZH-CN_TOPIC_0000001664982510"></a>
+## Interrupt Mechanism<a name="ZH-CN_TOPIC_0000001664982510"></a>
 
 
 
 
 
-### 概述<a name="ZH-CN_TOPIC_0000001713102017"></a>
+### Overview<a name="ZH-CN_TOPIC_0000001713102017"></a>
 
-中断是指CPU暂停执行当前程序，转而执行新程序的过程。中断相关的硬件可以划分为3类：
+An interrupt is a process in which the CPU suspends the execution of the current program and executes a new program instead. Interrupt-related hardware can be divided into 3 categories:
 
--   设备：发起中断的源，当设备需要请求CPU时，产生一个中断信号，该信号连接至中断控制器。
--   中断控制器：接收中断输入并上报给CPU。可以设置中断源的优先级、触发方式、打开和关闭等操作。
--   CPU：判断和执行中断任务。
+-   Device: the source that initiates the interrupt. When a device needs to request the CPU, it generates an interrupt signal, which is connected to the interrupt controller.
+-   Interrupt controller: receives interrupt inputs and reports them to the CPU. It can perform operations such as setting the priority and trigger mode of the interrupt source, and enabling or disabling it.
+-   CPU: judges and executes the interrupt task.
 
-中断相关的名词解释：
+Explanation of terms related to interrupts:
 
--   中断号：每个中断请求信号都会有特定的标志，使得计算机能够判断是哪个设备提出的中断请求，这个标志就是中断号。
--   中断请求：“紧急事件”需向CPU提出申请（发一个电脉冲信号），要求中断，及要求CPU暂停当前执行的任务，转而处理该“紧急事件”，这一申请过程称为中断申请。
--   中断优先级：为使系统能够及时响应并处理所有中断，系统根据中断事件的重要性和紧迫程度，将中断源分为若干个级别，称作中断优先级。系统中所有的中断源优先级相同，不支持中断嵌套或抢占。
--   中断处理程序：当外设产生中断请求后，CPU暂停当前的任务，转而响应中断申请，即执行中断处理程序。
--   中断触发：中断源发出并送给CPU控制信号，将接口卡上的中断触发器置“1”，表明该中断源产生了中断，要求CPU去响应该中断,CPU暂停当前任务，执行相应的中断处理程序。
--   中断触发类型：外部中断申请通过一个物理信号发送到CPU，可以是电平触发或边沿触发。
--   中断向量：中断服务程序的入口地址。
--   中断向量表：存储中断向量的存储区，中断向量与中断号对应，中断向量在中断向量表中按照中断号顺序存储。
+-   Interrupt number: Each interrupt request signal has a specific flag that enables the computer to determine which device has raised the interrupt request. This flag is the interrupt number.
+-   Interrupt request: An "urgent event" needs to apply to the CPU (by sending an electrical pulse signal) for interruption, requiring the CPU to suspend the currently executing task and handle the "urgent event" instead. This application process is called an interrupt request.
+-   Interrupt priority: To enable the system to respond to and handle all interrupts in time, the system divides interrupt sources into several levels according to the importance and urgency of interrupt events, which are called interrupt priorities. All interrupt sources in the system have the same priority, and interrupt nesting or preemption is not supported.
+-   Interrupt handler: After a peripheral generates an interrupt request, the CPU suspends the current task and responds to the interrupt request, that is, executes the interrupt handler.
+-   Interrupt trigger: The interrupt source sends a control signal to the CPU and sets the interrupt trigger on the interface card to "1", indicating that the interrupt source has generated an interrupt and requires the CPU to respond to it. The CPU suspends the current task and executes the corresponding interrupt handler.
+-   Interrupt trigger type: An external interrupt request is sent to the CPU through a physical signal, which can be level-triggered or edge-triggered.
+-   Interrupt vector: the entry address of the interrupt service routine.
+-   Interrupt vector table: a storage area that stores interrupt vectors. Interrupt vectors correspond to interrupt numbers and are stored in the interrupt vector table in the order of interrupt numbers.
 
-### 开发流程<a name="ZH-CN_TOPIC_0000001664982494"></a>
+### Development Process<a name="ZH-CN_TOPIC_0000001664982494"></a>
 
-**使用场景<a name="section1148812535378"></a>**
+**Usage Scenario<a name="section1148812535378"></a>**
 
-当有中断请求产生时，CPU暂停当前的任务，转而去响应外设请求。根据需要，用户通过中断申请，注册中断处理程序，可以指定CPU响应中断请求时所执行的具体操作。
+When an interrupt request is generated, the CPU suspends the current task and responds to the peripheral request. As needed, users can register an interrupt handler through an interrupt request and specify the specific operations to be performed when the CPU responds to the interrupt request.
 
-**功能说明<a name="section472215313389"></a>**
+**Function Description<a name="section472215313389"></a>**
 
-系统支持的中断机制接口如[表1](#table1656932151615)所示。
+The interrupt mechanism interfaces supported by the system are shown in [Table 1](#table1656932151615).
 
-**表 1**  中断机制接口说明
+**Table 1**  Interrupt mechanism interface description
 
 <a name="table1656932151615"></a>
-<table><thead align="left"><tr id="row456920219161"><th class="cellrowborder" valign="top" width="20.51%" id="mcps1.2.3.1.1"><p id="p11569162151614"><a name="p11569162151614"></a><a name="p11569162151614"></a>接口名称</p>
+<table><thead align="left"><tr id="row456920219161"><th class="cellrowborder" valign="top" width="20.51%" id="mcps1.2.3.1.1"><p id="p11569162151614"><a name="p11569162151614"></a><a name="p11569162151614"></a>Interface Name</p>
 </th>
-<th class="cellrowborder" valign="top" width="79.49000000000001%" id="mcps1.2.3.1.2"><p id="p156932181615"><a name="p156932181615"></a><a name="p156932181615"></a>说明</p>
+<th class="cellrowborder" valign="top" width="79.49000000000001%" id="mcps1.2.3.1.2"><p id="p156932181615"><a name="p156932181615"></a><a name="p156932181615"></a>Description</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row1156914231611"><td class="cellrowborder" valign="top" width="20.51%" headers="mcps1.2.3.1.1 "><p id="p158954075110"><a name="p158954075110"></a><a name="p158954075110"></a>osal_irq_lock</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p59103382198"><a name="p59103382198"></a><a name="p59103382198"></a>关闭全部中断。</p>
-<p id="p2056918218167"><a name="p2056918218167"></a><a name="p2056918218167"></a>关中断后不能执行引起调度的函数，如osal_sleep或其他阻塞接口。</p>
-<p id="p6563184451720"><a name="p6563184451720"></a><a name="p6563184451720"></a>关中断仅保护可预期的短时间的操作，否则影响中断响应，可能引起性能问题。</p>
-<p id="p626616329536"><a name="p626616329536"></a><a name="p626616329536"></a>返回值为当前中断状态即CPSR值。</p>
+<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p59103382198"><a name="p59103382198"></a><a name="p59103382198"></a>Disables all interrupts.</p>
+<p id="p2056918218167"><a name="p2056918218167"></a><a name="p2056918218167"></a>After disabling interrupts, functions that cause scheduling, such as osal_sleep or other blocking interfaces, cannot be executed.</p>
+<p id="p6563184451720"><a name="p6563184451720"></a><a name="p6563184451720"></a>Disabling interrupts only protects predictable short-duration operations; otherwise, interrupt response is affected, which may cause performance problems.</p>
+<p id="p626616329536"><a name="p626616329536"></a><a name="p626616329536"></a>The return value is the current interrupt state, that is, the CPSR value.</p>
 </td>
 </tr>
 <tr id="row11569926161"><td class="cellrowborder" valign="top" width="20.51%" headers="mcps1.2.3.1.1 "><p id="p1740259145214"><a name="p1740259145214"></a><a name="p1740259145214"></a>osal_irq_restore</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p7569202151617"><a name="p7569202151617"></a><a name="p7569202151617"></a>恢复关中断前的状态。</p>
-<p id="p556918241620"><a name="p556918241620"></a><a name="p556918241620"></a>入参必须是与之对应的关中断时保存的关中断之前的CPSR的值。</p>
+<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p7569202151617"><a name="p7569202151617"></a><a name="p7569202151617"></a>Restores the state before interrupts were disabled.</p>
+<p id="p556918241620"><a name="p556918241620"></a><a name="p556918241620"></a>The input parameter must be the CPSR value saved before interrupts were disabled at the time of the corresponding interrupt disable.</p>
 </td>
 </tr>
 <tr id="row99572612218"><td class="cellrowborder" valign="top" width="20.51%" headers="mcps1.2.3.1.1 "><p id="p199781392512"><a name="p199781392512"></a><a name="p199781392512"></a>osal_in_interrupt</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p563711511195"><a name="p563711511195"></a><a name="p563711511195"></a>检查是否在中断上下文中。</p>
+<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p563711511195"><a name="p563711511195"></a><a name="p563711511195"></a>Checks whether the current context is an interrupt context.</p>
 </td>
 </tr>
 <tr id="row35697271611"><td class="cellrowborder" valign="top" width="20.51%" headers="mcps1.2.3.1.1 "><p id="p1785622535119"><a name="p1785622535119"></a><a name="p1785622535119"></a>osal_irq_enable</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p125698211612"><a name="p125698211612"></a><a name="p125698211612"></a>使能指定中断。</p>
+<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p125698211612"><a name="p125698211612"></a><a name="p125698211612"></a>Enables the specified interrupt.</p>
 </td>
 </tr>
 <tr id="row195694271617"><td class="cellrowborder" valign="top" width="20.51%" headers="mcps1.2.3.1.1 "><p id="p5375183220513"><a name="p5375183220513"></a><a name="p5375183220513"></a>osal_irq_disable</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p1056914251610"><a name="p1056914251610"></a><a name="p1056914251610"></a>去使能指定中断。</p>
+<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p1056914251610"><a name="p1056914251610"></a><a name="p1056914251610"></a>Disables the specified interrupt.</p>
 </td>
 </tr>
 <tr id="row62036499187"><td class="cellrowborder" valign="top" width="20.51%" headers="mcps1.2.3.1.1 "><p id="p39731045205019"><a name="p39731045205019"></a><a name="p39731045205019"></a>osal_irq_request</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p520494921815"><a name="p520494921815"></a><a name="p520494921815"></a>注册中断。</p>
+<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p520494921815"><a name="p520494921815"></a><a name="p520494921815"></a>Registers an interrupt.</p>
 </td>
 </tr>
 <tr id="row189171403192"><td class="cellrowborder" valign="top" width="20.51%" headers="mcps1.2.3.1.1 "><p id="p289735310506"><a name="p289735310506"></a><a name="p289735310506"></a>osal_irq_free</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p8918307196"><a name="p8918307196"></a><a name="p8918307196"></a>清除注册中断。</p>
+<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p8918307196"><a name="p8918307196"></a><a name="p8918307196"></a>Clears the registered interrupt.</p>
 </td>
 </tr>
 <tr id="row4685198529"><td class="cellrowborder" valign="top" width="20.51%" headers="mcps1.2.3.1.1 "><p id="p71916308553"><a name="p71916308553"></a><a name="p71916308553"></a>osal_irq_set_priority</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p368131985216"><a name="p368131985216"></a><a name="p368131985216"></a>设置中断优先级。</p>
+<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p368131985216"><a name="p368131985216"></a><a name="p368131985216"></a>Sets the interrupt priority.</p>
 </td>
 </tr>
 <tr id="row0521142145217"><td class="cellrowborder" valign="top" width="20.51%" headers="mcps1.2.3.1.1 "><p id="p1284945035514"><a name="p1284945035514"></a><a name="p1284945035514"></a>osal_irq_clear</p>
 </td>
-<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p95221211522"><a name="p95221211522"></a><a name="p95221211522"></a>清除中断标志。</p>
+<td class="cellrowborder" valign="top" width="79.49000000000001%" headers="mcps1.2.3.1.2 "><p id="p95221211522"><a name="p95221211522"></a><a name="p95221211522"></a>Clears the interrupt flag.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**错误码<a name="section15175858164315"></a>**
+**Error Code<a name="section15175858164315"></a>**
 
-OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL封装的内核接口运行过程中会打印异常信息值，便于快速定位问题。
+The OSAL interface supports the diagnostic print switch. After disabling the OSALLOG\_DISABLE macro definition, the kernel interfaces encapsulated by OSAL will print abnormal information values during execution, facilitating rapid problem location.
 
-中断机制错误码如[表2](#table0241246183012)所示。
+Interrupt mechanism error codes are shown in [Table 2](#table0241246183012).
 
-**表 2**  中断机制错误码说明
+**Table 2**  Interrupt mechanism error code description
 
 <a name="table0241246183012"></a>
-<table><thead align="left"><tr id="row1724046173013"><th class="cellrowborder" valign="top" width="6.751543209876544%" id="mcps1.2.6.1.1"><p id="p82415465307"><a name="p82415465307"></a><a name="p82415465307"></a>序号</p>
+<table><thead align="left"><tr id="row1724046173013"><th class="cellrowborder" valign="top" width="6.751543209876544%" id="mcps1.2.6.1.1"><p id="p82415465307"><a name="p82415465307"></a><a name="p82415465307"></a>No.</p>
 </th>
-<th class="cellrowborder" valign="top" width="18.71141975308642%" id="mcps1.2.6.1.2"><p id="p124846193012"><a name="p124846193012"></a><a name="p124846193012"></a>定义</p>
+<th class="cellrowborder" valign="top" width="18.71141975308642%" id="mcps1.2.6.1.2"><p id="p124846193012"><a name="p124846193012"></a><a name="p124846193012"></a>Definition</p>
 </th>
-<th class="cellrowborder" valign="top" width="7.108410493827161%" id="mcps1.2.6.1.3"><p id="p824124663020"><a name="p824124663020"></a><a name="p824124663020"></a>实际数值</p>
+<th class="cellrowborder" valign="top" width="7.108410493827161%" id="mcps1.2.6.1.3"><p id="p824124663020"><a name="p824124663020"></a><a name="p824124663020"></a>Actual Value</p>
 </th>
-<th class="cellrowborder" valign="top" width="28.848379629629626%" id="mcps1.2.6.1.4"><p id="p1624346123017"><a name="p1624346123017"></a><a name="p1624346123017"></a>说明</p>
+<th class="cellrowborder" valign="top" width="28.848379629629626%" id="mcps1.2.6.1.4"><p id="p1624346123017"><a name="p1624346123017"></a><a name="p1624346123017"></a>Description</p>
 </th>
-<th class="cellrowborder" valign="top" width="38.580246913580254%" id="mcps1.2.6.1.5"><p id="p13241946133018"><a name="p13241946133018"></a><a name="p13241946133018"></a>参考解决方案</p>
+<th class="cellrowborder" valign="top" width="38.580246913580254%" id="mcps1.2.6.1.5"><p id="p13241946133018"><a name="p13241946133018"></a><a name="p13241946133018"></a>Reference Solution</p>
 </th>
 </tr>
 </thead>
@@ -888,9 +888,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.108410493827161%" headers="mcps1.2.6.1.3 "><p id="p1092714572182"><a name="p1092714572182"></a><a name="p1092714572182"></a>0x02000900</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p14927165717183"><a name="p14927165717183"></a><a name="p14927165717183"></a>创建或删除中断时，传入了无效中断号。</p>
+<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p14927165717183"><a name="p14927165717183"></a><a name="p14927165717183"></a>When creating or deleting an interrupt, an invalid interrupt number was passed in.</p>
 </td>
-<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p1392713574187"><a name="p1392713574187"></a><a name="p1392713574187"></a>检查中断号，给定有效中断号。</p>
+<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p1392713574187"><a name="p1392713574187"></a><a name="p1392713574187"></a>Check the interrupt number and provide a valid interrupt number.</p>
 </td>
 </tr>
 <tr id="row124046133020"><td class="cellrowborder" valign="top" width="6.751543209876544%" headers="mcps1.2.6.1.1 "><p id="p14927115713183"><a name="p14927115713183"></a><a name="p14927115713183"></a>2</p>
@@ -899,9 +899,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.108410493827161%" headers="mcps1.2.6.1.3 "><p id="p14927195716180"><a name="p14927195716180"></a><a name="p14927195716180"></a>0x02000901</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p10927185791820"><a name="p10927185791820"></a><a name="p10927185791820"></a>创建中断时，传入的中断处理程序指针为空；如果调用其他接口返回此错误码则表示该接口功能不支持。</p>
+<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p10927185791820"><a name="p10927185791820"></a><a name="p10927185791820"></a>When creating an interrupt, the interrupt handler pointer passed in is null; if this error code is returned when calling other interfaces, it means the interface function is not supported.</p>
 </td>
-<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p109276576182"><a name="p109276576182"></a><a name="p109276576182"></a>传入非空中断处理程序指针。</p>
+<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p109276576182"><a name="p109276576182"></a><a name="p109276576182"></a>Pass in a non-null interrupt handler pointer.</p>
 </td>
 </tr>
 <tr id="row1966754951413"><td class="cellrowborder" valign="top" width="6.751543209876544%" headers="mcps1.2.6.1.1 "><p id="p892714578181"><a name="p892714578181"></a><a name="p892714578181"></a>3</p>
@@ -910,10 +910,10 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.108410493827161%" headers="mcps1.2.6.1.3 "><p id="p3927175701813"><a name="p3927175701813"></a><a name="p3927175701813"></a>0x02000903</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p149274576181"><a name="p149274576181"></a><a name="p149274576181"></a>创建中断时，出现内存不足的情况。</p>
+<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p149274576181"><a name="p149274576181"></a><a name="p149274576181"></a>Insufficient memory occurs when creating an interrupt.</p>
 </td>
-<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p5927185761819"><a name="p5927185761819"></a><a name="p5927185761819"></a>增大动态内存空间，有两种方式可以实现：</p>
-<a name="ul1492775741815"></a><a name="ul1492775741815"></a><ul id="ul1492775741815"><li>设置更大的系统动态内存池。</li><li>释放一部分动态内存。</li></ul>
+<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p5927185761819"><a name="p5927185761819"></a><a name="p5927185761819"></a>Increase the dynamic memory space. This can be achieved in two ways:</p>
+<a name="ul1492775741815"></a><a name="ul1492775741815"></a><ul id="ul1492775741815"><li>Set a larger system dynamic memory pool.</li><li>Release part of the dynamic memory.</li></ul>
 </td>
 </tr>
 <tr id="row454645861420"><td class="cellrowborder" valign="top" width="6.751543209876544%" headers="mcps1.2.6.1.1 "><p id="p1492855712184"><a name="p1492855712184"></a><a name="p1492855712184"></a>4</p>
@@ -922,9 +922,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.108410493827161%" headers="mcps1.2.6.1.3 "><p id="p092812575182"><a name="p092812575182"></a><a name="p092812575182"></a>0x02000904</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p09283574184"><a name="p09283574184"></a><a name="p09283574184"></a>创建中断时，发现要注册的中断号已经创建。</p>
+<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p09283574184"><a name="p09283574184"></a><a name="p09283574184"></a>When creating an interrupt, it is found that the interrupt number to be registered has already been created.</p>
 </td>
-<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p10928125717182"><a name="p10928125717182"></a><a name="p10928125717182"></a>对于非共享中断号的情况，检查传入的中断号是否已经被创建；对于共享中断号的情况，检查传入中断号的链表中是否已经有匹配函数参数的设备ID。</p>
+<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p10928125717182"><a name="p10928125717182"></a><a name="p10928125717182"></a>For non-shared interrupt numbers, check whether the passed interrupt number has already been created; for shared interrupt numbers, check whether the linked list of the passed interrupt number already contains a device ID matching the function parameter.</p>
 </td>
 </tr>
 <tr id="row10321135610317"><td class="cellrowborder" valign="top" width="6.751543209876544%" headers="mcps1.2.6.1.1 "><p id="p19928105714184"><a name="p19928105714184"></a><a name="p19928105714184"></a>5</p>
@@ -933,9 +933,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.108410493827161%" headers="mcps1.2.6.1.3 "><p id="p179281857151812"><a name="p179281857151812"></a><a name="p179281857151812"></a>0x02000905</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p592805712188"><a name="p592805712188"></a><a name="p592805712188"></a>设置的中断优先级无效。</p>
+<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p592805712188"><a name="p592805712188"></a><a name="p592805712188"></a>The set interrupt priority is invalid.</p>
 </td>
-<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p16928757141815"><a name="p16928757141815"></a><a name="p16928757141815"></a>传入有效中断优先级。优先级有效范围依赖于硬件，外部可配。</p>
+<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p16928757141815"><a name="p16928757141815"></a><a name="p16928757141815"></a>Pass in a valid interrupt priority. The valid priority range depends on the hardware and is externally configurable.</p>
 </td>
 </tr>
 <tr id="row83991271323"><td class="cellrowborder" valign="top" width="6.751543209876544%" headers="mcps1.2.6.1.1 "><p id="p14928135710181"><a name="p14928135710181"></a><a name="p14928135710181"></a>6</p>
@@ -944,39 +944,39 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.108410493827161%" headers="mcps1.2.6.1.3 "><p id="p69281570182"><a name="p69281570182"></a><a name="p69281570182"></a>0x02000908</p>
 </td>
-<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p1792865761819"><a name="p1792865761819"></a><a name="p1792865761819"></a>在中断中调用osal_irq_request接口。</p>
+<td class="cellrowborder" valign="top" width="28.848379629629626%" headers="mcps1.2.6.1.4 "><p id="p1792865761819"><a name="p1792865761819"></a><a name="p1792865761819"></a>Calling the osal_irq_request interface in an interrupt.</p>
 </td>
-<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p19928957191813"><a name="p19928957191813"></a><a name="p19928957191813"></a>查看osal_irq_request接口的使用是否正确。</p>
+<td class="cellrowborder" valign="top" width="38.580246913580254%" headers="mcps1.2.6.1.5 "><p id="p19928957191813"><a name="p19928957191813"></a><a name="p19928957191813"></a>Check whether the osal_irq_request interface is used correctly.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-### 注意事项<a name="ZH-CN_TOPIC_0000001664982506"></a>
+### Precautions<a name="ZH-CN_TOPIC_0000001664982506"></a>
 
--   根据具体硬件，配置支持的最大中断数及中断初始化操作的寄存器地址。
--   中断处理程序耗时不能过长，影响CPU对中断的及时响应。
--   中断响应过程中不能执行引起任务调度的函数。
--   中断恢复osal\_irq\_restore\(\)的入参必须是与之对应的osal\_irq\_lock\(\)保存的关中断之前的CPSR的值。
--   中断的处理函数中不能使用mutex、malloc、sleep、delay函数，代码须尽量短小、运行快速，对于较复杂的操作需通过抛事件给中断下半部处理。
--   BS2X内核的配置文件bs21.config默认打开了中断嵌套（LOSCFG\_ARCH\_INTERRUPT\_PREEMPTION），BS2X的riscv内核开启中断嵌套时，对于电平触发方式，需要在中断处理程序结束时调用osal\_irq\_clear接口，主动清除中断寄存器状态，该接口只有在中断嵌套场景生效；非嵌套场景用户无需清除中断控制器状态。
--   在使能中断嵌套后，严禁在中断中调整中断优先级，异常的提高优先级，可能会导致中断重入。
+-   According to the specific hardware, configure the maximum number of supported interrupts and the register address for interrupt initialization.
+-   The interrupt handler should not take too long, as this affects the CPU's timely response to interrupts.
+-   During interrupt response, functions that cause task scheduling cannot be executed.
+-   The input parameter of the interrupt restore osal\_irq\_restore() must be the CPSR value saved by the corresponding osal\_irq\_lock() before interrupts were disabled.
+-   In interrupt handlers, the mutex, malloc, sleep, and delay functions cannot be used. The code must be as short as possible and run fast. For more complex operations, events need to be posted to the bottom half of the interrupt for processing.
+-   The bs21.config configuration file of the BS2X kernel enables interrupt nesting (LOSCFG\_ARCH\_INTERRUPT\_PREEMPTION) by default. When interrupt nesting is enabled on the BS2X RISC-V kernel, for level-triggered mode, the osal\_irq\_clear interface needs to be called at the end of the interrupt handler to actively clear the interrupt register state. This interface only takes effect in the interrupt nesting scenario. In the non-nesting scenario, users do not need to clear the interrupt controller state.
+-   After enabling interrupt nesting, it is strictly forbidden to adjust the interrupt priority in an interrupt. Abnormally increasing the priority may cause interrupt re-entry.
 
-### 编程实例<a name="ZH-CN_TOPIC_0000001664982502"></a>
+### Programming Example<a name="ZH-CN_TOPIC_0000001664982502"></a>
 
-本实例实现如下功能：
+This example implements the following functions:
 
--   关闭全部中断。
--   中断使能。
--   中断去使能。
--   恢复关闭中断前的状态。
+-   Disable all interrupts.
+-   Enable an interrupt.
+-   Disable an interrupt.
+-   Restore the state before interrupts were disabled.
 
-代码示例：
+Code example:
 
 ```
 #include "common_def.h"
 #include "soc_osal.h"
-#define UART_HANDLE_PRIO    1    /* 中断优先级范围，从高到低:  0 - 7 */
+#define UART_HANDLE_PRIO    1    /* Interrupt priority range, from high to low: 0-7 */
 void uart_irqhandle(int32_t irq,void *dev)
 {
     unused(irq);
@@ -987,130 +987,130 @@ void example_irq(void)
 {
     uint32_t irq_idx = 10;
     uint32_t uvIntSave;
-    /* 开关所有中断 */
+    /* Disable all interrupts */
     uvIntSave = osal_irq_lock();
     osal_irq_restore(uvIntSave);
-    /* 注册中断 */
+    /* Register an interrupt */
     osal_irq_request(irq_idx, (osal_irq_handler)uart_irqhandle, NULL, "uart irq", NULL);
-    /* 设置中断优先级 */
+    /* Set the interrupt priority */
     osal_irq_set_priority(irq_idx, UART_HANDLE_PRIO);
-    /* 使能中断 */
+    /* Enable the interrupt */
     osal_irq_enable(irq_idx);
-    /* 去使能中断 */
+    /* Disable the interrupt */
     osal_irq_disable(irq_idx);
 }
 ```
 
-## 队列<a name="ZH-CN_TOPIC_0000001713022037"></a>
+## Queue<a name="ZH-CN_TOPIC_0000001713022037"></a>
 
 
 
 
 
-### 概述<a name="ZH-CN_TOPIC_0000001665142198"></a>
+### Overview<a name="ZH-CN_TOPIC_0000001665142198"></a>
 
-队列又称消息队列，是一种常用于任务间通信的数据结构，实现了接收来自任务或中断的不固定长度的消息，接收方根据消息ID读取消息。
+A queue, also called a message queue, is a data structure commonly used for inter-task communication. It implements the reception of messages of variable length from tasks or interrupts, and the receiver reads messages based on the message ID.
 
-任务能够从队列里面读取消息：
+A task can read messages from the queue:
 
--   当队列中的消息是空时，挂起读取任务。
--   当队列中有新消息时，挂起的读取任务被唤醒并处理新消息。
--   用户在处理业务时，消息队列提供了异步处理机制，允许将一个消息放入队列，但并不立即处理它，同时队列还能起到缓冲消息作用。
+-   When the queue is empty, suspend the reading task.
+-   When a new message arrives in the queue, the suspended reading task is awakened and processes the new message.
+-   When processing business, the message queue provides an asynchronous processing mechanism that allows a message to be placed in the queue without being processed immediately. Meanwhile, the queue can also buffer messages.
 
-系统中使用队列数据结构实现任务异步通信工作，具有如下特性：
+The system uses the queue data structure to implement asynchronous communication between tasks, with the following characteristics:
 
--   消息以先进先出方式排队，支持异步读写工作方式。
--   读队列和写队列都支持超时机制。
--   发送消息类型由通信双方约定，可以允许不同长度（不超过队列节点最大值）消息。
--   一个任务能够从任意一个消息队列接收和发送消息。
--   多个任务能够从同一个消息队列接收和发送消息。
--   当队列使用结束后，如果是动态申请的内存，需要通过释放内存函数回收。
+-   Messages are queued in a first-in-first-out manner, and asynchronous read/write is supported.
+-   Both reading from and writing to a queue support the timeout mechanism.
+-   The message type is agreed upon by both communicating parties. Messages of different lengths (not exceeding the maximum queue node size) are allowed.
+-   A task can receive and send messages from/to any message queue.
+-   Multiple tasks can receive and send messages from/to the same message queue.
+-   After the queue is no longer used, if the memory was dynamically allocated, it needs to be reclaimed through the memory free function.
 
-### 开发流程<a name="ZH-CN_TOPIC_0000001665142210"></a>
+### Development Process<a name="ZH-CN_TOPIC_0000001665142210"></a>
 
-**使用场景<a name="section1139054114508"></a>**
+**Usage Scenario<a name="section1139054114508"></a>**
 
-多任务间通信，可通过消息队列完成。
+Communication between multiple tasks can be completed through message queues.
 
-**功能说明<a name="section98536495216"></a>**
+**Function Description<a name="section98536495216"></a>**
 
-消息队列提供的接口如[表1](#table12647151885317)所示。
+The interfaces provided by the message queue are shown in [Table 1](#table12647151885317).
 
-**表 1**  队列接口说明
+**Table 1**  Queue interface description
 
 <a name="table12647151885317"></a>
-<table><thead align="left"><tr id="row1647161818530"><th class="cellrowborder" valign="top" width="35.68%" id="mcps1.2.3.1.1"><p id="p364720181536"><a name="p364720181536"></a><a name="p364720181536"></a>接口名称</p>
+<table><thead align="left"><tr id="row1647161818530"><th class="cellrowborder" valign="top" width="35.68%" id="mcps1.2.3.1.1"><p id="p364720181536"><a name="p364720181536"></a><a name="p364720181536"></a>Interface Name</p>
 </th>
-<th class="cellrowborder" valign="top" width="64.32%" id="mcps1.2.3.1.2"><p id="p176381812471"><a name="p176381812471"></a><a name="p176381812471"></a>说明</p>
+<th class="cellrowborder" valign="top" width="64.32%" id="mcps1.2.3.1.2"><p id="p176381812471"><a name="p176381812471"></a><a name="p176381812471"></a>Description</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row16471218135320"><td class="cellrowborder" valign="top" width="35.68%" headers="mcps1.2.3.1.1 "><p id="p71418386511"><a name="p71418386511"></a><a name="p71418386511"></a>osal_msg_queue_create</p>
 </td>
-<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p66471218175319"><a name="p66471218175319"></a><a name="p66471218175319"></a>创建消息队列。</p>
+<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p66471218175319"><a name="p66471218175319"></a><a name="p66471218175319"></a>Creates a message queue.</p>
 </td>
 </tr>
 <tr id="row206471118165319"><td class="cellrowborder" valign="top" width="35.68%" headers="mcps1.2.3.1.1 "><p id="p15365171420589"><a name="p15365171420589"></a><a name="p15365171420589"></a>osal_msg_queue_delete</p>
 </td>
-<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p564718189532"><a name="p564718189532"></a><a name="p564718189532"></a>删除消息队列。</p>
+<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p564718189532"><a name="p564718189532"></a><a name="p564718189532"></a>Deletes a message queue.</p>
 </td>
 </tr>
 <tr id="row1647191875311"><td class="cellrowborder" valign="top" width="35.68%" headers="mcps1.2.3.1.1 "><p id="p10143810115919"><a name="p10143810115919"></a><a name="p10143810115919"></a>osal_msg_queue_write_copy</p>
 </td>
-<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p6647418205314"><a name="p6647418205314"></a><a name="p6647418205314"></a>发送消息到队列尾部。</p>
+<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p6647418205314"><a name="p6647418205314"></a><a name="p6647418205314"></a>Sends a message to the end of the queue.</p>
 </td>
 </tr>
 <tr id="row597131510414"><td class="cellrowborder" valign="top" width="35.68%" headers="mcps1.2.3.1.1 "><p id="p576416144015"><a name="p576416144015"></a><a name="p576416144015"></a>osal_msg_queue_write_head_copy</p>
 </td>
-<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p64942916266"><a name="p64942916266"></a><a name="p64942916266"></a>发送消息到队列头。</p>
+<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p64942916266"><a name="p64942916266"></a><a name="p64942916266"></a>Sends a message to the head of the queue.</p>
 </td>
 </tr>
 <tr id="row13647191885318"><td class="cellrowborder" valign="top" width="35.68%" headers="mcps1.2.3.1.1 "><p id="p147097540597"><a name="p147097540597"></a><a name="p147097540597"></a>osal_msg_queue_read_copy</p>
 </td>
-<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p1764713184532"><a name="p1764713184532"></a><a name="p1764713184532"></a>阻塞接收消息，单位：ms。</p>
+<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p1764713184532"><a name="p1764713184532"></a><a name="p1764713184532"></a>Blocking reception of messages, in ms.</p>
 </td>
 </tr>
 <tr id="row10711235165416"><td class="cellrowborder" valign="top" width="35.68%" headers="mcps1.2.3.1.1 "><p id="p20724162555812"><a name="p20724162555812"></a><a name="p20724162555812"></a>osal_msg_queue_is_full</p>
 </td>
-<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p16721335165412"><a name="p16721335165412"></a><a name="p16721335165412"></a>检查消息队列是否已满。</p>
+<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p16721335165412"><a name="p16721335165412"></a><a name="p16721335165412"></a>Checks whether the message queue is full.</p>
 </td>
 </tr>
 <tr id="row1824574610542"><td class="cellrowborder" valign="top" width="35.68%" headers="mcps1.2.3.1.1 "><p id="p16311249155817"><a name="p16311249155817"></a><a name="p16311249155817"></a>osal_msg_queue_get_msg_num</p>
 </td>
-<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p424513460545"><a name="p424513460545"></a><a name="p424513460545"></a>获取当前已经使用的消息队列个数。</p>
+<td class="cellrowborder" valign="top" width="64.32%" headers="mcps1.2.3.1.2 "><p id="p424513460545"><a name="p424513460545"></a><a name="p424513460545"></a>Obtains the number of currently used message queues.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**开发流程<a name="section12845154711528"></a>**
+**Development Process<a name="section12845154711528"></a>**
 
-使用队列模块的典型流程：
+Typical process of using the queue module:
 
-1.  创建消息队列osal\_msg\_queue\_create。创建成功后，可以得到消息队列的ID值。
-2.  发送消息osal\_msg\_queue\_write\_copy。
-3.  消息等待接收osal\_msg\_queue\_read\_copy。
-4.  队列状态管理osal\_msg\_queue\_is\_full、osal\_msg\_queue\_get\_msg\_num。
-5.  删除队列osal\_msg\_queue\_delete。
+1.  Create a message queue using osal\_msg\_queue\_create. After successful creation, the ID value of the message queue can be obtained.
+2.  Send a message using osal\_msg\_queue\_write\_copy.
+3.  Wait to receive a message using osal\_msg\_queue\_read\_copy.
+4.  Manage the queue state using osal\_msg\_queue\_is\_full and osal\_msg\_queue\_get\_msg\_num.
+5.  Delete the queue using osal\_msg\_queue\_delete.
 
-**错误码<a name="section076573115314"></a>**
+**Error Code<a name="section076573115314"></a>**
 
-OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL封装的内核接口运行会打印异常信息值，以便快速定位错误原因。
+The OSAL interface supports the diagnostic print switch. After disabling the OSALLOG\_DISABLE macro definition, the kernel interfaces encapsulated by OSAL will print abnormal information values during execution, facilitating rapid error cause location.
 
-队列操作失败错误码如[表2](#table19356240184719)所示。
+Error codes for queue operation failures are shown in [Table 2](#table19356240184719).
 
-**表 2**  队列错误码说明
+**Table 2**  Queue error code description
 
 <a name="table19356240184719"></a>
-<table><thead align="left"><tr id="row135711407473"><th class="cellrowborder" valign="top" width="6.740491092922484%" id="mcps1.2.6.1.1"><p id="p1964046154812"><a name="p1964046154812"></a><a name="p1964046154812"></a>序号</p>
+<table><thead align="left"><tr id="row135711407473"><th class="cellrowborder" valign="top" width="6.740491092922484%" id="mcps1.2.6.1.1"><p id="p1964046154812"><a name="p1964046154812"></a><a name="p1964046154812"></a>No.</p>
 </th>
-<th class="cellrowborder" valign="top" width="22.37843042850265%" id="mcps1.2.6.1.2"><p id="p364013618484"><a name="p364013618484"></a><a name="p364013618484"></a>定义</p>
+<th class="cellrowborder" valign="top" width="22.37843042850265%" id="mcps1.2.6.1.2"><p id="p364013618484"><a name="p364013618484"></a><a name="p364013618484"></a>Definition</p>
 </th>
-<th class="cellrowborder" valign="top" width="8.021184400577756%" id="mcps1.2.6.1.3"><p id="p9640146144817"><a name="p9640146144817"></a><a name="p9640146144817"></a>实际数值</p>
+<th class="cellrowborder" valign="top" width="8.021184400577756%" id="mcps1.2.6.1.3"><p id="p9640146144817"><a name="p9640146144817"></a><a name="p9640146144817"></a>Actual Value</p>
 </th>
-<th class="cellrowborder" valign="top" width="36.53346172363987%" id="mcps1.2.6.1.4"><p id="p186400619480"><a name="p186400619480"></a><a name="p186400619480"></a>说明</p>
+<th class="cellrowborder" valign="top" width="36.53346172363987%" id="mcps1.2.6.1.4"><p id="p186400619480"><a name="p186400619480"></a><a name="p186400619480"></a>Description</p>
 </th>
-<th class="cellrowborder" valign="top" width="26.326432354357244%" id="mcps1.2.6.1.5"><p id="p1664014610485"><a name="p1664014610485"></a><a name="p1664014610485"></a>参考解决方案</p>
+<th class="cellrowborder" valign="top" width="26.326432354357244%" id="mcps1.2.6.1.5"><p id="p1664014610485"><a name="p1664014610485"></a><a name="p1664014610485"></a>Reference Solution</p>
 </th>
 </tr>
 </thead>
@@ -1120,9 +1120,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p964111620481"><a name="p964111620481"></a><a name="p964111620481"></a>0x02000601</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p86418610482"><a name="p86418610482"></a><a name="p86418610482"></a>队列初始化时，从动态内存池申请内存失败。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p86418610482"><a name="p86418610482"></a><a name="p86418610482"></a>When the queue is initialized, memory allocation from the dynamic memory pool fails.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p136411561482"><a name="p136411561482"></a><a name="p136411561482"></a>设置更大的系统动态内存池，配置项为OS_SYS_MEM_SIZE，或减少系统支持的最大队列数。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p136411561482"><a name="p136411561482"></a><a name="p136411561482"></a>Set a larger system dynamic memory pool through the OS_SYS_MEM_SIZE configuration item, or reduce the maximum number of queues supported by the system.</p>
 </td>
 </tr>
 <tr id="row1535724044719"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p17641565485"><a name="p17641565485"></a><a name="p17641565485"></a>2</p>
@@ -1131,9 +1131,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p186411361484"><a name="p186411361484"></a><a name="p186411361484"></a>0x02000602</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p136416619485"><a name="p136416619485"></a><a name="p136416619485"></a>创建队列时，从动态内存池申请内存失败。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p136416619485"><a name="p136416619485"></a><a name="p136416619485"></a>When creating a queue, memory allocation from the dynamic memory pool fails.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p166411566481"><a name="p166411566481"></a><a name="p166411566481"></a>设置更大的系统动态内存池，配置项为OS_SYS_MEM_SIZE，或减少要创建队列的队列长度和消息节点大小。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p166411566481"><a name="p166411566481"></a><a name="p166411566481"></a>Set a larger system dynamic memory pool through the OS_SYS_MEM_SIZE configuration item, or reduce the queue length and message node size of the queue to be created.</p>
 </td>
 </tr>
 <tr id="row035754010475"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p96418664812"><a name="p96418664812"></a><a name="p96418664812"></a>3</p>
@@ -1142,9 +1142,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p11641126104810"><a name="p11641126104810"></a><a name="p11641126104810"></a>0x02000603</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p4641561489"><a name="p4641561489"></a><a name="p4641561489"></a>创建队列时消息节点大小超过上限。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p4641561489"><a name="p4641561489"></a><a name="p4641561489"></a>When creating a queue, the message node size exceeds the upper limit.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1464116611488"><a name="p1464116611488"></a><a name="p1464116611488"></a>更改入参消息节点大小，使之不超过上限。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1464116611488"><a name="p1464116611488"></a><a name="p1464116611488"></a>Change the input message node size so that it does not exceed the upper limit.</p>
 </td>
 </tr>
 <tr id="row173577409470"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p56412620482"><a name="p56412620482"></a><a name="p56412620482"></a>4</p>
@@ -1153,9 +1153,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p186411169480"><a name="p186411169480"></a><a name="p186411169480"></a>0x02000604</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p86417674815"><a name="p86417674815"></a><a name="p86417674815"></a>创建队列时，系统中已经没有空闲队列。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p86417674815"><a name="p86417674815"></a><a name="p86417674815"></a>When creating a queue, there is no free queue available in the system.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p26413612483"><a name="p26413612483"></a><a name="p26413612483"></a>增加系统支持的最大队列数。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p26413612483"><a name="p26413612483"></a><a name="p26413612483"></a>Increase the maximum number of queues supported by the system.</p>
 </td>
 </tr>
 <tr id="row93572040114713"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p564176194813"><a name="p564176194813"></a><a name="p564176194813"></a>5</p>
@@ -1164,9 +1164,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p06417615486"><a name="p06417615486"></a><a name="p06417615486"></a>0x02000605</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p1464118614483"><a name="p1464118614483"></a><a name="p1464118614483"></a>传递给删除队列接口的队列ID大于等于系统支持的最大队列数。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p1464118614483"><a name="p1464118614483"></a><a name="p1464118614483"></a>The queue ID passed to the delete queue interface is greater than or equal to the maximum number of queues supported by the system.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1264119664817"><a name="p1264119664817"></a><a name="p1264119664817"></a>确保队列ID是有效的。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1264119664817"><a name="p1264119664817"></a><a name="p1264119664817"></a>Ensure that the queue ID is valid.</p>
 </td>
 </tr>
 <tr id="row1835754019479"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p156411634817"><a name="p156411634817"></a><a name="p156411634817"></a>6</p>
@@ -1175,9 +1175,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p2064116624813"><a name="p2064116624813"></a><a name="p2064116624813"></a>0x02000606</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p166411469483"><a name="p166411469483"></a><a name="p166411469483"></a>当任务被锁定时，禁止在队列中阻塞等待写消息或读消息。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p166411469483"><a name="p166411469483"></a><a name="p166411469483"></a>When the task is locked, it is forbidden to block waiting to write or read messages in the queue.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p964114614488"><a name="p964114614488"></a><a name="p964114614488"></a>使用队列前解锁任务。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p964114614488"><a name="p964114614488"></a><a name="p964114614488"></a>Unlock the task before using the queue.</p>
 </td>
 </tr>
 <tr id="row6357134016474"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p864156184816"><a name="p864156184816"></a><a name="p864156184816"></a>7</p>
@@ -1186,9 +1186,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p1764111615481"><a name="p1764111615481"></a><a name="p1764111615481"></a>0x02000607</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p964176194814"><a name="p964176194814"></a><a name="p964176194814"></a>等待处理队列超时。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p964176194814"><a name="p964176194814"></a><a name="p964176194814"></a>Waiting to process the queue timed out.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1164146114813"><a name="p1164146114813"></a><a name="p1164146114813"></a>检查设置的超时时间是否合适。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1164146114813"><a name="p1164146114813"></a><a name="p1164146114813"></a>Check whether the set timeout is appropriate.</p>
 </td>
 </tr>
 <tr id="row7357340124718"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p564113694815"><a name="p564113694815"></a><a name="p564113694815"></a>8</p>
@@ -1197,9 +1197,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p1964111617484"><a name="p1964111617484"></a><a name="p1964111617484"></a>0x02000608</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p9641126134812"><a name="p9641126134812"></a><a name="p9641126134812"></a>队列存在阻塞任务而不能被删除。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p9641126134812"><a name="p9641126134812"></a><a name="p9641126134812"></a>The queue has blocked tasks and cannot be deleted.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p96413634810"><a name="p96413634810"></a><a name="p96413634810"></a>使任务能够获得资源而不是在队列中被阻塞。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p96413634810"><a name="p96413634810"></a><a name="p96413634810"></a>Enable tasks to obtain resources instead of being blocked in the queue.</p>
 </td>
 </tr>
 <tr id="row13358154064711"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p46419664818"><a name="p46419664818"></a><a name="p46419664818"></a>9</p>
@@ -1208,9 +1208,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p17641669480"><a name="p17641669480"></a><a name="p17641669480"></a>0x02000609</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p264112684812"><a name="p264112684812"></a><a name="p264112684812"></a>在中断处理程序中不能以阻塞模式写队列。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p264112684812"><a name="p264112684812"></a><a name="p264112684812"></a>In an interrupt handler, the queue cannot be written in blocking mode.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p26411368487"><a name="p26411368487"></a><a name="p26411368487"></a>将写队列设为非阻塞模式，即将写队列的超时时间设置为0。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p26411368487"><a name="p26411368487"></a><a name="p26411368487"></a>Set the write queue to non-blocking mode, that is, set the write queue timeout to 0.</p>
 </td>
 </tr>
 <tr id="row43581640124712"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p11641864484"><a name="p11641864484"></a><a name="p11641864484"></a>10</p>
@@ -1219,9 +1219,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p8641156144814"><a name="p8641156144814"></a><a name="p8641156144814"></a>0x0200060a</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p9641866485"><a name="p9641866485"></a><a name="p9641866485"></a>队列未创建。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p9641866485"><a name="p9641866485"></a><a name="p9641866485"></a>The queue has not been created.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p564113619485"><a name="p564113619485"></a><a name="p564113619485"></a>创建该队列，或更换为一个已经创建的队列。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p564113619485"><a name="p564113619485"></a><a name="p564113619485"></a>Create the queue, or replace it with an already created queue.</p>
 </td>
 </tr>
 <tr id="row6358184010472"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p19641168487"><a name="p19641168487"></a><a name="p19641168487"></a>11</p>
@@ -1230,9 +1230,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p96419694814"><a name="p96419694814"></a><a name="p96419694814"></a>0x0200060b</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p186426617482"><a name="p186426617482"></a><a name="p186426617482"></a>队列读写不同步。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p186426617482"><a name="p186426617482"></a><a name="p186426617482"></a>Queue read/write is not synchronized.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p136421965484"><a name="p136421965484"></a><a name="p136421965484"></a>同步队列的读写，即多个任务不能并发读写同一个队列。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p136421965484"><a name="p136421965484"></a><a name="p136421965484"></a>Synchronize the read/write of the queue, that is, multiple tasks cannot read/write the same queue concurrently.</p>
 </td>
 </tr>
 <tr id="row14358114064718"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p664276194816"><a name="p664276194816"></a><a name="p664276194816"></a>12</p>
@@ -1241,9 +1241,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p126421468482"><a name="p126421468482"></a><a name="p126421468482"></a>0x0200060c</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p5642136124818"><a name="p5642136124818"></a><a name="p5642136124818"></a>对于创建队列接口，保存队列ID的入参为空指针。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p5642136124818"><a name="p5642136124818"></a><a name="p5642136124818"></a>For the queue creation interface, the input parameter that stores the queue ID is a null pointer.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p86427674813"><a name="p86427674813"></a><a name="p86427674813"></a>确保传入的参数不为空指针。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p86427674813"><a name="p86427674813"></a><a name="p86427674813"></a>Ensure that the passed parameter is not a null pointer.</p>
 </td>
 </tr>
 <tr id="row1235814034718"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p13642156144811"><a name="p13642156144811"></a><a name="p13642156144811"></a>13</p>
@@ -1252,9 +1252,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p66421665485"><a name="p66421665485"></a><a name="p66421665485"></a>0x0200060d</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p36421869484"><a name="p36421869484"></a><a name="p36421869484"></a>对于创建队列接口，入参队列长度或消息节点大小为0。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p36421869484"><a name="p36421869484"></a><a name="p36421869484"></a>For the queue creation interface, the input queue length or message node size is 0.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p146428619486"><a name="p146428619486"></a><a name="p146428619486"></a>传入正确的队列长度和消息节点大小。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p146428619486"><a name="p146428619486"></a><a name="p146428619486"></a>Pass in the correct queue length and message node size.</p>
 </td>
 </tr>
 <tr id="row4358134064710"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p116421168486"><a name="p116421168486"></a><a name="p116421168486"></a>14</p>
@@ -1263,9 +1263,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p1264214694818"><a name="p1264214694818"></a><a name="p1264214694818"></a>0x0200060e</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p66429610483"><a name="p66429610483"></a><a name="p66429610483"></a>传递给读队列或写队列或获取队列信息接口的队列ID大于等于系统支持的最大队列数。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p66429610483"><a name="p66429610483"></a><a name="p66429610483"></a>The queue ID passed to the read queue, write queue, or queue information acquisition interface is greater than or equal to the maximum number of queues supported by the system.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p176421616487"><a name="p176421616487"></a><a name="p176421616487"></a>确保队列ID有效。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p176421616487"><a name="p176421616487"></a><a name="p176421616487"></a>Ensure that the queue ID is valid.</p>
 </td>
 </tr>
 <tr id="row1835811404474"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p12642176194818"><a name="p12642176194818"></a><a name="p12642176194818"></a>15</p>
@@ -1274,9 +1274,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p1264276204812"><a name="p1264276204812"></a><a name="p1264276204812"></a>0x0200060f</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p10642156164818"><a name="p10642156164818"></a><a name="p10642156164818"></a>传递给读队列接口的指针为空。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p10642156164818"><a name="p10642156164818"></a><a name="p10642156164818"></a>The pointer passed to the read queue interface is null.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1064219612489"><a name="p1064219612489"></a><a name="p1064219612489"></a>确保传入的参数不为空指针。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1064219612489"><a name="p1064219612489"></a><a name="p1064219612489"></a>Ensure that the passed parameter is not a null pointer.</p>
 </td>
 </tr>
 <tr id="row1335834084714"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p206429674812"><a name="p206429674812"></a><a name="p206429674812"></a>16</p>
@@ -1285,9 +1285,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p17642106144810"><a name="p17642106144810"></a><a name="p17642106144810"></a>0x02000610</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p86421769489"><a name="p86421769489"></a><a name="p86421769489"></a>传递给读队列接口的缓冲区大小为0或大于0xFFFB。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p86421769489"><a name="p86421769489"></a><a name="p86421769489"></a>The buffer size passed to the read queue interface is 0 or greater than 0xFFFB.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1464217619485"><a name="p1464217619485"></a><a name="p1464217619485"></a>传入的一个正确的缓冲区大小需要大于0且小于0xFFFC。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1464217619485"><a name="p1464217619485"></a><a name="p1464217619485"></a>A correct buffer size passed in needs to be greater than 0 and less than 0xFFFC.</p>
 </td>
 </tr>
 <tr id="row10358140174713"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p116426634812"><a name="p116426634812"></a><a name="p116426634812"></a>17</p>
@@ -1296,9 +1296,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p14642761487"><a name="p14642761487"></a><a name="p14642761487"></a>0x02000612</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p156429617481"><a name="p156429617481"></a><a name="p156429617481"></a>传递给写队列接口的缓冲区指针为空。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p156429617481"><a name="p156429617481"></a><a name="p156429617481"></a>The buffer pointer passed to the write queue interface is null.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p9642176174818"><a name="p9642176174818"></a><a name="p9642176174818"></a>确保传入的参数不为空指针。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p9642176174818"><a name="p9642176174818"></a><a name="p9642176174818"></a>Ensure that the passed parameter is not a null pointer.</p>
 </td>
 </tr>
 <tr id="row1135817404479"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p16421861484"><a name="p16421861484"></a><a name="p16421861484"></a>18</p>
@@ -1307,9 +1307,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p36424615484"><a name="p36424615484"></a><a name="p36424615484"></a>0x02000613</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p136426664816"><a name="p136426664816"></a><a name="p136426664816"></a>传递给写队列接口的缓冲区大小为0。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p136426664816"><a name="p136426664816"></a><a name="p136426664816"></a>The buffer size passed to the write queue interface is 0.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p6642361484"><a name="p6642361484"></a><a name="p6642361484"></a>传入正确的缓冲区大小。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p6642361484"><a name="p6642361484"></a><a name="p6642361484"></a>Pass in the correct buffer size.</p>
 </td>
 </tr>
 <tr id="row53588402476"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p764296104818"><a name="p764296104818"></a><a name="p764296104818"></a>19</p>
@@ -1318,9 +1318,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p76423619483"><a name="p76423619483"></a><a name="p76423619483"></a>0x02000615</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p1864220616489"><a name="p1864220616489"></a><a name="p1864220616489"></a>传递给写队列接口的缓冲区大小比队列的消息节点大小要大。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p1864220616489"><a name="p1864220616489"></a><a name="p1864220616489"></a>The buffer size passed to the write queue interface is larger than the message node size of the queue.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p15642867488"><a name="p15642867488"></a><a name="p15642867488"></a>减小缓冲区大小，或增大队列的消息节点大小。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p15642867488"><a name="p15642867488"></a><a name="p15642867488"></a>Reduce the buffer size, or increase the message node size of the queue.</p>
 </td>
 </tr>
 <tr id="row435918402475"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p764215694820"><a name="p764215694820"></a><a name="p764215694820"></a>20</p>
@@ -1329,9 +1329,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p146428611484"><a name="p146428611484"></a><a name="p146428611484"></a>0x02000616</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p136421260487"><a name="p136421260487"></a><a name="p136421260487"></a>写队列时没有可用的空闲节点。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p136421260487"><a name="p136421260487"></a><a name="p136421260487"></a>There is no free node available when writing to the queue.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1864236144810"><a name="p1864236144810"></a><a name="p1864236144810"></a>写队列之前，确保在队列中存在可用的空闲节点，或者使用阻塞模式写队列，即设置大于0的写队列超时时间。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p1864236144810"><a name="p1864236144810"></a><a name="p1864236144810"></a>Before writing to the queue, ensure that there is a free node available in the queue, or use the blocking mode to write to the queue, that is, set the write queue timeout to a value greater than 0.</p>
 </td>
 </tr>
 <tr id="row1735912406477"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p166424654818"><a name="p166424654818"></a><a name="p166424654818"></a>21</p>
@@ -1340,9 +1340,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p06426618486"><a name="p06426618486"></a><a name="p06426618486"></a>0x02000617</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p86438644811"><a name="p86438644811"></a><a name="p86438644811"></a>传递给获取队列信息接口的指针为空。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p86438644811"><a name="p86438644811"></a><a name="p86438644811"></a>The pointer passed to the queue information acquisition interface is null.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p864318613485"><a name="p864318613485"></a><a name="p864318613485"></a>确保传入的参数不为空指针。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p864318613485"><a name="p864318613485"></a><a name="p864318613485"></a>Ensure that the passed parameter is not a null pointer.</p>
 </td>
 </tr>
 <tr id="row133591402470"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p19643196114815"><a name="p19643196114815"></a><a name="p19643196114815"></a>22</p>
@@ -1351,9 +1351,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p9643146134820"><a name="p9643146134820"></a><a name="p9643146134820"></a>0x02000618</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p3643368484"><a name="p3643368484"></a><a name="p3643368484"></a>在中断处理程序中不能以阻塞模式读队列。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p3643368484"><a name="p3643368484"></a><a name="p3643368484"></a>In an interrupt handler, the queue cannot be read in blocking mode.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p664318684814"><a name="p664318684814"></a><a name="p664318684814"></a>将读队列设为非阻塞模式，即将读队列的超时时间设置为0。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p664318684814"><a name="p664318684814"></a><a name="p664318684814"></a>Set the read queue to non-blocking mode, that is, set the read queue timeout to 0.</p>
 </td>
 </tr>
 <tr id="row1935964020472"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p964366164815"><a name="p964366164815"></a><a name="p964366164815"></a>23</p>
@@ -1362,9 +1362,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p1864326134815"><a name="p1864326134815"></a><a name="p1864326134815"></a>0x0200061d</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p5643064485"><a name="p5643064485"></a><a name="p5643064485"></a>队列已空。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p5643064485"><a name="p5643064485"></a><a name="p5643064485"></a>The queue is empty.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p86439615484"><a name="p86439615484"></a><a name="p86439615484"></a>读队列之前，确保队列中存在未读的消息，或者使用阻塞模式读队列，即设置大于0的读队列超时时间。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p86439615484"><a name="p86439615484"></a><a name="p86439615484"></a>Before reading the queue, ensure that there are unread messages in the queue, or use the blocking mode to read the queue, that is, set the read queue timeout to a value greater than 0.</p>
 </td>
 </tr>
 <tr id="row12359140174713"><td class="cellrowborder" valign="top" width="6.740491092922484%" headers="mcps1.2.6.1.1 "><p id="p116431362489"><a name="p116431362489"></a><a name="p116431362489"></a>24</p>
@@ -1373,39 +1373,39 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.021184400577756%" headers="mcps1.2.6.1.3 "><p id="p12643196134811"><a name="p12643196134811"></a><a name="p12643196134811"></a>0x0200061f</p>
 </td>
-<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p146438617483"><a name="p146438617483"></a><a name="p146438617483"></a>传递给读队列接口的读缓冲区大小小于队列消息节点大小。</p>
+<td class="cellrowborder" valign="top" width="36.53346172363987%" headers="mcps1.2.6.1.4 "><p id="p146438617483"><a name="p146438617483"></a><a name="p146438617483"></a>The read buffer size passed to the read queue interface is smaller than the message node size of the queue.</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p14643136164811"><a name="p14643136164811"></a><a name="p14643136164811"></a>增加缓冲区大小，或减小队列消息节点大小。</p>
+<td class="cellrowborder" valign="top" width="26.326432354357244%" headers="mcps1.2.6.1.5 "><p id="p14643136164811"><a name="p14643136164811"></a><a name="p14643136164811"></a>Increase the buffer size, or reduce the message node size of the queue.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-### 注意事项<a name="ZH-CN_TOPIC_0000001713102049"></a>
+### Precautions<a name="ZH-CN_TOPIC_0000001713102049"></a>
 
--   等待消息：在中断、关中断、锁任务上下文禁止调用等待消息接口，进而产生不可控的异常调度。
--   发送消息：在关中断上下文禁止调用发送消息接口，进而产生不可控的异常调度。
--   发送消息（超时时间非0）：在中断、锁任务上下文禁止调用超时时间非0发送消息接口，进而产生不可控的异常调度。
--   系统可配置的队列资源个数是指整个系统的队列资源总个数，而非用户能使用的个数。例如：系统软件定时器多占用一个队列资源，那么系统可配置的队列资源就会减少一个。
--   队列接口函数中的入参timeout是指相对时间。
--   当队列使用结束后，如果存在动态申请的内存，需要及时释放这些内存。
+-   Waiting for messages: In interrupt, interrupt-disabled, and task-locked contexts, calling the message waiting interface is prohibited, as it may cause uncontrollable abnormal scheduling.
+-   Sending messages: In interrupt-disabled contexts, calling the message sending interface is prohibited, as it may cause uncontrollable abnormal scheduling.
+-   Sending messages (non-zero timeout): In interrupt and task-locked contexts, calling the message sending interface with a non-zero timeout is prohibited, as it may cause uncontrollable abnormal scheduling.
+-   The number of configurable queue resources refers to the total number of queue resources in the entire system, not the number available for user use. For example, if the system software timer occupies one additional queue resource, the number of configurable queue resources in the system decreases by one.
+-   The input parameter timeout in the queue interface functions refers to relative time.
+-   When the queue is no longer used, if memory was dynamically allocated, such memory must be released in a timely manner.
 
-### 编程实例<a name="ZH-CN_TOPIC_0000001665142222"></a>
+### Programming Example<a name="ZH-CN_TOPIC_0000001665142222"></a>
 
-创建一个队列，两个任务：
+Create a queue and two tasks:
 
--   任务1调用发送接口发送消息。
--   任务2通过接收接口接收消息。
+-   Task 1 calls the sending interface to send a message.
+-   Task 2 receives the message through the receiving interface.
 
-步骤如下：
+The steps are as follows:
 
-1.  通过osal\_kthread\_create创建任务1和任务2。
-2.  通过osal\_msg\_queue\_create创建一个消息队列。
-3.  在任务1 调用osal\_msg\_queue\_write\_copy发送消息。
-4.  在任务2 调用osal\_msg\_queue\_read\_copy接收消息。
-5.  通过osal\_msg\_queue\_delete删除队列。
+1.  Create task 1 and task 2 through osal\_kthread\_create.
+2.  Create a message queue through osal\_msg\_queue\_create.
+3.  In task 1, call osal\_msg\_queue\_write\_copy to send a message.
+4.  In task 2, call osal\_msg\_queue\_read\_copy to receive a message.
+5.  Delete the queue through osal\_msg\_queue\_delete.
 
-代码示例：
+Code example:
 
 ```
 #include "common_def.h"
@@ -1416,7 +1416,7 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 #define MSG_MAX_LEN     50
 static unsigned long g_msg_queue;
 uint8_t abuf[] = "test is message x";
-/*任务1发送数据*/
+/*Task 1 sends data*/
 void example_send_task(void *arg)
 {
     uint32_t i = 0,ret = 0;
@@ -1425,7 +1425,7 @@ void example_send_task(void *arg)
     while (i < 5) {
         abuf[uwlen - 2] = '0' + i;
         i++;
-        /*将abuf里的数据写入队列*/
+        /*Write the data in abuf to the queue*/
         ret = osal_msg_queue_write_copy(g_msg_queue, abuf, sizeof(abuf), OSAL_WAIT_FOREVER);
         if(ret != OSAL_SUCCESS) {
             osal_printk("send message failure,error:%x\n",ret);
@@ -1433,16 +1433,16 @@ void example_send_task(void *arg)
         osal_msleep(5);
     }
 }
-/*任务2接收数据*/
+/*Task 2 receives data*/
 void example_recv_task(void *arg)
 {
     unused(arg);
     uint8_t msg[50] = {0};
     uint32_t ret = 0;
-    /*设置buff缓冲区大小以及存放读取到的消息大小*/
+    /*Set the buffer size and the size of the received message*/
     uint32_t msg_rev_size = 50;
     while (1) {
-        /*读取队列里的数据存入msg里*/
+        /*Read the data in the queue into msg*/
         ret = osal_msg_queue_read_copy(g_msg_queue, msg, &msg_rev_size, OSAL_WAIT_FOREVER);
         if(ret != OSAL_SUCCESS) {
             osal_printk("recv message failure,error:%x\n",ret);
@@ -1451,40 +1451,40 @@ void example_recv_task(void *arg)
         osal_printk("recv message:%s\n", (char *)msg);
         osal_msleep(5);
     }
-    /*删除队列。需根据具体情况删除，大多数情况下无需删除队列，且在有任务占用等情况下删除队列会导致失败。以下代码仅供API展示*/
+    /*Delete the queue. Delete the queue only as needed. In most cases, there is no need to delete the queue, and deleting the queue when a task is still using it will fail. The following code is only for API demonstration*/
     osal_msg_queue_delete(g_msg_queue);
 }
 int example_msg_queue(void)
 {
     uint32_t ret = 0;
     osal_task *example_task1_info, *example_task2_info;
-    /* 创建队列 */
+    /* Create the queue */
     ret = osal_msg_queue_create("name", MSP_QUEUE_SIZE, &g_msg_queue, NULL, MSG_MAX_LEN);
     if(ret != OSAL_SUCCESS) {
         osal_printk("create queue failure!,error:%x\n",ret);
     }
     osal_printk("create the queue success! queue_id = %d\n", g_msg_queue);
-    /* 创建任务期间锁住任务调度 */
+    /* Lock task scheduling during task creation */
     osal_kthread_lock();
-    /* 创建任务1 */
+    /* Create task 1 */
     example_task1_info = osal_kthread_create((osal_kthread_handler)example_send_task, NULL, "example_task1", TASK_STACK_SIZE);
     ret = osal_kthread_set_priority(example_task1_info->task, TASK_PRI1);
     if (ret != OSAL_SUCCESS) {
         osal_printk("Example_task create failed!\n");
     }
-    /* 创建任务2 */
+    /* Create task 2 */
     example_task2_info = osal_kthread_create((osal_kthread_handler)example_recv_task, NULL, "example_task2", TASK_STACK_SIZE);
     ret = osal_kthread_set_priority(example_task2_info->task, TASK_PRI2);
     if (ret != OSAL_SUCCESS) {
         osal_printk("Example_task create failed!\n");
     }
-    /* 任务创建完成解锁任务调度 */
+    /* Unlock task scheduling after task creation is complete */
     osal_kthread_unlock();
     return ret;
 }
 ```
 
-结果验证：
+Result verification:
 
 ```
 create the queue success! queue_id = 2
@@ -1495,122 +1495,122 @@ recv message:test is message 3
 recv message:test is message 4
 ```
 
-## 事件<a name="ZH-CN_TOPIC_0000001713102045"></a>
+## Event<a name="ZH-CN_TOPIC_0000001713102045"></a>
 
 
 
 
 
-### 概述<a name="ZH-CN_TOPIC_0000001713102021"></a>
+### Overview<a name="ZH-CN_TOPIC_0000001713102021"></a>
 
-事件是一种任务间通信的机制，可用于实现任务间的同步。
+An event is an inter-task communication mechanism that can be used to implement synchronization between tasks.
 
-多任务环境下，任务之间往往需要同步操作，一个等待即是一个同步。事件可以提供一对多、多对多的同步操作。
+In a multi-task environment, tasks often need synchronous operations. A wait is a synchronization. Events can provide one-to-many and many-to-many synchronous operations.
 
--   一对多同步模型：一个任务等待多个事件的触发。
--   多对多同步模型：多个任务等待多个事件的触发。
+-   One-to-many synchronization model: one task waits for the trigger of multiple events.
+-   Many-to-many synchronization model: multiple tasks wait for the trigger of multiple events.
 
-任务可以通过创建事件控制块来实现对事件的触发和等待操作。
+A task can trigger and wait for events by creating an event control block.
 
-事件接口具有如下特点：
+Event interfaces have the following features:
 
--   事件不与任务相关联，事件相互独立，内部实现为一个32位的无符号整型变量，用于标识该任务发生的事件类型，其中每一位表示一种事件类型。
-    -   0：该事件类型未发生。
-    -   1：该事件类型已经发生。
+-   Events are not associated with tasks and are independent of each other. Internally, an event is implemented as a 32-bit unsigned integer variable used to identify the event type that occurs in the task, where each bit indicates one event type.
+    -   0: The event type has not occurred.
+    -   1: The event type has occurred.
 
--   事件仅用于任务间的同步，不提供数据传输功能。
--   多次向任务发送同一事件类型等效于只发送一次。
--   多个任务可以对同一事件进行读写操作。
--   支持事件读写超时机制。
+-   Events are only used for synchronization between tasks and do not provide data transmission.
+-   Sending the same event type to a task multiple times is equivalent to sending it only once.
+-   Multiple tasks can read and write the same event.
+-   Timeout mechanisms are supported for event reading and writing.
 
-在读事件时，可以选择读取模式。读取模式如下：
+When reading an event, you can select a read mode. The read modes are as follows:
 
--   所有事件（OSAL\_WAITMODE\_AND）：读取掩码中所有事件类型，只有读取的所有事件类型都发生，才能读取成功。
--   任一事件（OSAL\_WAITMODE\_OR）： 读取掩码中任一事件类型，读取的事件中任意一种事件类型发生，即可读取成功。
--   清除事件（OSAL\_WAITMODE\_CLR）：这是一种附加读取模式，可以与 OSAL\_WAITMODE\_AND和OSAL\_WAITMODE\_OR结合使用（OSAL\_WAITMODE\_AND| OSAL\_WAITMODE\_CLR或 OSAL\_WAITMODE\_OR| OSAL\_WAITMODE\_CLR），设置该模式读取成功后，对应事件类型位会自动清除。
+-   All events (OSAL\_WAITMODE\_AND): Read all event types in the mask. Only when all the read event types have occurred can the read succeed.
+-   Any event (OSAL\_WAITMODE\_OR): Read any event type in the mask. The read succeeds if any of the read event types has occurred.
+-   Clear events (OSAL\_WAITMODE\_CLR): This is an additional read mode that can be used in combination with OSAL\_WAITMODE\_AND and OSAL\_WAITMODE\_OR (OSAL\_WAITMODE\_AND| OSAL\_WAITMODE\_CLR or OSAL\_WAITMODE\_OR| OSAL\_WAITMODE\_CLR). With this mode enabled, the corresponding event type bits are automatically cleared after a successful read.
 
-运行机制：
+Working mechanism:
 
-读事件时，可以根据入参事件掩码类型mask读取事件的单个或多个事件类型。事件读取成功后，如果设置OSAL\_WAITMODE\_CLR会清除已读取到的事件类型，反之不会清除已读到的事件类型，需显式清除。可以通过入参选择读取模式，读取事件掩码类型中所有事件还是读取事件掩码类型中任意事件。
+When reading an event, you can read one or more event types based on the input event mask type. After an event read succeeds, if OSAL\_WAITMODE\_CLR is set, the read event types are cleared; otherwise, the read event types are not cleared and must be cleared explicitly. You can use the input parameter to select the read mode, that is, whether to read all events or any event in the event mask type.
 
--   写事件时，对指定事件写入指定的事件类型，可以一次同时写多个事件类型。写事件会触发任务调度。
--   清除事件时，根据入参事件和待清除的事件类型，对事件对应位进行清0操作。
+-   When writing an event, write the specified event types to the specified event. Multiple event types can be written at one time. Writing an event triggers task scheduling.
+-   When clearing an event, based on the input event and the event types to be cleared, clear the corresponding bits of the event to 0.
 
-### 开发流程<a name="ZH-CN_TOPIC_0000001713022029"></a>
+### Development Flow<a name="ZH-CN_TOPIC_0000001713022029"></a>
 
-**使用场景<a name="section57961452195911"></a>**
+**Application Scenarios<a name="section57961452195911"></a>**
 
-事件可应用于多种任务同步场景，在某些同步场景下可替代信号量。
+Events can be applied to various task synchronization scenarios and can replace semaphores in some synchronization scenarios.
 
-**功能说明<a name="section1962095915597"></a>**
+**Function Description<a name="section1962095915597"></a>**
 
-系统中的事件模块为用户提供的接口如[表1](#table15447173212416)所示。
+The interfaces provided by the event module in the system for users are shown in [Table 1](#table15447173212416).
 
-**表 1**  事件接口说明
+**Table 1**  Description of event interfaces
 
 <a name="table15447173212416"></a>
-<table><thead align="left"><tr id="row9561163274115"><th class="cellrowborder" valign="top" width="42.11%" id="mcps1.2.3.1.1"><p id="p85611032184113"><a name="p85611032184113"></a><a name="p85611032184113"></a>接口名称</p>
+<table><thead align="left"><tr id="row9561163274115"><th class="cellrowborder" valign="top" width="42.11%" id="mcps1.2.3.1.1"><p id="p85611032184113"><a name="p85611032184113"></a><a name="p85611032184113"></a>Interface Name</p>
 </th>
-<th class="cellrowborder" valign="top" width="57.89%" id="mcps1.2.3.1.2"><p id="p2561183217419"><a name="p2561183217419"></a><a name="p2561183217419"></a>说明</p>
+<th class="cellrowborder" valign="top" width="57.89%" id="mcps1.2.3.1.2"><p id="p2561183217419"><a name="p2561183217419"></a><a name="p2561183217419"></a>Description</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row8382719151718"><td class="cellrowborder" valign="top" width="42.11%" headers="mcps1.2.3.1.1 "><p id="p459318468266"><a name="p459318468266"></a><a name="p459318468266"></a>osal_event_init</p>
 </td>
-<td class="cellrowborder" valign="top" width="57.89%" headers="mcps1.2.3.1.2 "><p id="p738314199170"><a name="p738314199170"></a><a name="p738314199170"></a>初始化一个事件控制块。</p>
+<td class="cellrowborder" valign="top" width="57.89%" headers="mcps1.2.3.1.2 "><p id="p738314199170"><a name="p738314199170"></a><a name="p738314199170"></a>Initializes an event control block.</p>
 </td>
 </tr>
 <tr id="row145611932104114"><td class="cellrowborder" valign="top" width="42.11%" headers="mcps1.2.3.1.1 "><p id="p3178516142614"><a name="p3178516142614"></a><a name="p3178516142614"></a>osal_event_read</p>
 </td>
-<td class="cellrowborder" valign="top" width="57.89%" headers="mcps1.2.3.1.2 "><p id="p1556123284110"><a name="p1556123284110"></a><a name="p1556123284110"></a>阻塞读取指定事件类型，等待超时时间为相对时间，单位：ms。</p>
+<td class="cellrowborder" valign="top" width="57.89%" headers="mcps1.2.3.1.2 "><p id="p1556123284110"><a name="p1556123284110"></a><a name="p1556123284110"></a>Blocking read of the specified event types. The wait timeout is relative time, in ms.</p>
 </td>
 </tr>
 <tr id="row1056253217417"><td class="cellrowborder" valign="top" width="42.11%" headers="mcps1.2.3.1.1 "><p id="p6436107132613"><a name="p6436107132613"></a><a name="p6436107132613"></a>osal_event_write</p>
 </td>
-<td class="cellrowborder" valign="top" width="57.89%" headers="mcps1.2.3.1.2 "><p id="p1356223219412"><a name="p1356223219412"></a><a name="p1356223219412"></a>写指定的事件类型。</p>
+<td class="cellrowborder" valign="top" width="57.89%" headers="mcps1.2.3.1.2 "><p id="p1356223219412"><a name="p1356223219412"></a><a name="p1356223219412"></a>Writes the specified event types.</p>
 </td>
 </tr>
 <tr id="row356233254111"><td class="cellrowborder" valign="top" width="42.11%" headers="mcps1.2.3.1.1 "><p id="p185012720266"><a name="p185012720266"></a><a name="p185012720266"></a>osal_event_clear</p>
 </td>
-<td class="cellrowborder" valign="top" width="57.89%" headers="mcps1.2.3.1.2 "><p id="p2562832114120"><a name="p2562832114120"></a><a name="p2562832114120"></a>清除指定的事件类型。</p>
+<td class="cellrowborder" valign="top" width="57.89%" headers="mcps1.2.3.1.2 "><p id="p2562832114120"><a name="p2562832114120"></a><a name="p2562832114120"></a>Clears the specified event types.</p>
 </td>
 </tr>
 <tr id="row0562113216414"><td class="cellrowborder" valign="top" width="42.11%" headers="mcps1.2.3.1.1 "><p id="p1716293312615"><a name="p1716293312615"></a><a name="p1716293312615"></a>osal_event_destroy</p>
 </td>
-<td class="cellrowborder" valign="top" width="57.89%" headers="mcps1.2.3.1.2 "><p id="p356218329419"><a name="p356218329419"></a><a name="p356218329419"></a>销毁指定的事件控制块。</p>
+<td class="cellrowborder" valign="top" width="57.89%" headers="mcps1.2.3.1.2 "><p id="p356218329419"><a name="p356218329419"></a><a name="p356218329419"></a>Destroys the specified event control block.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**开发流程<a name="section2294508013"></a>**
+**Development Flow<a name="section2294508013"></a>**
 
-使用事件模块的典型流程：
+A typical flow of using the event module is as follows:
 
-1.  调用事件初始化osal\_event\_init接口，初始化事件等待队列。
-2.  写事件osal\_event\_write，配置事件掩码类型。
-3.  读事件osal\_event\_read，选择读取模式。
-4.  清除事件osal\_event\_clear，清除指定的事件类型。
-5.  事件调用osal\_event\_destroy完成事件资源回收。
+1.  Call the event initialization interface osal\_event\_init to initialize the event wait queue.
+2.  Write events through osal\_event\_write to configure the event mask type.
+3.  Read events through osal\_event\_read and select the read mode.
+4.  Clear events through osal\_event\_clear to clear the specified event types.
+5.  Call osal\_event\_destroy to recycle event resources.
 
-**错误码<a name="section15980814711"></a>**
+**Error Codes<a name="section15980814711"></a>**
 
-OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL封装的内核接口运行过程中出现异常会打印异常信息值，事件存在失败的可能性操作包括：事件初始化、事件销毁、事件读写、事件清除，便于快速定位问题。
+The OSAL interface supports a fault detection and printing switch. After the OSALLOG\_DISABLE macro is disabled, if an exception occurs during the running of the kernel interfaces encapsulated by OSAL, the exception information value will be printed. Operations that may cause event failure include: event initialization, event destruction, event reading/writing, and event clearing, which facilitates rapid fault location.
 
-事件错误码如[表2](#table254317371422)所示。
+The event error codes are shown in [Table 2](#table254317371422).
 
-**表 2**  事件错误码说明
+**Table 2**  Description of event error codes
 
 <a name="table254317371422"></a>
-<table><thead align="left"><tr id="row10720143794217"><th class="cellrowborder" valign="top" width="6.6293370662933695%" id="mcps1.2.6.1.1"><p id="p187201371424"><a name="p187201371424"></a><a name="p187201371424"></a>序号</p>
+<table><thead align="left"><tr id="row10720143794217"><th class="cellrowborder" valign="top" width="6.6293370662933695%" id="mcps1.2.6.1.1"><p id="p187201371424"><a name="p187201371424"></a><a name="p187201371424"></a>No.</p>
 </th>
-<th class="cellrowborder" valign="top" width="23.23767623237676%" id="mcps1.2.6.1.2"><p id="p67204379423"><a name="p67204379423"></a><a name="p67204379423"></a>定义</p>
+<th class="cellrowborder" valign="top" width="23.23767623237676%" id="mcps1.2.6.1.2"><p id="p67204379423"><a name="p67204379423"></a><a name="p67204379423"></a>Definition</p>
 </th>
-<th class="cellrowborder" valign="top" width="8.63913608639136%" id="mcps1.2.6.1.3"><p id="p27201337164217"><a name="p27201337164217"></a><a name="p27201337164217"></a>实际值</p>
+<th class="cellrowborder" valign="top" width="8.63913608639136%" id="mcps1.2.6.1.3"><p id="p27201337164217"><a name="p27201337164217"></a><a name="p27201337164217"></a>Actual Value</p>
 </th>
-<th class="cellrowborder" valign="top" width="41.975802419758026%" id="mcps1.2.6.1.4"><p id="p1572043715422"><a name="p1572043715422"></a><a name="p1572043715422"></a>说明</p>
+<th class="cellrowborder" valign="top" width="41.975802419758026%" id="mcps1.2.6.1.4"><p id="p1572043715422"><a name="p1572043715422"></a><a name="p1572043715422"></a>Description</p>
 </th>
-<th class="cellrowborder" valign="top" width="19.518048195180484%" id="mcps1.2.6.1.5"><p id="p16721163784218"><a name="p16721163784218"></a><a name="p16721163784218"></a>参考解决方案</p>
+<th class="cellrowborder" valign="top" width="19.518048195180484%" id="mcps1.2.6.1.5"><p id="p16721163784218"><a name="p16721163784218"></a><a name="p16721163784218"></a>Reference Solution</p>
 </th>
 </tr>
 </thead>
@@ -1620,9 +1620,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.63913608639136%" headers="mcps1.2.6.1.3 "><p id="p2856131693317"><a name="p2856131693317"></a><a name="p2856131693317"></a>0x02001c00</p>
 </td>
-<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p138566161339"><a name="p138566161339"></a><a name="p138566161339"></a>写事件时，将事件ID的第25个bit设置为1。这个比特位OS内部保留，不允许设置为1。</p>
+<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p138566161339"><a name="p138566161339"></a><a name="p138566161339"></a>When writing an event, the 25th bit of the event ID is set to 1. This bit is reserved by the OS internally and cannot be set to 1.</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p1985641612332"><a name="p1985641612332"></a><a name="p1985641612332"></a>事件ID的第25bit置为0。</p>
+<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p1985641612332"><a name="p1985641612332"></a><a name="p1985641612332"></a>Set the 25th bit of the event ID to 0.</p>
 </td>
 </tr>
 <tr id="row177211237194215"><td class="cellrowborder" valign="top" width="6.6293370662933695%" headers="mcps1.2.6.1.1 "><p id="p2085615160335"><a name="p2085615160335"></a><a name="p2085615160335"></a>2</p>
@@ -1631,9 +1631,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.63913608639136%" headers="mcps1.2.6.1.3 "><p id="p3856161633316"><a name="p3856161633316"></a><a name="p3856161633316"></a>0x02001c01</p>
 </td>
-<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p1285614165339"><a name="p1285614165339"></a><a name="p1285614165339"></a>读事件超时。</p>
+<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p1285614165339"><a name="p1285614165339"></a><a name="p1285614165339"></a>Event read timeout.</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p108562161331"><a name="p108562161331"></a><a name="p108562161331"></a>增加等待时间或者重新读取。</p>
+<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p108562161331"><a name="p108562161331"></a><a name="p108562161331"></a>Increase the wait time or read again.</p>
 </td>
 </tr>
 <tr id="row117211337134213"><td class="cellrowborder" valign="top" width="6.6293370662933695%" headers="mcps1.2.6.1.1 "><p id="p128561316143310"><a name="p128561316143310"></a><a name="p128561316143310"></a>3</p>
@@ -1642,9 +1642,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.63913608639136%" headers="mcps1.2.6.1.3 "><p id="p178561116193314"><a name="p178561116193314"></a><a name="p178561116193314"></a>0x02001c02</p>
 </td>
-<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p1985617168333"><a name="p1985617168333"></a><a name="p1985617168333"></a>入参的事件ID无效。</p>
+<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p1985617168333"><a name="p1985617168333"></a><a name="p1985617168333"></a>The input event ID is invalid.</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p4856151613315"><a name="p4856151613315"></a><a name="p4856151613315"></a>传入有效的事件ID参数。</p>
+<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p4856151613315"><a name="p4856151613315"></a><a name="p4856151613315"></a>Pass a valid event ID parameter.</p>
 </td>
 </tr>
 <tr id="row17211637174218"><td class="cellrowborder" valign="top" width="6.6293370662933695%" headers="mcps1.2.6.1.1 "><p id="p1985641613333"><a name="p1985641613333"></a><a name="p1985641613333"></a>4</p>
@@ -1653,9 +1653,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.63913608639136%" headers="mcps1.2.6.1.3 "><p id="p15856151623317"><a name="p15856151623317"></a><a name="p15856151623317"></a>0x02001c03</p>
 </td>
-<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p685651616330"><a name="p685651616330"></a><a name="p685651616330"></a>在中断中读取事件。</p>
+<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p685651616330"><a name="p685651616330"></a><a name="p685651616330"></a>Reading an event in an interrupt.</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p98564168336"><a name="p98564168336"></a><a name="p98564168336"></a>启动新的任务来获取事件。</p>
+<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p98564168336"><a name="p98564168336"></a><a name="p98564168336"></a>Start a new task to read the event.</p>
 </td>
 </tr>
 <tr id="row1072113379429"><td class="cellrowborder" valign="top" width="6.6293370662933695%" headers="mcps1.2.6.1.1 "><p id="p2856716193313"><a name="p2856716193313"></a><a name="p2856716193313"></a>5</p>
@@ -1664,9 +1664,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.63913608639136%" headers="mcps1.2.6.1.3 "><p id="p085614161334"><a name="p085614161334"></a><a name="p085614161334"></a>0x02001c04</p>
 </td>
-<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p285611162334"><a name="p285611162334"></a><a name="p285611162334"></a>读取事件的mode无效。</p>
+<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p285611162334"><a name="p285611162334"></a><a name="p285611162334"></a>The mode for reading events is invalid.</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p13856916193310"><a name="p13856916193310"></a><a name="p13856916193310"></a>传入有效的mode参数。</p>
+<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p13856916193310"><a name="p13856916193310"></a><a name="p13856916193310"></a>Pass a valid mode parameter.</p>
 </td>
 </tr>
 <tr id="row772210373424"><td class="cellrowborder" valign="top" width="6.6293370662933695%" headers="mcps1.2.6.1.1 "><p id="p18856151616334"><a name="p18856151616334"></a><a name="p18856151616334"></a>6</p>
@@ -1675,9 +1675,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.63913608639136%" headers="mcps1.2.6.1.3 "><p id="p17856191611338"><a name="p17856191611338"></a><a name="p17856191611338"></a>0x02001c05</p>
 </td>
-<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p98563160337"><a name="p98563160337"></a><a name="p98563160337"></a>任务锁住，不能读取事件。</p>
+<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p98563160337"><a name="p98563160337"></a><a name="p98563160337"></a>The task is locked and events cannot be read.</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p16856161693319"><a name="p16856161693319"></a><a name="p16856161693319"></a>解锁任务，再读取事件。</p>
+<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p16856161693319"><a name="p16856161693319"></a><a name="p16856161693319"></a>Unlock the task and then read events.</p>
 </td>
 </tr>
 <tr id="row177228375429"><td class="cellrowborder" valign="top" width="6.6293370662933695%" headers="mcps1.2.6.1.1 "><p id="p885681618333"><a name="p885681618333"></a><a name="p885681618333"></a>7</p>
@@ -1686,9 +1686,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.63913608639136%" headers="mcps1.2.6.1.3 "><p id="p985610162331"><a name="p985610162331"></a><a name="p985610162331"></a>0x02001c06</p>
 </td>
-<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p158561316203316"><a name="p158561316203316"></a><a name="p158561316203316"></a>传入的参数为空指针。</p>
+<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p158561316203316"><a name="p158561316203316"></a><a name="p158561316203316"></a>The input parameter is a null pointer.</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p585641617333"><a name="p585641617333"></a><a name="p585641617333"></a>传入非空入参。</p>
+<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p585641617333"><a name="p585641617333"></a><a name="p585641617333"></a>Pass a non-null input parameter.</p>
 </td>
 </tr>
 <tr id="row6722203724218"><td class="cellrowborder" valign="top" width="6.6293370662933695%" headers="mcps1.2.6.1.1 "><p id="p12856516123314"><a name="p12856516123314"></a><a name="p12856516123314"></a>8</p>
@@ -1697,33 +1697,33 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="8.63913608639136%" headers="mcps1.2.6.1.3 "><p id="p1856141643311"><a name="p1856141643311"></a><a name="p1856141643311"></a>0x02001c08</p>
 </td>
-<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p7856181613331"><a name="p7856181613331"></a><a name="p7856181613331"></a>事件链表上仍有任务，无法被销毁。</p>
+<td class="cellrowborder" valign="top" width="41.975802419758026%" headers="mcps1.2.6.1.4 "><p id="p7856181613331"><a name="p7856181613331"></a><a name="p7856181613331"></a>There are still tasks on the event linked list, so the event cannot be destroyed.</p>
 </td>
-<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p085611693315"><a name="p085611693315"></a><a name="p085611693315"></a>检查事件链表是否为空。</p>
+<td class="cellrowborder" valign="top" width="19.518048195180484%" headers="mcps1.2.6.1.5 "><p id="p085611693315"><a name="p085611693315"></a><a name="p085611693315"></a>Check whether the event linked list is empty.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-### 注意事项<a name="ZH-CN_TOPIC_0000001713102041"></a>
+### Precautions<a name="ZH-CN_TOPIC_0000001713102041"></a>
 
--   在系统初始化之前不能调用读写事件接口。如果调用，则系统运行会不正常。
--   在中断中，可以对事件对象进行写操作，但不能进行读操作。
--   在锁任务调度状态下，禁止任务阻塞与读事件。
--   hi\_event\_clear入参值是要清除的指定事件类型的反码（\~event\_bits）。
--   事件掩码支持bit\[0\]～bit\[23\]，bit\[24\]～bit\[31\]不支持。
+-   The event reading and writing interfaces cannot be called before system initialization. Otherwise, the system will not run properly.
+-   In an interrupt, event objects can be written but cannot be read.
+-   When task scheduling is locked, tasks are prohibited from blocking and reading events.
+-   The input value of hi\_event\_clear is the bitwise NOT of the specified event types to be cleared (\~event\_bits).
+-   The event mask supports bit[0] to bit[23]; bit[24] to bit[31] are not supported.
 
-### 编程实例<a name="ZH-CN_TOPIC_0000001665142214"></a>
+### Programming Example<a name="ZH-CN_TOPIC_0000001665142214"></a>
 
-本示例中，任务example\_task\_entry\_event 创建一个任务example\_event，example\_event读事件阻塞，example\_task\_entry\_event 向该任务写事件。
+In this example, task example\_task\_entry\_event creates a task example\_event. example\_event blocks when reading an event, and example\_task\_entry\_event writes an event to that task.
 
-1.  在任务example\_task\_entry\_event 创建任务example\_event，其中任务example\_event优先级高于example\_task\_entry\_event 。
-2.  在任务example\_event中读事件0x00000001，阻塞，发生任务切换，执行任务 example\_task\_entry\_event。
-3.  在任务example\_task\_entry\_event 向任务Example\_Event写事件0x00000001，发生任务切换，执行任务example\_event。
-4.  example\_event得以执行，直到任务结束。
-5.  example\_task\_entry\_event 得以执行，直到任务结束。
+1.  In task example\_task\_entry\_event, create task example\_event, where the priority of task example\_event is higher than that of example\_task\_entry\_event.
+2.  In task example\_event, read event 0x00000001 and block, causing a task switch to execute task example\_task\_entry\_event.
+3.  In task example\_task\_entry\_event, write event 0x00000001 to task Example\_Event, causing a task switch to execute task example\_event.
+4.  example\_event executes until the task ends.
+5.  example\_task\_entry\_event executes until the task ends.
 
-代码示例：
+Code example:
 
 ```
 #include "common_def.h"
@@ -1735,7 +1735,7 @@ void example_event(void* param)
 {
     uint32_t ret;
     unused(param);
-    /* 超时 等待方式读事件, 超时时间为永远等待 */
+    /* Read events in timeout wait mode. The timeout is wait forever */
     osal_printk("example_event wait event 0x%x \n", TEST_EVENT);
     ret = osal_event_read(&g_event_id, TEST_EVENT, OSAL_WAIT_FOREVER, OSAL_WAITMODE_AND);
     if (ret == OSAL_SUCCESS) {
@@ -1748,19 +1748,19 @@ uint32_t example_task_entry_event(void)
 {
     uint32_t ret = 0;
     osal_task *example_task1_info;
-    /* 初始化事件 */
+    /* Initialize the event */
     osal_event_init(&g_event_id);
-    /* 创建任务期间锁住任务调度 */
+    /* Lock task scheduling during task creation */
     osal_kthread_lock();
-    /* 创建任务1 */
+    /* Create task 1 */
     example_task1_info = osal_kthread_create((osal_kthread_handler)example_event, NULL, "example_task1", TASK_STACK_SIZE);
     ret = osal_kthread_set_priority(example_task1_info->task, TASK_PRI_EVENT);
     if (ret != OSAL_SUCCESS) {
         osal_printk("Example_task create failed!\n");
     }
-    /* 任务创建完成解锁任务调度 */
+    /* Unlock task scheduling after task creation is complete */
     osal_kthread_unlock();
-    /* 写用例任务等待的事件 */
+    /* Write the event that the test case task is waiting for */
     osal_printk("example_task_entry_event write event.\n");
     ret = osal_event_write(&g_event_id, TEST_EVENT);
     if(ret != OSAL_SUCCESS){
@@ -1768,20 +1768,20 @@ uint32_t example_task_entry_event(void)
         return OSAL_FAILURE;
     }
     osal_printk("example_task_entry_event event write success .\n");
-    /* 清标志位 */
+    /* Clear the flag bits */
     ret = osal_event_clear(&g_event_id, TEST_EVENT);
     if (ret != OSAL_SUCCESS) {
         osal_printk("event clear failed .\n");
         return OSAL_FAILURE;
     }
     osal_printk("example_task_entry_event event clear success.\n");
-    /* 删除任务 */
+    /* Delete the task */
     osal_kthread_destroy(example_task1_info->task, 0);
     return OSAL_SUCCESS;
 }
 ```
 
-结果验证：
+Result verification:
 
 ```
 example_event wait event 0x1
@@ -1791,104 +1791,104 @@ example_task_entry_event event write success .
 example_task_entry_event event clear success.
 ```
 
-## 互斥锁<a name="ZH-CN_TOPIC_0000001665142190"></a>
+## Mutex<a name="ZH-CN_TOPIC_0000001665142190"></a>
 
 
 
 
 
-### 概述<a name="ZH-CN_TOPIC_0000001713022033"></a>
+### Overview<a name="ZH-CN_TOPIC_0000001713022033"></a>
 
-互斥锁又称互斥型信号量，是一种特殊的二值性信号量，用于实现对共享资源的独占式处理。任意时刻互斥锁的状态只有两种：
+A mutex, also known as a mutex semaphore, is a special binary semaphore used to implement exclusive processing of shared resources. At any time, a mutex has only two states:
 
--   闭锁：当有任务持有时，互斥锁处于闭锁状态，这个任务获得该互斥锁的所有权。
--   开锁：当该任务释放它时，该互斥锁被开锁，任务失去该互斥锁的所有权。
+-   Locked: When a task holds the mutex, the mutex is in the locked state, and this task obtains the ownership of the mutex.
+-   Unlocked: When the task releases the mutex, the mutex is unlocked and the task loses the ownership of the mutex.
 
-当一个任务持有互斥锁时，其他任务将不能再对该互斥锁进行开锁或持有。多任务环境下往往存在多个任务竞争同一共享资源的应用场景，互斥锁可被用于对共享资源的保护从而实现独占式访问。另外，互斥锁可以解决信号量存在的优先级翻转问题。
+When a task holds a mutex, other tasks cannot unlock or hold the mutex. In a multi-task environment, multiple tasks often compete for the same shared resource. A mutex can be used to protect shared resources and achieve exclusive access. In addition, a mutex can solve the priority inversion problem that exists with semaphores.
 
-互斥锁接口具有如下特点：
+Mutex interfaces have the following feature:
 
-通过优先级继承算法，解决优先级翻转问题。
+It solves the priority inversion problem through the priority inheritance algorithm.
 
-### 开发流程<a name="ZH-CN_TOPIC_0000001664982482"></a>
+### Development Flow<a name="ZH-CN_TOPIC_0000001664982482"></a>
 
-**使用场景<a name="section8966815172611"></a>**
+**Application Scenarios<a name="section8966815172611"></a>**
 
-互斥锁可以提供任务之间的互斥机制，用来防止两个任务在同一时刻访问相同的共享资源。
+Mutexes can provide a mutual exclusion mechanism between tasks to prevent two tasks from accessing the same shared resource at the same time.
 
-**功能说明<a name="section9663523102618"></a>**
+**Function Description<a name="section9663523102618"></a>**
 
-系统中的互斥锁模块为用户提供的功能如[表1](#table15447173212416)所示。
+The functions provided by the mutex module in the system for users are shown in [Table 1](#table15447173212416).
 
-**表 1**  互斥锁接口说明
+**Table 1**  Description of mutex interfaces
 
 <a name="table15447173212416"></a>
-<table><thead align="left"><tr id="row9561163274115"><th class="cellrowborder" valign="top" width="31.759999999999998%" id="mcps1.2.3.1.1"><p id="p85611032184113"><a name="p85611032184113"></a><a name="p85611032184113"></a>接口名称</p>
+<table><thead align="left"><tr id="row9561163274115"><th class="cellrowborder" valign="top" width="31.759999999999998%" id="mcps1.2.3.1.1"><p id="p85611032184113"><a name="p85611032184113"></a><a name="p85611032184113"></a>Interface Name</p>
 </th>
-<th class="cellrowborder" valign="top" width="68.24%" id="mcps1.2.3.1.2"><p id="p2561183217419"><a name="p2561183217419"></a><a name="p2561183217419"></a>说明</p>
+<th class="cellrowborder" valign="top" width="68.24%" id="mcps1.2.3.1.2"><p id="p2561183217419"><a name="p2561183217419"></a><a name="p2561183217419"></a>Description</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row1556153214412"><td class="cellrowborder" valign="top" width="31.759999999999998%" headers="mcps1.2.3.1.1 "><p id="p1653152834718"><a name="p1653152834718"></a><a name="p1653152834718"></a>osal_mutex_init</p>
 </td>
-<td class="cellrowborder" valign="top" width="68.24%" headers="mcps1.2.3.1.2 "><p id="p710662151514"><a name="p710662151514"></a><a name="p710662151514"></a>初始化互斥锁。</p>
+<td class="cellrowborder" valign="top" width="68.24%" headers="mcps1.2.3.1.2 "><p id="p710662151514"><a name="p710662151514"></a><a name="p710662151514"></a>Initializes a mutex.</p>
 </td>
 </tr>
 <tr id="row145611932104114"><td class="cellrowborder" valign="top" width="31.759999999999998%" headers="mcps1.2.3.1.1 "><p id="p1052833534712"><a name="p1052833534712"></a><a name="p1052833534712"></a>osal_mutex_destroy</p>
 </td>
-<td class="cellrowborder" valign="top" width="68.24%" headers="mcps1.2.3.1.2 "><p id="p19992856141415"><a name="p19992856141415"></a><a name="p19992856141415"></a>删除指定的互斥锁。</p>
+<td class="cellrowborder" valign="top" width="68.24%" headers="mcps1.2.3.1.2 "><p id="p19992856141415"><a name="p19992856141415"></a><a name="p19992856141415"></a>Deletes the specified mutex.</p>
 </td>
 </tr>
 <tr id="row8159205284713"><td class="cellrowborder" valign="top" width="31.759999999999998%" headers="mcps1.2.3.1.1 "><p id="p1983025574714"><a name="p1983025574714"></a><a name="p1983025574714"></a>osal_mutex_lock_timeout</p>
 </td>
-<td class="cellrowborder" valign="top" width="68.24%" headers="mcps1.2.3.1.2 "><p id="p515945219472"><a name="p515945219472"></a><a name="p515945219472"></a>阻塞获取互斥锁，单位：ms。</p>
+<td class="cellrowborder" valign="top" width="68.24%" headers="mcps1.2.3.1.2 "><p id="p515945219472"><a name="p515945219472"></a><a name="p515945219472"></a>Blocking acquisition of a mutex, in ms.</p>
 </td>
 </tr>
 <tr id="row356233254111"><td class="cellrowborder" valign="top" width="31.759999999999998%" headers="mcps1.2.3.1.1 "><p id="p16971152124910"><a name="p16971152124910"></a><a name="p16971152124910"></a>osal_mutex_unlock</p>
 </td>
-<td class="cellrowborder" valign="top" width="68.24%" headers="mcps1.2.3.1.2 "><p id="p2562832114120"><a name="p2562832114120"></a><a name="p2562832114120"></a>释放指定的互斥锁。</p>
+<td class="cellrowborder" valign="top" width="68.24%" headers="mcps1.2.3.1.2 "><p id="p2562832114120"><a name="p2562832114120"></a><a name="p2562832114120"></a>Releases the specified mutex.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**开发流程<a name="section13174122111285"></a>**
+**Development Flow<a name="section13174122111285"></a>**
 
-互斥锁典型场景的开发流程：
+Development flow of typical mutex scenarios:
 
-1.  创建互斥锁osal\_mutex\_init。
-2.  申请互斥锁osal\_mutex\_lock\_timeout。
+1.  Create a mutex through osal\_mutex\_init.
+2.  Apply for a mutex through osal\_mutex\_lock\_timeout.
 
-    申请模式有3种：
+    There are three application modes:
 
-    -   无阻塞模式：任务需要申请互斥锁，若该互斥锁当前没有任务持有，或者持有该互斥锁的任务和申请该互斥锁的任务为同一个任务，则申请成功，超时时间设置为0。
-    -   永久阻塞模式：任务需要申请互斥锁，若该互斥锁当前没有被占用，则申请 成功。否则，该任务进入阻塞态，系统切换到就绪任务中优先级高者继续 执行。任务进入阻塞态后，直到有其他任务释放该互斥锁，阻塞任务才会重 新得以执行，超时时间设置为OSAL\_MUTEX\_WAIT\_FOREVER。
-    -   定时阻塞模式：任务需要申请互斥锁，若该互斥锁当前没有被占用，则申请 成功。否则该任务进入阻塞态，系统切换到就绪任务中优先级高者继续执行。任务进入阻塞态后，指定时间超时前有其他任务释放该互斥锁，或者用户指定时间超时后，阻塞任务才会重新得以执行，超时时间设置为一个合理的超时值。
+    -   Non-blocking mode: A task needs to apply for a mutex. If no task currently holds the mutex, or the task holding the mutex is the same task applying for it, the application succeeds. Set the timeout to 0.
+    -   Wait-forever mode: A task needs to apply for a mutex. If the mutex is not currently occupied, the application succeeds. Otherwise, the task enters the blocked state, and the system switches to the ready task with the highest priority to continue execution. After the task enters the blocked state, it will not resume execution until another task releases the mutex. Set the timeout to OSAL\_MUTEX\_WAIT\_FOREVER.
+    -   Timed blocking mode: A task needs to apply for a mutex. If the mutex is not currently occupied, the application succeeds. Otherwise, the task enters the blocked state, and the system switches to the ready task with the highest priority to continue execution. After the task enters the blocked state, it will not resume execution until another task releases the mutex before the specified timeout, or until the user-specified timeout expires. Set the timeout to a reasonable timeout value.
 
-3.  释放互斥锁osal\_mutex\_unlock。
-    -   如果有任务阻塞于指定互斥锁，则唤醒被阻塞任务中优先级高的，该任务进入就绪态，并进行任务调度。
-    -   如果没有任务阻塞于指定互斥锁，则互斥锁释放成功。
+3.  Release the mutex through osal\_mutex\_unlock.
+    -   If a task is blocked on the specified mutex, wake up the blocked task with the highest priority. The task enters the ready state and task scheduling is performed.
+    -   If no task is blocked on the specified mutex, the mutex is released successfully.
 
-4.  删除互斥锁osal\_mutex\_destroy。
+4.  Delete the mutex through osal\_mutex\_destroy.
 
-**错误码<a name="section19993054135111"></a>**
+**Error Codes<a name="section19993054135111"></a>**
 
-OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL封装的内核接口运行过程中会打印异常信息值，便于快速定位问题。
+The OSAL interface supports a fault detection and printing switch. After the OSALLOG\_DISABLE macro is disabled, if an exception occurs during the running of the kernel interfaces encapsulated by OSAL, the exception information value will be printed, which facilitates rapid fault location.
 
-互斥锁错误码说明如[表2](#table1522683775714)所示。
+The mutex error codes are described in [Table 2](#table1522683775714).
 
-**表 2**  互斥锁错误码说明
+**Table 2**  Description of mutex error codes
 
 <a name="table1522683775714"></a>
-<table><thead align="left"><tr id="row1422673745719"><th class="cellrowborder" valign="top" width="6.766553890768488%" id="mcps1.2.6.1.1"><p id="p16579339175712"><a name="p16579339175712"></a><a name="p16579339175712"></a>序号</p>
+<table><thead align="left"><tr id="row1422673745719"><th class="cellrowborder" valign="top" width="6.766553890768488%" id="mcps1.2.6.1.1"><p id="p16579339175712"><a name="p16579339175712"></a><a name="p16579339175712"></a>No.</p>
 </th>
-<th class="cellrowborder" valign="top" width="17.38037699371677%" id="mcps1.2.6.1.2"><p id="p2579239195713"><a name="p2579239195713"></a><a name="p2579239195713"></a>定义</p>
+<th class="cellrowborder" valign="top" width="17.38037699371677%" id="mcps1.2.6.1.2"><p id="p2579239195713"><a name="p2579239195713"></a><a name="p2579239195713"></a>Definition</p>
 </th>
-<th class="cellrowborder" valign="top" width="7.897535041082648%" id="mcps1.2.6.1.3"><p id="p65791839145720"><a name="p65791839145720"></a><a name="p65791839145720"></a>实际数值</p>
+<th class="cellrowborder" valign="top" width="7.897535041082648%" id="mcps1.2.6.1.3"><p id="p65791839145720"><a name="p65791839145720"></a><a name="p65791839145720"></a>Actual Value</p>
 </th>
-<th class="cellrowborder" valign="top" width="23.653939101014984%" id="mcps1.2.6.1.4"><p id="p17579339145720"><a name="p17579339145720"></a><a name="p17579339145720"></a>说明</p>
+<th class="cellrowborder" valign="top" width="23.653939101014984%" id="mcps1.2.6.1.4"><p id="p17579339145720"><a name="p17579339145720"></a><a name="p17579339145720"></a>Description</p>
 </th>
-<th class="cellrowborder" valign="top" width="44.30159497341711%" id="mcps1.2.6.1.5"><p id="p12579139105716"><a name="p12579139105716"></a><a name="p12579139105716"></a>参考解决方案</p>
+<th class="cellrowborder" valign="top" width="44.30159497341711%" id="mcps1.2.6.1.5"><p id="p12579139105716"><a name="p12579139105716"></a><a name="p12579139105716"></a>Reference Solution</p>
 </th>
 </tr>
 </thead>
@@ -1898,9 +1898,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.897535041082648%" headers="mcps1.2.6.1.3 "><p id="p35794398573"><a name="p35794398573"></a><a name="p35794398573"></a>0x02001d00</p>
 </td>
-<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p1157993985717"><a name="p1157993985717"></a><a name="p1157993985717"></a>初始化互斥锁模块时，内存不足。</p>
+<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p1157993985717"><a name="p1157993985717"></a><a name="p1157993985717"></a>When initializing the mutex module, the memory is insufficient.</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p5579639135715"><a name="p5579639135715"></a><a name="p5579639135715"></a>设置更大的系统动态内存池，配置项为OS_SYS_MEM_SIZE，或减少系统支持的最大互斥锁个数。</p>
+<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p5579639135715"><a name="p5579639135715"></a><a name="p5579639135715"></a>Set a larger system dynamic memory pool. The configuration item is OS_SYS_MEM_SIZE, or reduce the maximum number of mutexes supported by the system.</p>
 </td>
 </tr>
 <tr id="row22261437175714"><td class="cellrowborder" valign="top" width="6.766553890768488%" headers="mcps1.2.6.1.1 "><p id="p1957919399572"><a name="p1957919399572"></a><a name="p1957919399572"></a>2</p>
@@ -1909,9 +1909,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.897535041082648%" headers="mcps1.2.6.1.3 "><p id="p757963912576"><a name="p757963912576"></a><a name="p757963912576"></a>0x02001d01</p>
 </td>
-<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p1257953975716"><a name="p1257953975716"></a><a name="p1257953975716"></a>互斥锁不可用。</p>
+<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p1257953975716"><a name="p1257953975716"></a><a name="p1257953975716"></a>The mutex is unavailable.</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p175791539145710"><a name="p175791539145710"></a><a name="p175791539145710"></a>传入有效的互斥锁ID。</p>
+<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p175791539145710"><a name="p175791539145710"></a><a name="p175791539145710"></a>Pass a valid mutex ID.</p>
 </td>
 </tr>
 <tr id="row14226937155716"><td class="cellrowborder" valign="top" width="6.766553890768488%" headers="mcps1.2.6.1.1 "><p id="p457983918572"><a name="p457983918572"></a><a name="p457983918572"></a>3</p>
@@ -1920,9 +1920,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.897535041082648%" headers="mcps1.2.6.1.3 "><p id="p657933919573"><a name="p657933919573"></a><a name="p657933919573"></a>0x02001d02</p>
 </td>
-<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p165791639155715"><a name="p165791639155715"></a><a name="p165791639155715"></a>创建互斥锁时，入参为空指针。</p>
+<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p165791639155715"><a name="p165791639155715"></a><a name="p165791639155715"></a>When creating a mutex, the input parameter is a null pointer.</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p4579193985712"><a name="p4579193985712"></a><a name="p4579193985712"></a>传入有效指针。</p>
+<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p4579193985712"><a name="p4579193985712"></a><a name="p4579193985712"></a>Pass a valid pointer.</p>
 </td>
 </tr>
 <tr id="row622643765718"><td class="cellrowborder" valign="top" width="6.766553890768488%" headers="mcps1.2.6.1.1 "><p id="p3579203914578"><a name="p3579203914578"></a><a name="p3579203914578"></a>4</p>
@@ -1931,9 +1931,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.897535041082648%" headers="mcps1.2.6.1.3 "><p id="p1457913918577"><a name="p1457913918577"></a><a name="p1457913918577"></a>0x02001d03</p>
 </td>
-<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p95791539155717"><a name="p95791539155717"></a><a name="p95791539155717"></a>创建互斥锁时，系统中已经没有可用的互斥锁。</p>
+<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p95791539155717"><a name="p95791539155717"></a><a name="p95791539155717"></a>When creating a mutex, there is no available mutex in the system.</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p175793395573"><a name="p175793395573"></a><a name="p175793395573"></a>增加系统支持的最大互斥锁个数。</p>
+<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p175793395573"><a name="p175793395573"></a><a name="p175793395573"></a>Increase the maximum number of mutexes supported by the system.</p>
 </td>
 </tr>
 <tr id="row192261337145711"><td class="cellrowborder" valign="top" width="6.766553890768488%" headers="mcps1.2.6.1.1 "><p id="p358043917575"><a name="p358043917575"></a><a name="p358043917575"></a>5</p>
@@ -1942,9 +1942,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.897535041082648%" headers="mcps1.2.6.1.3 "><p id="p11580173925712"><a name="p11580173925712"></a><a name="p11580173925712"></a>0x02001d04</p>
 </td>
-<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p95809396576"><a name="p95809396576"></a><a name="p95809396576"></a>申请互斥锁失败，因为锁已经被其他线程持有。</p>
+<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p95809396576"><a name="p95809396576"></a><a name="p95809396576"></a>The mutex application fails because the lock is already held by another thread.</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p0580139145713"><a name="p0580139145713"></a><a name="p0580139145713"></a>等待其他线程解锁或者设置等待时间。</p>
+<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p0580139145713"><a name="p0580139145713"></a><a name="p0580139145713"></a>Wait for other threads to unlock or set a wait time.</p>
 </td>
 </tr>
 <tr id="row9226437175713"><td class="cellrowborder" valign="top" width="6.766553890768488%" headers="mcps1.2.6.1.1 "><p id="p158093975713"><a name="p158093975713"></a><a name="p158093975713"></a>6</p>
@@ -1953,9 +1953,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.897535041082648%" headers="mcps1.2.6.1.3 "><p id="p13580183917574"><a name="p13580183917574"></a><a name="p13580183917574"></a>0x02001d05</p>
 </td>
-<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p558015396579"><a name="p558015396579"></a><a name="p558015396579"></a>在中断中使用互斥锁。</p>
+<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p558015396579"><a name="p558015396579"></a><a name="p558015396579"></a>Using a mutex in an interrupt.</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p95801439135711"><a name="p95801439135711"></a><a name="p95801439135711"></a>禁止在中断中申请/释放互斥锁。</p>
+<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p95801439135711"><a name="p95801439135711"></a><a name="p95801439135711"></a>Applying for/releasing a mutex in an interrupt is prohibited.</p>
 </td>
 </tr>
 <tr id="row12227143713571"><td class="cellrowborder" valign="top" width="6.766553890768488%" headers="mcps1.2.6.1.1 "><p id="p105809390570"><a name="p105809390570"></a><a name="p105809390570"></a>7</p>
@@ -1964,9 +1964,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.897535041082648%" headers="mcps1.2.6.1.3 "><p id="p658019393575"><a name="p658019393575"></a><a name="p658019393575"></a>0x02001d06</p>
 </td>
-<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p15805391573"><a name="p15805391573"></a><a name="p15805391573"></a>锁任务调度时，不允许以阻塞模式申请互斥锁。</p>
+<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p15805391573"><a name="p15805391573"></a><a name="p15805391573"></a>When task scheduling is locked, it is not allowed to apply for a mutex in blocking mode.</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p1858043965711"><a name="p1858043965711"></a><a name="p1858043965711"></a>以非阻塞模式申请互斥锁，或使能任务调度后再阻塞申请互斥锁。</p>
+<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p1858043965711"><a name="p1858043965711"></a><a name="p1858043965711"></a>Apply for a mutex in non-blocking mode, or enable task scheduling before applying for a mutex in blocking mode.</p>
 </td>
 </tr>
 <tr id="row1422773745715"><td class="cellrowborder" valign="top" width="6.766553890768488%" headers="mcps1.2.6.1.1 "><p id="p1158023913571"><a name="p1158023913571"></a><a name="p1158023913571"></a>8</p>
@@ -1975,9 +1975,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.897535041082648%" headers="mcps1.2.6.1.3 "><p id="p35804394574"><a name="p35804394574"></a><a name="p35804394574"></a>0x02001d07</p>
 </td>
-<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p758083913576"><a name="p758083913576"></a><a name="p758083913576"></a>申请互斥锁超时。</p>
+<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p758083913576"><a name="p758083913576"></a><a name="p758083913576"></a>The mutex application times out.</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p3580173905712"><a name="p3580173905712"></a><a name="p3580173905712"></a>增加等待时间，或采用一直等待模式。</p>
+<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p3580173905712"><a name="p3580173905712"></a><a name="p3580173905712"></a>Increase the wait time or use the wait-forever mode.</p>
 </td>
 </tr>
 <tr id="row18227103718577"><td class="cellrowborder" valign="top" width="6.766553890768488%" headers="mcps1.2.6.1.1 "><p id="p75801839175710"><a name="p75801839175710"></a><a name="p75801839175710"></a>9</p>
@@ -1986,33 +1986,33 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="7.897535041082648%" headers="mcps1.2.6.1.3 "><p id="p658016395571"><a name="p658016395571"></a><a name="p658016395571"></a>0x02001d09</p>
 </td>
-<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p175801039175714"><a name="p175801039175714"></a><a name="p175801039175714"></a>删除正在使用的互斥锁。</p>
+<td class="cellrowborder" valign="top" width="23.653939101014984%" headers="mcps1.2.6.1.4 "><p id="p175801039175714"><a name="p175801039175714"></a><a name="p175801039175714"></a>Deleting a mutex that is in use.</p>
 </td>
-<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p4580139135714"><a name="p4580139135714"></a><a name="p4580139135714"></a>等待解锁后再删除该互斥锁。</p>
+<td class="cellrowborder" valign="top" width="44.30159497341711%" headers="mcps1.2.6.1.5 "><p id="p4580139135714"><a name="p4580139135714"></a><a name="p4580139135714"></a>Wait until the mutex is unlocked before deleting it.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-### 注意事项<a name="ZH-CN_TOPIC_0000001713022021"></a>
+### Precautions<a name="ZH-CN_TOPIC_0000001713022021"></a>
 
--   如果由于达到互斥锁数量上限而导致互斥锁创建失败，可以通过配置“bs25.config”文件里面的LOSCFG\_BASE\_IPC\_MUX\_LIMIT来增大互斥锁数量上限。
--   两个任务不能对同一把互斥锁加锁。如果某任务对已被持有的互斥锁加锁，则该任务会被挂起，直到持有该锁的任务对互斥锁解锁，才能执行对这把互斥锁的加锁操作。
--   互斥锁不能在中断服务程序中使用。
--   作为实时操作系统需要保证任务调度的实时性，尽量避免任务的长时间阻塞，因此在获得互斥锁之后，应该尽快释放互斥锁。
--   持有互斥锁的过程中，不得再调用osal\_kthread\_set\_priority等接口更改持有互斥锁任务的优先级。
+-   If mutex creation fails because the mutex quantity upper limit is reached, you can increase the mutex quantity upper limit by configuring LOSCFG\_BASE\_IPC\_MUX\_LIMIT in the "bs25.config" file.
+-   Two tasks cannot lock the same mutex. If a task locks a mutex that is already held, the task will be suspended until the task holding the mutex unlocks it; only then can the task perform the lock operation on the mutex.
+-   Mutexes cannot be used in interrupt service routines.
+-   As a real-time operating system, the system needs to ensure the real-time performance of task scheduling and avoid long-term blocking of tasks as much as possible. Therefore, after obtaining a mutex, the mutex should be released as soon as possible.
+-   While holding a mutex, interfaces such as osal\_kthread\_set\_priority must not be called to change the priority of the task holding the mutex.
 
-### 编程实例<a name="ZH-CN_TOPIC_0000001713022041"></a>
+### Programming Example<a name="ZH-CN_TOPIC_0000001713022041"></a>
 
-本实例实现如下流程：
+This example implements the following flow:
 
-1.  任务example\_task\_entry\_mux创建一个互斥锁，锁任务调度，创建两个任务example\_mutex\_task1、example\_mutex\_task2，example\_mutex\_task2优先级高于example\_mutex\_task1，解锁任务调度。
-2.  example\_mutex\_task2被调度，永久申请互斥锁，然后任务休眠100ms， example\_mutex\_task2挂起，example\_mutex\_task1被唤醒。
-3.  example\_mutex\_task1申请互斥锁，等待时间为10ms，因互斥锁仍被example\_mutex\_task2持有，example\_mutex\_task1挂起，10ms后未拿到互斥锁，example\_mutex\_task1被唤醒，试图以永久等待申请互斥锁，example\_mutex\_task1挂起。
-4.  100ms后example\_mutex\_task2唤醒， 释放互斥锁后，example\_mutex\_task1被调度 运行，后释放互斥锁。
-5.  example\_mutex\_task1执行完，300ms后任务example\_task\_entry\_mux被调度运行，删除互斥锁。
+1.  Task example\_task\_entry\_mux creates a mutex, locks task scheduling, creates two tasks example\_mutex\_task1 and example\_mutex\_task2 (example\_mutex\_task2 has a higher priority than example\_mutex\_task1), and unlocks task scheduling.
+2.  example\_mutex\_task2 is scheduled, permanently applies for the mutex, and then sleeps for 100 ms. example\_mutex\_task2 is suspended, and example\_mutex\_task1 is woken up.
+3.  example\_mutex\_task1 applies for the mutex with a wait time of 10 ms. Because the mutex is still held by example\_mutex\_task2, example\_mutex\_task1 is suspended. After 10 ms, the mutex is still not obtained, example\_mutex\_task1 is woken up and tries to apply for the mutex in wait-forever mode, and example\_mutex\_task1 is suspended.
+4.  After 100 ms, example\_mutex\_task2 wakes up. After releasing the mutex, example\_mutex\_task1 is scheduled to run and then releases the mutex.
+5.  After example\_mutex\_task1 finishes execution, task example\_task\_entry\_mux is scheduled to run 300 ms later and deletes the mutex.
 
-代码示例：
+Code example:
 
 ```
 #include "common_def.h"
@@ -2052,25 +2052,25 @@ uint32_t example_task_entry_mutex(void)
 {
     uint32_t ret = 0;
     osal_task *example_task1_info, *example_task2_info;
-    /* 创建互斥量 */
+    /* Create the mutex */
     osal_mutex_init(&g_mux_id);
-    /* 创建任务期间锁住任务调度 */
+    /* Lock task scheduling during task creation */
     osal_kthread_lock();
-    /* 创建任务1 */
+    /* Create task 1 */
     example_task1_info = osal_kthread_create((osal_kthread_handler)example_mutex_task1, NULL, "example_task1", TASK_STACK_SIZE);
     ret = osal_kthread_set_priority(example_task1_info->task, TASK_PRI_TASK1);
     if (ret != OSAL_SUCCESS) {
         osal_printk("Example_task create failed!\n");
     }
-    /* 创建任务2 */
+    /* Create task 2 */
     example_task2_info = osal_kthread_create((osal_kthread_handler)example_mutex_task2, NULL, "example_task2", TASK_STACK_SIZE);
     ret = osal_kthread_set_priority(example_task2_info->task, TASK_PRI_TASK2);
     if (ret != OSAL_SUCCESS) {
         osal_printk("Example_task create failed!\n");
     }
-    /* 任务创建完成解锁任务调度 */
+    /* Unlock task scheduling after task creation is complete */
     osal_kthread_unlock();
-    /* 延时3s，回收资源 */
+    /* Delay 3s to recycle resources */
     osal_msleep(3000);
     osal_mutex_destroy(&g_mux_id);
     osal_kthread_destroy(example_task1_info->task, 0);
@@ -2079,7 +2079,7 @@ uint32_t example_task_entry_mutex(void)
 }
 ```
 
-结果验证：
+Result verification:
 
 ```
 task2 try to get mutex, wait forever.
@@ -2090,119 +2090,119 @@ task2 resumed and post the g_mux_id.
 task1 wait forever,get mutex g_mux_id.
 ```
 
-## 信号量<a name="ZH-CN_TOPIC_0000001665142226"></a>
+## Semaphore<a name="ZH-CN_TOPIC_0000001665142226"></a>
 
 
 
 
 
-### 概述<a name="ZH-CN_TOPIC_0000001713022013"></a>
+### Overview<a name="ZH-CN_TOPIC_0000001713022013"></a>
 
-信号量（Semaphore）是一种实现任务间通信的机制，实现任务之间同步或临界资源的互斥访问。常用于协助一组相互竞争的任务来访问临界资源。
+A semaphore is a mechanism for implementing inter-task communication, enabling synchronization between tasks or mutually exclusive access to critical resources. It is commonly used to assist a group of competing tasks in accessing critical resources.
 
-在多任务系统中，各任务之间需要同步或互斥实现临界资源的保护，信号量功能可以为用户提供这方面的支持。通常一个信号量的计数值用于对应有效的资源数，表示剩下的可被占用的互斥资源数。其值的含义分2种情况：
+In a multi-task system, tasks need to synchronize or mutually exclude each other to protect critical resources. The semaphore function can provide users with support in this regard. Usually, the count value of a semaphore corresponds to the number of valid resources, indicating the number of remaining mutex resources that can be occupied. The meaning of the value is divided into two cases:
 
--   0：没有积累下来的Post操作，且有可能有在此信号量上阻塞的任务。
--   正值：有一个或多个Post下来的释放操作。
+-   0: There are no accumulated Post operations, and there may be tasks blocked on this semaphore.
+-   Positive value: There are one or more accumulated release operations (Posts).
 
-以同步为目的的信号量和以互斥为目的的信号量在使用时有如下不同：
+When a semaphore is used for synchronization versus mutual exclusion, the usage differs as follows:
 
--   用作同步时，信号量在创建后被置为空，任务1取信号量而阻塞，任务2在某种条件发生后，释放信号量，于是任务1得以进入READY或RUNNING态，从而达到了两个任务间的同步。
--   用作互斥时，信号量创建后记数是满的，在需要使用临界资源时，先取信号量使其变空，这样其他任务需要使用临界资源时就会因为无法取到信号量而阻塞，从而保证了临界资源的安全。
+-   When used for synchronization, the semaphore is set empty after creation. Task 1 acquires the semaphore and blocks. When a certain condition occurs, task 2 releases the semaphore, so task 1 can enter the READY or RUNNING state, thus achieving synchronization between the two tasks.
+-   When used for mutual exclusion, the count of the semaphore is full after creation. When a critical resource needs to be used, the semaphore is first acquired to make it empty, so that other tasks needing the critical resource will block because they cannot acquire the semaphore, thereby ensuring the safety of the critical resource.
 
-信号量运作原理：
+Semaphore working principle:
 
--   信号量初始化：为配置的N个信号量申请内存（N值可以由用户自行配置，受内存限制），并把所有的信号量初始化成未使用，并加入到未使用链表中供系统使用。
--   信号量创建：从未使用的信号量链表中获取一个信号量资源，并设定初值。
--   信号量申请：如果其计数器值＞0，则直接减1返回成功。否则任务阻塞，等待其它任务释放该信号量，等待的超时时间可设定。当任务被一个信号量阻塞时，将该任务挂到信号量等待任务队列的队尾。信号量释放，如果没有任务等待该信号量，则直接将计数器加1返回。否则唤醒该信号量等待任务队列上的第一个任务。
--   信号量删除：将正在使用的信号量置为未使用信号量，并挂回到未使用链表。
+-   Semaphore initialization: Allocate memory for the configured N semaphores (the value of N can be configured by the user, subject to memory constraints), initialize all semaphores as unused, and add them to the unused linked list for system use.
+-   Semaphore creation: Obtain one semaphore resource from the unused semaphore linked list and set its initial value.
+-   Semaphore acquisition: If the counter value > 0, directly decrement by 1 and return success. Otherwise, the task blocks and waits for other tasks to release the semaphore. The wait timeout can be set. When a task is blocked by a semaphore, the task is appended to the tail of the semaphore wait task queue. When the semaphore is released, if no task is waiting for the semaphore, the counter is directly incremented by 1 and returned. Otherwise, the first task on the semaphore wait task queue is woken up.
+-   Semaphore deletion: Set the in-use semaphore as unused and add it back to the unused linked list.
 
-信号量允许多个任务在同一时刻访问同一资源，但会限制同一时刻访问此资源的大任务数目。访问同一资源的任务数达到该资源的最大数量时，会阻塞其他试图获取该资源的任务，直到有任务释放该信号量。
+A semaphore allows multiple tasks to access the same resource at the same time, but limits the maximum number of tasks accessing the resource at the same time. When the number of tasks accessing the same resource reaches the maximum number of the resource, other tasks trying to acquire the resource will be blocked until a task releases the semaphore.
 
-### 开发流程<a name="ZH-CN_TOPIC_0000001713102013"></a>
+### Development Flow<a name="ZH-CN_TOPIC_0000001713102013"></a>
 
-**使用场景<a name="section1236713352318"></a>**
+**Application Scenarios<a name="section1236713352318"></a>**
 
-信号量是一种非常灵活的同步方式，可以运用在多种场合中，实现锁、同步、资源计数等功能，也能方便用于任务与任务、中断与任务的同步中。
+A semaphore is a very flexible synchronization method that can be used in a variety of occasions to implement functions such as locking, synchronization, and resource counting. It can also be conveniently used for synchronization between tasks, and between interrupts and tasks.
 
-**功能说明<a name="section366174316314"></a>**
+**Function Description<a name="section366174316314"></a>**
 
-系统中的信号量模块为用户提供的功能如[表1](#table15447173212416)所示。
+The functions provided by the semaphore module in the system for users are shown in [Table 1](#table15447173212416).
 
-**表 1**  信号量接口说明
+**Table 1**  Description of semaphore interfaces
 
 <a name="table15447173212416"></a>
-<table><thead align="left"><tr id="row9561163274115"><th class="cellrowborder" valign="top" width="33.17%" id="mcps1.2.3.1.1"><p id="p85611032184113"><a name="p85611032184113"></a><a name="p85611032184113"></a>接口描述</p>
+<table><thead align="left"><tr id="row9561163274115"><th class="cellrowborder" valign="top" width="33.17%" id="mcps1.2.3.1.1"><p id="p85611032184113"><a name="p85611032184113"></a><a name="p85611032184113"></a>Interface Name</p>
 </th>
-<th class="cellrowborder" valign="top" width="66.83%" id="mcps1.2.3.1.2"><p id="p2561183217419"><a name="p2561183217419"></a><a name="p2561183217419"></a>说明</p>
+<th class="cellrowborder" valign="top" width="66.83%" id="mcps1.2.3.1.2"><p id="p2561183217419"><a name="p2561183217419"></a><a name="p2561183217419"></a>Description</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row1556153214412"><td class="cellrowborder" valign="top" width="33.17%" headers="mcps1.2.3.1.1 "><p id="p1076011319141"><a name="p1076011319141"></a><a name="p1076011319141"></a>osal_sem_init</p>
 </td>
-<td class="cellrowborder" valign="top" width="66.83%" headers="mcps1.2.3.1.2 "><p id="p710662151514"><a name="p710662151514"></a><a name="p710662151514"></a>创建信号量。</p>
+<td class="cellrowborder" valign="top" width="66.83%" headers="mcps1.2.3.1.2 "><p id="p710662151514"><a name="p710662151514"></a><a name="p710662151514"></a>Creates a semaphore.</p>
 </td>
 </tr>
 <tr id="row7874202653318"><td class="cellrowborder" valign="top" width="33.17%" headers="mcps1.2.3.1.1 "><p id="p18874142612335"><a name="p18874142612335"></a><a name="p18874142612335"></a>osal_sem_binary_sem_init</p>
 </td>
-<td class="cellrowborder" valign="top" width="66.83%" headers="mcps1.2.3.1.2 "><p id="p42301031173417"><a name="p42301031173417"></a><a name="p42301031173417"></a>创建二进制信号量。</p>
+<td class="cellrowborder" valign="top" width="66.83%" headers="mcps1.2.3.1.2 "><p id="p42301031173417"><a name="p42301031173417"></a><a name="p42301031173417"></a>Creates a binary semaphore.</p>
 </td>
 </tr>
 <tr id="row145611932104114"><td class="cellrowborder" valign="top" width="33.17%" headers="mcps1.2.3.1.1 "><p id="p19931185314146"><a name="p19931185314146"></a><a name="p19931185314146"></a>osal_sem_destroy</p>
 </td>
-<td class="cellrowborder" valign="top" width="66.83%" headers="mcps1.2.3.1.2 "><p id="p19992856141415"><a name="p19992856141415"></a><a name="p19992856141415"></a>销毁指定的信号量。</p>
+<td class="cellrowborder" valign="top" width="66.83%" headers="mcps1.2.3.1.2 "><p id="p19992856141415"><a name="p19992856141415"></a><a name="p19992856141415"></a>Destroys the specified semaphore.</p>
 </td>
 </tr>
 <tr id="row1056253217417"><td class="cellrowborder" valign="top" width="33.17%" headers="mcps1.2.3.1.1 "><p id="p1281720203151"><a name="p1281720203151"></a><a name="p1281720203151"></a>osal_sem_down_timeout</p>
 </td>
-<td class="cellrowborder" valign="top" width="66.83%" headers="mcps1.2.3.1.2 "><p id="p1356223219412"><a name="p1356223219412"></a><a name="p1356223219412"></a>阻塞获取指定的信号量，单位：ms。</p>
+<td class="cellrowborder" valign="top" width="66.83%" headers="mcps1.2.3.1.2 "><p id="p1356223219412"><a name="p1356223219412"></a><a name="p1356223219412"></a>Blocking acquisition of the specified semaphore, in ms.</p>
 </td>
 </tr>
 <tr id="row356233254111"><td class="cellrowborder" valign="top" width="33.17%" headers="mcps1.2.3.1.1 "><p id="p248125911154"><a name="p248125911154"></a><a name="p248125911154"></a>osal_sem_up</p>
 </td>
-<td class="cellrowborder" valign="top" width="66.83%" headers="mcps1.2.3.1.2 "><p id="p2562832114120"><a name="p2562832114120"></a><a name="p2562832114120"></a>释放指定的信号量。</p>
+<td class="cellrowborder" valign="top" width="66.83%" headers="mcps1.2.3.1.2 "><p id="p2562832114120"><a name="p2562832114120"></a><a name="p2562832114120"></a>Releases the specified semaphore.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**开发流程<a name="section955317245419"></a>**
+**Development Flow<a name="section955317245419"></a>**
 
-信号量的开发典型流程：
+Typical semaphore development flow:
 
-1.  创建信号量osal\_sem\_init或者osal\_sem\_binary\_sem\_init。
-2.  申请信号量osal\_sem\_down\_timeout。
+1.  Create a semaphore through osal\_sem\_init or osal\_sem\_binary\_sem\_init.
+2.  Acquire a semaphore through osal\_sem\_down\_timeout.
 
-    信号量有3种申请模式：
+    There are three semaphore acquisition modes:
 
-    -   无阻塞模式：任务需要申请信号量，若当前信号量的任务数没有到信号量设定的上限，则申请成功。否则，立即返回申请失败。超时时间设置为0。
-    -   永久阻塞模式：任务需要申请信号量，若当前信号量的任务数没有到信号量设定的上限，则申请成功。否则，该任务进入阻塞态，系统切换到就绪任务中优先级高者继续执行。任务进入阻塞态后，直到有其他任务释放该信号量，阻塞任务才会重新得以执行。超时时间设置为OSAL\_SEM\_WAIT\_FOREVER。
-    -   定时阻塞模式：任务需要申请信号量，若当前信号量的任务数没有到信号量设定的上限，则申请成功。否则，该任务进入阻塞态，系统切换到就绪任务中优先级高者继续执行。任务进入阻塞态后，指定时间超时前有其他任务 释放该信号量，或者用户指定时间超时后，阻塞任务才会重新得以执行。超时时间设置为合理的值。
+    -   Non-blocking mode: A task needs to acquire a semaphore. If the current number of tasks using the semaphore has not reached the upper limit set for the semaphore, the acquisition succeeds. Otherwise, the acquisition failure is returned immediately. Set the timeout to 0.
+    -   Wait-forever mode: A task needs to acquire a semaphore. If the current number of tasks using the semaphore has not reached the upper limit set for the semaphore, the acquisition succeeds. Otherwise, the task enters the blocked state, and the system switches to the ready task with the highest priority to continue execution. After the task enters the blocked state, it will not resume execution until another task releases the semaphore. Set the timeout to OSAL\_SEM\_WAIT\_FOREVER.
+    -   Timed blocking mode: A task needs to acquire a semaphore. If the current number of tasks using the semaphore has not reached the upper limit set for the semaphore, the acquisition succeeds. Otherwise, the task enters the blocked state, and the system switches to the ready task with the highest priority to continue execution. After the task enters the blocked state, it will not resume execution until another task releases the semaphore before the specified timeout, or until the user-specified timeout expires. Set the timeout to a reasonable value.
 
-3.  释放信号量osal\_sem\_up。
-    -   如果有任务阻塞于指定信号量，则唤醒该信号量阻塞队列上的第一个任务。 该任务进入就绪态，并进行调度。
-    -   如果没有任务阻塞于指定信号量，释放信号量成功。
+3.  Release the semaphore through osal\_sem\_up.
+    -   If a task is blocked on the specified semaphore, wake up the first task on the semaphore blocking queue. The task enters the ready state and is scheduled.
+    -   If no task is blocked on the specified semaphore, the semaphore is released successfully.
 
-4.  删除信号量osal\_sem\_destroy。
+4.  Delete the semaphore through osal\_sem\_destroy.
 
-**错误码<a name="section6206046547"></a>**
+**Error Codes<a name="section6206046547"></a>**
 
-OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL封装的内核接口运行过程中会打印异常信息值，会打印信号量操作失败的情况的错误码，以便快速定位错误原因。
+The OSAL interface supports a fault detection and printing switch. After the OSALLOG\_DISABLE macro is disabled, if an exception occurs during the running of the kernel interfaces encapsulated by OSAL, the exception information value will be printed, including the error code of the semaphore operation failure, so that the cause of the error can be quickly located.
 
-信号量错误码说明如[表2](#table6488173252113)所示。
+The semaphore error codes are described in [Table 2](#table6488173252113).
 
-**表 2**  信号量错误码说明
+**Table 2**  Description of semaphore error codes
 
 <a name="table6488173252113"></a>
-<table><thead align="left"><tr id="row048813320217"><th class="cellrowborder" valign="top" width="5.75%" id="mcps1.2.6.1.1"><p id="p534873462117"><a name="p534873462117"></a><a name="p534873462117"></a>序号</p>
+<table><thead align="left"><tr id="row048813320217"><th class="cellrowborder" valign="top" width="5.75%" id="mcps1.2.6.1.1"><p id="p534873462117"><a name="p534873462117"></a><a name="p534873462117"></a>No.</p>
 </th>
-<th class="cellrowborder" valign="top" width="25.740000000000002%" id="mcps1.2.6.1.2"><p id="p53485347213"><a name="p53485347213"></a><a name="p53485347213"></a>定义</p>
+<th class="cellrowborder" valign="top" width="25.740000000000002%" id="mcps1.2.6.1.2"><p id="p53485347213"><a name="p53485347213"></a><a name="p53485347213"></a>Definition</p>
 </th>
-<th class="cellrowborder" valign="top" width="12.790000000000001%" id="mcps1.2.6.1.3"><p id="p2348113412114"><a name="p2348113412114"></a><a name="p2348113412114"></a>实际数值</p>
+<th class="cellrowborder" valign="top" width="12.790000000000001%" id="mcps1.2.6.1.3"><p id="p2348113412114"><a name="p2348113412114"></a><a name="p2348113412114"></a>Actual Value</p>
 </th>
-<th class="cellrowborder" valign="top" width="31.080000000000002%" id="mcps1.2.6.1.4"><p id="p13348143472114"><a name="p13348143472114"></a><a name="p13348143472114"></a>描述</p>
+<th class="cellrowborder" valign="top" width="31.080000000000002%" id="mcps1.2.6.1.4"><p id="p13348143472114"><a name="p13348143472114"></a><a name="p13348143472114"></a>Description</p>
 </th>
-<th class="cellrowborder" valign="top" width="24.64%" id="mcps1.2.6.1.5"><p id="p634883482119"><a name="p634883482119"></a><a name="p634883482119"></a>参考解决方案</p>
+<th class="cellrowborder" valign="top" width="24.64%" id="mcps1.2.6.1.5"><p id="p634883482119"><a name="p634883482119"></a><a name="p634883482119"></a>Reference Solution</p>
 </th>
 </tr>
 </thead>
@@ -2212,9 +2212,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="12.790000000000001%" headers="mcps1.2.6.1.3 "><p id="p33481634152111"><a name="p33481634152111"></a><a name="p33481634152111"></a>0x02000700</p>
 </td>
-<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p123488342219"><a name="p123488342219"></a><a name="p123488342219"></a>初始化信号量时，内存空间不足。</p>
+<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p123488342219"><a name="p123488342219"></a><a name="p123488342219"></a>When initializing a semaphore, the memory space is insufficient.</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p183485349216"><a name="p183485349216"></a><a name="p183485349216"></a>调整OS_SYS_MEM_SIZE以确保有足够的内存供信号量使用，或减小系统支持的最大信号量数LOSCFG_BASE_IPC_SEM_LIMIT。</p>
+<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p183485349216"><a name="p183485349216"></a><a name="p183485349216"></a>Adjust OS_SYS_MEM_SIZE to ensure sufficient memory for semaphores, or reduce the maximum number of semaphores supported by the system, LOSCFG_BASE_IPC_SEM_LIMIT.</p>
 </td>
 </tr>
 <tr id="row104881032102112"><td class="cellrowborder" valign="top" width="5.75%" headers="mcps1.2.6.1.1 "><p id="p1534893417214"><a name="p1534893417214"></a><a name="p1534893417214"></a>2</p>
@@ -2223,9 +2223,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="12.790000000000001%" headers="mcps1.2.6.1.3 "><p id="p2348123412217"><a name="p2348123412217"></a><a name="p2348123412217"></a>0x02000701</p>
 </td>
-<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p11348133462114"><a name="p11348133462114"></a><a name="p11348133462114"></a>信号量ID不正确或信号量未创建。</p>
+<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p11348133462114"><a name="p11348133462114"></a><a name="p11348133462114"></a>The semaphore ID is incorrect or the semaphore has not been created.</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p934883422113"><a name="p934883422113"></a><a name="p934883422113"></a>传入正确的信号量ID或创建信号量后再使用。</p>
+<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p934883422113"><a name="p934883422113"></a><a name="p934883422113"></a>Pass the correct semaphore ID, or create the semaphore before use.</p>
 </td>
 </tr>
 <tr id="row1748913323215"><td class="cellrowborder" valign="top" width="5.75%" headers="mcps1.2.6.1.1 "><p id="p33486344218"><a name="p33486344218"></a><a name="p33486344218"></a>3</p>
@@ -2234,9 +2234,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="12.790000000000001%" headers="mcps1.2.6.1.3 "><p id="p11348173402114"><a name="p11348173402114"></a><a name="p11348173402114"></a>0x02000702</p>
 </td>
-<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p1334833413213"><a name="p1334833413213"></a><a name="p1334833413213"></a>传入空指针。</p>
+<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p1334833413213"><a name="p1334833413213"></a><a name="p1334833413213"></a>A null pointer is passed.</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p134811344215"><a name="p134811344215"></a><a name="p134811344215"></a>传入合法指针。</p>
+<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p134811344215"><a name="p134811344215"></a><a name="p134811344215"></a>Pass a valid pointer.</p>
 </td>
 </tr>
 <tr id="row17489432162110"><td class="cellrowborder" valign="top" width="5.75%" headers="mcps1.2.6.1.1 "><p id="p17348334132113"><a name="p17348334132113"></a><a name="p17348334132113"></a>4</p>
@@ -2245,9 +2245,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="12.790000000000001%" headers="mcps1.2.6.1.3 "><p id="p134853415212"><a name="p134853415212"></a><a name="p134853415212"></a>0x02000703</p>
 </td>
-<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p834813413217"><a name="p834813413217"></a><a name="p834813413217"></a>创建信号量时，系统中已经没有未使用的信号量。</p>
+<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p834813413217"><a name="p834813413217"></a><a name="p834813413217"></a>When creating a semaphore, there is no unused semaphore in the system.</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p034811349213"><a name="p034811349213"></a><a name="p034811349213"></a>及时删除无用的信号量或增加系统支持的最大信号量数LOSCFG_BASE_IPC_SEM_LIMIT。</p>
+<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p034811349213"><a name="p034811349213"></a><a name="p034811349213"></a>Delete unused semaphores in a timely manner or increase the maximum number of semaphores supported by the system, LOSCFG_BASE_IPC_SEM_LIMIT.</p>
 </td>
 </tr>
 <tr id="row64898320219"><td class="cellrowborder" valign="top" width="5.75%" headers="mcps1.2.6.1.1 "><p id="p12348534192113"><a name="p12348534192113"></a><a name="p12348534192113"></a>5</p>
@@ -2256,9 +2256,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="12.790000000000001%" headers="mcps1.2.6.1.3 "><p id="p6348534202120"><a name="p6348534202120"></a><a name="p6348534202120"></a>0x02000704</p>
 </td>
-<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p18348123442110"><a name="p18348123442110"></a><a name="p18348123442110"></a>无阻塞模式下未获取到信号量。</p>
+<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p18348123442110"><a name="p18348123442110"></a><a name="p18348123442110"></a>The semaphore was not obtained in non-blocking mode.</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p14348134182117"><a name="p14348134182117"></a><a name="p14348134182117"></a>选择阻塞等待或根据该错误码适当处理。</p>
+<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p14348134182117"><a name="p14348134182117"></a><a name="p14348134182117"></a>Choose blocking wait or handle it appropriately based on this error code.</p>
 </td>
 </tr>
 <tr id="row18489163232115"><td class="cellrowborder" valign="top" width="5.75%" headers="mcps1.2.6.1.1 "><p id="p034883452115"><a name="p034883452115"></a><a name="p034883452115"></a>6</p>
@@ -2267,9 +2267,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="12.790000000000001%" headers="mcps1.2.6.1.3 "><p id="p53488343211"><a name="p53488343211"></a><a name="p53488343211"></a>0x02000705</p>
 </td>
-<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p16348193462118"><a name="p16348193462118"></a><a name="p16348193462118"></a>中断期间非法调用osal_sem_down_timeout申请信号量。</p>
+<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p16348193462118"><a name="p16348193462118"></a><a name="p16348193462118"></a>Illegally calling osal_sem_down_timeout to acquire a semaphore during an interrupt.</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p11348103416214"><a name="p11348103416214"></a><a name="p11348103416214"></a>中断期间禁止调用osal_sem_down_timeout。</p>
+<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p11348103416214"><a name="p11348103416214"></a><a name="p11348103416214"></a>Calling osal_sem_down_timeout during an interrupt is prohibited.</p>
 </td>
 </tr>
 <tr id="row54891332162119"><td class="cellrowborder" valign="top" width="5.75%" headers="mcps1.2.6.1.1 "><p id="p153487345219"><a name="p153487345219"></a><a name="p153487345219"></a>7</p>
@@ -2278,9 +2278,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="12.790000000000001%" headers="mcps1.2.6.1.3 "><p id="p1134813432110"><a name="p1134813432110"></a><a name="p1134813432110"></a>0x02000706</p>
 </td>
-<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p23482344215"><a name="p23482344215"></a><a name="p23482344215"></a>任务被锁，无法获得信号量。</p>
+<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p23482344215"><a name="p23482344215"></a><a name="p23482344215"></a>The task is locked and cannot obtain a semaphore.</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p1349133422117"><a name="p1349133422117"></a><a name="p1349133422117"></a>在任务被锁时，不能调用osal_sem_down_timeout申请信号量。</p>
+<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p1349133422117"><a name="p1349133422117"></a><a name="p1349133422117"></a>When the task is locked, osal_sem_down_timeout cannot be called to acquire a semaphore.</p>
 </td>
 </tr>
 <tr id="row1948913272111"><td class="cellrowborder" valign="top" width="5.75%" headers="mcps1.2.6.1.1 "><p id="p193491334112110"><a name="p193491334112110"></a><a name="p193491334112110"></a>8</p>
@@ -2289,9 +2289,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="12.790000000000001%" headers="mcps1.2.6.1.3 "><p id="p153491534122110"><a name="p153491534122110"></a><a name="p153491534122110"></a>0x02000707</p>
 </td>
-<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p6349103416211"><a name="p6349103416211"></a><a name="p6349103416211"></a>获取信号量超时。</p>
+<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p6349103416211"><a name="p6349103416211"></a><a name="p6349103416211"></a>Semaphore acquisition timed out.</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p19349183452116"><a name="p19349183452116"></a><a name="p19349183452116"></a>将时间设置在合理范围内。</p>
+<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p19349183452116"><a name="p19349183452116"></a><a name="p19349183452116"></a>Set the time to a reasonable range.</p>
 </td>
 </tr>
 <tr id="row16490432132112"><td class="cellrowborder" valign="top" width="5.75%" headers="mcps1.2.6.1.1 "><p id="p23491348217"><a name="p23491348217"></a><a name="p23491348217"></a>9</p>
@@ -2300,9 +2300,9 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="12.790000000000001%" headers="mcps1.2.6.1.3 "><p id="p1034918345211"><a name="p1034918345211"></a><a name="p1034918345211"></a>0x02000708</p>
 </td>
-<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p23491345214"><a name="p23491345214"></a><a name="p23491345214"></a>信号量计数值已达到最大值，无法再继续释放该信号量。</p>
+<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p23491345214"><a name="p23491345214"></a><a name="p23491345214"></a>The semaphore count has reached the maximum value, and the semaphore cannot be released further.</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p173491934112114"><a name="p173491934112114"></a><a name="p173491934112114"></a>根据该错误码适当处理。</p>
+<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p173491934112114"><a name="p173491934112114"></a><a name="p173491934112114"></a>Handle it appropriately based on this error code.</p>
 </td>
 </tr>
 <tr id="row34901332112117"><td class="cellrowborder" valign="top" width="5.75%" headers="mcps1.2.6.1.1 "><p id="p14349834202115"><a name="p14349834202115"></a><a name="p14349834202115"></a>10</p>
@@ -2311,29 +2311,29 @@ OSAL接口支持维测打印开关，关闭OSALLOG\_DISABLE宏定义后，OSAL�
 </td>
 <td class="cellrowborder" valign="top" width="12.790000000000001%" headers="mcps1.2.6.1.3 "><p id="p1034923412213"><a name="p1034923412213"></a><a name="p1034923412213"></a>0x02000709</p>
 </td>
-<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p13349173452119"><a name="p13349173452119"></a><a name="p13349173452119"></a>等待信号量的任务队列不为空。</p>
+<td class="cellrowborder" valign="top" width="31.080000000000002%" headers="mcps1.2.6.1.4 "><p id="p13349173452119"><a name="p13349173452119"></a><a name="p13349173452119"></a>The task queue waiting for the semaphore is not empty.</p>
 </td>
-<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p113491934182119"><a name="p113491934182119"></a><a name="p113491934182119"></a>唤醒所有等待该信号量的任务后，再删除该信号量。</p>
+<td class="cellrowborder" valign="top" width="24.64%" headers="mcps1.2.6.1.5 "><p id="p113491934182119"><a name="p113491934182119"></a><a name="p113491934182119"></a>Wake up all tasks waiting for the semaphore before deleting it.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-### 注意事项<a name="ZH-CN_TOPIC_0000001713022017"></a>
+### Precautions<a name="ZH-CN_TOPIC_0000001713022017"></a>
 
-由于中断不能被阻塞，因此在申请信号量时，阻塞模式不能在中断中使用。
+Because interrupts cannot be blocked, the blocking mode cannot be used in interrupts when acquiring a semaphore.
 
-### 编程实例<a name="ZH-CN_TOPIC_0000001713102029"></a>
+### Programming Example<a name="ZH-CN_TOPIC_0000001713102029"></a>
 
-本实例实现两个任务同步获取信号量的功能，步骤如下：
+This example implements the function of two tasks synchronously acquiring a semaphore. The steps are as follows:
 
-1.  测试任务example\_task\_entry\_sem创建一个信号量，锁任务调度，创建两个任务example\_sem\_task1、example\_sem\_task2，example\_sem\_task2优先级高于example\_sem\_task1，两个任务中申请同一信号量，解锁任务调度后两任务阻塞， 测试任务example\_task\_entry\_sem释放信号量。
-2.  example\_sem\_task2得到信号量，被调度，然后任务休眠200ms， example\_sem\_task2延迟，example\_sem\_task1被唤醒。
-3.  example\_sem\_task1定时阻塞模式申请信号量，等待时间为100ms，因信号量仍被example\_semtask2持有，example\_sem\_task1挂起，100ms后仍未得到信号量，example\_sem\_task1被唤醒，试图以永久阻塞模式申请信号量，example\_sem\_task1挂起。
-4.  200ms后example\_sem\_task2唤醒，释放信号量后，example\_sem\_task1得到信号量被调度运行，后释放信号量。
-5.  example\_sem\_task1执行完，400ms后任务example\_task\_entry\_sem被唤醒，执行删除信号量，删除两个任务。
+1.  Test task example\_task\_entry\_sem creates a semaphore, locks task scheduling, and creates two tasks example\_sem\_task1 and example\_sem\_task2 (example\_sem\_task2 has a higher priority than example\_sem\_task1). Both tasks apply for the same semaphore. After task scheduling is unlocked, the two tasks block, and test task example\_task\_entry\_sem releases the semaphore.
+2.  example\_sem\_task2 obtains the semaphore, is scheduled, and then sleeps for 200 ms. example\_sem\_task2 is delayed, and example\_sem\_task1 is woken up.
+3.  example\_sem\_task1 acquires the semaphore in timed blocking mode with a wait time of 100 ms. Because the semaphore is still held by example\_semtask2, example\_sem\_task1 is suspended. After 100 ms, the semaphore is still not obtained, example\_sem\_task1 is woken up and tries to acquire the semaphore in wait-forever blocking mode, and example\_sem\_task1 is suspended.
+4.  After 200 ms, example\_sem\_task2 wakes up. After releasing the semaphore, example\_sem\_task1 obtains the semaphore and is scheduled to run, and then releases the semaphore.
+5.  After example\_sem\_task1 finishes execution, task example\_task\_entry\_sem is woken up 400 ms later, deletes the semaphore, and deletes the two tasks.
 
-代码示例：
+Code example:
 
 ```
 #include "common_def.h"
@@ -2345,15 +2345,15 @@ void example_sem_task1(void* param)
     unused(param);
     uint32_t ret;
     osal_printk("example_sem_task1 try get sem g_sem_id ,timeout 100 ms.\n");
-    /* 定时阻塞模式申请信号量，定时时间为100ms */
+    /* Acquire the semaphore in timed blocking mode, with a timing of 100 ms */
     ret = osal_sem_down_timeout(&g_sem_id, 100);
-    /* 申请到信号量 */
+    /* Semaphore acquired */
     if(ret == OSAL_SUCCESS) {
         osal_sem_up(&g_sem_id);
     } else {
-        /* 定时时间到，未申请到信号量 */
+        /* The timed wait expired and the semaphore was not acquired */
         osal_printk("example_sem_task1 timeout and try get sem g_sem_id wait forever.\n");
-        /* 永久阻塞模式申请信号量 */
+        /* Acquire the semaphore in wait-forever blocking mode */
         ret = osal_sem_down_timeout(&g_sem_id, OSAL_WAIT_FOREVER);
         osal_printk("example_sem_task1 wait_forever and get sem g_sem_id .\n");
         if (ret == OSAL_SUCCESS) {
@@ -2366,55 +2366,55 @@ void example_sem_task2(void* param)
     unused(param);
     uint32_t ret;
     osal_printk("example_sem_task2 try get sem g_sem_id wait forever.\n");
-    /* 永久阻塞模式申请信号量 */
+    /* Acquire the semaphore in wait-forever blocking mode */
     ret = osal_sem_down_timeout(&g_sem_id, OSAL_WAIT_FOREVER);
     if (ret == OSAL_SUCCESS) {
         osal_printk("example_sem_task2 get sem g_sem_id and then delay 200ms .\n");
     }
-    /* 任务休眠200ms */
+    /* The task sleeps for 200 ms */
     osal_msleep(200);
     osal_printk("example_sem_task2 post sem g_sem_id .\n");
-    /* 释放信号量 */
+    /* Release the semaphore */
     osal_sem_up(&g_sem_id);
 }
 uint32_t example_task_entry_sem(void)
 {
     uint32_t ret;
     osal_task *example_task1_info, *example_task2_info;
-    /* 创建信号量 */
+    /* Create the semaphore */
     osal_sem_init(&g_sem_id, 0);
-    /* 创建任务期间锁住任务调度 */
+    /* Lock task scheduling during task creation */
     osal_kthread_lock();
-    /* 创建任务1 */
+    /* Create task 1 */
     example_task1_info = osal_kthread_create((osal_kthread_handler)example_sem_task1, NULL, "example_task1", TASK_STACK_SIZE);
     ret = osal_kthread_set_priority(example_task1_info->task, TASK_PRI_TASK1);
     if (ret != OSAL_SUCCESS) {
         osal_printk("Example_task create failed!\n");
     }
-    /* 创建任务2 */
+    /* Create task 2 */
     example_task2_info = osal_kthread_create((osal_kthread_handler)example_sem_task2, NULL, "example_task2", TASK_STACK_SIZE);
     ret = osal_kthread_set_priority(example_task2_info->task, TASK_PRI_TASK2);
     if (ret != OSAL_SUCCESS) {
         osal_printk("Example_task create failed!\n");
     }
-    /* 任务创建完成解锁任务调度 */
+    /* Unlock task scheduling after task creation is complete */
     osal_kthread_unlock();
     osal_sem_up(&g_sem_id);
-    /*任务休眠400ms*/
+    /*The task sleeps for 400 ms*/
     osal_msleep(400);
-    /*删除信号量*/
+    /*Delete the semaphore*/
     osal_sem_destroy(&g_sem_id);
-    /*删除任务1*/
+    /*Delete task 1*/
     osal_kthread_destroy(example_task1_info->task, 0);
-    /*删除任务2*/
+    /*Delete task 2*/
     osal_kthread_destroy(example_task2_info->task, 0);
     return OSAL_SUCCESS;
 }
 ```
 
-结果验证：
+Result verification:
 
-编译运行得到的结果为：
+The result obtained after compilation and running is:
 
 ```
 example_sem_task2 try get sem g_sem_id wait forever.
@@ -2425,80 +2425,80 @@ example_sem_task2 post sem g_sem_id.
 example_sem_task1 wait_forever and get sem g_sem_id.
 ```
 
-## 时间管理<a name="ZH-CN_TOPIC_0000001664982490"></a>
+## Time Management<a name="ZH-CN_TOPIC_0000001664982490"></a>
 
 
 
 
 
-### 概述<a name="ZH-CN_TOPIC_0000001664982478"></a>
+### Overview<a name="ZH-CN_TOPIC_0000001664982478"></a>
 
-时间管理以系统时钟为基础，提供给应用程序所有和时间有关的服务，系统中的时间管理模块提供时间转换、统计、延迟功能以满足用户对时间相关需求的实现。
+Time management is based on the system clock and provides all time-related services to applications. The time management module in the system provides time conversion, statistics, and delay functions to meet users' time-related requirements.
 
--   Cycle系统：最小的计时单位。Cycle的时长由系统主频决定，系统主频就是每秒钟的Cycle数。
--   Tick：操作系统的基本时间单位，对应的时长由系统主频及每秒Tick数决定，默认每秒1000个ticks，即每个tick时长为1ms。
+-   Cycle system: The smallest timing unit. The duration of a Cycle is determined by the system main frequency, which is the number of Cycles per second.
+-   Tick: The basic time unit of the operating system. Its corresponding duration is determined by the system main frequency and the number of Ticks per second. By default, there are 1000 ticks per second, that is, each tick lasts 1 ms.
 
-时间管理接口主要提供的功能如[表1](#table15447173212416)所示。
+The main functions provided by the time management interfaces are shown in [Table 1](#table15447173212416).
 
-**表 1**  时间管理接口说明
+**Table 1**  Description of time management interfaces
 
 <a name="table15447173212416"></a>
-<table><thead align="left"><tr id="row9561163274115"><th class="cellrowborder" valign="top" width="40.6%" id="mcps1.2.3.1.1"><p id="p85611032184113"><a name="p85611032184113"></a><a name="p85611032184113"></a>接口名称</p>
+<table><thead align="left"><tr id="row9561163274115"><th class="cellrowborder" valign="top" width="40.6%" id="mcps1.2.3.1.1"><p id="p85611032184113"><a name="p85611032184113"></a><a name="p85611032184113"></a>Interface Name</p>
 </th>
-<th class="cellrowborder" valign="top" width="59.4%" id="mcps1.2.3.1.2"><p id="p2561183217419"><a name="p2561183217419"></a><a name="p2561183217419"></a>说明</p>
+<th class="cellrowborder" valign="top" width="59.4%" id="mcps1.2.3.1.2"><p id="p2561183217419"><a name="p2561183217419"></a><a name="p2561183217419"></a>Description</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row14691149122015"><td class="cellrowborder" valign="top" width="40.6%" headers="mcps1.2.3.1.1 "><p id="p166612027164119"><a name="p166612027164119"></a><a name="p166612027164119"></a>osal_udelay</p>
 </td>
-<td class="cellrowborder" valign="top" width="59.4%" headers="mcps1.2.3.1.2 "><p id="p1069220902010"><a name="p1069220902010"></a><a name="p1069220902010"></a>CPU空等时间（单位：μs）。</p>
+<td class="cellrowborder" valign="top" width="59.4%" headers="mcps1.2.3.1.2 "><p id="p1069220902010"><a name="p1069220902010"></a><a name="p1069220902010"></a>CPU idle waiting time (in μs).</p>
 </td>
 </tr>
 <tr id="row852650194211"><td class="cellrowborder" valign="top" width="40.6%" headers="mcps1.2.3.1.1 "><p id="p26713414214"><a name="p26713414214"></a><a name="p26713414214"></a>osal_mdelay</p>
 </td>
-<td class="cellrowborder" valign="top" width="59.4%" headers="mcps1.2.3.1.2 "><p id="p172311911421"><a name="p172311911421"></a><a name="p172311911421"></a>CPU空等时间（单位：ms）。</p>
+<td class="cellrowborder" valign="top" width="59.4%" headers="mcps1.2.3.1.2 "><p id="p172311911421"><a name="p172311911421"></a><a name="p172311911421"></a>CPU idle waiting time (in ms).</p>
 </td>
 </tr>
 <tr id="row145611932104114"><td class="cellrowborder" valign="top" width="40.6%" headers="mcps1.2.3.1.1 "><p id="p1937112635612"><a name="p1937112635612"></a><a name="p1937112635612"></a>osal_get_jiffies</p>
 </td>
-<td class="cellrowborder" valign="top" width="59.4%" headers="mcps1.2.3.1.2 "><p id="p1043513610573"><a name="p1043513610573"></a><a name="p1043513610573"></a>获取当前的Tick数。</p>
+<td class="cellrowborder" valign="top" width="59.4%" headers="mcps1.2.3.1.2 "><p id="p1043513610573"><a name="p1043513610573"></a><a name="p1043513610573"></a>Obtains the current number of Ticks.</p>
 </td>
 </tr>
 <tr id="row356233254111"><td class="cellrowborder" valign="top" width="40.6%" headers="mcps1.2.3.1.1 "><p id="p115568714445"><a name="p115568714445"></a><a name="p115568714445"></a>osal_jiffies_to_msecs</p>
 </td>
-<td class="cellrowborder" valign="top" width="59.4%" headers="mcps1.2.3.1.2 "><p id="p2562832114120"><a name="p2562832114120"></a><a name="p2562832114120"></a>Tick转换为毫秒。</p>
+<td class="cellrowborder" valign="top" width="59.4%" headers="mcps1.2.3.1.2 "><p id="p2562832114120"><a name="p2562832114120"></a><a name="p2562832114120"></a>Converts Ticks to milliseconds.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-### 开发流程<a name="ZH-CN_TOPIC_0000001665142206"></a>
+### Development Flow<a name="ZH-CN_TOPIC_0000001665142206"></a>
 
-**使用场景<a name="section1665230102210"></a>**
+**Application Scenarios<a name="section1665230102210"></a>**
 
-用户需要了解当前系统运行的时间以及Tick与毫秒之间的转换关系，以及需要liteos提供μs级或者ms级的死延时。
+Users need to know the current system running time and the conversion relationship between Ticks and milliseconds, and may need LiteOS to provide dead delays at the μs or ms level.
 
-**开发流程<a name="section44971610182116"></a>**
+**Development Flow<a name="section44971610182116"></a>**
 
-时间管理的常用延时函数：
+Common delay functions in time management:
 
-1.  获取当前时间戳。
-2.  调用延时接口osal\_mdelay。
-3.  获取延时后的时间戳。
+1.  Obtain the current timestamp.
+2.  Call the delay interface osal\_mdelay.
+3.  Obtain the timestamp after the delay.
 
-**错误码<a name="section361815619203"></a>**
+**Error Codes<a name="section361815619203"></a>**
 
-无
+None
 
-### 注意事项<a name="ZH-CN_TOPIC_0000001664982474"></a>
+### Precautions<a name="ZH-CN_TOPIC_0000001664982474"></a>
 
--   系统的Tick数在关中断的情况下不进行计数，故系统Tick数不能作为准确时间计算，延时精度要求高的场景，可使用来源于32M时钟的TCXO计数接口，使用请参见《BS25 设备驱动开发指导书》中“TCXO”章节。
--   osal\_get\_jiffies接口获取的tick每次重新启动后都会重置，在内核启动后开始计时，使用时请注意。
--   使用osal\_xdelay时，底层实现为死循环延时，在开任务调度器的情况下，高优先级依旧可以打断延时线程，低于延时任务优先级的则在延时期间得不到调度。
+-   The system Tick count is not counted when interrupts are disabled, so the system Tick count cannot be used for accurate time calculation. For scenarios requiring high delay accuracy, you can use the TCXO counting interface derived from the 32M clock. For usage, see the "TCXO" chapter in the BS25 Device Driver Development Guide.
+-   The tick obtained by the osal\_get\_jiffies interface is reset after each restart, and starts counting after the kernel starts. Please pay attention when using it.
+-   When using osal\_xdelay, the underlying implementation is a busy-wait delay. When the task scheduler is enabled, tasks with higher priorities can still interrupt the delayed task, while tasks with lower priorities than the delayed task will not be scheduled during the delay.
 
-### 编程实例<a name="ZH-CN_TOPIC_0000001665142186"></a>
+### Programming Example<a name="ZH-CN_TOPIC_0000001665142186"></a>
 
-统计osal\_mdelay前后的count变化代码示例如下：
+The following is a code example for counting the change of count before and after osal\_mdelay:
 
 ```
 #include "common_def.h"
@@ -2512,108 +2512,108 @@ void example_delay_init(void)
 }
 ```
 
-## 软件定时器<a name="ZH-CN_TOPIC_0000001664982486"></a>
+## Software Timer<a name="ZH-CN_TOPIC_0000001664982486"></a>
 
 
 
 
 
-### 概述<a name="ZH-CN_TOPIC_0000001713102025"></a>
+### Overview<a name="ZH-CN_TOPIC_0000001713102025"></a>
 
-硬件定时器受硬件的限制，数量上不足以满足用户的实际需求，因此为了满足用户需求，提供更多的定时器，系统提供软件定时器功能。软件定时器是基于系统Tick时钟中断且由软件来模拟的定时器，当经过设定的Tick时钟计数值后会触发用户定义的回调函数。定时精度与系统Tick时钟的周期有关。软件定时器扩展了定时器的数量，允许创建更多的定时业务。软件定时器功能支持：
+Hardware timers are limited by hardware, and their quantity is insufficient to meet users' actual requirements. Therefore, to meet user requirements and provide more timers, the system provides the software timer function. A software timer is a timer based on the system Tick clock interrupt and simulated by software. When the set Tick clock count is reached, the user-defined callback function is triggered. The timing accuracy is related to the period of the system Tick clock. Software timers expand the number of timers and allow more timer services to be created. The software timer function supports:
 
--   软件定时器创建。
--   软件定时器启动。
--   软件定时器停止。
--   软件定时器删除。
+-   Software timer creation.
+-   Software timer startup.
+-   Software timer stop.
+-   Software timer deletion.
 
-运作机制：
+Working mechanism:
 
--   软件定时器使用了系统的一个队列和一个任务资源，先进先出。定时时间短的定时器总是比定时时间长的靠近队列头，满足优先被触发的准则。
--   当Tick中断到来时，在Tick中断处理函数中扫描软件定时器的计时任务，查看是否有定时器超时，如果有，则将超时的定时器记录到内核数据结构。
--   Tick中断处理函数结束后，软件定时器任务（优先级为最高）被唤醒，在该任务中调用超时定时器的回调函数。
+-   Software timers use one queue and one task resource of the system, in first-in-first-out order. Timers with shorter timing are always closer to the head of the queue than those with longer timing, satisfying the rule of being triggered first.
+-   When a Tick interrupt arrives, the timing task of software timers is scanned in the Tick interrupt handler function to check whether any timer has timed out. If so, the timed-out timer is recorded in the kernel data structure.
+-   After the Tick interrupt handler function ends, the software timer task (with the highest priority) is woken up, and the callback function of the timed-out timer is called in this task.
 
-软件定时器提供2类定时器机制：
+Software timers provide two types of timer mechanisms:
 
--   单次触发定时器：在启动后只会触发一次定时器事件。
--   周期触发定时器：会周期性地触发定时器事件，直到用户手动地停止定时器，否则将永远持续执行。
+-   One-shot timer: The timer event is triggered only once after startup.
+-   Periodic timer: The timer event is triggered periodically until the user manually stops the timer; otherwise, it will continue executing forever.
 
-### 开发流程<a name="ZH-CN_TOPIC_0000001713022025"></a>
+### Development Flow<a name="ZH-CN_TOPIC_0000001713022025"></a>
 
-**使用场景<a name="section4856133722815"></a>**
+**Application Scenarios<a name="section4856133722815"></a>**
 
--   创建一个单次触发的定时器，超时后执行回调函数。
--   创建一个周期性触发的定时器，超时后执行用户自定义的回调函数。
+-   Create a one-shot timer, and execute the callback function after timeout.
+-   Create a periodic timer, and execute the user-defined callback function after timeout.
 
-**功能说明<a name="section241595618287"></a>**
+**Function Description<a name="section241595618287"></a>**
 
-系统中的软件定时器模块为用户提供的功能如[表1](#table15447173212416)所示。
+The functions provided by the software timer module in the system for users are shown in [Table 1](#table15447173212416).
 
-**表 1**  软件定时器接口说明
+**Table 1**  Description of software timer interfaces
 
 <a name="table15447173212416"></a>
-<table><thead align="left"><tr id="row9561163274115"><th class="cellrowborder" valign="top" width="39.6%" id="mcps1.2.3.1.1"><p id="p85611032184113"><a name="p85611032184113"></a><a name="p85611032184113"></a>接口名称</p>
+<table><thead align="left"><tr id="row9561163274115"><th class="cellrowborder" valign="top" width="39.6%" id="mcps1.2.3.1.1"><p id="p85611032184113"><a name="p85611032184113"></a><a name="p85611032184113"></a>Interface Name</p>
 </th>
-<th class="cellrowborder" valign="top" width="60.4%" id="mcps1.2.3.1.2"><p id="p2561183217419"><a name="p2561183217419"></a><a name="p2561183217419"></a>说明</p>
+<th class="cellrowborder" valign="top" width="60.4%" id="mcps1.2.3.1.2"><p id="p2561183217419"><a name="p2561183217419"></a><a name="p2561183217419"></a>Description</p>
 </th>
 </tr>
 </thead>
 <tbody><tr id="row1556153214412"><td class="cellrowborder" valign="top" width="39.6%" headers="mcps1.2.3.1.1 "><p id="p831382575013"><a name="p831382575013"></a><a name="p831382575013"></a>osal_timer_init</p>
 </td>
-<td class="cellrowborder" valign="top" width="60.4%" headers="mcps1.2.3.1.2 "><p id="p1438733716431"><a name="p1438733716431"></a><a name="p1438733716431"></a>创建定时器。</p>
+<td class="cellrowborder" valign="top" width="60.4%" headers="mcps1.2.3.1.2 "><p id="p1438733716431"><a name="p1438733716431"></a><a name="p1438733716431"></a>Creates a timer.</p>
 </td>
 </tr>
 <tr id="row145611932104114"><td class="cellrowborder" valign="top" width="39.6%" headers="mcps1.2.3.1.1 "><p id="p155995655019"><a name="p155995655019"></a><a name="p155995655019"></a>osal_timer_destroy</p>
 </td>
-<td class="cellrowborder" valign="top" width="60.4%" headers="mcps1.2.3.1.2 "><p id="p1043513610573"><a name="p1043513610573"></a><a name="p1043513610573"></a>删除定时器。</p>
+<td class="cellrowborder" valign="top" width="60.4%" headers="mcps1.2.3.1.2 "><p id="p1043513610573"><a name="p1043513610573"></a><a name="p1043513610573"></a>Deletes a timer.</p>
 </td>
 </tr>
 <tr id="row51642022710"><td class="cellrowborder" valign="top" width="39.6%" headers="mcps1.2.3.1.1 "><p id="p10735245145013"><a name="p10735245145013"></a><a name="p10735245145013"></a>osal_timer_start</p>
 </td>
-<td class="cellrowborder" valign="top" width="60.4%" headers="mcps1.2.3.1.2 "><p id="p151646225110"><a name="p151646225110"></a><a name="p151646225110"></a>启动定时器。定时器超时时间（单位：ms）</p>
+<td class="cellrowborder" valign="top" width="60.4%" headers="mcps1.2.3.1.2 "><p id="p151646225110"><a name="p151646225110"></a><a name="p151646225110"></a>Starts the timer. Timer timeout duration (in ms).</p>
 </td>
 </tr>
 <tr id="row178911453412"><td class="cellrowborder" valign="top" width="39.6%" headers="mcps1.2.3.1.1 "><p id="p182531050135014"><a name="p182531050135014"></a><a name="p182531050135014"></a>osal_timer_stop</p>
 </td>
-<td class="cellrowborder" valign="top" width="60.4%" headers="mcps1.2.3.1.2 "><p id="p17756042194315"><a name="p17756042194315"></a><a name="p17756042194315"></a>停止定时器。</p>
+<td class="cellrowborder" valign="top" width="60.4%" headers="mcps1.2.3.1.2 "><p id="p17756042194315"><a name="p17756042194315"></a><a name="p17756042194315"></a>Stops the timer.</p>
 </td>
 </tr>
 <tr id="row328010243238"><td class="cellrowborder" valign="top" width="39.6%" headers="mcps1.2.3.1.1 "><p id="p20539205513524"><a name="p20539205513524"></a><a name="p20539205513524"></a>osal_timer_mod</p>
 </td>
-<td class="cellrowborder" valign="top" width="60.4%" headers="mcps1.2.3.1.2 "><p id="p18280172417236"><a name="p18280172417236"></a><a name="p18280172417236"></a>修改定时器，执行后定时器会重启。</p>
+<td class="cellrowborder" valign="top" width="60.4%" headers="mcps1.2.3.1.2 "><p id="p18280172417236"><a name="p18280172417236"></a><a name="p18280172417236"></a>Modifies the timer. After execution, the timer will restart.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-**开发流程<a name="section155678417297"></a>**
+**Development Flow<a name="section155678417297"></a>**
 
-ms级软件定时器的典型开发流程：
+Typical development flow of ms-level software timers:
 
-1.  创建定时器osal\_timer\_init。返回函数运行结果，成功或失败。
+1.  Create a timer through osal\_timer\_init. The function execution result (success or failure) is returned.
 
-1.  启动定时器osal\_timer\_start。
-2.  停止定时器osal\_timer\_stop。
-3.  删除定时器osal\_timer\_destroy。
+1.  Start the timer through osal\_timer\_start.
+2.  Stop the timer through osal\_timer\_stop.
+3.  Delete the timer through osal\_timer\_destroy.
 
-**错误码<a name="section653513309300"></a>**
+**Error Codes<a name="section653513309300"></a>**
 
-对软件定时器存在失败可能性的操作包括：创建、删除、暂停、重启定时器等，均需要返回对应的错误码，以便快速定位错误原因。
+Operations that may fail on software timers include: creation, deletion, pause, and restart of timers. Each of them must return a corresponding error code so that the cause of the error can be quickly located.
 
-软件定时器错误码如[表2](#table1639141191519)所示。
+The software timer error codes are shown in [Table 2](#table1639141191519).
 
-**表 2**  软件定时器错误码说明
+**Table 2**  Description of software timer error codes
 
 <a name="table1639141191519"></a>
-<table><thead align="left"><tr id="row964014117154"><th class="cellrowborder" valign="top" width="7.48%" id="mcps1.2.6.1.1"><p id="p132254171517"><a name="p132254171517"></a><a name="p132254171517"></a>序号</p>
+<table><thead align="left"><tr id="row964014117154"><th class="cellrowborder" valign="top" width="7.48%" id="mcps1.2.6.1.1"><p id="p132254171517"><a name="p132254171517"></a><a name="p132254171517"></a>No.</p>
 </th>
-<th class="cellrowborder" valign="top" width="31.269999999999996%" id="mcps1.2.6.1.2"><p id="p112215412153"><a name="p112215412153"></a><a name="p112215412153"></a>定义</p>
+<th class="cellrowborder" valign="top" width="31.269999999999996%" id="mcps1.2.6.1.2"><p id="p112215412153"><a name="p112215412153"></a><a name="p112215412153"></a>Definition</p>
 </th>
-<th class="cellrowborder" valign="top" width="15.440000000000001%" id="mcps1.2.6.1.3"><p id="p722174181515"><a name="p722174181515"></a><a name="p722174181515"></a>实际值</p>
+<th class="cellrowborder" valign="top" width="15.440000000000001%" id="mcps1.2.6.1.3"><p id="p722174181515"><a name="p722174181515"></a><a name="p722174181515"></a>Actual Value</p>
 </th>
-<th class="cellrowborder" valign="top" width="25.81%" id="mcps1.2.6.1.4"><p id="p1323144101510"><a name="p1323144101510"></a><a name="p1323144101510"></a>描述</p>
+<th class="cellrowborder" valign="top" width="25.81%" id="mcps1.2.6.1.4"><p id="p1323144101510"><a name="p1323144101510"></a><a name="p1323144101510"></a>Description</p>
 </th>
-<th class="cellrowborder" valign="top" width="20%" id="mcps1.2.6.1.5"><p id="p52314118156"><a name="p52314118156"></a><a name="p52314118156"></a>参考解决方案</p>
+<th class="cellrowborder" valign="top" width="20%" id="mcps1.2.6.1.5"><p id="p52314118156"><a name="p52314118156"></a><a name="p52314118156"></a>Reference Solution</p>
 </th>
 </tr>
 </thead>
@@ -2623,9 +2623,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p1228671235412"><a name="p1228671235412"></a><a name="p1228671235412"></a>0x02000300</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p42861912135412"><a name="p42861912135412"></a><a name="p42861912135412"></a>软件定时器回调函数为空。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p42861912135412"><a name="p42861912135412"></a><a name="p42861912135412"></a>The software timer callback function is empty.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p5286191214543"><a name="p5286191214543"></a><a name="p5286191214543"></a>定义软件定时器回调函数。。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p5286191214543"><a name="p5286191214543"></a><a name="p5286191214543"></a>Define the software timer callback function.</p>
 </td>
 </tr>
 <tr id="row164119112158"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p182861112205414"><a name="p182861112205414"></a><a name="p182861112205414"></a>2</p>
@@ -2634,9 +2634,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p1328611120544"><a name="p1328611120544"></a><a name="p1328611120544"></a>0x02000301</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p228641212542"><a name="p228641212542"></a><a name="p228641212542"></a>软件定时器的定时时长为0。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p228641212542"><a name="p228641212542"></a><a name="p228641212542"></a>The timing duration of the software timer is 0.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p5286191217542"><a name="p5286191217542"></a><a name="p5286191217542"></a>重新定义定时器的定时时长。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p5286191217542"><a name="p5286191217542"></a><a name="p5286191217542"></a>Redefine the timing duration of the timer.</p>
 </td>
 </tr>
 <tr id="row106411131511"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p12286181275413"><a name="p12286181275413"></a><a name="p12286181275413"></a>3</p>
@@ -2645,9 +2645,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p1528691215544"><a name="p1528691215544"></a><a name="p1528691215544"></a>0x02000302</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p13286612185416"><a name="p13286612185416"></a><a name="p13286612185416"></a>不正确的软件定时器模式。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p13286612185416"><a name="p13286612185416"></a><a name="p13286612185416"></a>Incorrect software timer mode.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p102861129541"><a name="p102861129541"></a><a name="p102861129541"></a>确认软件定时器模式，范围为0～2。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p102861129541"><a name="p102861129541"></a><a name="p102861129541"></a>Confirm the software timer mode. The range is 0 to 2.</p>
 </td>
 </tr>
 <tr id="row6641161141518"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p1728671245414"><a name="p1728671245414"></a><a name="p1728671245414"></a>4</p>
@@ -2656,9 +2656,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p328621245410"><a name="p328621245410"></a><a name="p328621245410"></a>0x02000303</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p4287111235412"><a name="p4287111235412"></a><a name="p4287111235412"></a>入参的软件定时器ID指针为NULL。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p4287111235412"><a name="p4287111235412"></a><a name="p4287111235412"></a>The input software timer ID pointer is NULL.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p228781285418"><a name="p228781285418"></a><a name="p228781285418"></a>定义ID变量，传入有效指针。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p228781285418"><a name="p228781285418"></a><a name="p228781285418"></a>Define the ID variable and pass a valid pointer.</p>
 </td>
 </tr>
 <tr id="row1564211191511"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p52871112195419"><a name="p52871112195419"></a><a name="p52871112195419"></a>5</p>
@@ -2667,9 +2667,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p15287151215413"><a name="p15287151215413"></a><a name="p15287151215413"></a>0x02000304</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p4287121235410"><a name="p4287121235410"></a><a name="p4287121235410"></a>软件定时器个数超过最大值。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p4287121235410"><a name="p4287121235410"></a><a name="p4287121235410"></a>The number of software timers exceeds the maximum value.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p428711122540"><a name="p428711122540"></a><a name="p428711122540"></a>重新设置软件定时器最大个数，或者等待一个软件定时器释放资源。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p428711122540"><a name="p428711122540"></a><a name="p428711122540"></a>Reset the maximum number of software timers, or wait for a software timer to release its resources.</p>
 </td>
 </tr>
 <tr id="row864251181519"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p52871312145418"><a name="p52871312145418"></a><a name="p52871312145418"></a>6</p>
@@ -2678,9 +2678,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p428731214546"><a name="p428731214546"></a><a name="p428731214546"></a>0x02000305</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p172870123544"><a name="p172870123544"></a><a name="p172870123544"></a>入参的软件定时器ID不正确。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p172870123544"><a name="p172870123544"></a><a name="p172870123544"></a>The input software timer ID is incorrect.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p0287612115412"><a name="p0287612115412"></a><a name="p0287612115412"></a>确保入参合法。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p0287612115412"><a name="p0287612115412"></a><a name="p0287612115412"></a>Ensure the input parameter is valid.</p>
 </td>
 </tr>
 <tr id="row176439111515"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p16287171219541"><a name="p16287171219541"></a><a name="p16287171219541"></a>7</p>
@@ -2689,9 +2689,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p928719122542"><a name="p928719122542"></a><a name="p928719122542"></a>0x02000306</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p10287161216547"><a name="p10287161216547"></a><a name="p10287161216547"></a>软件定时器未创建。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p10287161216547"><a name="p10287161216547"></a><a name="p10287161216547"></a>The software timer has not been created.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p1328715124547"><a name="p1328715124547"></a><a name="p1328715124547"></a>创建软件定时器。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p1328715124547"><a name="p1328715124547"></a><a name="p1328715124547"></a>Create the software timer.</p>
 </td>
 </tr>
 <tr id="row1424918184158"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p1228718125543"><a name="p1228718125543"></a><a name="p1228718125543"></a>8</p>
@@ -2700,9 +2700,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p1428741214549"><a name="p1428741214549"></a><a name="p1428741214549"></a>0x02000307</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p92871612165419"><a name="p92871612165419"></a><a name="p92871612165419"></a>初始化软件定时器模块时，内存不足。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p92871612165419"><a name="p92871612165419"></a><a name="p92871612165419"></a>When initializing the software timer module, the memory is insufficient.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p528731205417"><a name="p528731205417"></a><a name="p528731205417"></a>调整OS_SYS_MEM_SIZE，以确保有足够的内存供软件定时器使用。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p528731205417"><a name="p528731205417"></a><a name="p528731205417"></a>Adjust OS_SYS_MEM_SIZE to ensure sufficient memory for software timers.</p>
 </td>
 </tr>
 <tr id="row3249171851519"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p19287181213542"><a name="p19287181213542"></a><a name="p19287181213542"></a>9</p>
@@ -2711,9 +2711,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p12287512105416"><a name="p12287512105416"></a><a name="p12287512105416"></a>0x02000309</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p528701210543"><a name="p528701210543"></a><a name="p528701210543"></a>在中断中使用定时器。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p528701210543"><a name="p528701210543"></a><a name="p528701210543"></a>Using a timer in an interrupt.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p228711128546"><a name="p228711128546"></a><a name="p228711128546"></a>修改源代码确保不在中断中使用。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p228711128546"><a name="p228711128546"></a><a name="p228711128546"></a>Modify the source code to ensure the timer is not used in an interrupt.</p>
 </td>
 </tr>
 <tr id="row133559267151"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p12287131215420"><a name="p12287131215420"></a><a name="p12287131215420"></a>10</p>
@@ -2722,9 +2722,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p228761245419"><a name="p228761245419"></a><a name="p228761245419"></a>0x0200030b</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p10287111212546"><a name="p10287111212546"></a><a name="p10287111212546"></a>在软件定时器初始化时，创建定时器队列失败。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p10287111212546"><a name="p10287111212546"></a><a name="p10287111212546"></a>When initializing software timers, the timer queue creation fails.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p2287111235412"><a name="p2287111235412"></a><a name="p2287111235412"></a>调整OS_SYS_MEM_SIZE，以确保有足够的内存供软件定时器创建队列。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p2287111235412"><a name="p2287111235412"></a><a name="p2287111235412"></a>Adjust OS_SYS_MEM_SIZE to ensure sufficient memory for the software timer to create the queue.</p>
 </td>
 </tr>
 <tr id="row3249818181520"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p328713122549"><a name="p328713122549"></a><a name="p328713122549"></a>11</p>
@@ -2733,9 +2733,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p828731255412"><a name="p828731255412"></a><a name="p828731255412"></a>0x0200030c</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p528771217544"><a name="p528771217544"></a><a name="p528771217544"></a>在软件定时器初始化时，创建定时器任务失败。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p528771217544"><a name="p528771217544"></a><a name="p528771217544"></a>When initializing software timers, the timer task creation fails.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p1287121205411"><a name="p1287121205411"></a><a name="p1287121205411"></a>调整OS_SYS_MEM_SIZE，以确保有足够的内存供软件定时器创建任务。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p1287121205411"><a name="p1287121205411"></a><a name="p1287121205411"></a>Adjust OS_SYS_MEM_SIZE to ensure sufficient memory for the software timer to create the task.</p>
 </td>
 </tr>
 <tr id="row10249151819157"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p72872012185416"><a name="p72872012185416"></a><a name="p72872012185416"></a>12</p>
@@ -2744,9 +2744,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p1128771225413"><a name="p1128771225413"></a><a name="p1128771225413"></a>0x0200030d</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p1028761216541"><a name="p1028761216541"></a><a name="p1028761216541"></a>未启动软件定时器。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p1028761216541"><a name="p1028761216541"></a><a name="p1028761216541"></a>The software timer has not been started.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p9287191210548"><a name="p9287191210548"></a><a name="p9287191210548"></a>启动软件定时器。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p9287191210548"><a name="p9287191210548"></a><a name="p9287191210548"></a>Start the software timer.</p>
 </td>
 </tr>
 <tr id="row72491818151511"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p42879125549"><a name="p42879125549"></a><a name="p42879125549"></a>13</p>
@@ -2755,9 +2755,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p192876122545"><a name="p192876122545"></a><a name="p192876122545"></a>0x0200030e</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p1528781220540"><a name="p1528781220540"></a><a name="p1528781220540"></a>不正确的软件定时器状态。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p1528781220540"><a name="p1528781220540"></a><a name="p1528781220540"></a>Incorrect software timer status.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p1228731215420"><a name="p1228731215420"></a><a name="p1228731215420"></a>检查确认软件定时器状态。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p1228731215420"><a name="p1228731215420"></a><a name="p1228731215420"></a>Check and confirm the software timer status.</p>
 </td>
 </tr>
 <tr id="row924810180157"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p4287141217541"><a name="p4287141217541"></a><a name="p4287141217541"></a>14</p>
@@ -2766,9 +2766,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p14287181214544"><a name="p14287181214544"></a><a name="p14287181214544"></a>0x02000310</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p1628791225412"><a name="p1628791225412"></a><a name="p1628791225412"></a>用以获取软件定时器剩余Tick数的入参指针为NULL。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p1628791225412"><a name="p1628791225412"></a><a name="p1628791225412"></a>The input pointer used to obtain the remaining Tick count of the software timer is NULL.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p20287612155415"><a name="p20287612155415"></a><a name="p20287612155415"></a>定义有效变量以传入有效指针。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p20287612155415"><a name="p20287612155415"></a><a name="p20287612155415"></a>Define a valid variable and pass a valid pointer.</p>
 </td>
 </tr>
 <tr id="row142118311541"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p428781245419"><a name="p428781245419"></a><a name="p428781245419"></a>15</p>
@@ -2777,9 +2777,9 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p192881412105419"><a name="p192881412105419"></a><a name="p192881412105419"></a>0x02000311</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p128818122540"><a name="p128818122540"></a><a name="p128818122540"></a>在软件定时器初始化时，创建定时器链表失败。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p128818122540"><a name="p128818122540"></a><a name="p128818122540"></a>When initializing software timers, the timer linked list creation fails.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p10288112155410"><a name="p10288112155410"></a><a name="p10288112155410"></a>调整OS_SYS_MEM_SIZE，以确保有足够的内存供软件定时器创建链表。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p10288112155410"><a name="p10288112155410"></a><a name="p10288112155410"></a>Adjust OS_SYS_MEM_SIZE to ensure sufficient memory for the software timer to create the linked list.</p>
 </td>
 </tr>
 <tr id="row1945910618545"><td class="cellrowborder" valign="top" width="7.48%" headers="mcps1.2.6.1.1 "><p id="p4288171285416"><a name="p4288171285416"></a><a name="p4288171285416"></a>16</p>
@@ -2788,29 +2788,29 @@ ms级软件定时器的典型开发流程：
 </td>
 <td class="cellrowborder" valign="top" width="15.440000000000001%" headers="mcps1.2.6.1.3 "><p id="p42881212145410"><a name="p42881212145410"></a><a name="p42881212145410"></a>0x02000312</p>
 </td>
-<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p82881612115411"><a name="p82881612115411"></a><a name="p82881612115411"></a>在中断或软件定时器回调中尝试同步删除定时器，删除失败。</p>
+<td class="cellrowborder" valign="top" width="25.81%" headers="mcps1.2.6.1.4 "><p id="p82881612115411"><a name="p82881612115411"></a><a name="p82881612115411"></a>Attempting to synchronously delete a timer in an interrupt or in a software timer callback. The deletion fails.</p>
 </td>
-<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p16288312195413"><a name="p16288312195413"></a><a name="p16288312195413"></a>调整代码逻辑，避免在中断或软件定时器回调中同步删除软件定时器。</p>
+<td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.6.1.5 "><p id="p16288312195413"><a name="p16288312195413"></a><a name="p16288312195413"></a>Adjust the code logic to avoid synchronously deleting software timers in interrupts or in software timer callbacks.</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-### 注意事项<a name="ZH-CN_TOPIC_0000001665142202"></a>
+### Precautions<a name="ZH-CN_TOPIC_0000001665142202"></a>
 
--   软件定时器的回调函数中请勿做过多操作，请勿使用可能引起任务挂起或阻塞的接口或操作。
--   软件定时器使用了系统的一个队列和一个任务资源，软件定时器任务的优先级设定为0，且不允许修改 。
--   系统可配置的软件定时器资源个数是指整个系统可使用的软件定时器资源总个数，而并非是用户可使用的软件定时器资源个数。例如：系统软件定时器多占用一个软件定时器资源数，那么用户能使用的软件定时器资源就会减少一个。
--   定时器创建之后，不会被系统自动删除，用户需要调用定时器删除接口删除定时器，回收定时器资源，避免资源泄露。
+-   Do not perform too many operations in the software timer callback function, and do not use interfaces or operations that may cause task suspension or blocking.
+-   Software timers use one queue and one task resource of the system. The priority of the software timer task is set to 0 and cannot be modified.
+-   The number of configurable software timer resources refers to the total number of software timer resources available to the entire system, not the number of software timer resources available to users. For example, if the system software timer occupies one additional software timer resource, the number of software timer resources available to users decreases by one.
+-   After a timer is created, it will not be automatically deleted by the system. Users need to call the timer deletion interface to delete the timer and recycle timer resources to avoid resource leakage.
 
-### 编程实例<a name="ZH-CN_TOPIC_0000001713102037"></a>
+### Programming Example<a name="ZH-CN_TOPIC_0000001713102037"></a>
 
-在下面的例子中，演示如下功能：
+In the following example, the following functions are demonstrated:
 
--   软件定时器创建、启动、删除、暂停操作。
--   单次软件定时器、周期软件定时器使用方法。
+-   Software timer creation, startup, deletion, and pause operations.
+-   Usage of one-shot software timers and periodic software timers.
 
-代码示例：
+Code example:
 
 ```
 #include "common_def.h"
@@ -2818,53 +2818,53 @@ ms级软件定时器的典型开发流程：
 static uint32_t g_timercount1 = 0;
 static uint32_t g_timercount2 = 0;
 osal_timer timer_id1, timer_id2;
-void test_timer1_callback(unsigned long arg)  // 回调函数1
+void test_timer1_callback(unsigned long arg)  // Callback function 1
 {
     unused(arg);
     g_timercount1++;
     osal_printk("g_timercount1=%d\n",g_timercount1);
-    /* 开启下一次软件timer定时 */
+    /* Start the next software timer timing */
     osal_timer_start(&timer_id1);
 }
-void test_timer2_callback(unsigned long arg)  // 回调函数2
+void test_timer2_callback(unsigned long arg)  // Callback function 2
 {
     unused(arg);
     g_timercount2 ++;
     osal_printk("g_timercount2=%d\n",g_timercount2);
-    /* 开启下一次软件timer定时 */
+    /* Start the next software timer timing */
     osal_timer_start(&timer_id2);
 }
 void example_task_entry_timer(void)
 {
     uint32_t ret;
-    /* 创建单次软件定时器，时间为1000ms，启动到1000ms数时执行回调函数1 */
+    /* Create a one-shot software timer with a duration of 1000 ms. When the 1000 ms count is reached, callback function 1 is executed */
     timer_id1.timer = NULL;
     timer_id1.data = NULL;
-    timer_id1.handler = test_timer1_callback; /* 回调函数 */
+    timer_id1.handler = test_timer1_callback; /* Callback function */
     timer_id1.interval = 1000; /* 1000ms */
     ret = osal_timer_init(&timer_id1);
     if (ret != OSAL_SUCCESS) {
         osal_printk("Example_task timer1 create failed!\n");
     }
     osal_printk("create Timer1 success\n");
-    /* 启动一次软件timer定时 */
+    /* Start one software timer timing */
     osal_timer_start(&timer_id1);
     osal_printk("start Timer1 success\n");
-    osal_msleep(1200);//延时1200ms数
+    osal_msleep(1200);//Delay 1200ms
     osal_timer_stop(&timer_id1);
-    osal_timer_destroy(&timer_id1);//删除软件定时器
+    osal_timer_destroy(&timer_id1);//Delete the software timer
     osal_printk("delete Timer1 success\n");
-    /*创建单次软件定时器，每100ms数执行回调函数2 */
+    /* Create a one-shot software timer. Callback function 2 is executed every 100 ms */
     timer_id2.timer = NULL;
     timer_id2.data = NULL;
-    timer_id2.handler = test_timer2_callback; /* 回调函数 */
+    timer_id2.handler = test_timer2_callback; /* Callback function */
     timer_id2.interval = 100; /* 100ms */
     ret = osal_timer_init(&timer_id2);
     if (ret != OSAL_SUCCESS) {
         osal_printk("Example_task timer2 create failed!\n");
     }
     osal_printk("create Timer2 success\n");
-    osal_timer_start(&timer_id2);//启动周期性软件定时器
+    osal_timer_start(&timer_id2);//Start the periodic software timer
     osal_printk("start Timer2\n");
     osal_msleep(1000);
     osal_timer_stop(&timer_id2);
@@ -2873,7 +2873,7 @@ void example_task_entry_timer(void)
 }
 ```
 
-结果验证：
+Result verification:
 
 ```
 create Timer1 success
