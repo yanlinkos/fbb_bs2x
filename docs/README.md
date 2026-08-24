@@ -12,7 +12,7 @@
 | software | <a href="zh-CN/software/低功耗开发指南/低功耗开发指南.md">BS2XV100 Low-Power Development Guide</a>                                         |
 | software | <a href="zh-CN/software/低功耗FAQ/低功耗FAQ.md">BS2XV100 Low-Power FAQ</a>                                                         |
 | software | <a href="zh-CN/software/低功耗sample使用指南/低功耗sample 使用指南.md">BS2XV100 Low-Power Sample Usage Guide</a>                           |
-| software | <a href="zh-CN/software/NFC TAG软件开发指导书/NFC TAG软件开发指导书">BS2XV100 NFC TAG Software Development Guide</a>                       |
+| software | <a href="zh-CN/software/NFC TAG软件开发指导书/NFC TAG软件开发指导书.md">BS2XV100 NFC TAG Software Development Guide</a>                       |
 | software | <a href="zh-CN/software/NV存储用户指南/BS2XV100 NV存储 用户指南.md">BS2XV100 NV Storage User Guide</a>                                   |
 | software | <a href="zh-CN/software/功率配置说明书/功率配置说明书.md">BS2XV100 Power Configuration Manual</a>                                          |
 | software | <a href="zh-CN/software/快速入门指南/快速入门指南.md">BS2XV100 Quick Start Guide</a>                                                     |
