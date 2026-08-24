@@ -8,7 +8,7 @@
 
 **Hardware Overview:** Core board, OLED board. For the OLED datasheet, refer to the liquid crystal display (LCD) PDF in https://gitee.com/HiSpark/hi3861_hdu_iot_application/issues/I6WPSS?from=project-issue. On the BS21E development board, IO0 connects to the baseboard RX and IO1 connects to the baseboard TX. The hardware setup requirements are shown in the figure:
 
-Refer to the [core board schematic](../../doc/hardware/HH-D03_原理图_V01.pdf), [OLED board schematic](../../../../docs/hardware/HiHope_NearLink_DK_WS63E_V03/HiSpark_WiFi_IoT_OLED_VER.A.pdf), and [baseboard schematic](../../../../docs/hardware/HiHope_NearLink_DK_WS63E_V03/HiSpark_WiFi_IoT_EXB_VER.A.pdf)
+Refer to the [core board schematic](../../doc/hardware/HH-D03_原理图_V01.pdf), [OLED board schematic](../../doc/hardware/HiSpark_WiFi_IoT_OLED_VER.A.pdf), and [baseboard schematic](../../docs/hardware/HiSpark_WiFi_IoT_EXB_VER.A.pdf)
 
 ![image-20250424151926307](../../doc/media/oled/image-20250424151926307.png)
 
