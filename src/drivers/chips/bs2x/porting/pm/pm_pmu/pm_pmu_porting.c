@@ -24,6 +24,7 @@ static bool pmu_control_nfcldo_power(pmu_control_power_t power);
 static uint8_t g_micldo_vset = 0;
 #ifdef PIN_RESET_ENABLE
 #define PIN_RESET_DELAY 5ULL
+#define PIN_RESET_GPIO S_MGPIO21
 #endif
 
 #if defined(CONFIG_SUPPORT_NFC_SERVICE)
@@ -189,3 +190,15 @@ void pm_efuse_ldo_power(bool on)
         uapi_pmu_control(PMU_CONTROL_MICLDO_POWER, PMU_CONTROL_POWER_OFF);
     }
 }
+
+#ifdef PIN_RESET_ENABLE
+void pm_reset_pin_enable(bool state)
+{
+    if (state) {
+        /* enable S_MGPIO21 reset */
+        uapi_pmu_control(PMU_CONTROL_PIN_RESET_ENABLE, PIN_RESET_GPIO);
+    } else {
+        uapi_pmu_control(PMU_CONTROL_PIN_RESET_DISABLE, PIN_RESET_GPIO);
+    }
+}
+#endif

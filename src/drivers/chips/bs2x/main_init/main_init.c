@@ -104,6 +104,7 @@ static uint64_t g_irq_start_time = 0;
 static uint64_t g_irq_end_time = 0;
 #endif
 #endif
+#include "pm_pmu_porting.h"
 
 #define WDT_TIMEOUT_S 30
 #define IMG_NUM_MAX   2
@@ -381,6 +382,10 @@ static void chip_hw_init(void)
 #endif
     panic_init();
     uapi_pin_init();
+#ifdef PIN_RESET_ENABLE
+    /* enable S_MGPIO21 reset */
+    pm_reset_pin_enable(true);
+#endif
 #ifdef CONFIG_ULTRA_DEEP_SLEEP_ENABLE
     if (readw(0x5702C700) == 0) {
         hardware_config_init();

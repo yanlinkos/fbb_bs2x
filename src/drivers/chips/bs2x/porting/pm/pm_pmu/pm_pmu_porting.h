@@ -163,6 +163,9 @@ typedef enum pmu_power_supply {
 void pm_pmu_power_supply_mode_init(void);
 pmu_power_supply_t pm_get_pmu_power_supply_mode(void);
 void pm_efuse_ldo_power(bool on);
+#ifdef PIN_RESET_ENABLE
+void pm_reset_pin_enable(bool state);
+#endif
 
 /**
  * @}
